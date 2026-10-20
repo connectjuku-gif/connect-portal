@@ -60,6 +60,19 @@
     background: #FFFFFF; border: 1px solid #D8D2C4; border-radius: 999px;
     padding: 8px 16px; font-size: 13px; font-family: inherit; color: #595F6B; cursor: pointer;
   }
+  nav.grades { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  nav.grades .gl { font-size: 12px; color: #A9A294; margin-right: 2px; }
+  .gchip {
+    border: 1px solid #D8D2C4; background: #FFFFFF; color: #595F6B;
+    border-radius: 999px; padding: 7px 16px; font-size: 13px; font-weight: 500;
+    font-family: inherit; cursor: pointer;
+  }
+  .gchip:hover { border-color: var(--primary); color: var(--primary); }
+  .gchip.active { background: var(--primary); border-color: var(--primary); color: #FAF8F2; }
+  .category.grade-hidden, .material-item.grade-hidden { display: none !important; }
+  .category .empty-note { font-size: 12px; color: #A9A294; padding: 10px 0; display: none; }
+  .category.grade-empty .card-grid { display: none; }
+  .category.grade-empty .empty-note { display: block; }
   .quick-links { padding: 18px 0 6px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
   .quick-links .label { font-size: 12px; color: #A9A294; margin-right: 2px; }
   .quick-links a {
@@ -137,7 +150,14 @@
       <a href="#eng-top" class="chip eng">📘 英語</a>
       <a href="#math-top" class="chip math">📐 数学</a>
     </nav>
-    <button type="button" class="sort-btn">🎓 学年順に並べ替え（準備中）</button>
+    <nav class="grades" aria-label="学年で絞り込み">
+      <span class="gl">🎓 学年</span>
+      <button type="button" class="gchip active" data-grade="all">すべて</button>
+      <button type="button" class="gchip" data-grade="el">小学生</button>
+      <button type="button" class="gchip" data-grade="1">中1</button>
+      <button type="button" class="gchip" data-grade="2">中2</button>
+      <button type="button" class="gchip" data-grade="3">中3</button>
+    </nav>
   </div>
 
   <div class="quick-links">
@@ -163,8 +183,9 @@
     <div id="eng-grammar" class="category">
       <h3>文法解説 <span class="count">中1英語 総復習文法・全6種</span></h3>
       <p class="cat-note">確認テスト①②③（単元ごと）と、総復習ランダム英文法（基礎／標準／応用）。各カードから「やさしめ・標準」または「A・B」を選べます。</p>
+      <p class="empty-note">この学年の教材はまだありません。</p>
       <div class="card-grid">
-        <div class="card">
+        <div class="card material-item" data-grade="1">
           <div class="thumb" style="background:#EFF2F6;">📄</div>
           <div class="body">
             <div class="card-title">確認テスト① be動詞まで</div>
@@ -175,7 +196,7 @@
             </div>
           </div>
         </div>
-        <div class="card">
+        <div class="card material-item" data-grade="1">
           <div class="thumb" style="background:#EFF2F6;">📄</div>
           <div class="body">
             <div class="card-title">確認テスト② 一般動詞まで</div>
@@ -186,7 +207,7 @@
             </div>
           </div>
         </div>
-        <div class="card">
+        <div class="card material-item" data-grade="1">
           <div class="thumb" style="background:#EFF2F6;">📄</div>
           <div class="body">
             <div class="card-title">確認テスト③ 三人称単数まで</div>
@@ -197,7 +218,7 @@
             </div>
           </div>
         </div>
-        <div class="card">
+        <div class="card material-item" data-grade="1">
           <div class="thumb" style="background:#EFF2F6;">📘</div>
           <div class="body">
             <div class="card-title">総復習ランダム英文法 基礎</div>
@@ -208,7 +229,7 @@
             </div>
           </div>
         </div>
-        <div class="card">
+        <div class="card material-item" data-grade="1">
           <div class="thumb" style="background:#EFF2F6;">📗</div>
           <div class="body">
             <div class="card-title">総復習ランダム英文法 標準</div>
@@ -219,7 +240,7 @@
             </div>
           </div>
         </div>
-        <div class="card">
+        <div class="card material-item" data-grade="1">
           <div class="thumb" style="background:#EFF2F6;">📙</div>
           <div class="body">
             <div class="card-title">総復習ランダム英文法 応用（和文英訳）</div>
@@ -235,8 +256,9 @@
 
     <div id="eng-exam" class="category">
       <h3>都立入試対策 <span class="count">1種</span></h3>
+      <p class="empty-note">この学年の教材はまだありません。</p>
       <div class="card-grid">
-        <a href="materials/todai-eng-exam-strategy.html" class="material-link">
+        <a href="materials/todai-eng-exam-strategy.html" class="material-link material-item" data-grade="3">
           <div class="card">
             <div class="thumb" style="background:#EFF2F6;">📝</div>
             <div class="body">
@@ -259,8 +281,9 @@
 
     <div id="eng-vocab" class="category" style="margin-bottom:8px;">
       <h3>単語・読解 <span class="count">6種</span></h3>
+      <p class="empty-note">この学年の教材はまだありません。</p>
       <div class="card-grid">
-        <a href="vocab-test.html" class="material-link">
+        <a href="vocab-test.html" class="material-link material-item" data-grade="3">
           <div class="card">
             <div class="thumb" style="background:#EFF2F6;">🔤</div>
             <div class="body">
@@ -269,7 +292,7 @@
             </div>
           </div>
         </a>
-        <a href="vocab-test-g12.html" class="material-link">
+        <a href="vocab-test-g12.html" class="material-link material-item" data-grade="1 2">
           <div class="card">
             <div class="thumb" style="background:#EFF2F6;">🔤</div>
             <div class="body">
@@ -278,7 +301,7 @@
             </div>
           </div>
         </a>
-        <a href="elem-vocab-test.html" class="material-link">
+        <a href="elem-vocab-test.html" class="material-link material-item" data-grade="el">
           <div class="card">
             <div class="thumb" style="background:#EFF2F6;">🧒</div>
             <div class="body">
@@ -287,7 +310,7 @@
             </div>
           </div>
         </a>
-        <a href="irregular-verb-test.html" class="material-link">
+        <a href="irregular-verb-test.html" class="material-link material-item" data-grade="1 2 3">
           <div class="card">
             <div class="thumb" style="background:#EFF2F6;">🔁</div>
             <div class="body">
@@ -296,7 +319,7 @@
             </div>
           </div>
         </a>
-        <a href="vocab-test-target.html" class="material-link">
+        <a href="vocab-test-target.html" class="material-link material-item" data-grade="3">
           <div class="card">
             <div class="thumb" style="background:#EFF2F6;">📙</div>
             <div class="body">
@@ -305,7 +328,7 @@
             </div>
           </div>
         </a>
-        <a href="vocab-test-pass2.html" class="material-link">
+        <a href="vocab-test-pass2.html" class="material-link material-item" data-grade="3">
           <div class="card">
             <div class="thumb" style="background:#EFF2F6;">📙</div>
             <div class="body">
@@ -328,8 +351,9 @@
 
     <div id="math-formula" class="category">
       <h3>公式・総復習 <span class="count">8種</span></h3>
+      <p class="empty-note">この学年の教材はまだありません。</p>
       <div class="card-grid">
-        <a href="math-formulas-kishu.html" class="material-link">
+        <a href="math-formulas-kishu.html" class="material-link material-item" data-grade="3">
           <div class="card">
             <div class="thumb" style="background:#FBF3E3;">📐</div>
             <div class="body">
@@ -338,7 +362,7 @@
             </div>
           </div>
         </a>
-        <a href="math-formulas-solid-data.html" class="material-link">
+        <a href="math-formulas-solid-data.html" class="material-link material-item" data-grade="1 2">
           <div class="card">
             <div class="thumb" style="background:#FBF3E3;">📦</div>
             <div class="body">
@@ -347,7 +371,7 @@
             </div>
           </div>
         </a>
-        <a href="function-review.html" class="material-link">
+        <a href="function-review.html" class="material-link material-item" data-grade="3">
           <div class="card">
             <div class="thumb" style="background:#FBF3E3;">📈</div>
             <div class="body">
@@ -356,7 +380,7 @@
             </div>
           </div>
         </a>
-        <a href="linear-function-basics.html" class="material-link">
+        <a href="linear-function-basics.html" class="material-link material-item" data-grade="2">
           <div class="card">
             <div class="thumb" style="background:#FBF3E3;">📈</div>
             <div class="body">
@@ -365,7 +389,7 @@
             </div>
           </div>
         </a>
-        <div class="set-group">
+        <div class="set-group material-item" data-grade="2">
           <div class="set-label">📚 セット：解説書 → 練習問題</div>
           <div class="card-grid">
             <a href="linear-function-explained.html" class="material-link">
@@ -388,7 +412,7 @@
             </a>
           </div>
         </div>
-        <a href="equation-determination-test.html" class="material-link">
+        <a href="equation-determination-test.html" class="material-link material-item" data-grade="2">
           <div class="card">
             <div class="thumb" style="background:#FBF3E3;">✅</div>
             <div class="body">
@@ -397,7 +421,7 @@
             </div>
           </div>
         </a>
-        <a href="yax2-explained.html" class="material-link">
+        <a href="yax2-explained.html" class="material-link material-item" data-grade="3">
           <div class="card">
             <div class="thumb" style="background:#FBF3E3;">📘</div>
             <div class="body">
@@ -411,8 +435,9 @@
 
     <div id="math-exam" class="category">
       <h3>都立入試対策 <span class="count">4種</span></h3>
+      <p class="empty-note">この学年の教材はまだありません。</p>
       <div class="card-grid">
-        <a href="todai-math-q4-drill.html" class="material-link">
+        <a href="todai-math-q4-drill.html" class="material-link material-item" data-grade="3">
           <div class="card">
             <div class="thumb" style="background:#FBF3E3;">🧩</div>
             <div class="body">
@@ -421,7 +446,7 @@
             </div>
           </div>
         </a>
-        <a href="todai-math-q4-plane-figure.html" class="material-link">
+        <a href="todai-math-q4-plane-figure.html" class="material-link material-item" data-grade="3">
           <div class="card">
             <div class="thumb" style="background:#FBF3E3;">📐</div>
             <div class="body">
@@ -430,7 +455,7 @@
             </div>
           </div>
         </a>
-        <a href="todai-math-q5-drill.html" class="material-link">
+        <a href="todai-math-q5-drill.html" class="material-link material-item" data-grade="3">
           <div class="card">
             <div class="thumb" style="background:#FBF3E3;">🧩</div>
             <div class="body">
@@ -439,7 +464,7 @@
             </div>
           </div>
         </a>
-        <a href="todai-math-q5-solid-figure.html" class="material-link">
+        <a href="todai-math-q5-solid-figure.html" class="material-link material-item" data-grade="3">
           <div class="card">
             <div class="thumb" style="background:#FBF3E3;">📦</div>
             <div class="body">
@@ -453,8 +478,9 @@
 
     <div id="math-calc" class="category">
       <h3>計算プリント</h3>
+      <p class="empty-note">この学年の教材はまだありません。</p>
       <div class="card-grid">
-        <a href="math-calc-practice-1.html" class="material-link">
+        <a href="math-calc-practice-1.html" class="material-link material-item" data-grade="1">
           <div class="card">
             <div class="thumb" style="background:#FBF3E3;">🔢</div>
             <div class="body">
@@ -468,6 +494,7 @@
 
     <div id="math-shape" class="category" style="margin-bottom:8px;">
       <h3>図形・文章題</h3>
+      <p class="empty-note">この学年の教材はまだありません。</p>
       <div class="card-grid">
         <a href="#" class="material-link">
           <div class="card placeholder">
@@ -483,9 +510,39 @@
   </section>
 
   <footer>
-    ※このページはレイアウト確認用の骨組みです。各カードのリンク先・検索機能・並べ替え機能は今後設定します。
+    ※検索機能は準備中です。
   </footer>
 
 </main>
+
+<script>
+(function(){
+  var chips = document.querySelectorAll('.gchip');
+  chips.forEach(function(chip){
+    chip.addEventListener('click', function(){
+      chips.forEach(function(c){ c.classList.remove('active'); });
+      chip.classList.add('active');
+      applyGradeFilter(chip.getAttribute('data-grade'));
+    });
+  });
+
+  function applyGradeFilter(grade){
+    var items = document.querySelectorAll('.material-item');
+    items.forEach(function(el){
+      var dg = el.getAttribute('data-grade');
+      var visible = (grade === 'all') || !dg || dg.split(' ').indexOf(grade) !== -1;
+      el.classList.toggle('grade-hidden', !visible);
+    });
+    document.querySelectorAll('.category').forEach(function(cat){
+      var catItems = cat.querySelectorAll('.material-item');
+      if (catItems.length === 0) { cat.classList.remove('grade-empty'); return; }
+      var anyVisible = false;
+      catItems.forEach(function(it){ if (!it.classList.contains('grade-hidden')) anyVisible = true; });
+      cat.classList.toggle('grade-empty', !anyVisible);
+    });
+  }
+})();
+</script>
+
 </body>
 </html>
