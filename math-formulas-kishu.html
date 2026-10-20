@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>数学 公式集（既習内容編）</title>
+<style>
+@page { size: A4; margin: 12mm; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #888; font-family: "游明朝","Yu Mincho","Hiragino Mincho ProN","MS Mincho",serif; color: #000; font-size: 11pt; line-height: 1.6; }
+.page { width: 210mm; min-height: 297mm; margin: 8mm auto; background: #fff; padding: 12mm 14mm; page-break-after: always; }
+.page:last-child { page-break-after: auto; }
+h1 { font-size: 12pt; font-weight: normal; margin: 0 0 6mm; }
+h2 { font-size: 10.5pt; font-weight: normal; margin: 4mm 0 1.5mm; }
+.box { border: 1.5px solid #000; padding: 2.5mm 4mm; }
+.row { display: flex; gap: 6mm; }
+.row > * { flex: 1; }
+.fr { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; line-height: 1.15; margin: 0 1px; font-size: 0.95em; }
+.fr > span:first-child { border-bottom: 1px solid #000; padding: 0 2px; }
+.ans { font-weight: bold; text-decoration: underline; }
+.key { font-weight: bold; border: 1.5px solid #000; padding: 0 3px; }
+table.t { border-collapse: collapse; font-size: 9.5pt; margin: 1mm 0; }
+table.t th, table.t td { border: 1px solid #000; padding: 1px 6px; text-align: center; }
+table.t th { background: #eee; font-weight: normal; }
+ul { margin: 0.5mm 0; padding-left: 1.3em; }
+.small { font-size: 9.5pt; }
+.ex { border: 1px dashed #000; padding: 1.5mm 3mm; margin-top: 2mm; font-size: 10pt; }
+svg { display: block; }
+.toolbar { position: fixed; right: 12px; top: 12px; z-index: 10; }
+.toolbar button { font: 14px sans-serif; padding: 6px 12px; cursor: pointer; }
+body.editing .page { outline: 2px dashed #36c; }
+.g2{ display:grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+.rule { font-size: 10.5pt; }
+.rule li { margin: 1.2mm 0; }
+@media print {
+  body { background: #fff; }
+  .page { margin: 0; padding: 0; width: auto; min-height: 0; }
+  .toolbar { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar"><button id="editBtn" type="button">編集モード：OFF</button></div>
+
+<!-- ============ 1ページ目 ============ -->
+<div class="page">
+<h1>＜数学＞　確実に覚えておく知識・公式 〜既習内容編〜</h1>
+
+<div class="g2">
+  <div>
+    <h2>■関数の式</h2>
+    <div class="box">
+      【比例】　<i>y</i> = <i>ax</i><br><br>
+      【反比例】　<i>y</i> = <span class="fr"><span>a</span><span>x</span></span><br><br>
+      【一次関数】　<i>y</i> = <i>ax</i> + <i>b</i>
+    </div>
+  </div>
+  <div>
+    <h2>■変化の割合</h2>
+    <div class="box" style="text-align:center; padding:6mm 4mm;">
+      <b style="font-size:12pt;">変化の割合</b> ＝ <span class="fr"><span><i>y</i> の増加量</span><span><i>x</i> の増加量</span></span>
+    </div>
+  </div>
+</div>
+
+<div class="g2" style="margin-top:5mm;">
+  <div>
+    <h2>■円</h2>
+    <div class="box" style="text-align:center;">
+      <svg viewBox="0 0 220 180" width="100%" style="max-width:220px;margin:0 auto;">
+        <circle cx="110" cy="85" r="75" fill="none" stroke="#000" stroke-width="2"/>
+        <circle cx="110" cy="85" r="2" fill="#000"/>
+        <line x1="110" y1="85" x2="178" y2="85" stroke="#000" stroke-dasharray="3 3"/>
+        <text x="130" y="70" font-size="18" font-style="italic">r</text>
+      </svg>
+      <div style="text-align:left; margin-top:3mm;">
+        【円の面積】<i>πr</i>²<br>
+        【円周の長さ】2<i>πr</i>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2>■おうぎ形</h2>
+    <div class="box" style="text-align:center;">
+      <svg viewBox="0 0 220 180" width="100%" style="max-width:220px;margin:0 auto;">
+        <path d="M30 150 L110 20 L190 150 A90 60 0 0 1 30 150 Z" fill="none" stroke="#000" stroke-width="2"/>
+        <text x="80" y="110" font-size="18" font-style="italic">a</text>
+        <text x="105" y="145" font-size="18" font-style="italic">r</text>
+      </svg>
+      <div style="text-align:left; margin-top:3mm;">
+        【おうぎ形の面積】<i>πr</i>² × <span class="fr"><span>a</span><span>360</span></span><br>
+        【おうぎ形の弧の長さ】2<i>πr</i> × <span class="fr"><span>a</span><span>360</span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2 style="margin-top:5mm;">■体積</h2>
+<div class="box">
+  <div class="row">
+    <div>
+      <div><b>柱体</b></div>
+      <svg viewBox="0 0 330 110" width="100%">
+        <ellipse cx="35" cy="20" rx="25" ry="8" fill="none" stroke="#000"/>
+        <line x1="10" y1="20" x2="10" y2="75" stroke="#000"/>
+        <line x1="60" y1="20" x2="60" y2="75" stroke="#000"/>
+        <path d="M10 75 A25 8 0 0 0 60 75" fill="none" stroke="#000"/>
+        <path d="M10 75 A25 8 0 0 1 60 75" fill="none" stroke="#000" stroke-dasharray="2 2"/>
+        <polygon points="105,25 150,25 150,80 105,80" fill="none" stroke="#000"/>
+        <polygon points="105,25 120,12 165,12 150,25" fill="none" stroke="#000"/>
+        <polygon points="150,25 165,12 165,67 150,80" fill="none" stroke="#000"/>
+        <polygon points="220,35 260,30 260,85 220,90" fill="none" stroke="#000"/>
+        <polygon points="220,35 245,20 260,30" fill="none" stroke="#000" stroke-dasharray="2 2"/>
+        <line x1="245" y1="20" x2="245" y2="75" stroke="#000" stroke-dasharray="2 2"/>
+        <line x1="245" y1="75" x2="220" y2="90" stroke="#000" stroke-dasharray="2 2"/>
+      </svg>
+      <div style="text-align:center; margin-top:2mm;">体積＝底面積×高さ</div>
+    </div>
+    <div>
+      <div><b>錐体</b></div>
+      <svg viewBox="0 0 330 110" width="100%">
+        <line x1="35" y1="10" x2="10" y2="75" stroke="#000"/>
+        <line x1="35" y1="10" x2="60" y2="75" stroke="#000"/>
+        <path d="M10 75 A25 7 0 0 0 60 75" fill="none" stroke="#000"/>
+        <path d="M10 75 A25 7 0 0 1 60 75" fill="none" stroke="#000" stroke-dasharray="2 2"/>
+        <polygon points="135,10 100,80 170,80" fill="none" stroke="#000"/>
+        <line x1="135" y1="10" x2="135" y2="80" stroke="#000" stroke-dasharray="2 2"/>
+        <polygon points="245,10 215,80 260,90 285,55" fill="none" stroke="#000"/>
+        <line x1="245" y1="10" x2="260" y2="90" stroke="#000" stroke-dasharray="2 2"/>
+      </svg>
+      <div style="text-align:center; margin-top:2mm;">体積＝底面積×高さ×<span class="fr"><span>1</span><span>3</span></span></div>
+    </div>
+  </div>
+</div>
+
+<h2 style="margin-top:5mm;">■円錐の中心角・表面積</h2>
+<div class="box">
+  <div class="row">
+    <div>
+      <svg viewBox="0 0 200 160" width="100%">
+        <line x1="90" y1="15" x2="35" y2="130" stroke="#000"/>
+        <line x1="90" y1="15" x2="145" y2="130" stroke="#000"/>
+        <path d="M35 130 A55 13 0 0 0 145 130" fill="none" stroke="#000"/>
+        <path d="M35 130 A55 13 0 0 1 145 130" fill="none" stroke="#000" stroke-dasharray="2 2"/>
+        <line x1="90" y1="15" x2="90" y2="130" stroke="#000" stroke-dasharray="2 2"/>
+        <line x1="90" y1="130" x2="145" y2="130" stroke="#000" stroke-dasharray="2 2"/>
+        <text x="95" y="80" font-size="11">高さ</text>
+        <text x="105" y="128" font-size="11">半径</text>
+        <text x="40" y="70" font-size="11">母線</text>
+      </svg>
+    </div>
+    <div class="small">
+      <b>中心角</b> ＝ <span class="fr"><span>半径</span><span>母線</span></span> × 360<br><br>
+      <b>円錐の側面積</b> ＝ 母線 × 半径 × <i>π</i>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 2ページ目 ============ -->
+<div class="page">
+<h1>＜数学＞　確実に覚えておく知識・公式 〜既習内容編（続き）〜</h1>
+
+<div class="g2">
+  <div>
+    <h2>■三角形の合同条件</h2>
+    <div class="box">
+      <ul class="rule">
+        <li>3組の辺がそれぞれ等しい</li>
+        <li>2組の辺とその間の角がそれぞれ等しい</li>
+        <li>1組の辺とその両端の角がそれぞれ等しい</li>
+      </ul>
+    </div>
+  </div>
+  <div>
+    <h2>■直角三角形の合同条件</h2>
+    <div class="box">
+      <ul class="rule">
+        <li>直角三角形の斜辺と他の一辺がそれぞれ等しい</li>
+        <li>直角三角形の斜辺と1つの鋭角がそれぞれ等しい</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="g2" style="margin-top:5mm;">
+  <div>
+    <h2>■二等辺三角形</h2>
+    <div class="box">
+      定義：2辺が等しい<br>性質：底角は等しい／頂角の二等分線は底辺を垂直に2等分する
+      <svg viewBox="0 0 220 140" width="100%" style="margin-top:2mm;">
+        <polygon points="60,10 10,120 110,120" fill="none" stroke="#000"/>
+        <line x1="25" y1="55" x2="32" y2="58" stroke="#000"/>
+        <line x1="95" y1="55" x2="88" y2="58" stroke="#000"/>
+      </svg>
+      <div style="margin-top:2mm;">二等辺三角形になるための条件</div>
+      <ul class="rule"><li>2辺が等しい</li><li>2つの角が等しい</li></ul>
+    </div>
+  </div>
+  <div>
+    <h2>■正三角形</h2>
+    <div class="box">
+      定義：3辺が等しい<br>性質：3つの内角が等しい（すべて60°）
+      <svg viewBox="0 0 220 140" width="100%" style="margin-top:2mm;">
+        <polygon points="110,10 20,120 200,120" fill="none" stroke="#000"/>
+        <text x="95" y="40" font-size="11">60°</text>
+        <text x="25" y="115" font-size="11">60°</text>
+        <text x="175" y="115" font-size="11">60°</text>
+      </svg>
+      <div class="box" style="margin-top:2mm; text-align:center;">3辺がすべて等しい</div>
+      <div class="box" style="margin-top:2mm; text-align:center;">3つの角がすべて60°</div>
+    </div>
+  </div>
+</div>
+
+<h2 style="margin-top:5mm;">■平行四辺形</h2>
+<div class="box">
+  <div class="row">
+    <div>
+      定義：2組の対辺がそれぞれ平行な四角形<br>性質：
+      <ul class="rule">
+        <li>2組の対辺がそれぞれ等しい</li>
+        <li>2組の対角がそれぞれ等しい</li>
+        <li>対角線はそれぞれの中点で交わる</li>
+      </ul>
+    </div>
+    <div>
+      平行四辺形になるための条件
+      <ul class="rule">
+        <li>2組の対辺がそれぞれ平行である</li>
+        <li>2組の対辺がそれぞれ等しい</li>
+        <li>2組の対角がそれぞれ等しい</li>
+        <li>対角線がそれぞれの中点で交わる</li>
+        <li>1組の対辺が平行でその長さが等しい</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<h2 style="margin-top:5mm;">■特殊な平行四辺形の定義</h2>
+<div class="box">
+  長方形の定義：4つの角がすべて直角である四角形<br>
+  ひし形の定義：4つの辺がすべて等しい四角形<br>
+  正方形の定義：4つの角がすべて直角で、4つの辺がすべて等しい四角形
+</div>
+</div>
+
+<script>
+var btn = document.getElementById('editBtn');
+var on = false;
+btn.addEventListener('click', function () {
+  on = !on;
+  document.body.contentEditable = on ? 'true' : 'false';
+  document.body.classList.toggle('editing', on);
+  btn.textContent = '編集モード：' + (on ? 'ON' : 'OFF');
+});
+</script>
+</body>
+</html>
