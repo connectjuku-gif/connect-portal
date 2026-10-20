@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>都立入試英語攻略</title>
+<style>
+  :root{
+    --navy:#1F3A5C;
+    --navy-deep:#16293E;
+    --red:#B33A2E;
+    --red-bg:#FBEAE6;
+    --blue-bg:#E7ECF4;
+    --cream-bg:#F2EDE0;
+    --yellow:#FCE897;
+    --rule:#D8D8D0;
+    --text:#2B2B2B;
+    --sub:#6B7280;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:#EDEDE6;
+    font-family:"Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif;
+    color:var(--text);
+    line-height:1.85;
+  }
+  .toolbar{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; justify-content:flex-end;
+    padding:10px 18px;
+    background:rgba(237,237,230,0.0);
+    pointer-events:none;
+  }
+  .toolbar button{
+    pointer-events:auto;
+    background:var(--navy);
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    padding:8px 16px;
+    font-size:13px;
+    cursor:pointer;
+    box-shadow:0 2px 6px rgba(0,0,0,0.18);
+  }
+  .toolbar button.active{ background:var(--red); }
+  @media print{ .toolbar{ display:none; } body{ background:#fff; } }
+
+  .sheet{
+    max-width:880px;
+    margin:0 auto;
+    background:#fff;
+    padding:56px 60px 70px;
+    box-shadow:0 2px 18px rgba(0,0,0,0.10);
+  }
+  .doc-top{ padding-top:46px; }
+  .label-red{ color:var(--red); font-weight:700; font-size:13px; letter-spacing:.03em; }
+  h1.title{
+    font-size:38px; color:var(--navy); margin:14px 0 18px; font-weight:800;
+    letter-spacing:.01em;
+  }
+  p.lead{ font-size:15px; color:#444; margin:0 0 26px; }
+  hr.thin{ border:none; border-top:1px solid var(--rule); margin:22px 0; }
+  hr.thick{ border:none; border-top:2px solid var(--navy); margin:22px 0; }
+
+  .idx-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:14px 28px;
+    margin:26px 0 30px;
+  }
+  .idx-item{ display:flex; align-items:center; gap:14px; text-decoration:none; color:var(--text); }
+  .idx-badge{
+    flex:0 0 34px; height:34px; border-radius:4px;
+    background:var(--navy); color:#fff; font-weight:700; font-size:15px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .idx-item span.t{ font-size:15px; }
+  .idx-item:hover .idx-badge{ background:var(--red); }
+
+  section{ margin-top:52px; }
+  section:first-of-type{ margin-top:0; }
+
+  .sec-h{
+    display:flex; align-items:baseline; justify-content:space-between;
+    border-bottom:2px solid var(--rule); padding-bottom:10px; margin-bottom:22px;
+  }
+  .sec-h h2{ font-size:26px; color:var(--navy); margin:0; font-weight:800; }
+  .sec-h .note{ font-size:13px; color:var(--sub); }
+
+  .q-badge-h{ display:flex; align-items:baseline; gap:16px; border-bottom:2px solid var(--rule); padding-bottom:12px; margin-bottom:22px; }
+  .q-badge{
+    border:2px solid var(--navy); color:var(--navy); font-weight:800; font-size:19px;
+    border-radius:6px; padding:5px 12px; white-space:nowrap;
+  }
+  .q-badge-h h2{ font-size:25px; color:var(--navy); margin:0; font-weight:800; }
+  .q-badge-h .note{ margin-left:auto; font-size:13px; color:var(--sub); white-space:nowrap; }
+
+  h3.sub-h{
+    font-size:17px; color:var(--text); margin:30px 0 10px;
+    padding-left:12px; border-left:4px solid var(--red); font-weight:700;
+  }
+  h3.sub-h .tag{ font-weight:400; color:var(--sub); font-size:13px; margin-left:8px; }
+
+  p{ margin:14px 0; font-size:15.5px; }
+  ul.dots{ margin:14px 0; padding-left:0; list-style:none; }
+  ul.dots li{ position:relative; padding-left:20px; margin:8px 0; font-size:15.5px; }
+  ul.dots li::before{ content:"•"; position:absolute; left:0; color:var(--navy); font-weight:700; }
+
+  mark{ background:var(--yellow); padding:0 2px; border-radius:2px; }
+  b, strong{ font-weight:700; }
+
+  .box{ border-radius:8px; padding:20px 24px; margin:22px 0; }
+  .box .box-h{ font-weight:700; font-size:14px; margin-bottom:8px; }
+  .box p{ margin:8px 0; font-size:15px; }
+  .box-red{ background:var(--red-bg); border-left:4px solid var(--red); }
+  .box-red .box-h{ color:var(--red); }
+  .box-blue{ background:var(--blue-bg); border-left:4px solid var(--navy); }
+  .box-blue .box-h{ color:var(--navy); }
+  .box-cream{ background:var(--cream-bg); }
+  .box-cream .box-h{ color:var(--red); font-size:13px; font-weight:700; }
+  .box-cream .box-sub{ color:var(--sub); font-weight:400; margin-left:6px; }
+  .box-cream .eng{ font-weight:700; font-size:16px; margin:10px 0 2px; }
+  .box-cream .jp{ color:#555; font-size:14px; margin:0 0 14px; }
+
+  table.time{ width:100%; border-collapse:collapse; margin:20px 0; font-size:15px; }
+  table.time th{ text-align:left; color:var(--sub); font-weight:600; font-size:13px; padding:8px 10px; border-bottom:1px solid var(--rule); }
+  table.time td{ padding:14px 10px; border-bottom:1px solid var(--rule); vertical-align:top; }
+  table.time td.daimon{ font-weight:700; color:var(--navy); white-space:nowrap; width:90px; }
+  table.time td.time{ font-weight:800; font-size:17px; white-space:nowrap; width:70px; border-bottom:3px solid var(--navy); }
+  table.time tr.total td{ border-bottom:none; border-top:2px solid var(--navy); font-weight:800; }
+  table.time tr.total td.time{ color:var(--red); border-bottom:none; }
+
+  .pill{
+    display:inline-block; border-radius:20px; padding:3px 14px; font-size:13px; font-weight:700;
+    border:1.5px solid var(--navy); color:var(--navy); margin-left:10px; vertical-align:middle;
+  }
+  .pill.hard{ border-color:var(--red); color:var(--red); }
+
+  .scan-block{ margin:30px 0 38px; text-align:center; }
+  .scan-block img{ max-width:100%; border:1px solid #ddd; box-shadow:0 1px 8px rgba(0,0,0,0.08); }
+  .scan-cap{ font-size:13px; color:var(--navy); font-weight:700; margin-top:8px; }
+  .scan-cap .pnum{ color:var(--red); }
+
+  .q-exp h4{ font-size:16px; margin:26px 0 4px; }
+  .q-exp h4 .pill{ margin-left:10px; }
+
+  .footer-note{ margin-top:60px; padding-top:18px; border-top:1px solid var(--rule); font-size:12px; color:var(--sub); text-align:center; }
+
+  [contenteditable="true"]{ outline:2px dashed #93a7c0; outline-offset:4px; }
+</style>
+</head>
+<body>
+
+<div class="toolbar"><button id="editBtn" onclick="toggleEdit()">編集モード</button></div>
+
+<div class="sheet doc-top">
+
+  <div class="label-red">学習塾CONNECT　講師用資料</div>
+  <h1 class="title">都立入試英語攻略</h1>
+  <p class="lead">都立高校入試・英語の解き方と指導のポイント。生徒が「毎回お決まりの解き方」で解けるようになるまで、講師がこの手順を確認してあげてください。</p>
+
+  <hr class="thick">
+  <div class="idx-grid">
+    <a class="idx-item" href="#intro"><span class="idx-badge">序</span><span class="t">はじめに</span></a>
+    <a class="idx-item" href="#time"><span class="idx-badge">時</span><span class="t">時間配分</span></a>
+    <a class="idx-item" href="#q1"><span class="idx-badge">1</span><span class="t">大問1　リスニング</span></a>
+    <a class="idx-item" href="#q2"><span class="idx-badge">2</span><span class="t">大問2　図表・英作文</span></a>
+    <a class="idx-item" href="#q3"><span class="idx-badge">3</span><span class="t">大問3　会話文</span></a>
+    <a class="idx-item" href="#q4"><span class="idx-badge">4</span><span class="t">大問4　長文</span></a>
+    <a class="idx-item" href="#method"><span class="idx-badge">指</span><span class="t">長文読解の指導法</span></a>
+    <a class="idx-item" href="#past"><span class="idx-badge">過</span><span class="t">令和6年 過去問解説</span></a>
+  </div>
+  <hr class="thick">
+
+  <section id="intro">
+    <div class="sec-h"><h2>はじめに</h2><span class="note">都立英語の特徴と学習の前提</span></div>
+    <p>都立の英語は、しっかりと対策をすれば基本的に<b>50点以上</b>は取れるようになります。毎回お決まりの解き方で解けるように慣れるまでは、解き方のポイントを確認してあげると良いです。</p>
+    <p>都立英語の特徴として、文法の細かい知識を問う問題は<b>大問3の問6しかありません</b>。なので、文法の知識や問題演習よりは<mark>単語力・読解力</mark>が重要です。都立の過去問をやり始める目安は、<b>関係代名詞までの学習が終わっていること</b>が前提です。都立の英語は過去問を何度もやって解き方を身につけることが最短距離です。</p>
+    <p>V模擬や都トレなどの類似問題は演習としては有用ですが、問題の質は良くないです。具体的には過去問と比べて、語注のある英単語が異常に多い、大問2の問3の根拠がイマイチである（2択までは絞れるが答えの決め手に欠ける）、英文の内容が都立っぽくない（都立の英語は教科書的な無難な内容が多いが、類似問題は私立の問題文に近い）、大問4の答えの根拠になる箇所が一部に偏っている、などが挙げられます。</p>
+    <div class="box box-red">
+      <div class="box-h">大前提</div>
+      <p>入試は1点でも多く取ることが目的です。合格できればいいので、すべての英文を完全に理解する必要はないということを意識しましょう。ただし基礎力は必要不可欠なので、直前期までは基礎力の強化に励みましょう。</p>
+    </div>
+  </section>
+
+  <section id="time">
+    <div class="sec-h"><h2>時間配分</h2><span class="note">試験時間 50分</span></div>
+    <table class="time">
+      <tr><th>大問</th><th>目安</th><th>調整の考え方</th></tr>
+      <tr><td class="daimon">大問1</td><td class="time">10分</td><td>問題Bを飛ばす場合は6分 → 余った4分で大問2を読み進める</td></tr>
+      <tr><td class="daimon">大問2</td><td class="time">13分</td><td>英作文を書かない場合は10分 → 余った3分を大問3か4に使う</td></tr>
+      <tr><td class="daimon">大問3</td><td class="time">13分</td><td></td></tr>
+      <tr><td class="daimon">大問4</td><td class="time">13分</td><td></td></tr>
+      <tr class="total"><td>計</td><td class="time">49分</td><td>残り1分はマークミスがないかの確認</td></tr>
+    </table>
+    <div class="box box-red">
+      <div class="box-h">英語が苦手な生徒には</div>
+      <p>問題の取捨選択をすることで、リスニングと英作文で最大7分くらいは節約できます。その時間を使って大問2〜4を解きましょう。</p>
+    </div>
+  </section>
+
+  <section id="q1">
+    <div class="q-badge-h"><span class="q-badge">大問1</span><h2>リスニング</h2><span class="note">10分（問題Bを飛ばすなら6分）</span></div>
+    <h3 class="sub-h">解き方</h3>
+    <p><b>問題A</b>は頑張って解きましょう。特に<mark>数字や曜日、疑問詞</mark>などに注意して聴きましょう。</p>
+    <p><b>問題B</b>は Question 1 は簡単ですが、Question 2 は難しいので、出来ない生徒は捨てましょう。ただし時間がもったいないので、問題Bの時間から先に大問2の英文を読み始めましょう。</p>
+    <div class="box box-blue">
+      <div class="box-h">リスニングの指導方法</div>
+      <p>基本的には自宅や自習室などで生徒に自主的にやらせましょう。必要に応じて塾でやる場合は、<b>本番通りに解かせる → スクリプトの穴埋め</b>（答えの根拠になるキーワードや数字、疑問詞など）を作成して、それを読みながら書き取りをやらせると良いです。その場合は問題Bも全問解かせて構いません。</p>
+    </div>
+  </section>
+
+  <section id="q2">
+    <div class="q-badge-h"><span class="q-badge">大問2</span><h2>図表読み取り・英作文</h2><span class="note">13分（英作文なしなら10分）</span></div>
+    <h3 class="sub-h">解き方</h3>
+    <p>まず、日本語の説明文を必ず読みましょう。</p>
+
+    <h3 class="sub-h">問1・問2<span class="tag">図を見ながら固有名詞・数字・曜日・道順を答える</span></h3>
+    <p>ただし、簡単な足し算・引き算、数の大小を比べる必要があります。「今は△△だから、次は○○、明日は□□」というふうに、問題と図を読みながら考える必要があることもあるので注意しましょう。</p>
+    <ul class="dots">
+      <li>図と合う答えがなくても焦らない。計算等の作業を忘れていないか気を付ける。</li>
+      <li>英文に気を取られて図を見落とさないようにする。</li>
+      <li>空欄の前後に解答の根拠がないときもあるので、なくても焦らない。</li>
+    </ul>
+    <p>ここは簡単な情報処理能力が問われているので、<mark>とにかく慣れが大事</mark>です。</p>
+
+    <h3 class="sub-h">問3<span class="tag">内容一致</span></h3>
+    <p>問題を先に見て、「<b>だれが・なにを・どうしたか</b>」を意識しながら読みましょう。必ず、似たような表現で本文に答えが書かれています。基本的にはトピックセンテンスを見つけられれば簡単なのですが、「本文に書いてあるけれどトピックセンテンスではないから誤答」というパターンもあるので、中3には難しいです。答え以外の選択肢は、だれが・なにを、が本文と逆だったり、本文に書いていなかったりと変なところがありますが、判断が難しい年や選択肢の質の悪い問題もあるので、出来なくても仕方ないです。</p>
+
+    <h3 class="sub-h">英作文<span class="tag">便利な表現テンプレート</span></h3>
+    <p>基本的に英作文はテンプレートを覚えれば、テーマに応じて英単語を少し変えるだけで8割は取れるようになります。苦手な生徒はこの表現を参考にしてください。</p>
+
+    <div class="box box-cream">
+      <div class="box-h">1文目<span class="box-sub">自分の意見</span></div>
+      <div class="eng">I want (人) to ~</div><div class="jp">私は（人に）～をしたい</div>
+      <div class="eng">I think A is B</div><div class="jp">私はAがBだと思う</div>
+      <div class="eng">It is 形容詞 (for 人) to ~</div><div class="jp">（人にとって）～することは形容詞である</div>
+    </div>
+    <div class="box box-cream">
+      <div class="box-h">2文目<span class="box-sub">理由か具体例</span></div>
+      <div class="eng">This is because ~</div><div class="jp">それは、なぜなら～だからだ</div>
+      <div class="eng">For example, ~</div><div class="jp">例えば、～だ</div>
+    </div>
+    <div class="box box-cream">
+      <div class="box-h">最後の文<span class="box-sub">結論</span></div>
+      <div class="eng">So, I believe A is B</div><div class="jp">だから、私はAがBだと思う</div>
+      <div class="eng">So, I would like to ~</div><div class="jp">だから、私は～をしたい</div>
+      <div class="eng">Let's try to do it.</div><div class="jp">それを試してみよう</div>
+    </div>
+
+    <p>秘訣は、<mark>とにかく簡単な文を英語で書くこと</mark>です。自由英作文は減点方式ですので、小学生レベルでいいから、ちゃんとした文を書くことが大切です。日本語で思いついていることをそのまま英文にするのはかなり難しいです。どうしても苦手な場合は、簡単な日本語で下書きをしてそれを英語にするという方法でも良いです。英語に直せない場合は、他の日本語にどんどん言い換えていきましょう。</p>
+    <p>ありがちなミスは、日本語で難しく考えてしまって表現が思い付かないパターンや、無駄に長く複雑な文を作ってしまうことです。どんなに難しい単語や表現を使ってもスペルミスや文法ミスをしたら減点されるので、背伸びをしない。特に<b>時制のミス、三人称単数のsのつけ忘れ、スペルミス、ピリオド</b>を確認する。</p>
+    <div class="box box-blue">
+      <div class="box-h">指導のルール</div>
+      <p>接続詞を無駄にいくつも使いたがる生徒もいるので、基本的に「<b>接続詞は1文につき1個まで</b>」というルールをつくりましょう。接続詞の乱用は文法ミスに繋がります。</p>
+    </div>
+  </section>
+
+  <section id="q3">
+    <div class="q-badge-h"><span class="q-badge">大問3</span><h2>会話文</h2><span class="note">13分</span></div>
+    <h3 class="sub-h">解き方</h3>
+    <p>長めの会話文です。</p>
+
+    <h3 class="sub-h">問1〜問5<span class="tag">指示語・代名詞、ある発言に関する問題、書き換え問題</span></h3>
+    <p><b>that, this, it, the, such, do</b> といった単語は、下線部の<mark>前</mark>のほうにそれらが指している言葉があります。よって、前の文章から探すのが王道です。もし見つからなかったら、後ろにあるはずです。<b>a</b> は下線部の<mark>後ろ</mark>にあります。探してもなかったら前を見ましょう。基本的には、指示語や代名詞が何を指しているかを確認するだけの簡単な問題ばかりです。</p>
+
+    <h3 class="sub-h">問6<span class="tag">単語を入れる問題（唯一の文法知識問題）</span></h3>
+    <p>下線部の近くにないことが多いので難しい問題ですが、<b>必ず！本文中にある単語が入ります。</b>空欄に動詞・名詞・形容詞のどれが入るかは、文法で考えればわかるはずです。どうしてもわからないときは、<mark>動詞 → 名詞 → 形容詞</mark>の順で探すのが無難です。</p>
+
+    <h3 class="sub-h">問7<span class="tag">会話文の要約の穴埋め</span></h3>
+    <p><b>会話文を読み終わったらすぐ解いてください！</b>AとBが2箇所ずつ穴埋めになっているので、探しやすいほうで見つければ大丈夫です。大問3で一番難しいので、わからなかったら見切りをつけ、適当にマークして次の問題に行きましょう。この問題だけにこだわらないことが大事です。</p>
+  </section>
+
+  <section id="q4">
+    <div class="q-badge-h"><span class="q-badge">大問4</span><h2>長文読解</h2><span class="note">13分</span></div>
+    <h3 class="sub-h">解き方</h3>
+    <p>長めの長文です。</p>
+
+    <div class="box box-red">
+      <div class="box-h">鉄則</div>
+      <p>長文を全部読んでから設問を解かないでください！　設問はだいたい段落順になっています。<b>一段落読んだら設問を見る。解けそうなら解く、ちょっと不安ならもう少し読む。</b></p>
+    </div>
+
+    <p>読む際に、<mark>固有名詞、特に人の名前を □ で囲む</mark>！そうすると、だれが何をしたかを探しやすくなります。全部読んでから解くには偏差値60以上ないと無理です。それ未満の人が全部読んでから問題を解こうとしても、どこに何が書いてあるか、どんな内容だったかほとんど忘れてしまいます。その結果、同じところを何度も行ったり来たりしているうちに時間切れになる、うろ覚えで適当に解いて間違える、が関の山です。どこに何が書いてあるか探して見つける情報探索力が問われていますが、簡単に言えば「視力検査」です。</p>
+    <ul class="dots">
+      <li><b>問1・問3・問4</b>は段落順。</li>
+      <li><b>問2</b>は段落ごとに読みながら一個ずつ並べる。</li>
+    </ul>
+    <p>解き方としては、段落ごとに読んだら問1・問2・問4を見る。解けそうな問題があれば解く。解けたら次の問題を見る、という風にして解きましょう。理想は、<b>最後の段落を読んだら問題が全て解き終わっている状態</b>です。繰り返しですが、本文の内容を100％理解できなくても問題は解けます。完璧主義にならないことが大事です。</p>
+
+    <div class="box box-red">
+      <div class="box-h">時間切れのとき</div>
+      <p>どうしても時間がないときは、<b>同じ記号をひたすらマーク</b>しましょう。例えば大問4は全て「イ」にする。ランダムに適当にマークするより正答率は上がります。</p>
+    </div>
+  </section>
+
+  <section id="method">
+    <div class="sec-h"><h2>長文読解の指導法</h2><span class="note">大問3・4 共通</span></div>
+
+    <h3 class="sub-h">わからない単語にマーカーを引かせる</h3>
+    <p>読むときは、わからない英単語にマーカーを引かせるようにしましょう。ただ読むだけでなく作業が加わるので、読むことに集中しやすくなります。また、生徒がわからない英単語が視覚化されるので、生徒も指導者も英単語がどこまでわからないのかがはっきりします。その結果、<b>英単語がわからないから間違えたのかどうか</b>がわかります。</p>
+    <p>一般的に、英文の中でわからない英単語が<b>2割以上</b>あると意味の推測が困難になり、読めなくなると言われています。「未知の英単語を文脈で推測しろ」という指導もありますが、未知の英単語を推測するには、8割以上の英単語を知っていること、品詞の区別が出来ること、情報の取捨選択が出来ること、国語力があることが必須条件なので、中学生には無理です。簡単に言えば、現代文の文中の単語の穴埋めが出来るだけの能力が必要なのです。一文に穴がいくつもあったら大人でも全て理解するのは難しいと思います。これと同じことを英語で中学生が出来ますか？ということです。</p>
+
+    <h3 class="sub-h">答え合わせは毎回「根拠」を聞く</h3>
+    <p>答え合わせをする際は、毎回答えの根拠を聞きましょう。<mark>「なんとなく」は禁止</mark>です。例えば、生徒が「問3は3段落目の2行目に書いてあるからアにしました」と答えられれば完璧です。答えの根拠を見つけて正解できるまで、繰り返し解き直しさせましょう。大事なことは○×ではなく<b>再現性</b>です。根拠が常にある状態で解答できるようにしましょう。</p>
+    <p>慣れてきたら、間違いの選択肢はどこが違うのかまで言えるとワンランク上にいけます。例えば「イの選択肢はここが違う」「ウは前半は正しいけど後半は違う」など。この作業を繰り返しやることで、英語だけでなく国語の成績も上がっていきます。</p>
+  </section>
+
+  <section id="past">
+    <div class="sec-h"><h2>令和6年 過去問解説</h2><span class="note">書き込み入りの問題用紙つき</span></div>
+    <p>実際の問題用紙に、解答の根拠となる箇所をマーキングしたものです。生徒に「どこを見れば答えが決まるか」を示すときの見本にしてください。</p>
+
+    <div class="q-exp">
+      <h3 class="sub-h" style="margin-top:38px;">大問2</h3>
+
+      <h4>問1<span class="pill hard">意外と難しい</span></h4>
+      <p>(A) は空欄直後の <mark>a longer trip</mark> を見れば、より時間のかかる道のりを選択したことがわかります。荷物があるから乗り換えのない手段を選択しました。</p>
+      <p>(B) は空欄の直前を見ても「ramen をそのターミナルで食べましょう」と書いてあるだけです。ramen は Terminal 1 と 2 の両方にあるので、解答を絞り込むには <mark>the terminal</mark> がどれを指しているかを探す必要があります。本文中に登場している terminal は3行目の <mark>Terminal 2</mark> だけなので、Terminal 2 の Ramen Restaurant B が解答になります。</p>
+      <div class="scan-block">
+        <img src="images/todai-scan-09.png" alt="大問2 問1 空港案内図（書き込み入り）">
+        <div class="scan-cap"><span class="pnum">p.2</span>　大問2　問1</div>
+      </div>
+
+      <h4>問2<span class="pill">簡単</span></h4>
+      <p>スタートとゴールを記入して、英文に沿って道順を書いていけば簡単です。<mark>next to ～</mark>（～の隣）の意味を知らないと少し戸惑うかもしれません。</p>
+
+      <h4>問3<span class="pill">やや難</span></h4>
+      <p>本文と選択肢の英文が少し言い換えられているので、少し難しいかもしれません。ただし他の選択肢は本文の内容と違うことが書いてあるので、間違い探しが出来ていれば消去法で選ぶことも可能です。</p>
+      <div class="scan-block">
+        <img src="images/todai-scan-11.png" alt="大問2 問2・問3 本文（書き込み入り）">
+        <div class="scan-cap"><span class="pnum">p.3</span>　大問2　問2・問3（本文）</div>
+      </div>
+      <div class="scan-block">
+        <img src="images/todai-scan-13.png" alt="大問2 問3選択肢・英作文（書き込み入り）">
+        <div class="scan-cap"><span class="pnum">p.4</span>　大問2　問3（選択肢）・英作文</div>
+      </div>
+    </div>
+
+    <div class="q-exp">
+      <h3 class="sub-h" style="margin-top:46px;">大問3</h3>
+      <p>問1・2・3・5は指示語の問題なので、解答の根拠が直前に書いてあることがわかります。問4だけ下線部の後に書いてありますが、指示語が書いていないので、どんなアドバイスをくれたのか追っていけば答えは見つかります。</p>
+      <p>問6は points が ways に書き換えられているので少し難しいですが、important という英単語が書かれている箇所を探せばわかります。問7は本文の要約文のため答えの根拠を探すのが難しいですが、同じ記号で2カ所穴埋めがあるので、片方だけでも該当箇所を見つければなんとかなります。</p>
+      <div class="scan-block">
+        <img src="images/todai-scan-15.png" alt="大問3 会話文（前半、書き込み入り）">
+        <div class="scan-cap"><span class="pnum">p.5</span>　大問3　会話文（前半）</div>
+      </div>
+      <div class="scan-block">
+        <img src="images/todai-scan-16.png" alt="大問3 会話文（後半、書き込み入り）">
+        <div class="scan-cap"><span class="pnum">p.6</span>　大問3　会話文（後半）</div>
+      </div>
+      <div class="scan-block">
+        <img src="images/todai-scan-17.png" alt="大問3 問1〜問4（書き込み入り）">
+        <div class="scan-cap"><span class="pnum">p.7</span>　大問3　問1〜問4</div>
+      </div>
+      <div class="scan-block">
+        <img src="images/todai-scan-18.png" alt="大問3 問5〜問7（書き込み入り）">
+        <div class="scan-cap"><span class="pnum">p.8</span>　大問3　問5〜問7</div>
+      </div>
+    </div>
+
+    <div class="q-exp">
+      <h3 class="sub-h" style="margin-top:46px;">大問4</h3>
+      <p>段落毎に読みながら、問2の並び替え、問3(1)、問4(1)を順番に見ながら解いていけば、全文を読み終わるころに全ての問題が解き終わります。解きながら、写真のように解答の根拠となる文にマーキングをするとより確実です。特に並べ替え問題は、こうすればミスすることがなくなるはずです。</p>
+      <div class="scan-block">
+        <img src="images/todai-scan-19.png" alt="大問4 本文前半（書き込み入り）">
+        <div class="scan-cap"><span class="pnum">p.9</span>　大問4　本文（前半）</div>
+      </div>
+      <div class="scan-block">
+        <img src="images/todai-scan-20.png" alt="大問4 本文後半・問1・問2（書き込み入り）">
+        <div class="scan-cap"><span class="pnum">p.10</span>　大問4　本文（後半）・問1・問2</div>
+      </div>
+      <div class="scan-block">
+        <img src="images/todai-scan-21.png" alt="大問4 問3・問4（書き込み入り）">
+        <div class="scan-cap"><span class="pnum">p.11</span>　大問4　問3・問4</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer-note">学習塾CONNECT　講師用資料「都立入試英語攻略」　塾内資料・持ち出し禁止</div>
+
+</div>
+
+<script>
+function toggleEdit(){
+  const sheet = document.querySelector('.sheet');
+  const btn = document.getElementById('editBtn');
+  const on = sheet.getAttribute('contenteditable') === 'true';
+  sheet.setAttribute('contenteditable', on ? 'false' : 'true');
+  btn.classList.toggle('active', !on);
+}
+</script>
+
+</body>
+</html>
