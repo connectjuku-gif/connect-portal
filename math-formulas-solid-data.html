@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>数学 公式集（立体・データの活用編）</title>
+<style>
+@page { size: A4; margin: 12mm; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #888; font-family: "游明朝","Yu Mincho","Hiragino Mincho ProN","MS Mincho",serif; color: #000; font-size: 11pt; line-height: 1.6; }
+.page { width: 210mm; min-height: 297mm; margin: 8mm auto; background: #fff; padding: 12mm 14mm; page-break-after: always; }
+.page:last-child { page-break-after: auto; }
+h1 { font-size: 12pt; font-weight: normal; margin: 0 0 6mm; }
+h2 { font-size: 10.5pt; font-weight: normal; margin: 4mm 0 1.5mm; }
+.box { border: 1.5px solid #000; padding: 2.5mm 4mm; }
+.row { display: flex; gap: 6mm; }
+.row > * { flex: 1; }
+.fr { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; line-height: 1.15; margin: 0 1px; font-size: 0.95em; }
+.fr > span:first-child { border-bottom: 1px solid #000; padding: 0 2px; }
+.ans { font-weight: bold; text-decoration: underline; }
+.key { font-weight: bold; border: 1.5px solid #000; padding: 0 3px; }
+table.t { border-collapse: collapse; font-size: 9.5pt; margin: 1mm 0; }
+table.t th, table.t td { border: 1px solid #000; padding: 1px 6px; text-align: center; }
+table.t th { background: #eee; font-weight: normal; }
+ul { margin: 0.5mm 0; padding-left: 1.3em; }
+.small { font-size: 9.5pt; }
+.ex { border: 1px dashed #000; padding: 1.5mm 3mm; margin-top: 2mm; font-size: 10pt; }
+svg { display: block; }
+.toolbar { position: fixed; right: 12px; top: 12px; z-index: 10; }
+.toolbar button { font: 14px sans-serif; padding: 6px 12px; cursor: pointer; }
+body.editing .page { outline: 2px dashed #36c; }
+@media print {
+  body { background: #fff; }
+  .page { margin: 0; padding: 0; width: auto; min-height: 0; }
+  .toolbar { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="toolbar"><button id="editBtn" type="button">編集モード：OFF</button></div>
+
+<!-- ============ 1ページ目：立体 ============ -->
+<div class="page">
+<h1>＜数学＞　確実に覚えておく知識・公式 〜既習内容編（続き）〜</h1>
+
+<h2>■柱体の体積・表面積</h2>
+<div class="box">
+  <div class="row">
+    <div>
+      <svg viewBox="0 0 330 130" width="100%">
+        <!-- 円柱 -->
+        <ellipse cx="50" cy="25" rx="32" ry="9" fill="none" stroke="#000"/>
+        <line x1="18" y1="25" x2="18" y2="100" stroke="#000"/>
+        <line x1="82" y1="25" x2="82" y2="100" stroke="#000"/>
+        <path d="M18 100 A32 9 0 0 0 82 100" fill="none" stroke="#000"/>
+        <path d="M18 100 A32 9 0 0 1 82 100" fill="none" stroke="#000" stroke-dasharray="3 3"/>
+        <line x1="50" y1="25" x2="82" y2="25" stroke="#000" stroke-dasharray="3 3"/>
+        <text x="58" y="21" font-size="11" font-style="italic">r</text>
+        <text x="88" y="66" font-size="11" font-style="italic">h</text>
+        <text x="28" y="122" font-size="10">円柱</text>
+        <!-- 角柱 -->
+        <polygon points="120,40 170,40 170,100 120,100" fill="none" stroke="#000"/>
+        <polygon points="120,40 140,25 190,25 170,40" fill="none" stroke="#000"/>
+        <polygon points="170,40 190,25 190,85 170,100" fill="none" stroke="#000"/>
+        <text x="146" y="122" font-size="10">角柱</text>
+        <!-- 円柱の展開図 -->
+        <rect x="215" y="45" width="105" height="40" fill="none" stroke="#000"/>
+        <circle cx="240" cy="27" r="17" fill="none" stroke="#000"/>
+        <circle cx="295" cy="103" r="17" fill="none" stroke="#000"/>
+        <text x="228" y="30" font-size="9">底面</text>
+        <text x="283" y="106" font-size="9">底面</text>
+        <text x="236" y="69" font-size="10">側面（長方形）</text>
+        <text x="206" y="127" font-size="9">←展開図→ 横＝円周 2πr</text>
+      </svg>
+    </div>
+    <div class="small">
+      <b>共通</b>　体積＝底面積×高さ<br>
+      　　　表面積＝側面積＋底面積×2<br>
+      　　　側面積＝底面の周の長さ×高さ<br>
+      <b>円柱</b>　体積：<i>πr</i>²<i>h</i><br>
+      　　　側面積：2<i>πr</i>×<i>h</i>　底面積：<i>πr</i>²<br>
+      　　　表面積：2<i>πrh</i>＋2<i>πr</i>²
+    </div>
+  </div>
+  <div class="ex"><b>例</b>　半径3cm、高さ5cmの円柱<br>
+  体積：<i>π</i>×3²×5＝<span class="ans">45<i>π</i> cm³</span>　／　表面積：2<i>π</i>×3×5＋2<i>π</i>×3²＝30<i>π</i>＋18<i>π</i>＝<span class="ans">48<i>π</i> cm²</span></div>
+</div>
+
+<h2>■錐体の体積・表面積</h2>
+<div class="box">
+  <div class="row">
+    <div>
+      <svg viewBox="0 0 330 135" width="100%">
+        <!-- 円錐 -->
+        <line x1="55" y1="10" x2="15" y2="100" stroke="#000"/>
+        <line x1="55" y1="10" x2="95" y2="100" stroke="#000"/>
+        <path d="M15 100 A40 10 0 0 0 95 100" fill="none" stroke="#000"/>
+        <path d="M15 100 A40 10 0 0 1 95 100" fill="none" stroke="#000" stroke-dasharray="3 3"/>
+        <line x1="55" y1="10" x2="55" y2="100" stroke="#000" stroke-dasharray="3 3"/>
+        <line x1="55" y1="100" x2="95" y2="100" stroke="#000" stroke-dasharray="3 3"/>
+        <text x="58" y="60" font-size="11" font-style="italic">h</text>
+        <text x="68" y="96" font-size="11" font-style="italic">r</text>
+        <text x="20" y="52" font-size="10">母線 l</text>
+        <text x="40" y="128" font-size="10">円錐</text>
+        <!-- 角錐 -->
+        <polygon points="160,100 215,100 235,85 180,85" fill="none" stroke="#000" stroke-dasharray="0"/>
+        <line x1="195" y1="10" x2="160" y2="100" stroke="#000"/>
+        <line x1="195" y1="10" x2="215" y2="100" stroke="#000"/>
+        <line x1="195" y1="10" x2="235" y2="85" stroke="#000"/>
+        <line x1="195" y1="10" x2="180" y2="85" stroke="#000" stroke-dasharray="3 3"/>
+        <text x="185" y="128" font-size="10">角錐</text>
+        <!-- 円錐の展開図 -->
+        <path d="M290 15 L255 85 A78 78 0 0 0 330 82 Z" fill="none" stroke="#000"/>
+        <circle cx="300" cy="108" r="14" fill="none" stroke="#000"/>
+        <text x="262" y="100" font-size="9">側面</text>
+        <text x="288" y="111" font-size="9">底面</text>
+      </svg>
+    </div>
+    <div class="small">
+      <b>共通</b>　体積＝底面積×高さ×<span class="fr"><span>1</span><span>3</span></span><br>
+      　　　表面積＝側面積＋底面積<br>
+      <b>円錐</b>　体積：<span class="fr"><span>1</span><span>3</span></span><i>πr</i>²<i>h</i><br>
+      　　　側面積：母線×半径×<i>π</i>＝<i>πrl</i><br>
+      　　　表面積：<i>πrl</i>＋<i>πr</i>²<br>
+      <b>角錐</b>　側面積：三角形の面積の合計
+    </div>
+  </div>
+  <div class="ex"><b>例</b>　底面の半径3cm、高さ4cm、母線5cmの円錐<br>
+  体積：<span class="fr"><span>1</span><span>3</span></span>×<i>π</i>×3²×4＝<span class="ans">12<i>π</i> cm³</span>　／　表面積：5×3×<i>π</i>＋<i>π</i>×3²＝15<i>π</i>＋9<i>π</i>＝<span class="ans">24<i>π</i> cm²</span></div>
+</div>
+
+<h2>■球の体積・表面積</h2>
+<div class="box">
+  <div class="row">
+    <div>
+      <svg viewBox="0 0 330 100" width="100%">
+        <circle cx="70" cy="50" r="40" fill="none" stroke="#000"/>
+        <path d="M30 50 A40 11 0 0 0 110 50" fill="none" stroke="#000"/>
+        <path d="M30 50 A40 11 0 0 1 110 50" fill="none" stroke="#000" stroke-dasharray="3 3"/>
+        <line x1="70" y1="50" x2="110" y2="50" stroke="#000"/>
+        <circle cx="70" cy="50" r="1.5" fill="#000"/>
+        <text x="86" y="45" font-size="12" font-style="italic">r</text>
+      </svg>
+    </div>
+    <div class="small">
+      体積：<span class="fr"><span>4</span><span>3</span></span><i>πr</i>³<br>
+      表面積：4<i>πr</i>²<br>
+      
+    </div>
+  </div>
+  <div class="ex"><b>例</b>　半径3cmの球　体積：<span class="fr"><span>4</span><span>3</span></span>×<i>π</i>×3³＝<span class="ans">36<i>π</i> cm³</span>　／　表面積：4×<i>π</i>×3²＝<span class="ans">36<i>π</i> cm²</span></div>
+</div>
+
+<h2>■まとめ</h2>
+<table class="t" style="width:100%">
+<tr><th>立体</th><th>体積</th><th>表面積</th></tr>
+<tr><td>柱体</td><td>底面積×高さ</td><td>側面積＋底面積×2</td></tr>
+<tr><td>錐体</td><td>底面積×高さ×<span class="fr"><span>1</span><span>3</span></span></td><td>側面積＋底面積</td></tr>
+<tr><td>球</td><td><span class="fr"><span>4</span><span>3</span></span><i>πr</i>³</td><td>4<i>πr</i>²</td></tr>
+</table>
+</div>
+
+<!-- ============ 2ページ目：データの活用 ============ -->
+<div class="page">
+<h1>＜数学＞　確実に覚えておく知識・公式 〜既習内容編（続き）〜</h1>
+
+<h2>■データの活用① 度数分布表</h2>
+<div class="box">
+  <div class="row">
+    <div class="small">
+      <ul>
+        <li><b>階級</b>…データを区切った区間　<b>階級の幅</b>…区間の幅</li>
+        <li><b>度数</b>…各階級に入るデータの個数</li>
+        <li><b>相対度数</b>＝<span class="fr"><span>その階級の度数</span><span>度数の合計</span></span></li>
+        <li><b>累積度数</b>…最初の階級からその階級までの度数の合計</li>
+        <li><b>階級値</b>…階級の真ん中の値<br>＝（上限＋下限）÷2</li>
+        <li><b>最頻値</b>…度数が最も大きい階級の階級値</li>
+        <li><b>平均値</b>＝<span class="fr"><span>（階級値×度数）の合計</span><span>度数の合計</span></span></li>
+      </ul>
+    </div>
+    <div>
+      <table class="t" style="width:100%">
+        <tr><th>階級（点）</th><th>階級値</th><th>度数</th><th>相対度数</th><th>累積度数</th></tr>
+        <tr><td>0以上〜20未満</td><td>10</td><td>2</td><td>0.10</td><td>2</td></tr>
+        <tr><td>20〜40</td><td>30</td><td>4</td><td>0.20</td><td>6</td></tr>
+        <tr><td>40〜60</td><td>50</td><td>8</td><td>0.40</td><td>14</td></tr>
+        <tr><td>60〜80</td><td>70</td><td>4</td><td>0.20</td><td>18</td></tr>
+        <tr><td>80〜100</td><td>90</td><td>2</td><td>0.10</td><td>20</td></tr>
+        <tr><td>合計</td><td>―</td><td>20</td><td>1.00</td><td>―</td></tr>
+      </table>
+      <div class="small">平均値：（10×2＋30×4＋50×8＋70×4＋90×2）÷20＝<span class="ans">50点</span><br>最頻値：<span class="ans">50点</span></div>
+    </div>
+  </div>
+  <div class="row" style="margin-top:2mm">
+    <div>
+      <svg viewBox="0 0 330 170" width="100%">
+        <line x1="40" y1="20" x2="40" y2="140" stroke="#000"/>
+        <line x1="40" y1="140" x2="290" y2="140" stroke="#000"/>
+        <g fill="#ddd" stroke="#000">
+          <rect x="40" y="115" width="48" height="25"/>
+          <rect x="88" y="90" width="48" height="50"/>
+          <rect x="136" y="40" width="48" height="100"/>
+          <rect x="184" y="90" width="48" height="50"/>
+          <rect x="232" y="115" width="48" height="25"/>
+        </g>
+        <polyline points="16,140 64,115 112,90 160,40 208,90 256,115 304,140" fill="none" stroke="#000" stroke-dasharray="4 3"/>
+        <g font-size="9" text-anchor="middle">
+          <text x="40" y="152">0</text><text x="88" y="152">20</text><text x="136" y="152">40</text>
+          <text x="184" y="152">60</text><text x="232" y="152">80</text><text x="280" y="152">100(点)</text>
+        </g>
+        <g font-size="9" text-anchor="end">
+          <text x="36" y="143">0</text><text x="36" y="118">2</text><text x="36" y="93">4</text><text x="36" y="68">6</text><text x="36" y="43">8</text>
+        </g>
+        <text x="30" y="14" font-size="9">（人）</text>
+        <text x="150" y="166" font-size="9">ヒストグラム（柱状グラフ）</text>
+      </svg>
+    </div>
+    <div class="small">
+      <b>ヒストグラム</b>…階級ごとの度数を柱で表したグラフ<br>
+      <b>度数折れ線（度数分布多角形）</b>…各柱の上の辺の中点を結んだ折れ線<br>
+      <b>範囲（レンジ）</b>＝最大値－最小値<br>
+      階級の幅が同じなら、度数の大小は柱の高さで比べられる。<br>
+      中央値は累積度数を使い、<b>どの階級に入るか</b>を調べる（この例では40〜60点の階級）。
+    </div>
+  </div>
+</div>
+
+<h2>■データの活用② 箱ひげ図（四分位数）</h2>
+<div class="box">
+  <div class="small">
+    <b>【四分位数の求め方】</b>データを小さい順に並べ、4等分する。
+    <ul>
+      <li>①全体の<b>中央値</b>（＝第2四分位数）を求める</li>
+      <li>②中央値で<b>前半・後半</b>に分ける（データの個数が奇数のときは、中央値は<b>どちらにも入れない</b>）</li>
+      <li>③前半の中央値＝<b>第1四分位数</b>、後半の中央値＝<b>第3四分位数</b></li>
+    </ul>
+    <b>四分位範囲</b>＝第3四分位数－第1四分位数
+  </div>
+  <div class="ex">
+    <b>例</b>　3，5，6，8，9，<span class="key">11</span>，12，14，15，18，20（11個）<br>
+    中央値＝<span class="ans">11</span>　前半（3，5，6，8，9）の中央値＝第1四分位数<span class="ans">6</span><br>
+    後半（12，14，15，18，20）の中央値＝第3四分位数<span class="ans">15</span>　四分位範囲＝15－6＝<span class="ans">9</span>　範囲＝20－3＝<span class="ans">17</span>
+  </div>
+  <svg viewBox="0 0 330 150" width="100%" style="margin-top:2mm">
+    <g stroke="#000" fill="none">
+      <line x1="66" y1="52" x2="102" y2="52"/>
+      <line x1="210" y1="52" x2="270" y2="52"/>
+      <line x1="66" y1="42" x2="66" y2="62"/>
+      <line x1="270" y1="42" x2="270" y2="62"/>
+      <rect x="102" y="35" width="108" height="34" fill="#eee"/>
+      <line x1="162" y1="35" x2="162" y2="69" stroke-width="2.5"/>
+      <line x1="30" y1="125" x2="294" y2="125"/>
+      <line x1="30" y1="121" x2="30" y2="129"/><line x1="90" y1="121" x2="90" y2="129"/>
+      <line x1="150" y1="121" x2="150" y2="129"/><line x1="210" y1="121" x2="210" y2="129"/>
+      <line x1="270" y1="121" x2="270" y2="129"/>
+      <!-- leader lines -->
+      <line x1="66" y1="24" x2="66" y2="42" stroke-dasharray="2 2"/>
+      <line x1="162" y1="24" x2="162" y2="35" stroke-dasharray="2 2"/>
+      <line x1="270" y1="24" x2="270" y2="42" stroke-dasharray="2 2"/>
+      <line x1="102" y1="69" x2="102" y2="85" stroke-dasharray="2 2"/>
+      <line x1="210" y1="69" x2="210" y2="85" stroke-dasharray="2 2"/>
+    </g>
+    <g font-size="10" text-anchor="middle">
+      <text x="66" y="18">最小値(3)</text>
+      <text x="162" y="18">中央値(11)</text>
+      <text x="270" y="18">最大値(20)</text>
+      <text x="102" y="98">第1四分位数(6)</text>
+      <text x="210" y="98">第3四分位数(15)</text>
+      <text x="30" y="140">0</text><text x="90" y="140">5</text><text x="150" y="140">10</text>
+      <text x="210" y="140">15</text><text x="270" y="140">20</text>
+    </g>
+  </svg>
+  <div class="small">
+    <ul>
+      <li>「最小値〜第1四分位数」「第1〜中央値」「中央値〜第3」「第3〜最大値」の<b>各区間に、データの約1/4ずつ</b>が入る。</li>
+      <li><b>箱の長さ＝四分位範囲</b>。箱の中に全体の約半分のデータが入る。箱が長いほどデータの散らばりが大きい。</li>
+      <li>ひげの長さではなく、<b>箱の長さ</b>で散らばりを比べる（外れ値に影響されにくい）。</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<script>
+var btn = document.getElementById('editBtn');
+var on = false;
+btn.addEventListener('click', function () {
+  on = !on;
+  document.body.contentEditable = on ? 'true' : 'false';
+  document.body.classList.toggle('editing', on);
+  btn.textContent = '編集モード：' + (on ? 'ON' : 'OFF');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>中2数学 式の決定 確認テスト（3セット）</title>
+<style>
+@page { size: A4; margin: 12mm; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #e6e6e6; color: #000; font-family: "游ゴシック","Yu Gothic","Hiragino Kaku Gothic ProN","Meiryo","Noto Sans CJK JP",sans-serif; font-size: 11.5pt; line-height: 1.65; }
+.sheet { width: 210mm; margin: 8mm auto; background: #fff; padding: 13mm 15mm; box-shadow: 0 0 8px rgba(0,0,0,.35); }
+h1 { font-size: 17pt; text-align: center; margin: 0 0 1mm; letter-spacing: .05em; }
+.sub { text-align: center; font-size: 10.5pt; margin-bottom: 3mm; }
+.namebox { text-align: right; margin: 2mm 0 3mm; font-size: 11pt; }
+.namebox span { display: inline-block; border-bottom: 1px solid #000; min-width: 12mm; margin: 0 1mm; }
+.namebox .nm { min-width: 48mm; }
+.rules { border: 1px solid #000; padding: 2mm 4mm; font-size: 10pt; margin-bottom: 5mm; }
+.rules ul { margin: 0; padding-left: 1.2em; }
+.q { margin: 0 0 5.5mm; break-inside: avoid; page-break-inside: avoid; }
+.qh { display: flex; gap: 3mm; align-items: baseline; margin-bottom: 2mm; }
+.num { border: 1.5px solid #000; padding: 0 7px; font-weight: bold; font-size: 12.5pt; flex: none; }
+.inst { flex: 1; display: flex; justify-content: space-between; gap: 4mm; font-weight: bold; }
+.pts { font-weight: normal; font-size: 9.5pt; white-space: nowrap; }
+.hint { font-size: 10pt; margin: 1mm 0 0 0; }
+ol.items { list-style: none; margin: 0; padding: 0; counter-reset: it; }
+ol.items > li { counter-increment: it; margin: 1.8mm 0; padding-left: 9mm; position: relative; }
+ol.items > li::before { content: "(" counter(it) ")"; position: absolute; left: 0; }
+ol.items.cols2 { display: grid; grid-template-columns: 1fr 1fr; column-gap: 6mm; }
+.ab { display: inline-block; border: 1.5px solid #000; width: 20mm; height: 8mm; vertical-align: middle; margin: 0 1mm; }
+.ab.w { width: 42mm; }
+.ab.s { width: 14mm; }
+.work { border: 1px dashed #000; height: 20mm; position: relative; margin: 1.5mm 0; }
+.work::before { content: "計算スペース"; position: absolute; left: 2mm; top: 0.5mm; font-size: 8.5pt; }
+.ansline { text-align: right; margin-right: 3mm; }
+.fr { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; line-height: 1.15; margin: 0 1px; font-size: 0.92em; }
+.fr > span:first-child { border-bottom: 1px solid #000; padding: 0 2px; }
+.t { border-collapse: collapse; font-size: 11pt; margin: 1.5mm 0; }
+.t th, .t td { border: 1px solid #000; padding: 1px 6px; text-align: center; white-space: nowrap; }
+.t th { background: #eee; font-weight: normal; }
+.t td.e { height: 9mm; min-width: 13mm; }
+.row { display: flex; gap: 5mm; align-items: flex-start; }
+.row .c { flex: 1; min-width: 0; }
+.row .g { flex: none; }
+.k { color: #000; font-weight: bold; text-decoration: underline; }
+h2 { font-size: 12pt; margin: 4.5mm 0 1mm; display: flex; align-items: baseline; gap: 3mm; break-after: avoid; }
+h2 .pts { margin-left: auto; }
+.a { margin: 1mm 0; }
+.ex { border-left: 3px solid #000; padding: 0.5mm 3mm; margin: 1.5mm 0; font-size: 10.5pt; }
+.back { font-size: 9.5pt; text-align: right; }
+.memo { border: 1.5px solid #000; padding: 2.5mm 4mm; font-size: 10.5pt; margin-bottom: 4mm; }
+.memo ul { margin: 1mm 0 0; padding-left: 1.2em; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; align-items: start; }
+.sc td, .sc th { font-size: 10.5pt; }
+.blk { break-inside: avoid; page-break-inside: avoid; }
+ol.items > li.fx { display: flex; justify-content: space-between; align-items: center; gap: 4mm; margin: 3mm 0; }
+.pb { break-before: page; page-break-before: always; }
+.toolbar { position: fixed; right: 12px; top: 12px; z-index: 10; }
+.toolbar button { font: 14px sans-serif; padding: 6px 12px; cursor: pointer; }
+body.editing .sheet { outline: 2px dashed #36c; }
+@media print {
+  body { background: #fff; }
+  .sheet { margin: 0; width: auto; padding: 0; box-shadow: none; }
+  .toolbar { display: none; }
+  body.editing .sheet { outline: none; }
+}
+
+.grid10 { display: grid; grid-auto-flow: column; grid-template-rows: repeat(5, auto); grid-template-columns: 1fr 1fr; column-gap: 9mm; }
+.cell { padding: 0 0 2mm; break-inside: avoid; page-break-inside: avoid; }
+.qline { display: flex; gap: 2.5mm; align-items: flex-start; font-size: 11pt; line-height: 1.55; }
+.qline .num { margin-top: 0.3mm; font-size: 11.5pt; }
+.qt { flex: 1; }
+.cell .work { margin: 1.5mm 0 1mm; }
+.cell .ansline { text-align: right; margin: 0; }
+.cell .t { margin: 1mm 0 0 0; font-size: 10pt; }
+.cell .t th, .cell .t td { padding: 0 5px; }
+.lv { display: inline-block; border: 1.5px solid #000; padding: 0 6px; margin-left: 4mm; font-size: 11pt; }
+.aitem { font-size: 10pt; line-height: 1.55; }
+.aitem .st { display: block; font-size: 9.8pt; }
+.hay td, .hay th { font-size: 10pt; text-align: left; padding: 1px 6px; }
+</style>
+</head>
+<body>
+<div class="toolbar"><button id="editBtn" type="button">編集モード：OFF</button></div>
+<div class="sheet">
+<h1>中2　数学　一次関数　式の決定　確認テスト<span class="lv">セット1</span></h1>
+<div class="sub">学習塾CONNECT　／　基礎　／　各1点（10点満点）</div>
+<div class="namebox"><span></span>年　<span></span>組　<span></span>番　　名前<span class="nm"></span>　　点数<span></span>／ 10点</div>
+<div class="rules">解き方　①傾き<i>a</i>を求める　②1点を代入して<i>b</i>を求める　③<i>y</i>＝<i>a</i><i>x</i>＋<i>b</i> の形にする（<i>b</i>がわかっているときは、代入して<i>a</i>を求める）</div>
+<div style="margin:0 0 3mm"><b>問題</b>　次の一次関数や直線の式を求めなさい。</div>
+<div class="grid10"><div class="cell"><div class="qline"><span class="num">1</span><span class="qt">切片が2で、傾きが5である直線</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">2</span><span class="qt">変化の割合が3で、<i>x</i>＝2のとき<i>y</i>＝5である一次関数</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">3</span><span class="qt">傾きが−2で、点（1，4）を通る直線</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">4</span><span class="qt">点（3，5）を通り、切片が−1である直線</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">5</span><span class="qt"><i>x</i>＝1のとき<i>y</i>＝5、<i>x</i>＝3のとき<i>y</i>＝11である一次関数</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">6</span><span class="qt">2点（2，1）、（5，7）を通る直線</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">7</span><span class="qt">点（2，−1）を通り、直線<i>y</i>＝−3<i>x</i>＋4に平行である直線</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">8</span><span class="qt"><i>x</i>の値が4増加すると、<i>y</i>の値は8減少し、<i>x</i>＝1のとき<i>y</i>＝3である一次関数</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">9</span><span class="qt">対応する<i>x</i>，<i>y</i>の関係が下の表のようになる一次関数</span></div><table class="t"><tr><th><i>x</i></th><th>−2</th><th>1</th><th>4</th></tr><tr><th><i>y</i></th><td>5</td><td>2</td><td>−1</td></tr></table><div class="work" style="height:21mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">10</span><span class="qt">対応する<i>x</i>，<i>y</i>の関係が下の表のようになる一次関数</span></div><table class="t"><tr><th><i>x</i></th><th>−1</th><th>0</th><th>1</th><th>2</th></tr><tr><th><i>y</i></th><td>0</td><td>3</td><td>6</td><td>9</td></tr></table><div class="work" style="height:21mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div></div>
+</div>
+<div class="sheet pb">
+<h1>中2　数学　一次関数　式の決定　確認テスト<span class="lv">セット2</span></h1>
+<div class="sub">学習塾CONNECT　／　基礎（マイナスの数が増える）　／　各1点（10点満点）</div>
+<div class="namebox"><span></span>年　<span></span>組　<span></span>番　　名前<span class="nm"></span>　　点数<span></span>／ 10点</div>
+<div class="rules">解き方　①傾き<i>a</i>を求める　②1点を代入して<i>b</i>を求める　③<i>y</i>＝<i>a</i><i>x</i>＋<i>b</i> の形にする（<i>b</i>がわかっているときは、代入して<i>a</i>を求める）</div>
+<div style="margin:0 0 3mm"><b>問題</b>　次の一次関数や直線の式を求めなさい。</div>
+<div class="grid10"><div class="cell"><div class="qline"><span class="num">1</span><span class="qt">切片が−3で、傾きが−4である直線</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">2</span><span class="qt">変化の割合が−2で、<i>x</i>＝3のとき<i>y</i>＝−1である一次関数</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">3</span><span class="qt">傾きが3で、点（−2，−4）を通る直線</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">4</span><span class="qt">点（−2，5）を通り、切片が1である直線</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">5</span><span class="qt"><i>x</i>＝−1のとき<i>y</i>＝−6、<i>x</i>＝2のとき<i>y</i>＝3である一次関数</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">6</span><span class="qt">2点（−1，5）、（3，−3）を通る直線</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">7</span><span class="qt">点（−3，2）を通り、直線<i>y</i>＝2<i>x</i>−5に平行である直線</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">8</span><span class="qt"><i>x</i>の値が3増加すると、<i>y</i>の値は3減少し、<i>x</i>＝2のとき<i>y</i>＝−1である一次関数</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">9</span><span class="qt">対応する<i>x</i>，<i>y</i>の関係が下の表のようになる一次関数</span></div><table class="t"><tr><th><i>x</i></th><th>−2</th><th>0</th><th>3</th></tr><tr><th><i>y</i></th><td>−9</td><td>−1</td><td>11</td></tr></table><div class="work" style="height:21mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">10</span><span class="qt">対応する<i>x</i>，<i>y</i>の関係が下の表のようになる一次関数</span></div><table class="t"><tr><th><i>x</i></th><th>−1</th><th>0</th><th>1</th><th>2</th></tr><tr><th><i>y</i></th><td>4</td><td>1</td><td>−2</td><td>−5</td></tr></table><div class="work" style="height:21mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div></div>
+</div>
+<div class="sheet pb">
+<h1>中2　数学　一次関数　式の決定　確認テスト<span class="lv">セット3</span></h1>
+<div class="sub">学習塾CONNECT　／　ステップアップ（分数・大きな数）　／　各1点（10点満点）</div>
+<div class="namebox"><span></span>年　<span></span>組　<span></span>番　　名前<span class="nm"></span>　　点数<span></span>／ 10点</div>
+<div class="rules">解き方　①傾き<i>a</i>を求める　②1点を代入して<i>b</i>を求める　③<i>y</i>＝<i>a</i><i>x</i>＋<i>b</i> の形にする（<i>b</i>がわかっているときは、代入して<i>a</i>を求める）</div>
+<div style="margin:0 0 3mm"><b>問題</b>　次の一次関数や直線の式を求めなさい。</div>
+<div class="grid10"><div class="cell"><div class="qline"><span class="num">1</span><span class="qt">切片が−1で、傾きが<span class="fr"><span>1</span><span>2</span></span>である直線</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">2</span><span class="qt">変化の割合が−3で、<i>x</i>＝−1のとき<i>y</i>＝4である一次関数</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">3</span><span class="qt">傾きが<span class="fr"><span>1</span><span>2</span></span>で、点（4，5）を通る直線</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">4</span><span class="qt">点（−3，−2）を通り、切片が4である直線</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">5</span><span class="qt"><i>x</i>＝−2のとき<i>y</i>＝7、<i>x</i>＝3のとき<i>y</i>＝−3である一次関数</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">6</span><span class="qt">2点（−2，−3）、（4，0）を通る直線</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">7</span><span class="qt">点（2，3）を通り、直線<i>y</i>＝−4<i>x</i>＋1に平行である直線</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">8</span><span class="qt"><i>x</i>の値が4増加すると、<i>y</i>の値は2減少し、<i>x</i>＝−2のとき<i>y</i>＝5である一次関数</span></div><div class="work" style="height:27mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">9</span><span class="qt">対応する<i>x</i>，<i>y</i>の関係が下の表のようになる一次関数</span></div><table class="t"><tr><th><i>x</i></th><th>−1</th><th>2</th><th>4</th></tr><tr><th><i>y</i></th><td>−8</td><td>1</td><td>7</td></tr></table><div class="work" style="height:21mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div><div class="cell"><div class="qline"><span class="num">10</span><span class="qt">対応する<i>x</i>，<i>y</i>の関係が下の表のようになる一次関数</span></div><table class="t"><tr><th><i>x</i></th><th>−1</th><th>0</th><th>1</th><th>2</th></tr><tr><th><i>y</i></th><td>−1</td><td>−5</td><td>−9</td><td>−13</td></tr></table><div class="work" style="height:21mm"></div><div class="ansline">答　<i>y</i>＝<span class="ab w"></span></div></div></div>
+</div>
+<div class="sheet ans pb">
+<h1>解答・解説</h1>
+<div class="sub">式の決定　確認テスト　セット1〜3　（各1点・10点満点）</div>
+<div class="memo"><b>■ 出題範囲メモ</b>
+<ul>
+<li>範囲は中2「一次関数」の<b>式の決定</b>だけ。10問は3セットとも<b>同じ順番・同じタイプ</b>で、数字だけ変えてある（くり返し練習用）。</li>
+<li>セット1：基礎　セット2：基礎（マイナスの数が増える）　セット3：ステップアップ（分数の傾き、大きな数）。</li>
+<li>どのタイプも、<b>「傾きを出す」→「1点を代入して切片を出す」</b>の流れ。迷ったら下の早見表を見る。</li>
+</ul></div>
+<h2>10問の解き方 早見表</h2>
+
+<table class="t hay" style="width:100%">
+<tr><th style="width:15mm">問題</th><th style="width:48mm">わかっていること</th><th>まず</th><th>次に</th></tr>
+<tr><td>(1)</td><td>傾きと切片</td><td colspan="2">そのまま <i>y</i>＝<i>ax</i>＋<i>b</i> に入れる</td></tr>
+<tr><td>(2)</td><td>変化の割合と、1組の<i>x</i>，<i>y</i></td><td>変化の割合＝傾き<i>a</i></td><td>1組を代入して<i>b</i>を求める</td></tr>
+<tr><td>(3)</td><td>傾きと、通る1点</td><td>傾き<i>a</i>はわかっている</td><td>点を代入して<i>b</i>を求める</td></tr>
+<tr><td>(4)</td><td>通る1点と、切片</td><td>切片<i>b</i>はわかっている</td><td>点を代入して<i>a</i>を求める</td></tr>
+<tr><td>(5)(6)</td><td>2組の<i>x</i>，<i>y</i>／通る2点</td><td>傾き＝<i>y</i>の増加量÷<i>x</i>の増加量</td><td>1組を代入して<i>b</i>を求める</td></tr>
+<tr><td>(7)</td><td>平行な直線と、通る1点</td><td>傾きは平行な直線と同じ</td><td>点を代入して<i>b</i>を求める</td></tr>
+<tr><td>(8)</td><td><i>x</i>が増えたときの<i>y</i>の増減と、1組</td><td>傾き＝<i>y</i>の増加量÷<i>x</i>の増加量（減るときは−）</td><td>1組を代入して<i>b</i>を求める</td></tr>
+<tr><td>(9)(10)</td><td>表</td><td>表から2組を選んで傾きを求める</td><td>代入して<i>b</i>（<i>x</i>＝0の列があれば、その<i>y</i>が<i>b</i>）</td></tr>
+</table><div class="blk"><h2>セット1<span class="pts">［基礎］</span></h2><div class="two"><div><div class="ex aitem"><b>(1)</b>　<span class="k"><i>y</i>＝5<i>x</i>＋2</span><span class="st">傾きと切片がわかっているので、そのまま入れる。</span></div><div class="ex aitem"><b>(2)</b>　<span class="k"><i>y</i>＝3<i>x</i>−1</span><span class="st">変化の割合は傾きと同じ。<i>a</i>＝3　<i>y</i>＝3<i>x</i>＋<i>b</i> に（2，5）を代入　5＝3×2＋<i>b</i>　→　<i>b</i>＝−1</span></div><div class="ex aitem"><b>(3)</b>　<span class="k"><i>y</i>＝−2<i>x</i>＋6</span><span class="st"><i>y</i>＝−2<i>x</i>＋<i>b</i> に（1，4）を代入　4＝−2×1＋<i>b</i>　→　<i>b</i>＝6</span></div><div class="ex aitem"><b>(4)</b>　<span class="k"><i>y</i>＝2<i>x</i>−1</span><span class="st"><i>y</i>＝<i>a</i><i>x</i>−1 に（3，5）を代入　5＝3<i>a</i>−1　→　3<i>a</i>＝6　→　<i>a</i>＝2</span></div><div class="ex aitem"><b>(5)</b>　<span class="k"><i>y</i>＝3<i>x</i>＋2</span><span class="st">傾き＝<span class="fr"><span>11−5</span><span>3−1</span></span>＝3　<i>y</i>＝3<i>x</i>＋<i>b</i> に（1，5）を代入　5＝3×1＋<i>b</i>　→　<i>b</i>＝2</span></div></div><div><div class="ex aitem"><b>(6)</b>　<span class="k"><i>y</i>＝2<i>x</i>−3</span><span class="st">傾き＝<span class="fr"><span>7−1</span><span>5−2</span></span>＝2　<i>y</i>＝2<i>x</i>＋<i>b</i> に（2，1）を代入　1＝2×2＋<i>b</i>　→　<i>b</i>＝−3</span></div><div class="ex aitem"><b>(7)</b>　<span class="k"><i>y</i>＝−3<i>x</i>＋5</span><span class="st">平行なので傾きは同じ。<i>a</i>＝−3　<i>y</i>＝−3<i>x</i>＋<i>b</i> に（2，−1）を代入　−1＝−3×2＋<i>b</i>　→　<i>b</i>＝5</span></div><div class="ex aitem"><b>(8)</b>　<span class="k"><i>y</i>＝−2<i>x</i>＋5</span><span class="st">傾き＝<span class="fr"><span><i>y</i>の増加量</span><span><i>x</i>の増加量</span></span>＝<span class="fr"><span>−8</span><span>4</span></span>＝−2（減少は−）　<i>y</i>＝−2<i>x</i>＋<i>b</i> に（1，3）を代入　3＝−2×1＋<i>b</i>　→　<i>b</i>＝5</span></div><div class="ex aitem"><b>(9)</b>　<span class="k"><i>y</i>＝−<i>x</i>＋3</span><span class="st">表から2組を選ぶ。傾き＝<span class="fr"><span>2−5</span><span>1−（−2）</span></span>＝−1　<i>y</i>＝−<i>x</i>＋<i>b</i> に（−2，5）を代入　5＝−1×（−2）＋<i>b</i>　→　<i>b</i>＝3</span></div><div class="ex aitem"><b>(10)</b>　<span class="k"><i>y</i>＝3<i>x</i>＋3</span><span class="st">表より<i>x</i>＝0のとき<i>y</i>＝3　→　切片<i>b</i>＝3　傾き＝<span class="fr"><span>0−3</span><span>−1−0</span></span>＝3</span></div></div></div></div><div class="blk"><h2>セット2<span class="pts">［基礎（マイナスの数が増える）］</span></h2><div class="two"><div><div class="ex aitem"><b>(1)</b>　<span class="k"><i>y</i>＝−4<i>x</i>−3</span><span class="st">傾きと切片がわかっているので、そのまま入れる。</span></div><div class="ex aitem"><b>(2)</b>　<span class="k"><i>y</i>＝−2<i>x</i>＋5</span><span class="st">変化の割合は傾きと同じ。<i>a</i>＝−2　<i>y</i>＝−2<i>x</i>＋<i>b</i> に（3，−1）を代入　−1＝−2×3＋<i>b</i>　→　<i>b</i>＝5</span></div><div class="ex aitem"><b>(3)</b>　<span class="k"><i>y</i>＝3<i>x</i>＋2</span><span class="st"><i>y</i>＝3<i>x</i>＋<i>b</i> に（−2，−4）を代入　−4＝3×（−2）＋<i>b</i>　→　<i>b</i>＝2</span></div><div class="ex aitem"><b>(4)</b>　<span class="k"><i>y</i>＝−2<i>x</i>＋1</span><span class="st"><i>y</i>＝<i>a</i><i>x</i>＋1 に（−2，5）を代入　5＝−2<i>a</i>＋1　→　−2<i>a</i>＝4　→　<i>a</i>＝−2</span></div><div class="ex aitem"><b>(5)</b>　<span class="k"><i>y</i>＝3<i>x</i>−3</span><span class="st">傾き＝<span class="fr"><span>3−（−6）</span><span>2−（−1）</span></span>＝3　<i>y</i>＝3<i>x</i>＋<i>b</i> に（−1，−6）を代入　−6＝3×（−1）＋<i>b</i>　→　<i>b</i>＝−3</span></div></div><div><div class="ex aitem"><b>(6)</b>　<span class="k"><i>y</i>＝−2<i>x</i>＋3</span><span class="st">傾き＝<span class="fr"><span>−3−5</span><span>3−（−1）</span></span>＝−2　<i>y</i>＝−2<i>x</i>＋<i>b</i> に（−1，5）を代入　5＝−2×（−1）＋<i>b</i>　→　<i>b</i>＝3</span></div><div class="ex aitem"><b>(7)</b>　<span class="k"><i>y</i>＝2<i>x</i>＋8</span><span class="st">平行なので傾きは同じ。<i>a</i>＝2　<i>y</i>＝2<i>x</i>＋<i>b</i> に（−3，2）を代入　2＝2×（−3）＋<i>b</i>　→　<i>b</i>＝8</span></div><div class="ex aitem"><b>(8)</b>　<span class="k"><i>y</i>＝−<i>x</i>＋1</span><span class="st">傾き＝<span class="fr"><span><i>y</i>の増加量</span><span><i>x</i>の増加量</span></span>＝<span class="fr"><span>−3</span><span>3</span></span>＝−1（減少は−）　<i>y</i>＝−<i>x</i>＋<i>b</i> に（2，−1）を代入　−1＝−1×2＋<i>b</i>　→　<i>b</i>＝1</span></div><div class="ex aitem"><b>(9)</b>　<span class="k"><i>y</i>＝4<i>x</i>−1</span><span class="st">表より<i>x</i>＝0のとき<i>y</i>＝−1　→　切片<i>b</i>＝−1　傾き＝<span class="fr"><span>−9−（−1）</span><span>−2−0</span></span>＝4</span></div><div class="ex aitem"><b>(10)</b>　<span class="k"><i>y</i>＝−3<i>x</i>＋1</span><span class="st">表より<i>x</i>＝0のとき<i>y</i>＝1　→　切片<i>b</i>＝1　傾き＝<span class="fr"><span>4−1</span><span>−1−0</span></span>＝−3</span></div></div></div></div><div class="blk"><h2>セット3<span class="pts">［ステップアップ（分数・大きな数）］</span></h2><div class="two"><div><div class="ex aitem"><b>(1)</b>　<span class="k"><i>y</i>＝<span class="fr"><span>1</span><span>2</span></span><i>x</i>−1</span><span class="st">傾きと切片がわかっているので、そのまま入れる。</span></div><div class="ex aitem"><b>(2)</b>　<span class="k"><i>y</i>＝−3<i>x</i>＋1</span><span class="st">変化の割合は傾きと同じ。<i>a</i>＝−3　<i>y</i>＝−3<i>x</i>＋<i>b</i> に（−1，4）を代入　4＝−3×（−1）＋<i>b</i>　→　<i>b</i>＝1</span></div><div class="ex aitem"><b>(3)</b>　<span class="k"><i>y</i>＝<span class="fr"><span>1</span><span>2</span></span><i>x</i>＋3</span><span class="st"><i>y</i>＝<span class="fr"><span>1</span><span>2</span></span><i>x</i>＋<i>b</i> に（4，5）を代入　5＝<span class="fr"><span>1</span><span>2</span></span>×4＋<i>b</i>　→　<i>b</i>＝3</span></div><div class="ex aitem"><b>(4)</b>　<span class="k"><i>y</i>＝2<i>x</i>＋4</span><span class="st"><i>y</i>＝<i>a</i><i>x</i>＋4 に（−3，−2）を代入　−2＝−3<i>a</i>＋4　→　−3<i>a</i>＝−6　→　<i>a</i>＝2</span></div><div class="ex aitem"><b>(5)</b>　<span class="k"><i>y</i>＝−2<i>x</i>＋3</span><span class="st">傾き＝<span class="fr"><span>−3−7</span><span>3−（−2）</span></span>＝−2　<i>y</i>＝−2<i>x</i>＋<i>b</i> に（−2，7）を代入　7＝−2×（−2）＋<i>b</i>　→　<i>b</i>＝3</span></div></div><div><div class="ex aitem"><b>(6)</b>　<span class="k"><i>y</i>＝<span class="fr"><span>1</span><span>2</span></span><i>x</i>−2</span><span class="st">傾き＝<span class="fr"><span>0−（−3）</span><span>4−（−2）</span></span>＝<span class="fr"><span>1</span><span>2</span></span>　<i>y</i>＝<span class="fr"><span>1</span><span>2</span></span><i>x</i>＋<i>b</i> に（−2，−3）を代入　−3＝<span class="fr"><span>1</span><span>2</span></span>×（−2）＋<i>b</i>　→　<i>b</i>＝−2</span></div><div class="ex aitem"><b>(7)</b>　<span class="k"><i>y</i>＝−4<i>x</i>＋11</span><span class="st">平行なので傾きは同じ。<i>a</i>＝−4　<i>y</i>＝−4<i>x</i>＋<i>b</i> に（2，3）を代入　3＝−4×2＋<i>b</i>　→　<i>b</i>＝11</span></div><div class="ex aitem"><b>(8)</b>　<span class="k"><i>y</i>＝−<span class="fr"><span>1</span><span>2</span></span><i>x</i>＋4</span><span class="st">傾き＝<span class="fr"><span><i>y</i>の増加量</span><span><i>x</i>の増加量</span></span>＝<span class="fr"><span>−2</span><span>4</span></span>＝−<span class="fr"><span>1</span><span>2</span></span>（減少は−）　<i>y</i>＝−<span class="fr"><span>1</span><span>2</span></span><i>x</i>＋<i>b</i> に（−2，5）を代入　5＝−<span class="fr"><span>1</span><span>2</span></span>×（−2）＋<i>b</i>　→　<i>b</i>＝4</span></div><div class="ex aitem"><b>(9)</b>　<span class="k"><i>y</i>＝3<i>x</i>−5</span><span class="st">表から2組を選ぶ。傾き＝<span class="fr"><span>1−（−8）</span><span>2−（−1）</span></span>＝3　<i>y</i>＝3<i>x</i>＋<i>b</i> に（−1，−8）を代入　−8＝3×（−1）＋<i>b</i>　→　<i>b</i>＝−5</span></div><div class="ex aitem"><b>(10)</b>　<span class="k"><i>y</i>＝−4<i>x</i>−5</span><span class="st">表より<i>x</i>＝0のとき<i>y</i>＝−5　→　切片<i>b</i>＝−5　傾き＝<span class="fr"><span>−1−（−5）</span><span>−1−0</span></span>＝−4</span></div></div></div></div></div>
+<script>
+var btn = document.getElementById('editBtn');
+var on = false;
+btn.addEventListener('click', function () {
+  on = !on;
+  document.body.contentEditable = on ? 'true' : 'false';
+  document.body.classList.toggle('editing', on);
+  btn.textContent = '編集モード：' + (on ? 'ON' : 'OFF');
+});
+</script>
+</body>
+</html>
