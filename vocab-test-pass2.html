@@ -1,0 +1,386 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ランダム英単語テスト（英検準2級パス単）｜学習塾CONNECT</title>
+<style>
+  @page { size: A4; margin: 10mm 12mm; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+    font-size: 11.5pt;
+    color: #111;
+    background: #e9e9e9;
+  }
+  .en { font-family: "Century Gothic", "Yu Gothic", sans-serif; }
+
+  /* ===== 画面上のコントロールバー（印刷時は非表示） ===== */
+  .controlbar {
+    position: sticky; top: 0; z-index: 10;
+    background: #1F3A5F; color: #fff;
+    padding: 14px 20px;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+    font-size: 13px;
+  }
+  .controlbar .title { font-weight: bold; font-size: 15px; margin-right: 8px; }
+  .controlbar .rangelabel { font-size: 12px; color: #D9E1EC; }
+  .controlbar select, .controlbar button {
+    font-family: inherit; font-size: 13px; padding: 7px 14px;
+    border-radius: 6px; border: none; cursor: pointer;
+  }
+  .controlbar select { background: #fff; color: #111; }
+  .controlbar button.primary { background: #C9972B; color: #fff; font-weight: bold; }
+  .controlbar button.secondary { background: #3A557A; color: #fff; }
+  .controlbar button.secondary.active { background: #8A2E2E; }
+  .controlbar .spacer { flex: 1; }
+  .controlbar .count { font-size: 12px; color: #D9E1EC; }
+
+  @media print {
+    .controlbar { display: none !important; }
+    body { background: #fff; }
+  }
+
+  /* ===== 用紙 ===== */
+  .sheet {
+    position: relative;
+    width: 210mm;
+    min-height: 297mm;
+    margin: 16px auto;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+    padding: 10mm 12mm;
+  }
+  @media print {
+    .sheet { box-shadow: none; margin: 0; width: auto; min-height: 0; }
+    .sheet.pb { page-break-before: always; }
+  }
+
+  /* 点数記入欄（右上） */
+  .scorebox {
+    position: absolute; top: 10mm; right: 12mm;
+    width: 24mm; border: 2px solid #111; text-align: center; font-size: 9pt;
+  }
+  .scorebox .sb-label { background: #111; color: #fff; padding: 1.5px 0; font-weight: bold; letter-spacing: 0.1em; }
+  .scorebox .sb-box { height: 13mm; display: flex; align-items: center; justify-content: center; font-size: 13pt; }
+  .scorebox .sb-max { font-size: 8pt; color: #555; border-top: 1px solid #111; padding: 1px 0; }
+
+  h1 { font-size: 16pt; text-align: center; margin: 0 0 2.5mm; letter-spacing: 0.03em; }
+  .sub { text-align: center; font-size: 10pt; color: #333; margin-bottom: 3.5mm; }
+
+  .namebox {
+    display: flex; justify-content: flex-end; gap: 18px; font-size: 10pt;
+    border-bottom: 1px solid #999; padding-bottom: 2.5mm; margin-bottom: 3.5mm;
+    padding-right: 30mm;
+  }
+
+  .memo {
+    border: 1px solid #999; border-radius: 4px; padding: 6px 10px;
+    font-size: 9.5pt; color: #333; margin-bottom: 4mm; line-height: 1.5;
+  }
+  .memo .t { font-weight: bold; margin-bottom: 2px; }
+
+  .q { margin-bottom: 5mm; }
+  .qh { display: flex; align-items: baseline; gap: 10px; margin-bottom: 2.5mm; border-bottom: 2px solid #111; padding-bottom: 1.5mm; }
+  .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border: 2px solid #111; border-radius: 3px;
+    font-weight: bold; font-size: 11pt; flex-shrink: 0;
+  }
+  .inst { flex: 1; font-weight: bold; }
+  .pts { font-weight: normal; font-size: 9.5pt; color: #333; white-space: nowrap; }
+
+  /* 大問1: 単語テーブル */
+  table.wordtable { width: 100%; border-collapse: collapse; font-size: 11pt; }
+  table.wordtable td {
+    border: 1px solid #bbb; padding: 3px 8px; vertical-align: middle;
+  }
+  table.wordtable td.wnum { width: 22px; text-align: center; color: #666; font-size: 9.5pt; }
+  table.wordtable td.wword { width: 32%; font-weight: bold; }
+  table.wordtable td.wmeaning { }
+  .blankline { display: inline-block; min-width: 100%; border-bottom: 1px solid #333; height: 12px; }
+
+  /* 大問2: 文章完成 */
+  ol.sentlist { list-style: none; margin: 0; padding: 0; counter-reset: sitem; }
+  ol.sentlist > li {
+    counter-increment: sitem;
+    margin-bottom: 3mm; padding-left: 26px; position: relative;
+  }
+  ol.sentlist > li::before {
+    content: "(" counter(sitem) ")";
+    position: absolute; left: 0; font-weight: bold;
+  }
+  .sline { margin: 1.5px 0; }
+  .sline.en { font-family: "Century Gothic", "Yu Gothic", sans-serif; }
+  .blank-ul { border-bottom: 1px solid #333; padding: 0 2px; display: inline-block; min-width: 110px; text-align: center; }
+
+  /* 解答ページ */
+  .a .k { color: #000; font-weight: bold; text-decoration: underline; }
+  .ans h2 { font-size: 13pt; margin: 6mm 0 3mm; border-left: 5px solid #1F3A5F; padding-left: 8px; }
+  .ans table.wordtable td.wmeaning .k { font-weight: bold; text-decoration: underline; }
+  .ans .sline.jp .k, .ans .sline.en .k { font-weight: bold; text-decoration: underline; }
+
+  .footer-note { text-align: center; font-size: 9pt; color: #999; margin-top: 10mm; }
+
+  /* 編集モード */
+  body.editmode [contenteditable="true"] { outline: 1px dashed #C9972B; }
+  @media print { [contenteditable] { outline: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="controlbar">
+  <span class="title">📘 ランダム英単語テスト（英検準2級パス単）｜学習塾CONNECT</span>
+  <span class="rangelabel">から</span>
+  <select id="levelFrom"></select>
+  <span class="rangelabel">まで</span>
+  <select id="levelTo"></select>
+  <button class="primary" id="genBtn">この範囲で20問作成</button>
+  <button class="secondary" id="editBtn">編集モード</button>
+  <button class="secondary" id="printBtn">印刷</button>
+  <span class="spacer"></span>
+  <span class="count" id="rangeInfo"></span>
+</div>
+
+<div id="output"></div>
+
+<script type="application/json" id="vocabData">{"levels": ["section1", "section2", "section3", "section4", "section5", "section6", "section7", "section8", "section9", "section10", "section11", "section12", "section13", "section14", "section15"], "words": {"section1": [{"w": "let", "m": "〜させる"}, {"w": "decide", "m": "を決心する"}, {"w": "train", "m": "を訓練する"}, {"w": "travel", "m": "を旅行する"}, {"w": "leave", "m": "を置き忘れる"}, {"w": "park", "m": "を駐車する"}, {"w": "order", "m": "を注文する"}, {"w": "lose", "m": "を失う"}, {"w": "move", "m": "を動かす"}, {"w": "pay", "m": "を支払う"}, {"w": "wait", "m": "待つ"}, {"w": "change", "m": "を変える"}, {"w": "check", "m": "を確かめる"}, {"w": "build", "m": "を建てる"}, {"w": "worry", "m": "心配する"}, {"w": "plant", "m": "を植える"}, {"w": "practice", "m": "を練習する"}, {"w": "care", "m": "気にかける"}, {"w": "describe", "m": "を描写する"}, {"w": "cost", "m": "費用がかかる"}, {"w": "turn", "m": "を曲げる"}, {"w": "join", "m": "に加わる"}, {"w": "grow", "m": "成長する"}, {"w": "save", "m": "を救う"}, {"w": "win", "m": "に勝つ"}, {"w": "pick", "m": "を選ぶ"}, {"w": "believe", "m": "を信じる"}, {"w": "report", "m": "を報告する"}, {"w": "forget", "m": "を忘れる"}, {"w": "hurt", "m": "を傷つける"}, {"w": "borrow", "m": "を借りる"}, {"w": "surprise", "m": "を驚かせる"}, {"w": "volunteer", "m": "ボランティアをする"}, {"w": "carry", "m": "を運ぶ"}, {"w": "set", "m": "を置く"}, {"w": "invite", "m": "を招待する"}, {"w": "happen", "m": "偶然起こる"}, {"w": "choose", "m": "を選ぶ"}, {"w": "guide", "m": "を案内する"}, {"w": "arrive", "m": "到着する"}, {"w": "offer", "m": "を提供する"}, {"w": "remember", "m": "を覚えている"}, {"w": "cancel", "m": "を中止する"}, {"w": "repair", "m": "を修理する"}, {"w": "excuse", "m": "言い訳"}, {"w": "internet", "m": "インターネット"}, {"w": "idea", "m": "考え"}, {"w": "information", "m": "情報"}, {"w": "honey", "m": "あなた"}, {"w": "fire", "m": "火"}, {"w": "vegetable", "m": "野菜"}, {"w": "situation", "m": "状況"}, {"w": "passage", "m": "一節"}, {"w": "event", "m": "出来事"}, {"w": "ma'am", "m": "奥様"}, {"w": "avocado", "m": "アボカド"}, {"w": "type", "m": "型"}, {"w": "bakery", "m": "パン屋"}, {"w": "future", "m": "将来"}, {"w": "exercise", "m": "運動"}, {"w": "bottle", "m": "ビン"}, {"w": "sign", "m": "合図"}, {"w": "service", "m": "サービス"}, {"w": "garbage", "m": "生ゴミ"}, {"w": "customer", "m": "顧客"}, {"w": "business", "m": "職業"}, {"w": "trouble", "m": "トラブル"}, {"w": "tour", "m": "周遊旅行"}, {"w": "race", "m": "競走"}, {"w": "environment", "m": "環境"}, {"w": "activity", "m": "活動"}, {"w": "other", "m": "他の"}, {"w": "different", "m": "違った"}, {"w": "important", "m": "重要な"}, {"w": "special", "m": "特別な"}, {"w": "enough", "m": "十分な"}, {"w": "expensive", "m": "高価な"}, {"w": "difficult", "m": "困難な"}, {"w": "few", "m": "ほとんど〜ない"}, {"w": "another", "m": "別の"}, {"w": "close", "m": "接近した"}, {"w": "own", "m": "自分自身の"}, {"w": "local", "m": "地元の"}, {"w": "delicious", "m": "おいしい"}, {"w": "foreign", "m": "外国の"}, {"w": "however", "m": "しかしながら"}, {"w": "even", "m": "〜でさえ"}, {"w": "online", "m": "オンラインで"}, {"w": "outside", "m": "屋外に"}, {"w": "instead", "m": "その代わりに"}, {"w": "far", "m": "遠くに"}, {"w": "probably", "m": "たぶん"}, {"w": "though", "m": "でも"}, {"w": "actually", "m": "実際に"}, {"w": "later", "m": "あとで"}, {"w": "yet", "m": "もう／まだ"}, {"w": "quickly", "m": "すぐに"}, {"w": "inside", "m": "屋内に"}, {"w": "anyway", "m": "とにかく"}, {"w": "while", "m": "〜している間に"}], "section2": [{"w": "taste", "m": "〜の味がする"}, {"w": "fix", "m": "を修理する"}, {"w": "hold", "m": "を開催する"}, {"w": "collect", "m": "を集める"}, {"w": "paint", "m": "にペンキを塗る"}, {"w": "copy", "m": "の写しをとる"}, {"w": "guess", "m": "を推測する"}, {"w": "create", "m": "を創造する"}, {"w": "allow", "m": "〜が…するのを許す"}, {"w": "return", "m": "帰る"}, {"w": "suggest", "m": "を提案する"}, {"w": "relax", "m": "くつろぐ"}, {"w": "add", "m": "を加える"}, {"w": "reserve", "m": "を予約する"}, {"w": "design", "m": "をデザインする"}, {"w": "follow", "m": "についていく"}, {"w": "attract", "m": "の心をとらえる"}, {"w": "pass", "m": "に合格する"}, {"w": "miss", "m": "〜がいなくてさびしく思う"}, {"w": "recommend", "m": "を推薦する"}, {"w": "serve", "m": "を出す"}, {"w": "rent", "m": "を借りる"}, {"w": "wake", "m": "目を覚ます"}, {"w": "bake", "m": "を焼く"}, {"w": "prepare", "m": "を準備する"}, {"w": "damage", "m": "に損傷を与える"}, {"w": "bear", "m": "を我慢する"}, {"w": "seem", "m": "〜のようだ"}, {"w": "explain", "m": "を説明する"}, {"w": "cause", "m": "を引き起こす"}, {"w": "fill", "m": "を満たす"}, {"w": "kill", "m": "を殺す"}, {"w": "dress", "m": "服を着る"}, {"w": "throw", "m": "を投げる"}, {"w": "notice", "m": "に気づく"}, {"w": "result", "m": "結果"}, {"w": "front", "m": "最前部"}, {"w": "recipe", "m": "調理法"}, {"w": "area", "m": "地域"}, {"w": "visitor", "m": "訪問者"}, {"w": "clothes", "m": "衣服"}, {"w": "plastic", "m": "プラスチック"}, {"w": "chance", "m": "機会"}, {"w": "sale", "m": "販売"}, {"w": "skill", "m": "技術"}, {"w": "presentation", "m": "発表"}, {"w": "flight", "m": "定期航空便"}, {"w": "wheel", "m": "車輪"}, {"w": "product", "m": "製品"}, {"w": "meal", "m": "食事"}, {"w": "seed", "m": "種"}, {"w": "land", "m": "陸地"}, {"w": "medicine", "m": "薬"}, {"w": "reservation", "m": "予約"}, {"w": "space", "m": "宇宙"}, {"w": "apartment", "m": "アパート"}, {"w": "insect", "m": "虫"}, {"w": "mall", "m": "ショッピングモール"}, {"w": "smartphone", "m": "スマートフォン"}, {"w": "grade", "m": "成績"}, {"w": "police", "m": "警察"}, {"w": "prize", "m": "賞"}, {"w": "market", "m": "市場"}, {"w": "fair", "m": "見本市"}, {"w": "section", "m": "欄"}, {"w": "price", "m": "価格"}, {"w": "fact", "m": "事実"}, {"w": "department", "m": "部"}, {"w": "rule", "m": "規則"}, {"w": "nature", "m": "自然"}, {"w": "island", "m": "島"}, {"w": "goods", "m": "商品"}, {"w": "firefighter", "m": "消防隊員"}, {"w": "person", "m": "人"}, {"w": "husband", "m": "夫"}, {"w": "item", "m": "品目"}, {"w": "neighbor", "m": "隣人"}, {"w": "orchestra", "m": "オーケストラ"}, {"w": "gate", "m": "門"}, {"w": "healthy", "m": "健康に良い"}, {"w": "TRUE", "m": "本当の"}, {"w": "afraid", "m": "〜ではないかと心配して"}, {"w": "dangerous", "m": "危険な"}, {"w": "wild", "m": "野生の"}, {"w": "safe", "m": "安全な"}, {"w": "past", "m": "過去の"}, {"w": "available", "m": "入手できる"}, {"w": "successful", "m": "成功した"}, {"w": "perfect", "m": "完全な"}, {"w": "less", "m": "より少なく"}, {"w": "easily", "m": "簡単に"}, {"w": "else", "m": "その他に"}, {"w": "abroad", "m": "海外で"}, {"w": "recently", "m": "最近"}, {"w": "nowadays", "m": "今日（こんにち）では"}, {"w": "somewhere", "m": "どこかに"}, {"w": "forward", "m": "先へ"}, {"w": "although", "m": "〜だけれども"}, {"w": "without", "m": "〜なしで"}, {"w": "through", "m": "〜を通って"}], "section3": [{"w": "exchange", "m": "を交換する"}, {"w": "drop", "m": "を落とす"}, {"w": "climb", "m": "を登る"}, {"w": "smell", "m": "〜のにおいがする"}, {"w": "date", "m": "とデートする"}, {"w": "introduce", "m": "を紹介する"}, {"w": "recycle", "m": "を再生利用する"}, {"w": "perform", "m": "を上演する"}, {"w": "wish", "m": "を願う"}, {"w": "marry", "m": "と結婚する"}, {"w": "express", "m": "を表現する"}, {"w": "hide", "m": "隠れる"}, {"w": "protect", "m": "を保護する"}, {"w": "receive", "m": "を受け取る"}, {"w": "steal", "m": "を盗む"}, {"w": "interview", "m": "と面接する"}, {"w": "feed", "m": "〜に食べ物を与える"}, {"w": "spread", "m": "広がる"}, {"w": "deliver", "m": "を配達する"}, {"w": "search", "m": "を探す"}, {"w": "bite", "m": "を噛む"}, {"w": "trade", "m": "を交換する"}, {"w": "announce", "m": "を発表する"}, {"w": "produce", "m": "を生産する"}, {"w": "share", "m": "を共有する"}, {"w": "draw", "m": "を描く"}, {"w": "wood", "m": "木材"}, {"w": "reason", "m": "理由"}, {"w": "experience", "m": "経験"}, {"w": "bill", "m": "請求書"}, {"w": "discount", "m": "割引"}, {"w": "form", "m": "用紙"}, {"w": "owner", "m": "所有者"}, {"w": "side", "m": "片側"}, {"w": "community", "m": "地域社会"}, {"w": "guest", "m": "客"}, {"w": "performance", "m": "演技"}, {"w": "tool", "m": "道具"}, {"w": "century", "m": "1世紀"}, {"w": "dessert", "m": "デザート"}, {"w": "poem", "m": "詩"}, {"w": "government", "m": "政府"}, {"w": "novel", "m": "小説"}, {"w": "professor", "m": "教授"}, {"w": "project", "m": "計画"}, {"w": "charity", "m": "慈善事業"}, {"w": "million", "m": "100万"}, {"w": "instrument", "m": "器具"}, {"w": "mistake", "m": "間違い"}, {"w": "earth", "m": "地球"}, {"w": "address", "m": "住所"}, {"w": "co-worker", "m": "同僚"}, {"w": "cleaner", "m": "クリーニング店"}, {"w": "match", "m": "試合"}, {"w": "fan", "m": "ファン"}, {"w": "grandparent", "m": "祖父／祖母"}, {"w": "president", "m": "大統領"}, {"w": "wallpaper", "m": "壁紙"}, {"w": "health", "m": "健康なこと"}, {"w": "Europe", "m": "ヨーロッパ"}, {"w": "technology", "m": "科学技術"}, {"w": "suit", "m": "スーツ"}, {"w": "note", "m": "覚え書き"}, {"w": "score", "m": "得点"}, {"w": "gift", "m": "才能"}, {"w": "rest", "m": "休み"}, {"w": "view", "m": "眺め"}, {"w": "crowd", "m": "群集"}, {"w": "jazz", "m": "ジャズ"}, {"w": "direction", "m": "方向"}, {"w": "topic", "m": "話題"}, {"w": "wallet", "m": "財布"}, {"w": "piece", "m": "1片"}, {"w": "package", "m": "小さな包み"}, {"w": "teammate", "m": "チームメート"}, {"w": "playground", "m": "遊び場"}, {"w": "planet", "m": "惑星"}, {"w": "salon", "m": "高級店"}, {"w": "accident", "m": "事故"}, {"w": "actor", "m": "俳優"}, {"w": "traditional", "m": "伝統的な"}, {"w": "Russian", "m": "ロシアの"}, {"w": "human", "m": "人間の"}, {"w": "cheap", "m": "安い"}, {"w": "either", "m": "どちらか一方の"}, {"w": "professional", "m": "プロの"}, {"w": "similar", "m": "類似した"}, {"w": "part-time", "m": "パートタイムの"}, {"w": "whole", "m": "全体の"}, {"w": "frozen", "m": "凍った"}, {"w": "central", "m": "中心部の"}, {"w": "loud", "m": "大きい"}, {"w": "magic", "m": "奇術の"}, {"w": "pretty", "m": "なかなか"}, {"w": "certainly", "m": "確かに"}, {"w": "finally", "m": "ついに"}, {"w": "alone", "m": "1人で"}, {"w": "therefore", "m": "それゆえに"}, {"w": "lately", "m": "最近"}, {"w": "might", "m": "もしかすると〜かもしれない"}], "section4": [{"w": "stand", "m": "我慢する"}, {"w": "reach", "m": "〜に到着する"}, {"w": "promise", "m": "を約束する"}, {"w": "film", "m": "を撮影する"}, {"w": "fit", "m": "に適している"}, {"w": "celebrate", "m": "を祝う"}, {"w": "stretch", "m": "を伸ばす"}, {"w": "cover", "m": "を覆う"}, {"w": "develop", "m": "を発達させる"}, {"w": "solve", "m": "を解決する"}, {"w": "discover", "m": "を発見する"}, {"w": "continue", "m": "を続ける"}, {"w": "face", "m": "に面する"}, {"w": "shape", "m": "を形作る"}, {"w": "print", "m": "を印刷する"}, {"w": "lend", "m": "を貸す"}, {"w": "realize", "m": "を悟る"}, {"w": "wonder", "m": "〜かなと思う"}, {"w": "die", "m": "死ぬ"}, {"w": "pull", "m": "を引く"}, {"w": "push", "m": "を押す"}, {"w": "shake", "m": "を振る"}, {"w": "agree", "m": "同意する"}, {"w": "mean", "m": "を意味する"}, {"w": "mind", "m": "を気にする"}, {"w": "improve", "m": "を向上させる"}, {"w": "include", "m": "を含む"}, {"w": "enter", "m": "に入る"}, {"w": "communicate", "m": "を伝える"}, {"w": "tourist", "m": "観光客"}, {"w": "center", "m": "中心"}, {"w": "attention", "m": "注意"}, {"w": "couple", "m": "一対"}, {"w": "license", "m": "免許"}, {"w": "kid", "m": "子供"}, {"w": "desert", "m": "砂漠"}, {"w": "invention", "m": "発明"}, {"w": "chemistry", "m": "化学"}, {"w": "neighborhood", "m": "近所"}, {"w": "officer", "m": "警官"}, {"w": "moment", "m": "瞬間"}, {"w": "rock", "m": "岩"}, {"w": "cart", "m": "手押し車"}, {"w": "grass", "m": "芝生"}, {"w": "traffic", "m": "交通"}, {"w": "staff", "m": "職員"}, {"w": "snake", "m": "ヘビ"}, {"w": "grocery", "m": "食料雑貨"}, {"w": "fee", "m": "料金"}, {"w": "clothing", "m": "衣類"}, {"w": "training", "m": "訓練"}, {"w": "yoga", "m": "ヨガ"}, {"w": "truck", "m": "トラック"}, {"w": "forest", "m": "森"}, {"w": "flavor", "m": "風味"}, {"w": "weight", "m": "重さ"}, {"w": "subway", "m": "地下鉄"}, {"w": "discovery", "m": "発見"}, {"w": "oven", "m": "オーブン"}, {"w": "ID", "m": "身分証明書"}, {"w": "beginner", "m": "初心者"}, {"w": "cough", "m": "咳"}, {"w": "firework", "m": "花火"}, {"w": "flag", "m": "旗"}, {"w": "housework", "m": "家事"}, {"w": "ant", "m": "アリ"}, {"w": "ground", "m": "地面"}, {"w": "schedule", "m": "予定"}, {"w": "noise", "m": "騒音"}, {"w": "storm", "m": "嵐"}, {"w": "shelf", "m": "棚"}, {"w": "elevator", "m": "エレベーター"}, {"w": "Pacific", "m": "太平洋の"}, {"w": "careful", "m": "注意深い"}, {"w": "public", "m": "公衆の"}, {"w": "British", "m": "イギリスの"}, {"w": "friendly", "m": "親しみやすい"}, {"w": "native", "m": "出生地の"}, {"w": "excellent", "m": "非常に優れた"}, {"w": "nearby", "m": "近くの"}, {"w": "huge", "m": "巨大な"}, {"w": "main", "m": "主要な"}, {"w": "fresh", "m": "新鮮な"}, {"w": "usual", "m": "いつもの"}, {"w": "boring", "m": "退屈な"}, {"w": "colorful", "m": "色彩豊かな"}, {"w": "scary", "m": "恐ろしい"}, {"w": "spicy", "m": "辛い"}, {"w": "nervous", "m": "不安な"}, {"w": "convenient", "m": "便利な"}, {"w": "wide", "m": "幅の広い"}, {"w": "elementary", "m": "初歩的な"}, {"w": "once", "m": "かつて"}, {"w": "anymore", "m": "もはや〜ない"}, {"w": "almost", "m": "ほとんど"}, {"w": "carefully", "m": "注意深く"}, {"w": "luckily", "m": "幸運にも"}, {"w": "outdoors", "m": "屋外で"}, {"w": "clearly", "m": "はっきりと"}, {"w": "against", "m": "〜に反対して"}], "section5": [{"w": "connect", "m": "をつなぐ"}, {"w": "suppose", "m": "~することになっている"}, {"w": "fail", "m": "失敗する"}, {"w": "display", "m": "を展示する"}, {"w": "compete", "m": "競争する"}, {"w": "explore", "m": "を探検する"}, {"w": "raise", "m": "を上げる"}, {"w": "contact", "m": "~と連絡をとる"}, {"w": "attend", "m": "出席する"}, {"w": "remove", "m": "を取り除く"}, {"w": "complete", "m": "を達成する"}, {"w": "gain", "m": "を得る"}, {"w": "balance", "m": "バランスをとる"}, {"w": "decorate", "m": "を飾る"}, {"w": "gather", "m": "を集める"}, {"w": "bother", "m": "~に迷惑をかける"}, {"w": "retire", "m": "引退する"}, {"w": "hate", "m": "を憎む"}, {"w": "hug", "m": "を抱きしめる"}, {"w": "support", "m": "を支持する"}, {"w": "touch", "m": "触れる"}, {"w": "scare", "m": "を怯えさせる"}, {"w": "hire", "m": "を雇う"}, {"w": "expect", "m": "を予期する"}, {"w": "publish", "m": "を出版する"}, {"w": "attack", "m": "を攻撃する"}, {"w": "measure", "m": "を測定する"}, {"w": "discuss", "m": "議論する"}, {"w": "examination", "m": "試験"}, {"w": "research", "m": "調査"}, {"w": "amount", "m": "量"}, {"w": "announcement", "m": "発表"}, {"w": "screen", "m": "画面"}, {"w": "advice", "m": "助言"}, {"w": "distance", "m": "距離"}, {"w": "shopper", "m": "買い物客"}, {"w": "director", "m": "監督"}, {"w": "technique", "m": "技術"}, {"w": "average", "m": "平均"}, {"w": "gallery", "m": "美術館"}, {"w": "convenience", "m": "便利"}, {"w": "application", "m": "申し込み"}, {"w": "state", "m": "国家"}, {"w": "amusement", "m": "娯楽"}, {"w": "sight", "m": "光景"}, {"w": "matter", "m": "問題"}, {"w": "sauce", "m": "ソース"}, {"w": "bottom", "m": "底"}, {"w": "corner", "m": "角"}, {"w": "principal", "m": "校長"}, {"w": "homestay", "m": "ホームステイ"}, {"w": "jellyfish", "m": "クラゲ"}, {"w": "percent", "m": "パーセント"}, {"w": "lifestyle", "m": "ライフスタイル"}, {"w": "career", "m": "職業"}, {"w": "goal", "m": "目標"}, {"w": "chef", "m": "シェフ"}, {"w": "fashion", "m": "流行"}, {"w": "relative", "m": "親戚"}, {"w": "credit", "m": "信用"}, {"w": "challenge", "m": "課題"}, {"w": "luck", "m": "幸運"}, {"w": "backyard", "m": "裏庭"}, {"w": "emergency", "m": "緊急事態"}, {"w": "favor", "m": "好意"}, {"w": "Olympics", "m": "国際オリンピック大会"}, {"w": "fever", "m": "熱"}, {"w": "campus", "m": "構内"}, {"w": "photographer", "m": "写真家"}, {"w": "bar", "m": "棒"}, {"w": "laundry", "m": "洗濯物"}, {"w": "refrigerator", "m": "冷蔵庫"}, {"w": "modern", "m": "現代の"}, {"w": "common", "m": "共通の"}, {"w": "extra", "m": "余分の"}, {"w": "national", "m": "国民の"}, {"w": "real", "m": "本当の"}, {"w": "comfortable", "m": "快適な"}, {"w": "possible", "m": "可能な"}, {"w": "recent", "m": "最近の"}, {"w": "least", "m": "最も少ない"}, {"w": "normal", "m": "普通の"}, {"w": "international", "m": "国際的な"}, {"w": "asleep", "m": "眠って"}, {"w": "active", "m": "活動的な"}, {"w": "lonely", "m": "寂しい"}, {"w": "regular", "m": "通常の"}, {"w": "bright", "m": "明るい"}, {"w": "correct", "m": "正しい"}, {"w": "relaxing", "m": "くつろがせる"}, {"w": "unfortunately", "m": "不幸にも"}, {"w": "downtown", "m": "街の中心部へ"}, {"w": "mostly", "m": "大部分は"}, {"w": "nearly", "m": "ほとんど"}, {"w": "heavily", "m": "激しく"}, {"w": "anytime", "m": "いつでも"}, {"w": "except", "m": "~を除いては"}, {"w": "behind", "m": "~の後ろに"}, {"w": "neither", "m": "どちらも〜ない"}, {"w": "none", "m": "誰も〜ない"}], "section6": [{"w": "lay", "m": "を横たえる"}, {"w": "block", "m": "を邪魔する"}, {"w": "hunt", "m": "探し求める"}, {"w": "grill", "m": "を焼く"}, {"w": "count", "m": "を数える"}, {"w": "guard", "m": "を守る"}, {"w": "lift", "m": "を持ち上げる"}, {"w": "hit", "m": "を打つ"}, {"w": "pour", "m": "を注ぐ"}, {"w": "confuse", "m": "を混同する"}, {"w": "press", "m": "を押す"}, {"w": "broadcast", "m": "を放送する"}, {"w": "lie", "m": "うそをつく"}, {"w": "review", "m": "を復習する"}, {"w": "quit", "m": "をやめる"}, {"w": "remind", "m": "思い出させる"}, {"w": "separate", "m": "を分ける"}, {"w": "wipe", "m": "をふく"}, {"w": "rescue", "m": "を救助する"}, {"w": "translate", "m": "を翻訳する"}, {"w": "fight", "m": "戦う"}, {"w": "invitation", "m": "招待"}, {"w": "trash", "m": "ゴミ"}, {"w": "success", "m": "成功"}, {"w": "safety", "m": "安全"}, {"w": "tradition", "m": "伝統"}, {"w": "tournament", "m": "トーナメント"}, {"w": "spot", "m": "小さな点"}, {"w": "title", "m": "題名"}, {"w": "science fiction", "m": "空想科学小説"}, {"w": "weekday", "m": "平日"}, {"w": "spider", "m": "クモ"}, {"w": "sausage", "m": "ソーセージ"}, {"w": "seafood", "m": "シーフード"}, {"w": "boyfriend", "m": "男性の恋人"}, {"w": "diver", "m": "ダイバー"}, {"w": "trick", "m": "いたずら"}, {"w": "memory", "m": "思い出"}, {"w": "article", "m": "記事"}, {"w": "membership", "m": "会員であること"}, {"w": "factory", "m": "工場"}, {"w": "coupon", "m": "クーポン"}, {"w": "coach", "m": "コーチ"}, {"w": "battery", "m": "電池"}, {"w": "interest", "m": "興味"}, {"w": "knee", "m": "膝"}, {"w": "character", "m": "登場人物"}, {"w": "detail", "m": "詳細"}, {"w": "effort", "m": "努力"}, {"w": "climate", "m": "気候"}, {"w": "middle", "m": "真ん中"}, {"w": "purpose", "m": "目的"}, {"w": "danger", "m": "危険"}, {"w": "knowledge", "m": "知識"}, {"w": "brand", "m": "ブランド"}, {"w": "importance", "m": "重要性"}, {"w": "instruction", "m": "指示"}, {"w": "network", "m": "ネットワーク"}, {"w": "championship", "m": "選手権大会"}, {"w": "closet", "m": "クローゼット"}, {"w": "audience", "m": "観衆"}, {"w": "cash", "m": "現金"}, {"w": "photography", "m": "写真撮影"}, {"w": "headphone", "m": "ヘッドフォン"}, {"w": "journey", "m": "旅行"}, {"w": "debate", "m": "討論"}, {"w": "heater", "m": "暖房装置"}, {"w": "dentist", "m": "歯科医"}, {"w": "platform", "m": "プラットフォーム"}, {"w": "flour", "m": "小麦粉"}, {"w": "hero", "m": "英雄"}, {"w": "lobster", "m": "ロブスター"}, {"w": "makeup", "m": "化粧"}, {"w": "nut", "m": "木の実"}, {"w": "path", "m": "進路"}, {"w": "several", "m": "いくつかの"}, {"w": "valuable", "m": "貴重な"}, {"w": "scared", "m": "怖がっている"}, {"w": "ancient", "m": "古代の"}, {"w": "electronic", "m": "電子の"}, {"w": "elderly", "m": "年輩の"}, {"w": "certain", "m": "確信して"}, {"w": "harmful", "m": "有害な"}, {"w": "electric", "m": "電気の"}, {"w": "female", "m": "女性の"}, {"w": "daily", "m": "日常の"}, {"w": "cute", "m": "かわいい"}, {"w": "helpful", "m": "助けになる"}, {"w": "private", "m": "個人的な"}, {"w": "basic", "m": "基本的な"}, {"w": "Atlantic", "m": "大西洋の"}, {"w": "male", "m": "男性の"}, {"w": "advanced", "m": "進歩した"}, {"w": "additional", "m": "追加の"}, {"w": "especially", "m": "特に"}, {"w": "nicely", "m": "上手に"}, {"w": "indoors", "m": "屋内で"}, {"w": "afterward", "m": "後で"}, {"w": "deeply", "m": "深く"}, {"w": "whenever", "m": "~するときはいつでも"}], "section7": [{"w": "control", "m": "を制御する"}, {"w": "belong", "m": "所属する"}, {"w": "destroy", "m": "を破壊する"}, {"w": "accept", "m": "を受け入れる"}, {"w": "disappoint", "m": "を失望させる"}, {"w": "greet", "m": "あいさつする"}, {"w": "disturb", "m": "を妨害する"}, {"w": "advise", "m": "忠告する"}, {"w": "breathe", "m": "呼吸する"}, {"w": "combine", "m": "を結びつける"}, {"w": "crash", "m": "衝突する"}, {"w": "earn", "m": "を稼ぐ"}, {"w": "hang", "m": "をつるす"}, {"w": "cheer", "m": "を励ます"}, {"w": "escape", "m": "逃げる"}, {"w": "waste", "m": "を浪費する"}, {"w": "lead", "m": "を導く"}, {"w": "replace", "m": "を取り替える"}, {"w": "require", "m": "を必要とする"}, {"w": "invent", "m": "を発明する"}, {"w": "organize", "m": "を組織する"}, {"w": "pack", "m": "を詰め込む"}, {"w": "upset", "m": "を動転させる"}, {"w": "respect", "m": "を尊敬する"}, {"w": "select", "m": "を選ぶ"}, {"w": "phrase", "m": "句"}, {"w": "sense", "m": "感覚"}, {"w": "stair", "m": "階段"}, {"w": "scarf", "m": "スカーフ"}, {"w": "risk", "m": "危険"}, {"w": "teenager", "m": "ティーンエイジャー"}, {"w": "strength", "m": "強さ"}, {"w": "semester", "m": "学期"}, {"w": "teamwork", "m": "チームワーク"}, {"w": "secret", "m": "秘密"}, {"w": "sunshine", "m": "日光"}, {"w": "silence", "m": "沈黙"}, {"w": "value", "m": "価値"}, {"w": "employee", "m": "従業員"}, {"w": "expert", "m": "専門家"}, {"w": "energy", "m": "エネルギー"}, {"w": "adult", "m": "大人"}, {"w": "author", "m": "著者"}, {"w": "athlete", "m": "運動選手"}, {"w": "Egypt", "m": "エジプト"}, {"w": "boss", "m": "上司"}, {"w": "equipment", "m": "設備"}, {"w": "advantage", "m": "利益"}, {"w": "airline", "m": "航空会社"}, {"w": "engine", "m": "エンジン"}, {"w": "ability", "m": "能力"}, {"w": "aisle", "m": "通路"}, {"w": "entrance", "m": "入り口"}, {"w": "conversation", "m": "会話"}, {"w": "custom", "m": "慣習"}, {"w": "button", "m": "ボタン"}, {"w": "choice", "m": "選択"}, {"w": "counter", "m": "カウンター"}, {"w": "discussion", "m": "討論"}, {"w": "adventure", "m": "冒険"}, {"w": "anniversary", "m": "記念日"}, {"w": "avenue", "m": "大通り"}, {"w": "explorer", "m": "冒険家"}, {"w": "essay", "m": "作文"}, {"w": "fitness", "m": "フィットネス"}, {"w": "aquarium", "m": "水族館"}, {"w": "headache", "m": "頭痛"}, {"w": "channel", "m": "チャンネル"}, {"w": "harvest", "m": "収穫"}, {"w": "bonus", "m": "ボーナス"}, {"w": "electronics", "m": "電子工学"}, {"w": "file", "m": "ファイル"}, {"w": "herb", "m": "ハーブ"}, {"w": "serious", "m": "重大な"}, {"w": "wealthy", "m": "裕福な"}, {"w": "terrible", "m": "恐ろしい"}, {"w": "quiet", "m": "静かな"}, {"w": "round", "m": "丸い"}, {"w": "crowded", "m": "混雑した"}, {"w": "amazing", "m": "驚くべき"}, {"w": "double", "m": "2倍の"}, {"w": "dental", "m": "歯の"}, {"w": "classical", "m": "古典の"}, {"w": "awake", "m": "目を覚まして"}, {"w": "equal", "m": "平等な"}, {"w": "alive", "m": "生きている"}, {"w": "audio", "m": "音声の"}, {"w": "brand-new", "m": "真新しい"}, {"w": "Christian", "m": "キリスト教の"}, {"w": "giant", "m": "巨大な"}, {"w": "rather", "m": "かなり"}, {"w": "twice", "m": "2回"}, {"w": "quite", "m": "かなり"}, {"w": "sometime", "m": "いつか"}, {"w": "ahead", "m": "前方に"}, {"w": "completely", "m": "完全に"}, {"w": "exactly", "m": "正確に"}, {"w": "forever", "m": "永久に"}, {"w": "whatever", "m": "~するものは何でも"}, {"w": "whoever", "m": "~する人は誰でも"}], "section8": [{"w": "trust", "m": "を信頼する"}, {"w": "warn", "m": "~に警告する"}, {"w": "weigh", "m": "~の重さがある"}, {"w": "judge", "m": "を判断する"}, {"w": "ring", "m": "鳴る"}, {"w": "memorize", "m": "を暗記する"}, {"w": "reply", "m": "返事をする"}, {"w": "sail", "m": "航海する"}, {"w": "wave", "m": "手を振る"}, {"w": "imagine", "m": "を想像する"}, {"w": "shoot", "m": "を撃つ"}, {"w": "skip", "m": "を抜かす"}, {"w": "spell", "m": "をつづる"}, {"w": "swing", "m": "を揺らす"}, {"w": "wrap", "m": "を包む"}, {"w": "ignore", "m": "を無視する"}, {"w": "paste", "m": "を貼りつける"}, {"w": "knock", "m": "ノックする"}, {"w": "encourage", "m": "を励ます"}, {"w": "decrease", "m": "減少する"}, {"w": "access", "m": "~にアクセスする"}, {"w": "avoid", "m": "を避ける"}, {"w": "concern", "m": "~に関係する"}, {"w": "contain", "m": "を含む"}, {"w": "manage", "m": "を経営する"}, {"w": "approach", "m": "~に接近する"}, {"w": "beat", "m": "を負かす"}, {"w": "depend", "m": "頼る"}, {"w": "disappear", "m": "姿を消す"}, {"w": "act", "m": "を演じる"}, {"w": "castle", "m": "城"}, {"w": "salmon", "m": "サケ"}, {"w": "method", "m": "方法"}, {"w": "site", "m": "ウェブサイト"}, {"w": "tablet", "m": "タブレット"}, {"w": "opinion", "m": "意見"}, {"w": "instance", "m": "例"}, {"w": "instructor", "m": "指導者"}, {"w": "roll", "m": "ロールパン"}, {"w": "scene", "m": "場面"}, {"w": "style", "m": "様式"}, {"w": "policy", "m": "政策"}, {"w": "rush", "m": "突進"}, {"w": "sample", "m": "試供品"}, {"w": "partner", "m": "パートナー"}, {"w": "keyboard", "m": "キーボード"}, {"w": "tutor", "m": "家庭教師"}, {"w": "position", "m": "位置"}, {"w": "puzzle", "m": "パズル"}, {"w": "nation", "m": "国家"}, {"w": "scenery", "m": "風景"}, {"w": "highway", "m": "幹線道路"}, {"w": "lime", "m": "ライム"}, {"w": "objection", "m": "反対"}, {"w": "ketchup", "m": "ケチャップ"}, {"w": "rainbow", "m": "虹"}, {"w": "imagination", "m": "想像"}, {"w": "puppy", "m": "子犬"}, {"w": "Tow", "m": "列"}, {"w": "horn", "m": "角"}, {"w": "impression", "m": "印象"}, {"w": "leather", "m": "革"}, {"w": "lifeguard", "m": "監視員"}, {"w": "palace", "m": "宮殿"}, {"w": "photocopy", "m": "コピー"}, {"w": "pole", "m": "棒"}, {"w": "politician", "m": "政治家"}, {"w": "residence", "m": "住居"}, {"w": "spice", "m": "スパイス"}, {"w": "total", "m": "合計"}, {"w": "version", "m": "バージョン"}, {"w": "nephew", "m": "おい"}, {"w": "statue", "m": "像"}, {"w": "soldier", "m": "兵士"}, {"w": "patient", "m": "忍耐強い"}, {"w": "various", "m": "さまざまな"}, {"w": "laptop", "m": "ノートパソコンの"}, {"w": "violent", "m": "乱暴な"}, {"w": "noisy", "m": "騒々しい"}, {"w": "personal", "m": "個人の"}, {"w": "unique", "m": "独特の"}, {"w": "tight", "m": "きつい"}, {"w": "mixed", "m": "混じりあった"}, {"w": "typical", "m": "典型的な"}, {"w": "independent", "m": "自立した"}, {"w": "nonsmoking", "m": "禁煙の"}, {"w": "wooden", "m": "木製の"}, {"w": "narrow", "m": "狭い"}, {"w": "absent", "m": "欠席の"}, {"w": "sincerely", "m": "心から"}, {"w": "originally", "m": "最初は"}, {"w": "suddenly", "m": "突然"}, {"w": "poorly", "m": "下手に"}, {"w": "straight", "m": "まっすぐに"}, {"w": "upstairs", "m": "階上へ"}, {"w": "hopefully", "m": "願わくば"}, {"w": "physically", "m": "身体的に"}, {"w": "anytime", "m": "どこにも〜ない"}, {"w": "beyond", "m": "~を超えて"}, {"w": "below", "m": "~より下に"}], "section9": [{"w": "chat", "m": "おしゃべりする"}, {"w": "advertise", "m": "を宣伝する"}, {"w": "appreciate", "m": "を感謝する"}, {"w": "exhibit", "m": "を展示する"}, {"w": "arrange", "m": "を取り決める"}, {"w": "freeze", "m": "凍る"}, {"w": "download", "m": "をダウンロードする"}, {"w": "handle", "m": "を扱う"}, {"w": "apologize", "m": "謝る"}, {"w": "cycle", "m": "自転車に乗る"}, {"w": "dislike", "m": "を嫌う"}, {"w": "exist", "m": "存在する"}, {"w": "float", "m": "浮かぶ"}, {"w": "flow", "m": "流れる"}, {"w": "arrest", "m": "を逮捕する"}, {"w": "bark", "m": "ほえる"}, {"w": "dig", "m": "を掘る"}, {"w": "divide", "m": "を分ける"}, {"w": "flash", "m": "ぴかっと光る"}, {"w": "babysit", "m": "子供を世話する"}, {"w": "force", "m": "~することを強いる"}, {"w": "increase", "m": "増加する"}, {"w": "reduce", "m": "を減らす"}, {"w": "prevent", "m": "を防げる"}, {"w": "lower", "m": "を下げる"}, {"w": "rise", "m": "昇る"}, {"w": "limit", "m": "を制限する"}, {"w": "recognize", "m": "を認める"}, {"w": "remain", "m": "~のままである"}, {"w": "promote", "m": "を促進する"}, {"w": "request", "m": "を要請する"}, {"w": "observe", "m": "を観察する"}, {"w": "overcome", "m": "を克服する"}, {"w": "astronaut", "m": "宇宙飛行士"}, {"w": "disease", "m": "病気"}, {"w": "chemical", "m": "化学製品"}, {"w": "education", "m": "教育"}, {"w": "biology", "m": "生物学"}, {"w": "ballet", "m": "バレエ"}, {"w": "generation", "m": "世代"}, {"w": "blanket", "m": "毛布"}, {"w": "gasoline", "m": "ガソリン"}, {"w": "clinic", "m": "診療所"}, {"w": "clerk", "m": "店員"}, {"w": "engineer", "m": "エンジニア"}, {"w": "boarding", "m": "搭乗"}, {"w": "document", "m": "文書"}, {"w": "emotion", "m": "感情"}, {"w": "congratulation", "m": "祝いの言葉"}, {"w": "ceremony", "m": "儀式"}, {"w": "billion", "m": "10億"}, {"w": "assistant", "m": "助手"}, {"w": "habit", "m": "癖"}, {"w": "fisherman", "m": "漁師"}, {"w": "atmosphere", "m": "雰囲気"}, {"w": "commercial", "m": "コマーシャル"}, {"w": "designer", "m": "デザイナー"}, {"w": "envelope", "m": "封筒"}, {"w": "figure", "m": "図"}, {"w": "beauty", "m": "美"}, {"w": "branch", "m": "枝"}, {"w": "diet", "m": "日常の食事"}, {"w": "edge", "m": "ふち"}, {"w": "enemy", "m": "敵"}, {"w": "graduation", "m": "卒業"}, {"w": "calculator", "m": "計算機"}, {"w": "attitude", "m": "態度"}, {"w": "disaster", "m": "災害"}, {"w": "forecast", "m": "予報"}, {"w": "furniture", "m": "家具"}, {"w": "angle", "m": "角度"}, {"w": "beetle", "m": "カブトムシ"}, {"w": "bookshelf", "m": "本棚"}, {"w": "comment", "m": "コメント"}, {"w": "happiness", "m": "幸福"}, {"w": "nationality", "m": "国籍"}, {"w": "fat", "m": "太った"}, {"w": "empty", "m": "空の"}, {"w": "confident", "m": "自信のある"}, {"w": "exact", "m": "正確な"}, {"w": "dead", "m": "死んだ"}, {"w": "curious", "m": "好奇心の強い"}, {"w": "familiar", "m": "よく知られた"}, {"w": "fantastic", "m": "素晴らしい"}, {"w": "alike", "m": "似ている"}, {"w": "calm", "m": "落ち着いた"}, {"w": "delicate", "m": "繊細な"}, {"w": "flat", "m": "平らな"}, {"w": "following", "m": "次の"}, {"w": "handsome", "m": "ハンサムな"}, {"w": "balanced", "m": "バランスの取れた"}, {"w": "brave", "m": "勇敢な"}, {"w": "careless", "m": "不注意な"}, {"w": "foolish", "m": "愚かな"}, {"w": "freezing", "m": "凍てつくように寒い"}, {"w": "gradually", "m": "徐々に"}, {"w": "eventually", "m": "結局"}, {"w": "besides", "m": "さらに"}, {"w": "apart", "m": "~から離れて"}, {"w": "hardly", "m": "ほとんど〜ない"}], "section10": [{"w": "insist", "m": "強く主張する"}, {"w": "refresh", "m": "〜の気分をさわやかにする"}, {"w": "melt", "m": "溶ける"}, {"w": "seek", "m": "を探す"}, {"w": "slide", "m": "を滑らせる"}, {"w": "knit", "m": "を編む"}, {"w": "resemble", "m": "〜に似ている"}, {"w": "suffer", "m": "苦しむ"}, {"w": "surf", "m": "を見て回る"}, {"w": "stick", "m": "くっつく"}, {"w": "trap", "m": "を罠でとらえる"}, {"w": "switch", "m": "を切り替える"}, {"w": "specialize", "m": "専門とする"}, {"w": "supply", "m": "を供給する"}, {"w": "survive", "m": "生き残る"}, {"w": "succeed", "m": "成功する"}, {"w": "tear", "m": "を裂く"}, {"w": "vote", "m": "投票する"}, {"w": "lock", "m": "〜に鍵をかける"}, {"w": "harm", "m": "を傷つける"}, {"w": "award", "m": "を与える"}, {"w": "consider", "m": "〜についてよく考える"}, {"w": "release", "m": "を解放する"}, {"w": "appear", "m": "出現する"}, {"w": "researcher", "m": "調査員"}, {"w": "metal", "m": "金属"}, {"w": "manager", "m": "管理者"}, {"w": "organization", "m": "組織"}, {"w": "mystery", "m": "ミステリー"}, {"w": "passenger", "m": "乗客"}, {"w": "population", "m": "人口"}, {"w": "image", "m": "イメージ"}, {"w": "level", "m": "レベル"}, {"w": "opportunity", "m": "機会"}, {"w": "mayor", "m": "市長"}, {"w": "quality", "m": "質"}, {"w": "signal", "m": "信号"}, {"w": "liquid", "m": "液体"}, {"w": "majority", "m": "大多数"}, {"w": "location", "m": "場所"}, {"w": "pain", "m": "苦痛"}, {"w": "reality", "m": "現実"}, {"w": "rental", "m": "レンタル料"}, {"w": "midnight", "m": "真夜中"}, {"w": "influence", "m": "影響"}, {"w": "restroom", "m": "トイレ"}, {"w": "shelter", "m": "避難所"}, {"w": "sheet", "m": "1枚"}, {"w": "operation", "m": "手術"}, {"w": "photograph", "m": "写真"}, {"w": "printer", "m": "プリンター"}, {"w": "rhythm", "m": "リズム"}, {"w": "shrimp", "m": "小エビ"}, {"w": "souvenir", "m": "記念品"}, {"w": "receipt", "m": "レシート"}, {"w": "lecture", "m": "講義"}, {"w": "rank", "m": "ランク"}, {"w": "horizon", "m": "地平線"}, {"w": "purse", "m": "ハンドバッグ"}, {"w": "harmony", "m": "調和"}, {"w": "lawyer", "m": "弁護士"}, {"w": "origin", "m": "起源"}, {"w": "pause", "m": "休止"}, {"w": "popularity", "m": "人気"}, {"w": "praise", "m": "称賛"}, {"w": "pride", "m": "プライド"}, {"w": "reaction", "m": "反応"}, {"w": "rumor", "m": "うわさ"}, {"w": "shadow", "m": "影"}, {"w": "smoker", "m": "喫煙者"}, {"w": "laughter", "m": "笑い"}, {"w": "miracle", "m": "奇跡"}, {"w": "niece", "m": "めい"}, {"w": "oyster", "m": "カキ"}, {"w": "pace", "m": "ペース"}, {"w": "penalty", "m": "罰"}, {"w": "prayer", "m": "祈り"}, {"w": "projector", "m": "プロジェクター"}, {"w": "sketch", "m": "スケッチ"}, {"w": "particular", "m": "特定の"}, {"w": "necessary", "m": "必要な"}, {"w": "natural", "m": "自然の"}, {"w": "smart", "m": "頭の良い"}, {"w": "negative", "m": "消極的な"}, {"w": "ordinary", "m": "普通の"}, {"w": "simple", "m": "簡単な"}, {"w": "salty", "m": "塩気のある"}, {"w": "polite", "m": "礼儀正しい"}, {"w": "pure", "m": "純粋な"}, {"w": "shy", "m": "恥ずずかしがりの"}, {"w": "honest", "m": "正直な"}, {"w": "instant", "m": "即時の"}, {"w": "mad", "m": "狂気の"}, {"w": "hidden", "m": "隠された"}, {"w": "roast", "m": "焼いた"}, {"w": "immediately", "m": "直ちに"}, {"w": "naturally", "m": "自然に"}, {"w": "rarely", "m": "めったに〜しない"}, {"w": "shortly", "m": "まもなく"}, {"w": "seldom", "m": "めったに〜ない"}], "section11": [{"w": "argue", "m": "〜と主張する"}, {"w": "concentrate", "m": "集中する"}, {"w": "delay", "m": "を遅らせる"}, {"w": "major", "m": "専攻する"}, {"w": "achieve", "m": "を達成する"}, {"w": "lack", "m": "欠けている"}, {"w": "refer", "m": "言及する"}, {"w": "burn", "m": "燃える"}, {"w": "sink", "m": "沈む"}, {"w": "consist", "m": "成る"}, {"w": "spill", "m": "をこぼす"}, {"w": "mention", "m": "〜に言及する"}, {"w": "admit", "m": "を認める"}, {"w": "blow", "m": "吹く"}, {"w": "pretend", "m": "〜のふりをする"}, {"w": "regret", "m": "を後悔する"}, {"w": "treatment", "m": "治療"}, {"w": "survey", "m": "調査"}, {"w": "temple", "m": "寺"}, {"w": "uniform", "m": "ユニフォーム"}, {"w": "agency", "m": "代理店"}, {"w": "temperature", "m": "気温"}, {"w": "trend", "m": "流行"}, {"w": "surface", "m": "表面"}, {"w": "throat", "m": "のど"}, {"w": "profit", "m": "利益"}, {"w": "workplace", "m": "職場"}, {"w": "symbol", "m": "シンボル"}, {"w": "web", "m": "ウェブ"}, {"w": "track", "m": "走路"}, {"w": "task", "m": "仕事"}, {"w": "spelling", "m": "つづり"}, {"w": "summary", "m": "要約"}, {"w": "thunderstorm", "m": "雷を伴う暴風雨"}, {"w": "diamond", "m": "ダイヤモンド"}, {"w": "manual", "m": "マニュアル"}, {"w": "stomach", "m": "胃"}, {"w": "theme", "m": "テーマ"}, {"w": "thought", "m": "考え"}, {"w": "victory", "m": "勝利"}, {"w": "sword", "m": "剣"}, {"w": "volume", "m": "音量"}, {"w": "effect", "m": "影響"}, {"w": "material", "m": "材料"}, {"w": "statement", "m": "声明"}, {"w": "coast", "m": "海岸"}, {"w": "fear", "m": "恐れ"}, {"w": "countryside", "m": "田舎"}, {"w": "issue", "m": "発行"}, {"w": "condition", "m": "状況"}, {"w": "crime", "m": "犯罪"}, {"w": "degree", "m": "度"}, {"w": "sunlight", "m": "日光"}, {"w": "capital", "m": "首都"}, {"w": "behavior", "m": "行動"}, {"w": "childhood", "m": "子供の頃"}, {"w": "rate", "m": "割合"}, {"w": "ancestor", "m": "祖先"}, {"w": "earthquake", "m": "地震"}, {"w": "freedom", "m": "自由"}, {"w": "citizen", "m": "市民"}, {"w": "entertainment", "m": "娯楽"}, {"w": "frame", "m": "枠"}, {"w": "fare", "m": "料金"}, {"w": "fault", "m": "欠点"}, {"w": "feature", "m": "特徴"}, {"w": "honor", "m": "光栄"}, {"w": "role", "m": "役"}, {"w": "stressful", "m": "ストレスの原因となる"}, {"w": "thin", "m": "薄い"}, {"w": "worth", "m": "価値がある"}, {"w": "tough", "m": "堅い"}, {"w": "well-known", "m": "よく知られている"}, {"w": "thick", "m": "太い"}, {"w": "suitable", "m": "適した"}, {"w": "square", "m": "正方形の"}, {"w": "full-time", "m": "常勤の"}, {"w": "unfriendly", "m": "不親切な"}, {"w": "likely", "m": "〜しそうである"}, {"w": "official", "m": "公式の"}, {"w": "clear", "m": "はっきりとした"}, {"w": "ill", "m": "病気で"}, {"w": "unusual", "m": "異常な"}, {"w": "specific", "m": "特定の"}, {"w": "opposite", "m": "反対の"}, {"w": "pleasant", "m": "快い"}, {"w": "awful", "m": "ひどい"}, {"w": "direct", "m": "直接の"}, {"w": "raw", "m": "生の"}, {"w": "totally", "m": "完全に"}, {"w": "surprisingly", "m": "驚くほど"}, {"w": "wrongly", "m": "間違って"}, {"w": "further", "m": "さらに"}, {"w": "indeed", "m": "実は"}, {"w": "extremely", "m": "極端に"}, {"w": "perhaps", "m": "もしかすると"}, {"w": "unless", "m": "〜でない限り"}, {"w": "unlike", "m": "〜らしくない"}, {"w": "within", "m": "〜以内に"}, {"w": "toward", "m": "〜の方へ"}], "section12": [{"w": "take care of 〜", "m": "〜を世話する"}, {"w": "take care", "m": "気をつける"}, {"w": "a few 〜", "m": "少数の〜"}, {"w": "used to do", "m": "以前は〜であった"}, {"w": "be used to doing", "m": "〜するのに慣れている"}, {"w": "these days", "m": "このごろ"}, {"w": "too 〜 to do", "m": "…するには〜すぎる"}, {"w": "the way 〜", "m": "〜のやり方"}, {"w": "because of 〜", "m": "〜の理由で"}, {"w": "get 〜 to do", "m": "〜に…させる"}, {"w": "help 〜 to do", "m": "〜に…するのを助ける"}, {"w": "pick up 〜", "m": "〜を取りに行く"}, {"w": "pay for", "m": "〜の費用を払う"}, {"w": "such as 〜", "m": "〜のような"}, {"w": "so 〜 that …", "m": "とても〜なので…"}, {"w": "each other", "m": "お互い"}, {"w": "at first", "m": "元は"}, {"w": "do 〜 good", "m": "〜の役に立つ"}, {"w": "thank 〜 for …", "m": "〜に…を感謝する"}, {"w": "be worried about 〜", "m": "〜を心配する"}, {"w": "in the past", "m": "昔は"}, {"w": "live on 〜", "m": "〜を収入源として生活する"}, {"w": "put out 〜", "m": "〜を消す"}, {"w": "far away", "m": "遠くに"}, {"w": "look like 〜", "m": "〜であるように見える"}, {"w": "in fact", "m": "実際は"}, {"w": "find out 〜", "m": "〜を見つけ出す"}, {"w": "look up 〜", "m": "〜を調べる"}, {"w": "clean up", "m": "すっかりきれいにする"}, {"w": "take part in 〜", "m": "に参加する"}, {"w": "keep on doing", "m": "〜し続ける"}, {"w": "put on 〜", "m": "〜を着用する"}, {"w": "get married to 〜", "m": "〜と結婚する"}, {"w": "be afraid of 〜", "m": "〜を恐れる"}, {"w": "have time to do", "m": "〜する時間を持つ"}, {"w": "have enough 〜 to do", "m": "…するのに十分な〜を持っている"}, {"w": "work for 〜", "m": "〜で働く"}, {"w": "work on 〜", "m": "〜に取り組む"}, {"w": "pick 〜 up", "m": "〜を車で迎えに行く"}, {"w": "the first time 〜", "m": "初めて〜するとき"}, {"w": "right away", "m": "直ちに"}, {"w": "in order to", "m": "〜するために"}, {"w": "on time", "m": "時間通りに"}, {"w": "see to it that 〜", "m": "必ず〜するように取り計らう"}, {"w": "happen to do", "m": "たまたま〜する"}, {"w": "far from 〜", "m": "〜から遠い"}, {"w": "be ready for 〜", "m": "〜の用意ができている"}, {"w": "make a reservation", "m": "予約する"}, {"w": "help 〜 with …", "m": "〜の…を手伝う"}, {"w": "get lost", "m": "道に迷う"}, {"w": "have a baby", "m": "赤ちゃんができる"}, {"w": "what to do", "m": "何を〜すべきか"}, {"w": "the last 〜 to do", "m": "最も…しそうにない〜"}, {"w": "instead of 〜", "m": "〜の代わりに"}, {"w": "take 〜 for …", "m": "〜を…と間違える"}, {"w": "as well", "m": "もまた"}, {"w": "turn off 〜", "m": "〜を消す"}, {"w": "come out", "m": "出る"}, {"w": "next to 〜", "m": "〜の隣に"}, {"w": "have fun", "m": "楽しむ"}, {"w": "a piece of 〜", "m": "1個の〜"}, {"w": "so that 〜 can do", "m": "〜が…できるように"}, {"w": "on sale", "m": "売り出し中で"}, {"w": "get better", "m": "上手になる"}, {"w": "throw away 〜", "m": "〜を捨てる"}, {"w": "do well", "m": "うまくいく"}, {"w": "even if 〜", "m": "たとえ〜でも"}, {"w": "one of the 〜 …", "m": "最も〜な…のうちの1つ"}, {"w": "where to do", "m": "どこへ〜すべきか"}, {"w": "search 〜 for …", "m": "…を求めて〜を探す"}, {"w": "thanks to 〜", "m": "〜のおかげで"}, {"w": "be different from 〜", "m": "〜と異なる"}, {"w": "sound like", "m": "〜ようだ"}, {"w": "on foot", "m": "徒歩で"}, {"w": "except for 〜", "m": "〜を除いては"}, {"w": "take off 〜", "m": "〜を脱ぐ"}, {"w": "get ready for 〜", "m": "〜の準備をする"}, {"w": "think about doing", "m": "〜しようかなと思う"}, {"w": "for free", "m": "無料で"}, {"w": "a number of 〜", "m": "たくさんの〜"}, {"w": "ask for 〜", "m": "〜を求める"}, {"w": "set up 〜", "m": "〜を設計する"}, {"w": "come up with 〜", "m": "〜を思いつく"}, {"w": "at least", "m": "少なくとも"}, {"w": "a variety of 〜", "m": "さまざまな〜"}, {"w": "look after 〜", "m": "〜の世話をする"}, {"w": "along with 〜", "m": "〜と一緒に"}, {"w": "go into 〜", "m": "〜の中に入る"}, {"w": "take place", "m": "行われる"}, {"w": "give up 〜", "m": "〜をあきらめる"}, {"w": "a couple of 〜", "m": "2、3の〜"}, {"w": "translate 〜 into …", "m": "〜を…に翻訳する"}, {"w": "on earth", "m": "一体全体"}, {"w": "be in the hospital", "m": "入院している"}, {"w": "decide on 〜", "m": "〜に決める"}, {"w": "by oneself", "m": "独力で"}, {"w": "try on 〜", "m": "〜を試着する"}, {"w": "show 〜 how to do", "m": "〜に…する方法を教える"}, {"w": "on one's way to 〜", "m": "〜へ行く途中で"}, {"w": "spend 〜 on …", "m": "…に〜を使う"}], "section13": [{"w": "than usual", "m": "いつもより"}, {"w": "walk around 〜", "m": "〜を歩き回る"}, {"w": "up to 〜", "m": "〜次第である"}, {"w": "be similar to 〜", "m": "〜と似ている"}, {"w": "fall asleep", "m": "寝入る"}, {"w": "so far", "m": "今までのところ"}, {"w": "〜 as well as …", "m": "…はもちろんのこと〜も"}, {"w": "be sure to do", "m": "必ず〜する"}, {"w": "graduate from 〜", "m": "〜を卒業する"}, {"w": "be popular with 〜", "m": "〜に人気がある"}, {"w": "in the end", "m": "結局"}, {"w": "not 〜 but …", "m": "〜ではなく…"}, {"w": "together with 〜", "m": "〜と一緒に"}, {"w": "for the first time", "m": "初めて"}, {"w": "feel like doing", "m": "〜したい気がする"}, {"w": "apply for 〜", "m": "〜に応募する"}, {"w": "due to 〜", "m": "〜が原因で"}, {"w": "make out 〜", "m": "〜を理解する"}, {"w": "by the time 〜", "m": "〜するときまでに"}, {"w": "check in", "m": "チェックインする"}, {"w": "look over 〜", "m": "〜をざっと調べる"}, {"w": "keep up with 〜", "m": "〜に遅れないでついていく"}, {"w": "on the average", "m": "平均して"}, {"w": "come down", "m": "降りてくる"}, {"w": "go over 〜", "m": "〜を見直す"}, {"w": "run after 〜", "m": "〜を追いかける"}, {"w": "turn down 〜", "m": "〜を断る"}, {"w": "introduce 〜 to …", "m": "〜を…に紹介する"}, {"w": "get on 〜", "m": "〜に乗る"}, {"w": "add 〜 to …", "m": "〜を…に加える"}, {"w": "complain about 〜", "m": "〜について不平を言う"}, {"w": "have time for 〜", "m": "〜のための時間を持つ"}, {"w": "hear from 〜", "m": "〜から便りをもらう"}, {"w": "line up", "m": "列を作る"}, {"w": "take over 〜", "m": "〜を引き継ぐ"}, {"w": "as soon as 〜", "m": "〜するとすぐに"}, {"w": "call back", "m": "電話をかけ直す"}, {"w": "go to the doctor", "m": "医者に診てもらう"}, {"w": "in a group", "m": "グループで"}, {"w": "not only 〜 but also …", "m": "〜ばかりではなく…もまた"}, {"w": "shake hands", "m": "握手をする"}, {"w": "tell 〜 how to do", "m": "〜に…する方法を教える"}, {"w": "see if 〜", "m": "〜かどうか確かめる"}, {"w": "for instance", "m": "例えば"}, {"w": "fill out 〜", "m": "〜に書き込む"}, {"w": "would like 〜 to do", "m": "〜に…してもらいたい"}, {"w": "grow up to be 〜", "m": "成長して〜になる"}, {"w": "by mistake", "m": "間違って"}, {"w": "take a break", "m": "休憩する"}, {"w": "as 〜 as possible", "m": "できるだけ〜"}, {"w": "make sure that 〜", "m": "〜であることを確実にする"}, {"w": "〜 enough to do", "m": "…するのに十分〜"}, {"w": "prefer 〜 to …", "m": "…より〜を好む"}, {"w": "go ahead", "m": "先に行く"}, {"w": "the same 〜 as …", "m": "…と同じ〜"}, {"w": "for fun", "m": "遊びで"}, {"w": "stop by 〜", "m": "〜に立ち寄る"}, {"w": "cut down 〜", "m": "〜を切り倒す"}, {"w": "at a time", "m": "一度に"}, {"w": "before long", "m": "まもなく"}, {"w": "by chance", "m": "偶然に"}, {"w": "exchange 〜 for …", "m": "〜と…を交換する"}, {"w": "in addition to 〜", "m": "〜に加えて"}, {"w": "make a mistake", "m": "間違える"}, {"w": "in a hurry", "m": "急いで"}, {"w": "in time for 〜", "m": "〜に間に合って"}, {"w": "〜, …, and so on", "m": "〜や…など"}, {"w": "be responsible for 〜", "m": "〜に対して責任がある"}, {"w": "by nature", "m": "生まれつき"}, {"w": "on purpose", "m": "わざと"}, {"w": "at the moment", "m": "ちょうど今"}, {"w": "send out 〜", "m": "〜を発送する"}, {"w": "put down 〜", "m": "〜を書き留める"}, {"w": "look forward to doing", "m": "〜することを楽しみに待つ"}, {"w": "be in trouble", "m": "困っている"}, {"w": "all the year around", "m": "一年中"}, {"w": "be about to do", "m": "まさに〜するところである"}, {"w": "be typical of 〜", "m": "〜に典型的である"}, {"w": "by the side of 〜", "m": "〜のそばに"}, {"w": "come to life", "m": "意識を回復する"}, {"w": "compare 〜 with …", "m": "〜と…を比べる"}, {"w": "cut off 〜", "m": "〜を切り離す"}, {"w": "do 〜 a favor", "m": "〜に親切な行為をする"}, {"w": "do the laundry", "m": "洗濯する"}, {"w": "drop by 〜", "m": "〜にひょいっと立ち寄る"}, {"w": "focus on 〜", "m": "〜に注意を集中する"}, {"w": "go out", "m": "外出する"}, {"w": "lose sight of 〜", "m": "〜を見失う"}, {"w": "put off 〜", "m": "〜を延期する"}, {"w": "show off 〜", "m": "〜を見せびらかす"}, {"w": "stay away from 〜", "m": "〜に近づかないでいる"}, {"w": "as you know", "m": "知っての通り"}, {"w": "be over", "m": "終わっている"}, {"w": "make friends with 〜", "m": "〜と友達になる"}, {"w": "be made from 〜", "m": "〜で作られている"}, {"w": "run away", "m": "逃げる"}, {"w": "a pair of 〜", "m": "1組の〜"}, {"w": "once a week", "m": "週に1度"}, {"w": "fall down", "m": "落ちる"}, {"w": "in a minute", "m": "すぐに"}], "section14": [{"w": "on one's way home", "m": "家に帰る途中で"}, {"w": "across from 〜", "m": "〜の向こう側に"}, {"w": "after a while", "m": "しばらくして"}, {"w": "be away", "m": "留守にする"}, {"w": "get out of 〜", "m": "〜から出る"}, {"w": "have a chance to do", "m": "〜する機会を待つ"}, {"w": "run into 〜", "m": "〜と偶然出会う"}, {"w": "sleep well", "m": "よく眠る"}, {"w": "some other time", "m": "いつか別のときに"}, {"w": "take 〜 out of …", "m": "…から〜を取り出す"}, {"w": "suffer from 〜", "m": "〜に苦しむ"}, {"w": "in particular", "m": "特に"}, {"w": "be based on 〜", "m": "〜に基づいている"}, {"w": "bring back 〜", "m": "〜を持ち帰る"}, {"w": "no longer 〜", "m": "もはや〜でない"}, {"w": "depend on 〜", "m": "〜に依存する"}, {"w": "get rid of 〜", "m": "〜を取り除く"}, {"w": "leave for 〜", "m": "〜に向けて出発する"}, {"w": "turn on 〜", "m": "〜のスイッチを入れる"}, {"w": "result in 〜", "m": "結局〜に終わる"}, {"w": "be related to 〜", "m": "〜に関係がある"}, {"w": "all the time", "m": "いつでも"}, {"w": "for a while", "m": "しばらくの間"}, {"w": "by the end of 〜", "m": "〜の終わりまでには"}, {"w": "hold on", "m": "電話を切らないでおく"}, {"w": "fill up 〜", "m": "〜を満たす"}, {"w": "in other words", "m": "言い換えれば"}, {"w": "in turn", "m": "順番に"}, {"w": "point out 〜", "m": "〜を指摘する"}, {"w": "after all", "m": "結局"}, {"w": "for long", "m": "長い間"}, {"w": "go wrong", "m": "うまくいかない"}, {"w": "in line", "m": "整列して"}, {"w": "in return for 〜", "m": "〜のお返しに"}, {"w": "take a look at 〜", "m": "〜を見る"}, {"w": "whether 〜 or not", "m": "〜であろうとなかろうと"}, {"w": "be proud of 〜", "m": "〜を誇りに思う"}, {"w": "be sold out", "m": "売り切れている"}, {"w": "be full of 〜", "m": "〜でいっぱいである"}, {"w": "get in 〜", "m": "〜に乗る"}, {"w": "get together", "m": "集まる"}, {"w": "by far", "m": "断然"}, {"w": "for sure", "m": "確かに"}, {"w": "let 〜 down", "m": "〜を失望させる"}, {"w": "make up one's mind", "m": "決心する"}, {"w": "take after 〜", "m": "〜に似ている"}, {"w": "turn out to be", "m": "〜であることがわかる"}, {"w": "with luck", "m": "運がよければ"}, {"w": "be against 〜", "m": "〜に反対である"}, {"w": "check out", "m": "チェックアウトする"}, {"w": "just in case", "m": "万が一に備えて"}, {"w": "in public", "m": "人前で"}, {"w": "look through 〜", "m": "〜にざっと目を通す"}, {"w": "now that 〜", "m": "今や〜なので"}, {"w": "of one's own", "m": "自分自身の"}, {"w": "plenty of 〜", "m": "たくさんの〜"}, {"w": "take one's time", "m": "ゆっくりやる"}, {"w": "be sick in bed", "m": "病気で寝ている"}, {"w": "give 〜 a ride", "m": "〜を車に乗せる"}, {"w": "how far 〜", "m": "どのくらい〜"}, {"w": "come true", "m": "実現する"}, {"w": "at the end of 〜", "m": "〜の最後に"}, {"w": "it takes 〜 to do", "m": "〜するのに…かかる"}, {"w": "make a speech", "m": "演説をする"}, {"w": "something 〜 to do", "m": "何か…する〜なもの"}, {"w": "show 〜 around …", "m": "〜に…を案内する"}, {"w": "against one's will", "m": "意思に反して"}, {"w": "appeal to 〜", "m": "〜に訴える"}, {"w": "at the most", "m": "最大でも"}, {"w": "at length", "m": "ついに"}, {"w": "at the risk of 〜", "m": "〜の危険を冒して"}, {"w": "be capable of doing", "m": "〜する能力がある"}, {"w": "be free from 〜", "m": "〜から解放されている"}, {"w": "be grateful for 〜", "m": "〜のことを感謝している"}, {"w": "be independent of 〜", "m": "〜から独立している"}, {"w": "be jealous of 〜", "m": "〜を妬んでいる"}, {"w": "be out of order", "m": "故障している"}, {"w": "be out of the question", "m": "あり得ない"}, {"w": "be poor at 〜", "m": "〜が苦手である"}, {"w": "be sick of 〜", "m": "〜にうんざりしている"}, {"w": "be sure of 〜", "m": "〜を確信している"}, {"w": "break up 〜", "m": "〜をばらばらにする"}, {"w": "bring up 〜", "m": "〜を育てる"}, {"w": "by heart", "m": "暗記して"}, {"w": "care about 〜", "m": "〜を心配する"}, {"w": "do without 〜", "m": "〜なしで済ます"}, {"w": "feel at home", "m": "くつろぐ"}, {"w": "feel sorry for 〜", "m": "〜のことで済まないと思う"}, {"w": "for a change", "m": "気分転換に"}, {"w": "get away from 〜", "m": "〜から離れる"}, {"w": "head for 〜", "m": "〜へ向かう"}, {"w": "in a sense", "m": "ある意味では"}, {"w": "in contrast", "m": "それとは対照的に"}, {"w": "in shape", "m": "体調が良くて"}, {"w": "keep an eye on 〜", "m": "〜から目を離さない"}, {"w": "keep one's promise", "m": "約束を守る"}, {"w": "look up to 〜", "m": "〜を尊敬する"}, {"w": "lose control", "m": "自制を失う"}, {"w": "lose one's balance", "m": "バランスを崩す"}, {"w": "make oneself at home", "m": "くつろぐ"}], "section15": [{"w": "make sense", "m": "意味が通じる"}, {"w": "none of one's business", "m": "〜の知ったことではない"}, {"w": "do nothing but do", "m": "〜してばかりいる"}, {"w": "on demand", "m": "要求があり次第"}, {"w": "out of date", "m": "時代遅れの"}, {"w": "participate in 〜", "m": "〜に参加する"}, {"w": "pass by 〜", "m": "〜のそばを通る"}, {"w": "reach out for 〜", "m": "〜を取ろうと手を伸ばす"}, {"w": "separate 〜 from …", "m": "〜を…から分離する"}, {"w": "speak up", "m": "はっきり言う"}, {"w": "stand by 〜", "m": "〜を支援する"}, {"w": "stand out", "m": "目立つ"}, {"w": "succeed in 〜", "m": "〜に成功する"}, {"w": "take a bite", "m": "一口食べる"}, {"w": "The point is that 〜", "m": "重要な点は〜である"}, {"w": "to the point", "m": "的を射た"}, {"w": "with care", "m": "気をつけて"}, {"w": "without fail", "m": "必ず"}, {"w": "another 〜 minutes", "m": "もう〜分"}, {"w": "as if 〜", "m": "まるで〜のように"}, {"w": "be busy with 〜", "m": "〜で忙しい"}, {"w": "be ready to do", "m": "〜する準備ができている"}, {"w": "be tired from 〜", "m": "〜で疲れている"}, {"w": "dress up", "m": "正装する"}, {"w": "eat out", "m": "外食する"}, {"w": "either 〜 or …", "m": "〜か…のどちらか"}, {"w": "for a minute", "m": "ちょっとの間"}, {"w": "go on a tour", "m": "旅行に行く"}, {"w": "go out of business", "m": "破産する"}, {"w": "have a sore throat", "m": "のどが痛む"}, {"w": "make an appointment with 〜", "m": "〜の予約をする"}, {"w": "make sense of 〜", "m": "〜の意味を理解する"}, {"w": "no more than 〜", "m": "〜にすぎない"}, {"w": "on one's own", "m": "自身の力で"}, {"w": "over and over again", "m": "何度も"}, {"w": "put away 〜", "m": "〜を片付ける"}, {"w": "see 〜 off", "m": "〜を見送る"}, {"w": "stay in bed", "m": "寝ている"}, {"w": "take a seat", "m": "座る"}, {"w": "try one's best", "m": "全力を尽くして"}, {"w": "when to do", "m": "いつ〜すべきか"}, {"w": "lead to 〜", "m": "〜に通じる"}, {"w": "provide 〜 with …", "m": "〜に…を提供する"}, {"w": "hand in 〜", "m": "〜を提出する"}, {"w": "be aware of 〜", "m": "〜に気づいている"}, {"w": "carry out 〜", "m": "〜を実行する"}, {"w": "as a result of 〜", "m": "〜の結果として"}, {"w": "as long as 〜", "m": "〜する限り"}, {"w": "be involved in 〜", "m": "〜に関与する"}, {"w": "break down", "m": "故障する"}, {"w": "in conclusion", "m": "結論として"}, {"w": "at the beginning of 〜", "m": "〜の初めに"}, {"w": "on business", "m": "仕事で"}, {"w": "all the way", "m": "はるばる"}, {"w": "run out of 〜", "m": "〜がなくなる"}, {"w": "be injured", "m": "けがをする"}, {"w": "by accident", "m": "偶然に"}, {"w": "come across 〜", "m": "〜に偶然出会う"}, {"w": "in charge of 〜", "m": "〜を担当して"}, {"w": "make an effort", "m": "努力する"}, {"w": "pay attention to 〜", "m": "〜に注意する"}, {"w": "rely on 〜", "m": "〜を頼る"}, {"w": "be tired of 〜", "m": "〜に飽きる"}, {"w": "change one's mind", "m": "気が変わる"}, {"w": "a bunch of 〜", "m": "一束の〜"}, {"w": "ahead of 〜", "m": "〜の前に"}, {"w": "be expected to do", "m": "〜するように期待されている"}, {"w": "be impressed with 〜", "m": "〜に感銘を受ける"}, {"w": "be in danger", "m": "危険にさらされている"}, {"w": "be said to be 〜", "m": "〜であると言われている"}, {"w": "be satisfied with 〜", "m": "〜に満足している"}, {"w": "be unable to do", "m": "〜することができない"}, {"w": "catch up with 〜", "m": "〜に追いつく"}, {"w": "from now on", "m": "今後ずっと"}, {"w": "get along with 〜", "m": "〜とうまくやっていく"}, {"w": "get over 〜", "m": "〜を克服する"}, {"w": "go through 〜", "m": "〜を経験する"}, {"w": "had better do", "m": "〜した方がよい"}, {"w": "hope for 〜", "m": "〜を願う"}, {"w": "in advance", "m": "あらかじめ"}, {"w": "in reality", "m": "実際は"}, {"w": "in spite of 〜", "m": "〜にもかかわらず"}, {"w": "in the long run", "m": "長い目で見れば"}, {"w": "lead 〜 to …", "m": "〜を…に導く"}, {"w": "leave 〜 behind", "m": "〜を置いていく"}, {"w": "look out", "m": "用心する"}, {"w": "make a difference", "m": "違いをもたらす"}, {"w": "make up for 〜", "m": "〜の埋め合わせをする"}, {"w": "mean to do", "m": "〜するつもりである"}, {"w": "on board", "m": "〜に乗って"}, {"w": "play an important role in 〜", "m": "〜で重要な役割を果たす"}, {"w": "stand for 〜", "m": "〜を意味する"}, {"w": "start with 〜", "m": "〜で始まる"}, {"w": "take 〜 back to …", "m": "〜を…に返品する"}, {"w": "to one's surprise", "m": "驚いたことに"}, {"w": "watch out for 〜", "m": "〜に用心する"}, {"w": "stay up late", "m": "夜更かしをする"}, {"w": "as usual", "m": "いつものように"}, {"w": "cheer 〜 up", "m": "〜を元気づける"}, {"w": "name 〜 after …", "m": "…にちなんで〜を名付ける"}]}}</script>
+
+<script>
+(function(){
+  var DATA = JSON.parse(document.getElementById('vocabData').textContent);
+  var levelFrom = document.getElementById('levelFrom');
+  var levelTo = document.getElementById('levelTo');
+  var output = document.getElementById('output');
+  var rangeInfo = document.getElementById('rangeInfo');
+  var genBtn = document.getElementById('genBtn');
+  var editBtn = document.getElementById('editBtn');
+  var printBtn = document.getElementById('printBtn');
+
+  function levelLabel(lv){
+    var m = /^section(\d+)$/.exec(lv);
+    return m ? ('Section ' + m[1]) : lv;
+  }
+
+  DATA.levels.forEach(function(lv){
+    [levelFrom, levelTo].forEach(function(sel){
+      var opt = document.createElement('option');
+      opt.value = lv;
+      opt.textContent = levelLabel(lv);
+      sel.appendChild(opt);
+    });
+  });
+
+  // 「から」「まで」の級名から、DATA.levels上のインデックス範囲（昇順）を返す
+  function getSelectedLevels(){
+    var i1 = DATA.levels.indexOf(levelFrom.value);
+    var i2 = DATA.levels.indexOf(levelTo.value);
+    if (i1 < 0) i1 = 0;
+    if (i2 < 0) i2 = 0;
+    var lo = Math.min(i1, i2), hi = Math.max(i1, i2);
+    return DATA.levels.slice(lo, hi + 1);
+  }
+
+  function poolAcross(dict, levels){
+    var out = [];
+    levels.forEach(function(lv){
+      out = out.concat(dict[lv] || []);
+    });
+    return out;
+  }
+
+  function rangeLabel(levels){
+    if (levels.length === 1) return levelLabel(levels[0]);
+    return levelLabel(levels[0]) + '〜' + levelLabel(levels[levels.length - 1]);
+  }
+
+  function shuffle(arr){
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function pick(arr, n){
+    return shuffle(arr).slice(0, Math.min(n, arr.length));
+  }
+
+  function esc(s){
+    return String(s == null ? '' : s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function buildWordSection(levels, num){
+    var pool = poolAcross(DATA.words, levels);
+    var picked = pick(pool, num);
+    // pad to even number for 2-column layout
+    if (picked.length % 2 === 1) picked = picked.slice(0, picked.length - 1);
+    var rowsHtml = '';
+    var ansRowsHtml = '';
+    for (var i = 0; i < picked.length; i += 2) {
+      var a = picked[i], b = picked[i+1];
+      rowsHtml += '<tr>' +
+        '<td class="wnum">' + (i+1) + '</td><td class="wword en">' + esc(a.w) + '</td><td class="wmeaning"><span class="blankline"></span></td>' +
+        '<td class="wnum">' + (i+2) + '</td><td class="wword en">' + esc(b.w) + '</td><td class="wmeaning"><span class="blankline"></span></td>' +
+        '</tr>';
+      ansRowsHtml += '<tr>' +
+        '<td class="wnum">' + (i+1) + '</td><td class="wword en">' + esc(a.w) + '</td><td class="wmeaning"><span class="k">' + esc(a.m) + '</span></td>' +
+        '<td class="wnum">' + (i+2) + '</td><td class="wword en">' + esc(b.w) + '</td><td class="wmeaning"><span class="k">' + esc(b.m) + '</span></td>' +
+        '</tr>';
+    }
+    return {
+      count: picked.length,
+      q: '<table class="wordtable"><tbody>' + rowsHtml + '</tbody></table>',
+      a: '<table class="wordtable"><tbody>' + ansRowsHtml + '</tbody></table>'
+    };
+  }
+
+  // 問題文側の空欄 "(                    )" は、HTML上では連続スペースが1つに
+  // つぶれて見えてしまうため、書き込み用の下線（blank-ul）に置き換えて表示する。
+  function formatBlankLine(str){
+    var m = /\(\s+\)/.exec(str);
+    if (!m) return esc(str);
+    var prefix = str.slice(0, m.index);
+    var suffix = str.slice(m.index + m[0].length);
+    return esc(prefix) + '(<span class="blank-ul">&nbsp;</span>)' + esc(suffix);
+  }
+
+  // blankStr: "...(                    )..." / fullStr: 完成文。
+  // 空欄に入る語（句）だけを (　) で囲み、太字下線にして返す。
+  function buildAnswerLine(blankStr, fullStr){
+    var m = /\(\s+\)/.exec(blankStr);
+    if (!m) return esc(fullStr); // 念のためのフォールバック
+    var prefix = blankStr.slice(0, m.index);
+    var suffix = blankStr.slice(m.index + m[0].length);
+    if (fullStr.indexOf(prefix) !== 0 || fullStr.slice(fullStr.length - suffix.length) !== suffix) {
+      return esc(fullStr); // 前後が一致しない場合もフォールバック
+    }
+    var answer = fullStr.slice(prefix.length, fullStr.length - suffix.length);
+    return esc(prefix) + '(<span class="k">' + esc(answer) + '</span>)' + esc(suffix);
+  }
+
+  function buildSentenceSection(levels, num){
+    var ejPool = poolAcross(DATA.engjp, levels);
+    var jePool = poolAcross(DATA.jpeng, levels);
+    var halfA = Math.ceil(num / 2), halfB = num - halfA;
+    var ejItems = pick(ejPool, halfA).map(function(it){ return {type:'ej', it: it}; });
+    var jeItems = pick(jePool, halfB).map(function(it){ return {type:'je', it: it}; });
+    var items = shuffle(ejItems.concat(jeItems));
+
+    var qHtml = '', aHtml = '';
+    items.forEach(function(entry, idx){
+      if (entry.type === 'ej') {
+        var it = entry.it;
+        qHtml += '<li>' +
+          '<div class="sline en">' + esc(it.en) + '</div>' +
+          '<div class="sline jp">' + formatBlankLine(it.jpBlank) + '</div>' +
+          '</li>';
+        aHtml += '<li>' +
+          '<div class="sline en">' + esc(it.en) + '</div>' +
+          '<div class="sline jp">' + buildAnswerLine(it.jpBlank, it.jpFull) + '</div>' +
+          '</li>';
+      } else {
+        var it2 = entry.it;
+        qHtml += '<li>' +
+          '<div class="sline jp">' + esc(it2.jp) + '</div>' +
+          '<div class="sline en">' + formatBlankLine(it2.enBlank) + '</div>' +
+          '</li>';
+        aHtml += '<li>' +
+          '<div class="sline jp">' + esc(it2.jp) + '</div>' +
+          '<div class="sline en">' + buildAnswerLine(it2.enBlank, it2.enFull) + '</div>' +
+          '</li>';
+      }
+    });
+    return {
+      count: items.length,
+      q: '<ol class="sentlist">' + qHtml + '</ol>',
+      a: '<ol class="sentlist">' + aHtml + '</ol>'
+    };
+  }
+
+  function todayStr(){
+    var d = new Date();
+    return d.getFullYear() + '年' + (d.getMonth()+1) + '月' + d.getDate() + '日';
+  }
+
+  function render(){
+    var levels = getSelectedLevels();
+    var label = rangeLabel(levels);
+    var wordSec = buildWordSection(levels, 20);
+    var total = wordSec.count;
+
+    rangeInfo.textContent = '出題範囲：' + label + '（単語' + wordSec.count + '問）';
+
+    var html = '';
+
+    // ===== 問題用紙 =====
+    html += '<div class="sheet" id="sheetQ">';
+    html += '<div class="scorebox"><div class="sb-label">得点</div><div class="sb-box">&nbsp;</div><div class="sb-max">／' + total + '点</div></div>';
+    html += '<h1>ランダム英単語テスト　' + esc(label) + '</h1>';
+    html += '<div class="sub">学習塾CONNECT／英検準2級パス単／満点' + total + '点（各1点）</div>';
+    html += '<div class="namebox"><span>組　　番</span><span>名前　　　　　　　　　　　</span><span>' + todayStr() + '</span></div>';
+
+    html += '<div class="q">';
+    html += '<div class="qh"><span class="num">1</span><span class="inst">次の英単語・熟語の意味を書きなさい。<span class="pts">（各1点×' + wordSec.count + '）</span></span></div>';
+    html += wordSec.q;
+    html += '</div>';
+
+    html += '</div>'; // sheetQ
+
+    // ===== 解答ページ =====
+    html += '<div class="sheet pb ans">';
+    html += '<h1>解答・解説</h1>';
+    html += '<div class="sub">ランダム英単語テスト　' + esc(label) + '／英検準2級パス単／配点：' + total + '点</div>';
+
+    html += '<div class="memo"><div class="t">■ 出題範囲メモ</div>';
+    html += '「英検準2級パス単」の単語・熟語リスト（' + esc(label) + '）からランダム抽出して作成。単語→意味の一問一答形式。</div>';
+
+    html += '<h2>大問1　単語・熟語の意味</h2>';
+    html += wordSec.a;
+
+    html += '</div>'; // ans
+
+    output.innerHTML = html;
+  }
+
+  genBtn.addEventListener('click', render);
+  levelFrom.addEventListener('change', function(){
+    // from が to を追い越したら to も合わせる
+    if (DATA.levels.indexOf(levelFrom.value) > DATA.levels.indexOf(levelTo.value)) {
+      levelTo.value = levelFrom.value;
+    }
+    render();
+  });
+  levelTo.addEventListener('change', function(){
+    if (DATA.levels.indexOf(levelTo.value) < DATA.levels.indexOf(levelFrom.value)) {
+      levelFrom.value = levelTo.value;
+    }
+    render();
+  });
+
+  printBtn.addEventListener('click', function(){ window.print(); });
+
+  var editing = false;
+  editBtn.addEventListener('click', function(){
+    editing = !editing;
+    document.body.classList.toggle('editmode', editing);
+    editBtn.classList.toggle('active', editing);
+    editBtn.textContent = editing ? '編集モード：ON' : '編集モード';
+    var targets = output.querySelectorAll('.sheet, h1, .sub, .memo, td, li, .sline, .qh .inst');
+    targets.forEach(function(el){
+      el.setAttribute('contenteditable', editing ? 'true' : 'false');
+    });
+  });
+
+  // 初期表示
+  levelFrom.value = DATA.levels[0];
+  levelTo.value = DATA.levels[0];
+  render();
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CONNECT教材ポータル</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<style>
+  :root {
+    --primary: #1F3A5F;
+    --accent: #C9972B;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Noto Sans JP', sans-serif;
+    line-height: 1.7;
+    background: #FAF8F2;
+    color: #22262B;
+  }
+  a { color: inherit; text-decoration: none; }
+  .material-link:hover .card-title { text-decoration: underline; }
+  .chip:hover { filter: brightness(0.95); }
+  .material-card { transition: transform 0.15s, box-shadow 0.15s; }
+  .material-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(31,58,95,0.12); }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 18px;
+  }
+  header {
+    background: var(--primary);
+    color: #FAF8F2;
+    padding: 48px 24px 56px;
+  }
+  .header-inner { max-width: 1040px; margin: 0 auto; }
+  .eyebrow { font-size: 13px; letter-spacing: 0.08em; color: #C9D3DE; margin-bottom: 10px; }
+  h1 { margin: 0 0 10px; font-family: 'Shippori Mincho', serif; font-size: 34px; font-weight: 700; letter-spacing: 0.02em; }
+  .tagline { margin: 0 0 28px; font-size: 15px; color: #DCE3EC; max-width: 560px; }
+  .search-box {
+    display: flex; align-items: center; gap: 10px;
+    background: #FFFFFF; border-radius: 10px; padding: 12px 16px; max-width: 480px;
+  }
+  .search-box input {
+    border: none; outline: none; font-size: 14px; font-family: inherit;
+    color: #22262B; flex: 1; background: transparent;
+  }
+  main { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+  .filter-bar {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    gap: 16px; padding: 24px 0; border-bottom: 1px solid #E6E0D4;
+  }
+  nav.subjects { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { padding: 8px 18px; border-radius: 999px; font-size: 13px; font-weight: 500; }
+  .chip.all { background: var(--primary); color: #FAF8F2; }
+  .chip.eng { background: #EFF2F6; color: var(--primary); }
+  .chip.math { background: #FBF3E3; color: var(--accent); }
+  .sort-btn {
+    display: flex; align-items: center; gap: 6px;
+    background: #FFFFFF; border: 1px solid #D8D2C4; border-radius: 999px;
+    padding: 8px 16px; font-size: 13px; font-family: inherit; color: #595F6B; cursor: pointer;
+  }
+  .quick-links { padding: 18px 0 6px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .quick-links .label { font-size: 12px; color: #A9A294; margin-right: 2px; }
+  .quick-links a {
+    font-size: 12px; font-weight: 500; color: #595F6B;
+    background: #F3EFE3; border: 1px solid #EAE4D8; border-radius: 999px;
+    padding: 5px 13px;
+  }
+  .quick-links a:hover { background: #EAE4D8; }
+  .quick-links .sep { width: 1px; height: 14px; background: #D8D2C4; margin: 0 4px; }
+  section.subject { padding-top: 44px; }
+  .subject-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
+  .subject-head h2 { margin: 0; font-family: 'Shippori Mincho', serif; font-size: 24px; }
+  .subject-head .meta { font-size: 13px; color: #8A93A1; }
+  .underline { height: 3px; width: 56px; border-radius: 2px; margin-bottom: 28px; }
+  .category { margin-bottom: 40px; }
+  .category h3 { font-size: 16px; margin: 0 0 2px; color: #22262B; display: flex; align-items: baseline; gap: 8px; }
+  .category h3 .count { font-size: 12px; font-weight: 500; color: #A9A294; }
+  .category .cat-note { font-size: 12px; color: #A9A294; margin: 0 0 14px; }
+  .material-link { display: flex; }
+  .card {
+    background: #FFFFFF; border: 1px solid #EAE4D8; border-radius: 12px; overflow: hidden;
+    display: flex; flex-direction: column; width: 100%;
+  }
+  .card.placeholder { border: 1px dashed #D8D2C4; }
+  .card .thumb {
+    height: 72px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 26px;
+  }
+  .card .body { padding: 14px 16px 16px; flex: 1; display: flex; flex-direction: column; }
+  .card .card-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .card .desc { font-size: 12px; color: #8A93A1; margin-top: auto; padding-top: 6px; }
+  .card .pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .card .pill {
+    font-size: 12px; font-weight: 600; color: #595F6B;
+    background: #F3EFE3; border: 1px solid #EAE4D8; border-radius: 999px;
+    padding: 5px 13px;
+  }
+  .card .pill:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .set-group {
+    grid-column: span 2;
+    position: relative;
+    padding-top: 26px;
+  }
+  .set-group.wide { grid-column: 1 / -1; }
+  .set-group .set-label {
+    position: absolute; top: 0; left: 2px;
+    font-size: 12px; font-weight: 700; color: var(--accent);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .set-group .card-grid { gap: 10px; }
+  @media (max-width: 480px) { .set-group { grid-column: span 1; } }
+  footer {
+    border-top: 1px solid #E6E0D4; padding: 20px 0 48px; font-size: 12px; color: #A9A294;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="eyebrow">学習塾CONNECT ／ 講師用</div>
+    <h1>CONNECT 教材ポータル</h1>
+    <p class="tagline">これまで作成した授業プリント・解説・対策問題をひとまとめに。教科と単元からすぐに開けます。</p>
+    <div class="search-box">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="#8A93A1" stroke-width="2"/><line x1="21" y1="21" x2="16.65" y2="16.65" stroke="#8A93A1" stroke-width="2" stroke-linecap="round"/></svg>
+      <input type="text" placeholder="教材名・単元名で検索（準備中）" disabled>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <div class="filter-bar">
+    <nav class="subjects" aria-label="教科で絞り込み">
+      <a href="#" class="chip all">すべて</a>
+      <a href="#eng-top" class="chip eng">📘 英語</a>
+      <a href="#math-top" class="chip math">📐 数学</a>
+    </nav>
+    <button type="button" class="sort-btn">🎓 学年順に並べ替え（準備中）</button>
+  </div>
+
+  <div class="quick-links">
+    <span class="label">カテゴリ</span>
+    <a href="#eng-grammar">文法解説</a>
+    <a href="#eng-exam">都立入試対策</a>
+    <a href="#eng-vocab">単語・読解</a>
+    <span class="sep"></span>
+    <a href="#math-formula">公式・総復習</a>
+    <a href="#math-exam">都立入試対策</a>
+    <a href="#math-calc">計算プリント</a>
+    <a href="#math-shape">図形・文章題</a>
+  </div>
+
+  <!-- 英語 -->
+  <section id="eng-top" class="subject">
+    <div class="subject-head">
+      <h2 style="color: var(--primary);">📘 英語</h2>
+      <span class="meta">中学生向け</span>
+    </div>
+    <div class="underline" style="background: var(--primary);"></div>
+
+    <div id="eng-grammar" class="category">
+      <h3>文法解説 <span class="count">中1英語 総復習文法・全6種</span></h3>
+      <p class="cat-note">確認テスト①②③（単元ごと）と、総復習ランダム英文法（基礎／標準／応用）。各カードから「やさしめ・標準」または「A・B」を選べます。</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="thumb" style="background:#EFF2F6;">📄</div>
+          <div class="body">
+            <div class="card-title">確認テスト① be動詞まで</div>
+            <div class="desc">中1英語 総復習文法（PDF）</div>
+            <div class="pills">
+              <a href="materials/g1-eng-check1-be-easy.pdf" target="_blank" class="pill">やさしめ</a>
+              <a href="materials/g1-eng-check1-be-standard.pdf" target="_blank" class="pill">標準</a>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="thumb" style="background:#EFF2F6;">📄</div>
+          <div class="body">
+            <div class="card-title">確認テスト② 一般動詞まで</div>
+            <div class="desc">中1英語 総復習文法（PDF）</div>
+            <div class="pills">
+              <a href="materials/g1-eng-check2-genv-easy.pdf" target="_blank" class="pill">やさしめ</a>
+              <a href="materials/g1-eng-check2-genv-standard.pdf" target="_blank" class="pill">標準</a>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="thumb" style="background:#EFF2F6;">📄</div>
+          <div class="body">
+            <div class="card-title">確認テスト③ 三人称単数まで</div>
+            <div class="desc">中1英語 総復習文法（PDF）</div>
+            <div class="pills">
+              <a href="materials/g1-eng-check3-3rdsg-easy.pdf" target="_blank" class="pill">やさしめ</a>
+              <a href="materials/g1-eng-check3-3rdsg-standard.pdf" target="_blank" class="pill">標準</a>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="thumb" style="background:#EFF2F6;">📘</div>
+          <div class="body">
+            <div class="card-title">総復習ランダム英文法 基礎</div>
+            <div class="desc">中1英語 総復習文法（PDF）</div>
+            <div class="pills">
+              <a href="materials/g1-eng-review-basic.pdf" target="_blank" class="pill">A</a>
+              <a href="materials/g1-eng-review-basicB.pdf" target="_blank" class="pill">B</a>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="thumb" style="background:#EFF2F6;">📗</div>
+          <div class="body">
+            <div class="card-title">総復習ランダム英文法 標準</div>
+            <div class="desc">中1英語 総復習文法（PDF）</div>
+            <div class="pills">
+              <a href="materials/g1-eng-review-standard.pdf" target="_blank" class="pill">A</a>
+              <a href="materials/g1-eng-review-standardB.pdf" target="_blank" class="pill">B</a>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="thumb" style="background:#EFF2F6;">📙</div>
+          <div class="body">
+            <div class="card-title">総復習ランダム英文法 応用（和文英訳）</div>
+            <div class="desc">中1英語 総復習文法（PDF）</div>
+            <div class="pills">
+              <a href="materials/g1-eng-review-advanced-jtoe.pdf" target="_blank" class="pill">A</a>
+              <a href="materials/g1-eng-review-advancedB-jtoe.pdf" target="_blank" class="pill">B</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="eng-exam" class="category">
+      <h3>都立入試対策</h3>
+      <div class="card-grid">
+        <a href="#" class="material-link">
+          <div class="card">
+            <div class="thumb" style="background:#EFF2F6;">📝</div>
+            <div class="body">
+              <div class="card-title">都立入試英語攻略</div>
+              <div class="desc">出題傾向と対策のまとめ</div>
+            </div>
+          </div>
+        </a>
+        <a href="#" class="material-link">
+          <div class="card placeholder">
+            <div class="thumb" style="background:#FAF8F2; color:#C4BEAE;">＋</div>
+            <div class="body">
+              <div class="card-title" style="color:#A9A294;">準備中</div>
+              <div class="desc" style="color:#B8B2A2;">定期テスト予想問題など</div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div id="eng-vocab" class="category" style="margin-bottom:8px;">
+      <h3>単語・読解 <span class="count">6種</span></h3>
+      <div class="card-grid">
+        <a href="vocab-test.html" class="material-link">
+          <div class="card">
+            <div class="thumb" style="background:#EFF2F6;">🔤</div>
+            <div class="body">
+              <div class="card-title">ランダム英単語テスト（中3）</div>
+              <div class="desc">20級〜15段／級を選んで20問を自動生成・印刷</div>
+            </div>
+          </div>
+        </a>
+        <a href="vocab-test-g12.html" class="material-link">
+          <div class="card">
+            <div class="thumb" style="background:#EFF2F6;">🔤</div>
+            <div class="body">
+              <div class="card-title">ランダム英単語テスト（中1・中2）</div>
+              <div class="desc">20級〜15段／級を選んで20問を自動生成・印刷</div>
+            </div>
+          </div>
+        </a>
+        <a href="elem-vocab-test.html" class="material-link">
+          <div class="card">
+            <div class="thumb" style="background:#EFF2F6;">🧒</div>
+            <div class="body">
+              <div class="card-title">小学生英単語テスト</div>
+              <div class="desc">Unit1〜39／英→日・日→英・ミックスを自動生成</div>
+            </div>
+          </div>
+        </a>
+        <a href="irregular-verb-test.html" class="material-link">
+          <div class="card">
+            <div class="thumb" style="background:#EFF2F6;">🔁</div>
+            <div class="body">
+              <div class="card-title">不規則動詞テスト</div>
+              <div class="desc">8級・7級／過去形・過去分詞形をランダム出題</div>
+            </div>
+          </div>
+        </a>
+        <a href="vocab-test-target.html" class="material-link">
+          <div class="card">
+            <div class="thumb" style="background:#EFF2F6;">📙</div>
+            <div class="body">
+              <div class="card-title">ランダム英単語テスト（市販単語帳）</div>
+              <div class="desc">ターゲット1900/1400/1200/1000／開始番号と語数を指定して自動生成</div>
+            </div>
+          </div>
+        </a>
+        <a href="vocab-test-pass2.html" class="material-link">
+          <div class="card">
+            <div class="thumb" style="background:#EFF2F6;">📙</div>
+            <div class="body">
+              <div class="card-title">ランダム英単語テスト（英検準2級パス単）</div>
+              <div class="desc">Section1〜15／範囲を選んで20問を自動生成・印刷</div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 数学 -->
+  <section id="math-top" class="subject" style="padding-bottom:56px;">
+    <div class="subject-head">
+      <h2 style="color: var(--accent);">📐 数学</h2>
+      <span class="meta">中学生向け</span>
+    </div>
+    <div class="underline" style="background: var(--accent);"></div>
+
+    <div id="math-formula" class="category">
+      <h3>公式・総復習 <span class="count">5種</span></h3>
+      <div class="card-grid">
+        <a href="materials/math-formulas-kishu.pdf" class="material-link" target="_blank">
+          <div class="card">
+            <div class="thumb" style="background:#FBF3E3;">📐</div>
+            <div class="body">
+              <div class="card-title">数学公式集（既習内容編）</div>
+              <div class="desc">関数の式・円・おうぎ形・体積・表面積の公式まとめ（PDF）</div>
+            </div>
+          </div>
+        </a>
+        <a href="#" class="material-link">
+          <div class="card placeholder">
+            <div class="thumb" style="background:#FAF8F2; color:#C4BEAE;">＋</div>
+            <div class="body">
+              <div class="card-title" style="color:#A9A294;">立体・データの活用</div>
+              <div class="desc" style="color:#B8B2A2;">準備中</div>
+            </div>
+          </div>
+        </a>
+        <a href="materials/function-review.pdf" class="material-link" target="_blank">
+          <div class="card">
+            <div class="thumb" style="background:#FBF3E3;">📈</div>
+            <div class="body">
+              <div class="card-title">関数の総復習</div>
+              <div class="desc">比例・反比例・一次関数・y=ax²（PDF）</div>
+            </div>
+          </div>
+        </a>
+        <a href="materials/linear-function-basics.pdf" class="material-link" target="_blank">
+          <div class="card">
+            <div class="thumb" style="background:#FBF3E3;">📈</div>
+            <div class="body">
+              <div class="card-title">一次関数（超基本からていねいに）</div>
+              <div class="desc">一次関数の導入をゼロから（PDF）</div>
+            </div>
+          </div>
+        </a>
+        <div class="set-group">
+          <div class="set-label">📚 セット：解説書 → 練習問題</div>
+          <div class="card-grid">
+            <a href="materials/linear-function-explained.pdf" class="material-link" target="_blank">
+              <div class="card">
+                <div class="thumb" style="background:#FBF3E3;">📘</div>
+                <div class="body">
+                  <div class="card-title">一次関数 解説書</div>
+                  <div class="desc">一次関数の考え方・解き方の解説（PDF）</div>
+                </div>
+              </div>
+            </a>
+            <a href="materials/linear-function-practice.pdf" class="material-link" target="_blank">
+              <div class="card">
+                <div class="thumb" style="background:#FBF3E3;">✏️</div>
+                <div class="body">
+                  <div class="card-title">一次関数 練習問題</div>
+                  <div class="desc">一次関数の演習プリント（PDF）</div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <a href="materials/equation-determination-test.pdf" class="material-link" target="_blank">
+          <div class="card">
+            <div class="thumb" style="background:#FBF3E3;">✅</div>
+            <div class="body">
+              <div class="card-title">式の決定 確認テスト（3セット）</div>
+              <div class="desc">一次関数の式を求める確認テスト3種（PDF）</div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div id="math-exam" class="category">
+      <h3>都立入試対策 <span class="count">4種</span></h3>
+      <div class="card-grid">
+        <a href="todai-math-q4-drill.html" class="material-link">
+          <div class="card">
+            <div class="thumb" style="background:#FBF3E3;">🧩</div>
+            <div class="body">
+              <div class="card-title">大問4 部品ドリル（全30問）</div>
+              <div class="desc">都立入試 大問4（平面図形）の頻出パーツを反復演習</div>
+            </div>
+          </div>
+        </a>
+        <a href="todai-math-q4-plane-figure.html" class="material-link">
+          <div class="card">
+            <div class="thumb" style="background:#FBF3E3;">📐</div>
+            <div class="body">
+              <div class="card-title">大問4（平面図形）問2② 演習</div>
+              <div class="desc">H19〜R6の出題傾向と対策・演習問題</div>
+            </div>
+          </div>
+        </a>
+        <a href="todai-math-q5-drill.html" class="material-link">
+          <div class="card">
+            <div class="thumb" style="background:#FBF3E3;">🧩</div>
+            <div class="body">
+              <div class="card-title">大問5 部品ドリル（全30問）</div>
+              <div class="desc">都立入試 大問5（立体図形）の頻出パーツを反復演習</div>
+            </div>
+          </div>
+        </a>
+        <a href="todai-math-q5-solid-figure.html" class="material-link">
+          <div class="card">
+            <div class="thumb" style="background:#FBF3E3;">📦</div>
+            <div class="body">
+              <div class="card-title">大問5（立体図形）傾向と対策</div>
+              <div class="desc">H19〜R6の出題傾向・解答解説</div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div id="math-calc" class="category">
+      <h3>計算プリント</h3>
+      <div class="card-grid">
+        <a href="math-calc-practice-1.html" class="material-link">
+          <div class="card">
+            <div class="thumb" style="background:#FBF3E3;">🔢</div>
+            <div class="body">
+              <div class="card-title">中1数学 計算練習（正負の数・文字式・方程式）</div>
+              <div class="desc">STEP1〜6（全6枚）／ボタンで問題を毎回ランダム生成</div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div id="math-shape" class="category" style="margin-bottom:8px;">
+      <h3>図形・文章題</h3>
+      <div class="card-grid">
+        <a href="#" class="material-link">
+          <div class="card placeholder">
+            <div class="thumb" style="background:#FAF8F2; color:#C4BEAE;">＋</div>
+            <div class="body">
+              <div class="card-title" style="color:#A9A294;">準備中</div>
+              <div class="desc" style="color:#B8B2A2;">図形の証明・文章題など</div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    ※このページはレイアウト確認用の骨組みです。各カードのリンク先・検索機能・並べ替え機能は今後設定します。
+  </footer>
+
+</main>
+</body>
+</html>

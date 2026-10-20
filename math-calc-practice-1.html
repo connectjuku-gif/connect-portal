@@ -1,0 +1,432 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CONNECT中1数学_計算練習（正負の数・文字式・方程式）</title>
+<style>
+@page { size: A4; margin: 16mm 14mm; }
+* { box-sizing: border-box; }
+body { font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif; color:#111; line-height:1.7; font-size:11.5pt; margin:0; background:#e9e9e9; }
+.sheet { background:#fff; max-width: 190mm; margin: 12px auto; padding: 14mm 12mm; box-shadow: 0 1px 6px rgba(0,0,0,.15); }
+@media print { body{background:#fff;} .sheet{ box-shadow:none; margin:0; padding:0; max-width:none; } .nop{display:none !important;} .pb{ page-break-before: always; } }
+h1 { text-align:center; font-size:16pt; margin:0 0 4px; letter-spacing:.05em; }
+.sub { text-align:center; font-size:10.5pt; color:#444; margin-bottom:10px; }
+.namebox { border:1px solid #333; padding:6px 10px; display:flex; gap:24px; justify-content:flex-end; margin: 6px 0 14px; font-size:11pt; }
+.rules { border:1px solid #333; padding:8px 12px; font-size:10pt; margin-bottom:14px; }
+.q { margin: 18px 0 10px; }
+.qh { display:flex; align-items:flex-start; gap:8px; }
+.num { display:inline-block; border:1.5px solid #222; min-width:24px; text-align:center; font-weight:bold; line-height:1.4; padding:1px 4px; flex-shrink:0; }
+.pts { float:right; font-size:10pt; color:#333; }
+.inst { flex:1; }
+ol.items { list-style:none; padding-left: 1.5em; margin:6px 0; }
+ol.items li { margin: 5px 0; }
+.blank { display:inline-block; border-bottom:1px solid #222; min-width:64px; text-align:center; vertical-align:bottom; }
+.blank.w { min-width:110px; }
+.box { border:1px solid #222; padding:10px 14px; margin: 8px 0; }
+.note { font-size:9.5pt; color:#333; margin-top:6px; }
+.hint { color:#444; }
+.ans { background:#fbfbfb; }
+.ans h2 { font-size:13pt; border-left:5px solid #222; padding-left:8px; margin:20px 0 6px; }
+.ans .a { margin:4px 0 4px 1em; }
+.ans .k { color:#000; font-weight:bold; text-decoration: underline; }
+.ans .ex { font-size:10pt; color:#333; margin-left:1em; }
+.q, .box, .unit { break-inside: avoid; page-break-inside: avoid; }
+.unit { margin-bottom: 6px; }
+.memo { border:2px solid #222; padding:10px 14px; margin:10px 0 16px; font-size:10.5pt; }
+.memo b { display:block; margin-bottom:4px; }
+.u { text-decoration: underline; }
+.two { columns: 2; column-gap: 28px; }
+i { font-family: "Times New Roman", "Hiragino Mincho ProN", serif; font-size:1.08em; }
+.fr { display:inline-flex; flex-direction:column; text-align:center; vertical-align:middle; margin:0 3px; line-height:1.35; }
+.fr > span:first-child { border-bottom:1px solid #111; padding:0 4px; }
+.fr > span:last-child { padding:0 4px; }
+.sys { display:inline-flex; align-items:center; vertical-align:middle; }
+.hw .hh { border-bottom:2px solid #222; padding-bottom:3px; margin-bottom:6px; }
+.hw .hh1 { font-size:10.5pt; color:#333; letter-spacing:.05em; display:flex; justify-content:space-between; }
+.hw .hh2 { font-size:15pt; font-weight:bold; margin-top:1px; }
+.hw .gr, .ans .gr { font-size:10pt; font-weight:normal; margin-left:8px; color:#333; }
+.hw .meta { display:flex; align-items:flex-end; gap:6px; font-size:10.5pt; margin:4px 0 6px; }
+.hw .meta .ln { display:inline-block; border-bottom:1px solid #222; }
+.hw .meta .w1 { min-width:38mm; } .hw .meta .w2 { min-width:22mm; } .hw .meta .w3 { min-width:11mm; }
+.hw .meta span:nth-child(5) { margin-left:8px; } .hw .meta span:nth-child(9) { margin-left:8px; }
+.hw .point { border:1px solid #222; padding:4px 10px 4px; font-size:9.5pt; line-height:1.55; }
+.hw .point ul { margin:2px 0 0 1.1em; padding:0; } .hw .point li { margin:0; }
+.hw .grid { display:grid; grid-template-columns: 1fr 1fr; column-gap:12mm; margin-top:2mm; }
+.hw .sec { grid-column:1 / -1; font-weight:bold; font-size:10.5pt; border-bottom:1px solid #222; margin:2mm 0 1mm; padding-bottom:1px; }
+.hw .cell { height:var(--h); display:flex; flex-direction:column; border-bottom:1px dotted #888; padding:1.5mm 0 1mm; break-inside:avoid; }
+.hw .cq .ex { display:block; }
+.hw .cq .pq { display:block; margin-top:2px; }
+.hw .cq { display:flex; gap:6px; align-items:baseline; font-size:12.5pt; line-height:1.55; }
+.hw .no, .ans .no { font-size:10pt; font-weight:bold; flex-shrink:0; margin-right:4px; }
+.hw .al { margin-top:auto; text-align:right; font-size:10.5pt; }
+.hw .al .blank { min-width:22mm; } .hw .al .blank.w { min-width:30mm; }
+.ans .two { columns:2; column-gap:10mm; }
+.ans .ai { break-inside:avoid; font-size:10.5pt; margin:0 0 5px; line-height:1.7; padding-bottom:3px; border-bottom:1px dotted #bbb; }
+.ans .ai .st { display:block; font-size:9.5pt; color:#333; margin-left:2.2em; }
+.ans .ai .nt { display:block; font-size:9.5pt; color:#333; margin-left:2.2em; }
+.ans h2 { break-after: avoid; page-break-after: avoid; margin-top:14px; }
+
+.controlbar {
+  position: sticky; top: 0; z-index: 10;
+  background: #1F3A5F; color: #fff;
+  padding: 14px 20px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+  font-size: 13px;
+}
+.controlbar .title { font-weight: bold; font-size: 15px; margin-right: 8px; }
+.controlbar button {
+  font-family: inherit; font-size: 13px; padding: 7px 14px;
+  border-radius: 6px; border: none; cursor: pointer;
+}
+.controlbar button.primary { background: #C9972B; color: #fff; font-weight: bold; }
+.controlbar button.secondary { background: #3A557A; color: #fff; }
+.controlbar button.secondary.active { background: #8A2E2E; }
+.controlbar .spacer { flex: 1; }
+.controlbar .count { font-size: 12px; color: #D9E1EC; }
+@media print { .controlbar { display: none !important; } }
+body.editmode [contenteditable="true"] { outline: 1px dashed #C9972B; }
+@media print { [contenteditable] { outline: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="controlbar nop">
+  <span class="title">🔢 中1数学 計算練習（正負の数・文字式・方程式）｜学習塾CONNECT</span>
+  <button class="primary" id="genBtn">問題を作り直す</button>
+  <button class="secondary" id="editBtn">編集モード</button>
+  <button class="secondary" id="printBtn">印刷</button>
+  <span class="spacer"></span>
+  <span class="count" id="rangeInfo">STEP1〜6　計63問（各12問×5＋9問×1）</span>
+</div>
+
+<div id="output"></div>
+
+<script>
+(function(){
+  // ---------- helpers ----------
+  function ri(min, max){ return Math.floor(Math.random()*(max-min+1))+min; }
+  function rnz(min, max){ var v; do{ v = ri(min,max); }while(v===0); return v; }
+  function gcd(a,b){ a=Math.abs(a); b=Math.abs(b); while(b){ var t=a%b; a=b; b=t; } return a||1; }
+  function fracReduce(n,d){ if(d<0){ n=-n; d=-d; } var g=gcd(n,d)||1; return [n/g, d/g]; }
+  function fracHtml(n,d){
+    var r = fracReduce(n,d);
+    var rn=r[0], rd=r[1];
+    if (rd === 1) return signed(rn);
+    var sign = rn<0 ? '−' : '';
+    return sign + '<span class="fr"><span>'+Math.abs(rn)+'</span><span>'+rd+'</span></span>';
+  }
+  function fracVar(varHtml, d){
+    return '<span class="fr"><span>'+varHtml+'</span><span>'+d+'</span></span>';
+  }
+  function signed(v){ return v<0 ? ('−'+Math.abs(v)) : String(v); }
+  function pmInt(v){ return v<0 ? (' − '+Math.abs(v)) : (' + '+v); } // for embedding "... + v" where v may be negative
+  function pmDec(tenths){ var av=Math.abs(tenths), ip=Math.floor(av/10), dp=av%10; return tenths<0 ? (' − '+ip+'.'+dp) : (' + '+ip+'.'+dp); }
+  function paren(v){ return v<0 ? ('(−'+Math.abs(v)+')') : ('('+v+')'); }
+  function parenIfNeg(v){ return v<0 ? ('(−'+Math.abs(v)+')') : String(v); }
+  function dFmt(tenths){ // tenths = integer, value = tenths/10, always 1 decimal place
+    var sign = tenths<0 ? '−' : '';
+    var v = Math.abs(tenths);
+    var ip = Math.floor(v/10), dp = v%10;
+    return sign + ip + '.' + dp;
+  }
+  function vr(pool){ return pool[ri(0, pool.length-1)]; }
+  function dvar(v){ return '<i>'+v+'</i>'; }
+
+  // ========== STEP 1: 整数・基本 ==========
+  function s1a1(){ var a=ri(1,9), b=ri(1,9); var ans=b-a;
+    return {ex:'−'+a+' + '+b, ans: signed(ans)}; }
+  function s1a2(){ var a=ri(2,9), b=ri(1,9); if(b>=a) b=ri(1,a-1)||1; var ans=a-b;
+    return {ex: a+' − '+b, ans: signed(ans)}; }
+  function s1a3(){ var a=ri(1,9), b=ri(1,9); var ans=-(a+b);
+    return {ex:'(−'+a+') + (−'+b+')', ans: signed(ans)}; }
+  function s1a4(){ var a=ri(1,9), b=ri(1,9); var ans=a+b;
+    return {ex:a+' − (−'+b+')', ans: signed(ans)}; }
+
+  function s1b1(){ var a=ri(2,9); return {ex: dvar('x')+' × '+a, ans: a+dvar('x')}; }
+  function s1b2(){ var c=ri(2,9); return {ex: dvar('b')+' × '+dvar('a')+' × (−'+c+')', ans: '−'+c+dvar('a')+dvar('b')}; }
+  function s1b3(){ var b=ri(2,9); return {ex: dvar('a')+' ÷ '+b, ans: fracVar(dvar('a'), b)}; }
+  function s1b4(){ var p = vr([['x','y'],['a','b'],['p','q'],['m','n']]); return {ex: dvar(p[0])+' × '+dvar(p[0])+' × '+dvar(p[1]), ans: dvar(p[0])+'<sup>2</sup>'+dvar(p[1])}; }
+
+  function s1c1(){ var a=ri(2,9), x=ri(1,9), b=a+x;
+    return {ex: dvar('x')+' + '+a+' = '+b, ans: dvar('x')+' = '+signed(x), step:'途中：'+dvar('x')+' = '+b+' − '+a}; }
+  function s1c2(){ var a=ri(2,9), c=-ri(1,9), x=c+a;
+    return {ex: dvar('x')+' − '+a+' = '+signed(c), ans: dvar('x')+' = '+signed(x), step:'途中：'+dvar('x')+' = '+signed(c)+' + '+a}; }
+  function s1c3(){ var a=ri(2,9), x=rnz(-9,9), b=a*x;
+    return {ex: a+dvar('x')+' = '+signed(b), ans: dvar('x')+' = '+signed(x), step:'途中：'+dvar('x')+' = '+signed(b)+' ÷ '+a}; }
+  function s1c4(){ var a=ri(2,9), b=ri(1,a-1)||1, x=b-a;
+    return {ex: dvar('x')+' + '+a+' = '+b, ans: dvar('x')+' = '+signed(x), step:'途中：'+dvar('x')+' = '+b+' − '+a}; }
+
+  // ========== STEP 2: 整数・かけ算わり算と式の値 ==========
+  function s2a1(){ var a=ri(2,9), b=ri(2,9); return {ex:'(−'+a+') × '+b, ans: signed(-(a*b))}; }
+  function s2a2(){ var a=ri(2,9), b=ri(2,9); return {ex:'(−'+a+') × (−'+b+')', ans: signed(a*b)}; }
+  function s2a3(){ var b=ri(2,9), q=ri(2,9), a=b*q; return {ex: a+' ÷ (−'+b+')', ans: signed(-q)}; }
+  function s2a4(){ var b=ri(2,9), q=ri(2,9), a=b*q; return {ex:'(−'+a+') ÷ (−'+b+')', ans: signed(q)}; }
+
+  function s2b1(){ var a=ri(1,6), c=ri(2,5), d=ri(1,9); var val=c*a+d;
+    return {ex: dvar('x')+' = '+a+' のとき、'+c+dvar('x')+' + '+d, ans: signed(val)}; }
+  function s2b2(){ var a=ri(1,6), c=ri(2,5), d=ri(1,9); var val=c*(-a)-d;
+    return {ex: dvar('x')+' = −'+a+' のとき、'+c+dvar('x')+' − '+d, ans: signed(val)}; }
+  function s2b3(){ var p=ri(1,6), q=ri(1,6), c=ri(2,5); var val=p+c*(-q);
+    return {ex: dvar('a')+' = '+p+'、'+dvar('b')+' = −'+q+' のとき、'+dvar('a')+' + '+c+dvar('b'), ans: signed(val)}; }
+  function s2b4(){ var a=ri(1,6), d=ri(1,9); var val=d-(-a);
+    return {ex: dvar('x')+' = −'+a+' のとき、'+d+' − '+dvar('x'), ans: signed(val)}; }
+
+  function s2c1(){ var c=ri(2,6), d=ri(1,9), x=rnz(-9,9), e=c*x+d;
+    return {ex: c+dvar('x')+' + '+d+' = '+signed(e), ans: dvar('x')+' = '+signed(x), step:'途中：'+c+dvar('x')+' = '+signed(e)+' − '+d}; }
+  function s2c2(){ var c=ri(2,6), d=ri(1,9), x=rnz(-9,9), e=c*x-d;
+    return {ex: c+dvar('x')+' − '+d+' = '+signed(e), ans: dvar('x')+' = '+signed(x), step:'途中：'+c+dvar('x')+' = '+signed(e)+' + '+d}; }
+  function s2c3(){ var c=ri(2,6), d=ri(1,9), x=rnz(-9,-1), e=c*x+d;
+    return {ex: c+dvar('x')+' + '+d+' = '+signed(e), ans: dvar('x')+' = '+signed(x), step:'途中：'+c+dvar('x')+' = '+signed(e)+' − '+d}; }
+  function s2c4(){ var c=ri(2,6), x=rnz(-9,9), e=-c*x;
+    return {ex:'−'+c+dvar('x')+' = '+signed(e), ans: dvar('x')+' = '+signed(x), step:'途中：'+dvar('x')+' = '+signed(e)+' ÷ (−'+c+')'}; }
+
+  // ========== STEP 3: 整数・まとめて計算 ==========
+  function s3a1(){ var a=ri(1,9), b=ri(1,9), c=ri(1,9), d=ri(1,9); var val=a+b-c-d;
+    return {ex: a+' − (−'+b+') + (−'+c+') − '+d, ans: signed(val)}; }
+  function s3a2(){ var a=ri(1,9), b=ri(1,9), c=ri(1,9), d=ri(1,9); var val=-a+b-c+d;
+    return {ex:'−'+a+' + '+b+' − '+c+' + '+d, ans: signed(val)}; }
+  function s3a3(){ var a=ri(1,6), b=ri(1,6), c=ri(1,6); var val=a*b*c;
+    return {ex:'(−'+a+') × '+b+' × (−'+c+')', ans: signed(val)}; }
+  function s3a4(){ var b=ri(2,6), q=ri(1,9), c=ri(2,6), a=b*q; var val=(-q)*(-c);
+    return {ex: a+' ÷ (−'+b+') × (−'+c+')', ans: signed(val)}; }
+
+  function s3b1(){ var c1=ri(1,7), c2=ri(1,7); return {ex: c1+dvar('x')+' + '+c2+dvar('x'), ans: (c1+c2)+dvar('x')}; }
+  function s3b2(){ var c1=ri(3,9), c2=ri(1,c1-1)||1; return {ex: c1+dvar('a')+' − '+c2+dvar('a'), ans: (c1-c2)+dvar('a')}; }
+  function s3b3(){ var c1=ri(2,7), d1=ri(1,9), c2=ri(1,c1-1)||1, d2=ri(1,9);
+    var cc=c1-c2, dd=d1-d2;
+    return {ex: c1+dvar('x')+' + '+d1+' − '+c2+dvar('x')+' − '+d2, ans: (cc===1?'':cc)+dvar('x')+' '+(dd<0?'− '+Math.abs(dd):'+ '+dd)}; }
+  function s3b4(){ var c1=ri(1,6), d1=ri(1,9), c2=ri(c1+1,c1+6), d2=ri(1,9);
+    var cc=c2-c1, dd=d1-d2;
+    return {ex:'−'+c1+dvar('y')+' + '+d1+' + '+c2+dvar('y')+' − '+d2, ans: (cc===1?'':cc)+dvar('y')+' '+(dd<0?'− '+Math.abs(dd):'+ '+dd)}; }
+
+  function s3c1(){
+    var c1=ri(2,7), c2=ri(1,c1-1), x=rnz(-9,9), d1=ri(1,9);
+    var d2 = (c1-c2)*x + d1;
+    return {ex: c1+dvar('x')+' + '+d1+' = '+c2+dvar('x')+pmInt(d2), ans: dvar('x')+' = '+signed(x),
+      step:'途中：'+(c1-c2)+dvar('x')+' = '+signed(d2)+' − '+d1};
+  }
+
+  // ========== STEP 4: 整数・累乗とかっこ ==========
+  function s4a1(){ var a=ri(2,6); return {ex:'(−'+a+')<sup>2</sup>', ans: String(a*a), step:'途中：(−'+a+') × (−'+a+')'}; }
+  function s4a2(){ var a=ri(2,6); return {ex:'−'+a+'<sup>2</sup>', ans: '−'+(a*a), step:'途中：−('+a+' × '+a+')'}; }
+  function s4a3(){ var p=ri(1,9), q=ri(1,6), r=ri(2,6); var val=p-q*r;
+    return {ex: p+' + (−'+q+') × '+r, ans: signed(val), step:'途中：'+p+' + ('+signed(-q*r)+')'}; }
+  function s4a4(){ var p=ri(1,9), q=ri(p+1,p+9), r=ri(1,6); var val=(p-q)*(-r);
+    return {ex:'('+p+' − '+q+') × (−'+r+')', ans: signed(val)}; }
+
+  function s4b1(){ var c1=ri(1,6), d1=ri(1,9), c2=ri(1,6), d2=ri(1,9);
+    return {ex:'('+c1+dvar('x')+' + '+d1+') + ('+c2+dvar('x')+' − '+d2+')', ans: (c1+c2)+dvar('x')+' '+((d1-d2)<0?'− '+Math.abs(d1-d2):'+ '+(d1-d2))}; }
+  function s4b2(){ var c1=ri(2,7), d1=ri(1,9), c2=ri(1,c1-1)||1, d2=ri(1,9);
+    return {ex:'('+c1+dvar('x')+' − '+d1+') − ('+c2+dvar('x')+' − '+d2+')', ans: (c1-c2)+dvar('x')+' '+((d2-d1)<0?'− '+Math.abs(d2-d1):'+ '+(d2-d1))}; }
+  function s4b3(){ var c=ri(2,6), c2=ri(2,6), d=ri(1,9); return {ex: c+'('+c2+dvar('x')+' − '+d+')', ans: (c*c2)+dvar('x')+' − '+(c*d), step:'途中：'+c+' × '+c2+dvar('x')+' − '+c+' × '+d}; }
+  function s4b4(){ var c=ri(2,6), d=ri(1,9); return {ex:'−'+c+'('+dvar('x')+' − '+d+')', ans:'−'+c+dvar('x')+' + '+(c*d), step:'途中：−'+c+' × '+dvar('x')+' + '+c+' × '+d}; }
+
+  function s4c1(){ var c=ri(2,6), d=ri(1,9), x=rnz(-9,9), e=c*(x+d);
+    return {ex: c+'('+dvar('x')+' + '+d+') = '+signed(e), ans: dvar('x')+' = '+signed(x), step:'途中：'+dvar('x')+' + '+d+' = '+signed(e)+' ÷ '+c}; }
+  function s4c2(){ var c=ri(2,5), d=ri(1,9), x=rnz(1,9);
+    // c(x-d) = x + e  -> cx - cd = x + e -> (c-1)x = e+cd
+    var e = (c-1)*x - c*d;
+    return {ex: c+'('+dvar('x')+' − '+d+') = '+dvar('x')+pmInt(e), ans: dvar('x')+' = '+signed(x),
+      step:'途中：'+(c-1)+dvar('x')+' = '+signed(e)+' + '+(c*d)}; }
+  function s4c3(){ var c1=ri(2,6), d=ri(1,9), x=rnz(1,9), e=(c1-1)*x+d;
+    return {ex: c1+dvar('x')+' − ('+dvar('x')+' − '+d+') = '+e, ans: dvar('x')+' = '+signed(x),
+      step:'途中：'+(c1-1)+dvar('x')+' = '+e+' − '+d}; }
+  function s4c4(){
+    var c2=ri(2,4), m=ri(2,3), c1=c2*m, x=rnz(-6,6), d1=ri(1,6);
+    var d2 = m*(x-d1) - x;
+    var rhsTerm = d2>=0 ? (' + '+d2) : (' − '+Math.abs(d2));
+    var rhsSum = c1*d1 + c2*d2;
+    return {ex: c1+'('+dvar('x')+' − '+d1+') = '+c2+'('+dvar('x')+rhsTerm+')', ans: dvar('x')+' = '+signed(x),
+      step:'途中：'+(c1-c2)+dvar('x')+' = '+signed(rhsSum)}; }
+
+  // ========== STEP 5: 小数がでてくる (値は10倍した整数で保持) ==========
+  function s5a1(){ var a=ri(2,20), b=ri(2,20); var val=a+b; return {ex: dFmt(a)+' − (−'+dFmt(b)+')', ans: dFmt(val)}; }
+  function s5a2(){ var a=ri(2,20), b=ri(2,9); var val=a*b; return {ex:'(−'+dFmt(a)+') × (−'+b+')', ans: dFmt(val)}; }
+  function s5a3(){ var b=ri(2,9), q=ri(2,20), a=b*q; return {ex:'(−'+dFmt(a)+') ÷ '+b, ans: dFmt(-q)}; }
+  function s5a4(){ var a=ri(2,20), b=ri(2,20); var val=a-b; return {ex: dFmt(a)+' − '+dFmt(b), ans: dFmt(val)}; }
+
+  function s5b1(){ var c1=ri(2,9), c2=ri(1,c1-1)||1, d=ri(2,20);
+    return {ex: dFmt(c1)+dvar('x')+' + '+dFmt(d)+' − '+dFmt(c2)+dvar('x'), ans: dFmt(c1-c2)+dvar('x')+' + '+dFmt(d)}; }
+  function s5b2(){ var c=ri(2,9), c2=ri(2,9), d=ri(2,15);
+    return {ex: dFmt(c)+'('+c2+dvar('x')+' − '+d+')', ans: dFmt(c*c2)+dvar('x')+' − '+dFmt(c*d), step:'途中：'+dFmt(c)+' × '+c2+dvar('x')+' − '+dFmt(c)+' × '+d}; }
+  function s5b3(){ var c3=ri(2,9), xa=ri(1,6), xd=ri(1,9); var c1=xa*c3, d1=xd*c3;
+    return {ex:'('+dFmt(c1)+dvar('x')+' + '+dFmt(d1)+') ÷ '+dFmt(c3), ans: xa+dvar('x')+' + '+xd}; }
+  function s5b4(){ var c=ri(2,6), c2=ri(2,9), d=ri(2,15); return {ex:'−'+dFmt(c)+'('+c2+dvar('x')+' − '+d+')', ans:'−'+dFmt(c*c2)+dvar('x')+' + '+dFmt(c*d), step:'途中：−'+dFmt(c)+' × '+c2+dvar('x')+' + '+dFmt(c)+' × '+d}; }
+
+  function s5c1(){ var c=ri(2,9), x=ri(1,9), d=c*x; return {ex: dFmt(c)+dvar('x')+' = '+dFmt(d), ans: dvar('x')+' = '+x, step:'途中：'+c+dvar('x')+' = '+(d)}; }
+  function s5c2(){ var c=ri(2,9), x=ri(1,9), e=ri(2,20), f=c*x+e;
+    return {ex: dFmt(c)+dvar('x')+' + '+dFmt(e)+' = '+dFmt(f), ans: dvar('x')+' = '+x, step:'途中：'+c+dvar('x')+' = '+(f-e)}; }
+  function s5c3(){ var c=ri(2,9), x=ri(1,9), e=ri(2,20), f=c*x-e;
+    return {ex: dFmt(c)+dvar('x')+' − '+dFmt(e)+' = '+dFmt(f), ans: dvar('x')+' = '+x, step:'途中：'+c+dvar('x')+' = '+(f+e)}; }
+  function s5c4b(){ var c1=ri(3,9), c2=ri(1,c1-1), x=rnz(1,9); var e=ri(2,15); var f=(c1-c2)*x - e;
+    return {ex: dFmt(c1)+dvar('x')+' − '+dFmt(e)+' = '+dFmt(c2)+dvar('x')+pmDec(f), ans: dvar('x')+' = '+x,
+      step:'途中：'+(c1-c2)+dvar('x')+' = '+(f+e)}; }
+
+  // ========== STEP 6: 分数がでてくる（3問ずつ） ==========
+  function fa(n,d){ return '<span class="fr"><span>'+n+'</span><span>'+d+'</span></span>'; }
+  function fracAddSub(n1,d1,n2,d2,op){
+    var cd = d1*d2/gcd(d1,d2);
+    var nn1 = n1*(cd/d1), nn2 = n2*(cd/d2);
+    var rn = op==='+' ? nn1+nn2 : nn1-nn2;
+    return fracHtml(rn, cd);
+  }
+  function s6_frac_add(){ var d1=ri(2,6), d2=ri(2,6); if(d1===d2) d2=d1+1; var n1=ri(1,d1-1), n2=ri(1,d2-1);
+    var ans = fracAddSub(n1,d1,-n2,d2,'+');
+    return {ex: fa(n1,d1)+' − '+fa(n2,d2), ans: ans}; }
+  function s6_frac_mul(){ var p=ri(1,6), q=ri(2,7), r=ri(2,7), s=ri(2,6);
+    var ans = fracHtml(-(p*r), q*s);
+    return {ex:'(−'+fa(p,q)+') × '+fa(r,s), ans: ans}; }
+  function s6_frac_div(){ var p=ri(1,6), q=ri(2,7), r=ri(2,7), s=ri(2,6);
+    var ans = fracHtml(p*s, q*r);
+    return {ex:'(−'+fa(p,q)+') ÷ (−'+fa(r,s)+')', ans: ans}; }
+
+  function s6_lit_add(){ var a=ri(2,5), b=ri(2,5); if(a===b) b=a+1; var cd=a*b/gcd(a,b);
+    var r = fracReduce(cd/a + cd/b, cd);
+    var coefHtml = r[1]===1 ? String(r[0]) : fa(r[0], r[1]);
+    return {ex: fa('1',a)+dvar('x')+' + '+fa('1',b)+dvar('x'), ans: coefHtml+dvar('x')}; }
+  function s6_lit_dist(){ var c=ri(2,6), a=ri(2,6), b=ri(2,6);
+    var coef = fracReduce(c, a); var constv = fracReduce(c, b);
+    var coefHtml = coef[1]===1 ? String(coef[0]) : fa(coef[0],coef[1]);
+    var constHtml = constv[1]===1 ? String(constv[0]) : fa(constv[0], constv[1]);
+    return {ex: c+'('+fa(dvar('x'), a)+' − '+fa('1',b)+')', ans: coefHtml+dvar('x')+' − '+constHtml,
+      step:'途中：'+c+' × '+fa(dvar('x'),a)+' − '+c+' × '+fa('1',b)}; }
+  function s6_lit_mul(){ var a=ri(2,6), b=ri(1,9), c=ri(2,5), d=ri(2,5); if (c % d === 0) c++; // avoid c/d showing as a whole number
+    // (a x - b) × (c/d)
+    var cdR = fracReduce(c,d); var cHtmlDisp = cdR[1]===1 ? String(cdR[0]) : fa(cdR[0],cdR[1]);
+    var cx = fracReduce(a*c, d); var cc = fracReduce(b*c, d);
+    var cxHtml = cx[1]===1 ? String(cx[0]) : fa(cx[0],cx[1]);
+    var ccHtml = cc[1]===1 ? String(cc[0]) : fa(cc[0],cc[1]);
+    return {ex:'('+a+dvar('x')+' − '+b+') × '+cHtmlDisp, ans: cxHtml+dvar('x')+' − '+ccHtml}; }
+
+  function s6_eq_1(){ var a=ri(2,9), b=rnz(-9,9), x=a*b; return {ex: fa(dvar('x'),a)+' = '+signed(b), ans: dvar('x')+' = '+signed(x), step:'途中：'+dvar('x')+' = '+signed(b)+' × '+a}; }
+  function s6_eq_2(){ var a=ri(2,6), c=ri(1,9), k=rnz(-6,6), x=a*k, d=k+c;
+    return {ex: fa(dvar('x'),a)+' + '+c+' = '+signed(d), ans: dvar('x')+' = '+signed(x), step:'途中：'+fa(dvar('x'),a)+' = '+signed(d-c)}; }
+  function s6_eq_3(){ var b=ri(2,6), a=ri(1,9), c=ri(2,9), x=b*c-a;
+    return {ex: fa(dvar('x')+' + '+a, b)+' = '+c, ans: dvar('x')+' = '+signed(x), step:'途中：'+dvar('x')+' + '+a+' = '+(b*c)}; }
+
+  // ---------- assemble ----------
+  var STEPS = [
+    { title:'STEP 1　整数・基本', star:'★☆☆☆☆☆', max:12, pts:[
+        '文字式のきまり：× の記号は省略する。数は文字の前に書く。÷ は分数の形で書く',
+        'ひき算は、たし算に直す：'+dvar('a')+' − (−'+dvar('b')+') = '+dvar('a')+' + '+dvar('b'),
+        '方程式：数の項を右辺へ移す（移項すると符号がかわる）。'+dvar('a')+dvar('x')+' = '+dvar('b')+' は両辺を '+dvar('a')+' でわる'
+      ], sections:[
+        {label:'正負の数（たし算・ひき算）　次の計算をしなさい。', gens:[s1a1,s1a2,s1a3,s1a4]},
+        {label:'文字式（文字式のきまり）　次の式を、文字式のきまりにしたがって書きなさい。', gens:[s1b1,s1b2,s1b3,s1b4]},
+        {label:'方程式　次の方程式を解きなさい。', gens:[s1c1,s1c2,s1c3,s1c4], eq:true}
+      ]},
+    { title:'STEP 2　整数・かけ算わり算と式の値', star:'★★☆☆☆☆', max:12, pts:[
+        'かけ算・わり算：同じ符号なら＋、ちがう符号なら−',
+        '式の値：文字に数を入れて計算する。負の数を入れるときは（　）をつける',
+        '方程式：先に数の項を移項して '+dvar('a')+dvar('x')+' = '+dvar('b')+' の形にし、両辺を '+dvar('a')+' でわる'
+      ], sections:[
+        {label:'正負の数（かけ算・わり算）　次の計算をしなさい。', gens:[s2a1,s2a2,s2a3,s2a4]},
+        {label:'文字式（式の値）　次の式の値を求めなさい。', gens:[s2b1,s2b2,s2b3,s2b4]},
+        {label:'方程式　次の方程式を解きなさい。', gens:[s2c1,s2c2,s2c3,s2c4], eq:true}
+      ]},
+    { title:'STEP 3　整数・まとめて計算', star:'★★★☆☆☆', max:12, pts:[
+        '正の数どうし、負の数どうしにまとめてから計算するとラク',
+        '同類項（文字の部分が同じ項）どうし、数の項どうしをまとめる',
+        '方程式：'+dvar('x')+' の項は左辺へ、数の項は右辺へ集める（移項で符号がかわる）'
+      ], sections:[
+        {label:'正負の数（3つ以上の計算・かけ算わり算の混合）　次の計算をしなさい。', gens:[s3a1,s3a2,s3a3,s3a4]},
+        {label:'文字式（同類項）　次の計算をしなさい。', gens:[s3b1,s3b2,s3b3,s3b4]},
+        {label:'方程式（両辺に x がある式）　次の方程式を解きなさい。', gens:[s3c1,s3c1,s3c1,s3c1], eq:true}
+      ]},
+    { title:'STEP 4　整数・累乗とかっこ', star:'★★★★☆☆', max:12, pts:[
+        '−3<sup>2</sup> は −(3 × 3)、(−3)<sup>2</sup> は (−3) × (−3) （かっこがあるかないかで答えがかわる）',
+        '分配法則：'+dvar('a')+'('+dvar('b')+' + '+dvar('c')+') = '+dvar('a')+dvar('b')+' + '+dvar('a')+dvar('c')+'。かっこの前が − のとき、かっこをはずすと中の符号が全部かわる',
+        '方程式：かっこは先にはずしてから、移項する'
+      ], sections:[
+        {label:'正負の数（累乗・かっこ）　次の計算をしなさい。', gens:[s4a1,s4a2,s4a3,s4a4]},
+        {label:'文字式（かっこをはずす）　次の計算をしなさい。', gens:[s4b1,s4b2,s4b3,s4b4]},
+        {label:'方程式（かっこがある式）　次の方程式を解きなさい。', gens:[s4c1,s4c2,s4c3,s4c4], eq:true}
+      ]},
+    { title:'STEP 5　小数がでてくる', star:'★★★★★☆', max:12, pts:[
+        '小数の加減は小数点の位置をそろえる。かけ算・わり算は整数にして計算し、小数点の位置を考える',
+        '0.3'+dvar('x')+' のような小数の係数も、同類項どうしでまとめる',
+        '小数の方程式は、両辺に 10 をかけて整数にすると解きやすい（すべての項にかける）'
+      ], sections:[
+        {label:'正負の数（小数）　次の計算をしなさい。', gens:[s5a1,s5a2,s5a3,s5a4]},
+        {label:'文字式（小数が出てくる計算）　次の計算をしなさい。', gens:[s5b1,s5b2,s5b3,s5b4]},
+        {label:'方程式（小数）　次の方程式を解きなさい。', gens:[s5c1,s5c2,s5c3,s5c4b], eq:true}
+      ]},
+    { title:'STEP 6　分数がでてくる', star:'★★★★★★', max:9, pts:[
+        '分数の加減は通分する。かけ算は約分しながら、わり算は逆数をかける',
+        fa(dvar('x')+' + 1','2')+' の和・差は通分して、分子をまとめる',
+        '分数の方程式は、分母の最小公倍数を両辺の<b>すべての項</b>にかけて、分母をなくす'
+      ], sections:[
+        {label:'正負の数（分数）　次の計算をしなさい。', gens:[s6_frac_add,s6_frac_mul,s6_frac_div]},
+        {label:'文字式（分数が出てくる計算）　次の計算をしなさい。', gens:[s6_lit_add,s6_lit_dist,s6_lit_mul]},
+        {label:'方程式（分数）　次の方程式を解きなさい。', gens:[s6_eq_1,s6_eq_2,s6_eq_3], eq:true}
+      ]}
+  ];
+
+  function esc(s){ return String(s); } // content is pre-built html, no escaping needed here
+
+  function render(){
+    var out = '';
+    var allAnswers = []; // {stepTitle, items:[{no,ex,ans,step}]}
+    var qNoGlobal;
+
+    STEPS.forEach(function(step, si){
+      var qNo = 1;
+      var items = [];
+      var body = '';
+      step.sections.forEach(function(sec, sidx){
+        body += '<div class="sec">'+sec.label+'</div>';
+        sec.gens.forEach(function(gen){
+          var p = gen();
+          items.push({no:qNo, ex:p.ex, ans:p.ans, step:p.step});
+          var alHtml = sec.eq ? (dvar('x')+' = <span class="blank w">&nbsp;</span>') :
+            ('答え <span class="blank w">&nbsp;</span>');
+          body += '<div class="cell"><div class="cq"><span class="no">('+qNo+')</span><span class="ex">'+p.ex+'</span></div><div class="al">'+alHtml+'</div></div>';
+          qNo++;
+        });
+      });
+      out += '<div class="sheet hw'+(si>0?' pb':'')+'">';
+      out += '<div class="hh"><div class="hh1">CONNECT 中1数学　計算練習<span class="hno">第'+(si+1)+'枚／全6枚</span></div>';
+      out += '<div class="hh2">'+step.title+'<span class="gr">むずかしさ '+step.star+'</span></div></div>';
+      out += '<div class="meta"><span>名前</span><span class="ln w1">&nbsp;</span><span>日付</span><span class="ln w2">&nbsp;</span><span>かかった時間</span><span class="ln w3">&nbsp;</span><span>分</span><span>○の数</span><span class="ln w3">&nbsp;</span><span>／'+step.max+'</span></div>';
+      out += '<div class="point"><b>ポイント</b><ul>'+step.pts.map(function(t){return '<li>'+t+'</li>';}).join('')+'</ul></div>';
+      out += '<div class="grid" style="--h:27.8mm">'+body+'</div>';
+      out += '</div>';
+
+      allAnswers.push({title: step.title, no: si+1, items: items});
+    });
+
+    out += '<div class="sheet ans pb">';
+    out += '<h1>解答・解説</h1>';
+    out += '<div class="sub">CONNECT 中1数学　計算練習（正負の数・文字式・方程式）（全6枚）</div>';
+    out += '<div class="memo"><b>■ 進め方の目安</b>・1枚あたり15〜20分。STEP 1 から順に、1日1枚ずつ進めます（STEP が上がるほど、少しずつ難しくなります）。<br>・先に「ポイント」を読んでから解きます。途中の式は消さずに書いてください。<br>・答え合わせはこのページで。○をつけて、まちがえた問題は「途中」を見ながら解き直します。<br>・どうしてもわからない問題には印をつけて、授業のときに質問しましょう。</div>';
+    allAnswers.forEach(function(a){
+      out += '<h2>第'+a.no+'枚　'+a.title+'</h2><div class="two">';
+      a.items.forEach(function(it){
+        out += '<div class="ai"><span class="no">('+it.no+')</span><span class="k">'+it.ans+'</span>'+(it.step?('<span class="st">'+it.step+'</span>'):'')+'</div>';
+      });
+      out += '</div>';
+    });
+    out += '</div>';
+
+    document.getElementById('output').innerHTML = out;
+  }
+
+  document.getElementById('genBtn').addEventListener('click', render);
+  document.getElementById('printBtn').addEventListener('click', function(){ window.print(); });
+
+  var editing = false;
+  document.getElementById('editBtn').addEventListener('click', function(){
+    editing = !editing;
+    document.body.classList.toggle('editmode', editing);
+    this.classList.toggle('active', editing);
+    this.textContent = editing ? '編集モード：ON' : '編集モード';
+    document.querySelectorAll('.sheet').forEach(function(el){ el.setAttribute('contenteditable', editing ? 'true' : 'false'); });
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>

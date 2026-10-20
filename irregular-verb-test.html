@@ -1,0 +1,269 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>不規則動詞テスト｜学習塾CONNECT</title>
+<style>
+  @page { size: A4; margin: 10mm 12mm; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+    font-size: 11.5pt;
+    color: #111;
+    background: #e9e9e9;
+  }
+  .en { font-family: "Century Gothic", "Yu Gothic", sans-serif; }
+
+  .controlbar {
+    position: sticky; top: 0; z-index: 10;
+    background: #1F3A5F; color: #fff;
+    padding: 14px 20px;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+    font-size: 13px;
+  }
+  .controlbar .title { font-weight: bold; font-size: 15px; margin-right: 8px; }
+  .controlbar select, .controlbar button {
+    font-family: inherit; font-size: 13px; padding: 7px 14px;
+    border-radius: 6px; border: none; cursor: pointer;
+  }
+  .controlbar select { background: #fff; color: #111; }
+  .controlbar button.primary { background: #C9972B; color: #fff; font-weight: bold; }
+  .controlbar button.secondary { background: #3A557A; color: #fff; }
+  .controlbar button.secondary.active { background: #8A2E2E; }
+  .controlbar .spacer { flex: 1; }
+  .controlbar .count { font-size: 12px; color: #D9E1EC; }
+
+  @media print {
+    .controlbar { display: none !important; }
+    body { background: #fff; }
+  }
+
+  .sheet {
+    position: relative;
+    width: 210mm;
+    min-height: 297mm;
+    margin: 16px auto;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+    padding: 10mm 12mm;
+  }
+  @media print {
+    .sheet { box-shadow: none; margin: 0; width: auto; min-height: 0; }
+    .sheet.pb { page-break-before: always; }
+  }
+
+  .scorebox {
+    position: absolute; top: 10mm; right: 12mm;
+    width: 24mm; border: 2px solid #111; text-align: center; font-size: 9pt;
+  }
+  .scorebox .sb-label { background: #111; color: #fff; padding: 1.5px 0; font-weight: bold; letter-spacing: 0.1em; }
+  .scorebox .sb-box { height: 13mm; display: flex; align-items: center; justify-content: center; font-size: 13pt; }
+  .scorebox .sb-max { font-size: 8pt; color: #555; border-top: 1px solid #111; padding: 1px 0; }
+
+  h1 { font-size: 16pt; text-align: center; margin: 0 0 2.5mm; letter-spacing: 0.03em; }
+  .sub { text-align: center; font-size: 10pt; color: #333; margin-bottom: 3.5mm; }
+
+  .namebox {
+    display: flex; justify-content: flex-end; gap: 18px; font-size: 10pt;
+    border-bottom: 1px solid #999; padding-bottom: 2.5mm; margin-bottom: 3.5mm;
+    padding-right: 30mm;
+  }
+
+  .memo {
+    border: 1px solid #999; border-radius: 4px; padding: 6px 10px;
+    font-size: 9.5pt; color: #333; margin-bottom: 4mm; line-height: 1.5;
+  }
+  .memo .t { font-weight: bold; margin-bottom: 2px; }
+
+  .q { margin-bottom: 5mm; }
+  .qh { display: flex; align-items: baseline; gap: 10px; margin-bottom: 2.5mm; border-bottom: 2px solid #111; padding-bottom: 1.5mm; }
+  .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border: 2px solid #111; border-radius: 3px;
+    font-weight: bold; font-size: 11pt; flex-shrink: 0;
+  }
+  .inst { flex: 1; font-weight: bold; }
+  .pts { font-weight: normal; font-size: 9.5pt; color: #333; white-space: nowrap; }
+
+  table.verbtable { width: 100%; border-collapse: collapse; font-size: 10.5pt; }
+  table.verbtable th {
+    border: 1px solid #999; background: #f0f0f0; padding: 4px 6px; font-size: 9.5pt;
+  }
+  table.verbtable td {
+    border: 1px solid #bbb; padding: 4px 6px; vertical-align: middle; text-align: center;
+  }
+  table.verbtable td.vnum { width: 20px; color: #666; font-size: 9pt; }
+  table.verbtable td.vmeaning { width: 22%; text-align: left; }
+  table.verbtable td.vbase { width: 16%; font-weight: bold; }
+  .vblank-ul { display: inline-block; border-bottom: 1px solid #333; height: 12px; width: 90%; }
+
+  .a .k { color: #000; font-weight: bold; text-decoration: underline; }
+  .ans h2 { font-size: 13pt; margin: 6mm 0 3mm; border-left: 5px solid #1F3A5F; padding-left: 8px; }
+
+  body.editmode [contenteditable="true"] { outline: 1px dashed #C9972B; }
+  @media print { [contenteditable] { outline: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="controlbar">
+  <span class="title">🔁 不規則動詞テスト｜学習塾CONNECT</span>
+  <select id="levelSelect"></select>
+  <select id="countSelect">
+    <option value="16">16問</option>
+    <option value="20" selected>20問</option>
+    <option value="999">全問</option>
+  </select>
+  <button class="primary" id="genBtn">この範囲で作成</button>
+  <button class="secondary" id="editBtn">編集モード</button>
+  <button class="secondary" id="printBtn">印刷</button>
+  <span class="spacer"></span>
+  <span class="count" id="rangeInfo"></span>
+</div>
+
+<div id="output"></div>
+
+<script type="application/json" id="verbData">{"levels":["8級","7級"],"verbs":{"8級":[{"m":"持ってくる","base":"bring","past":"brought","pp":"brought"},{"m":"買う","base":"buy","past":"bought","pp":"bought"},{"m":"思う","base":"think","past":"thought","pp":"thought"},{"m":"つかまえる","base":"catch","past":"caught","pp":"caught"},{"m":"教える","base":"teach","past":"taught","pp":"taught"},{"m":"立つ","base":"stand","past":"stood","pp":"stood"},{"m":"勝つ","base":"win","past":"won","pp":"won"},{"m":"得る","base":"get","past":"got","pp":"got(gotten)"},{"m":"忘れる","base":"forget","past":"forgot","pp":"forgot(forgotten)"},{"m":"保つ","base":"keep","past":"kept","pp":"kept"},{"m":"[時間]を過ごす","base":"spend","past":"spent","pp":"spent"},{"m":"建てる","base":"build","past":"built","pp":"built"},{"m":"感じる","base":"feel","past":"felt","pp":"felt"},{"m":"出発する","base":"leave","past":"left","pp":"left"},{"m":"会う","base":"meet","past":"met","pp":"met"},{"m":"失う","base":"lose","past":"lost","pp":"lost"},{"m":"送る","base":"send","past":"sent","pp":"sent"},{"m":"すわる","base":"sit","past":"sat","pp":"sat"},{"m":"見つける","base":"find","past":"found","pp":"found"},{"m":"持っている","base":"have","past":"had","pp":"had"},{"m":"売る","base":"sell","past":"sold","pp":"sold"},{"m":"聞こえる","base":"hear","past":"heard","pp":"heard"},{"m":"開く, 催す","base":"hold","past":"held","pp":"held"},{"m":"作る","base":"make","past":"made","pp":"made"},{"m":"読む","base":"read","past":"read","pp":"read"},{"m":"言う","base":"say","past":"said","pp":"said"},{"m":"話す, 教える","base":"tell","past":"told","pp":"told"}],"7級":[{"m":"〜である","base":"be[am, is, are]","past":"was, were","pp":"been"},{"m":"する","base":"do","past":"did","pp":"done"},{"m":"行く","base":"go","past":"went","pp":"gone"},{"m":"始める","base":"begin","past":"began","pp":"begun"},{"m":"[絵]を描く","base":"draw","past":"drew","pp":"drawn"},{"m":"歌う","base":"sing","past":"sang","pp":"sung"},{"m":"成長する","base":"grow","past":"grew","pp":"grown"},{"m":"食べる","base":"eat","past":"ate","pp":"eaten"},{"m":"与える","base":"give","past":"gave","pp":"given"},{"m":"知っている","base":"know","past":"knew","pp":"known"},{"m":"壊す","base":"break","past":"broke","pp":"broken"},{"m":"落ちる","base":"fall","past":"fell","pp":"fallen"},{"m":"見える","base":"see","past":"saw","pp":"seen"},{"m":"見せる","base":"show","past":"showed","pp":"shown(showed)"},{"m":"話す","base":"speak","past":"spoke","pp":"spoken"},{"m":"[写真]を撮る","base":"take","past":"took","pp":"taken"},{"m":"書く","base":"write","past":"wrote","pp":"written"},{"m":"〜になる","base":"become","past":"became","pp":"become"},{"m":"来る","base":"come","past":"came","pp":"come"},{"m":"走る","base":"run","past":"ran","pp":"run"},{"m":"打つ","base":"hit","past":"hit","pp":"hit"},{"m":"置く","base":"put","past":"put","pp":"put"},{"m":"切る","base":"cut","past":"cut","pp":"cut"}]}}</script>
+
+<script>
+(function(){
+  var DATA = JSON.parse(document.getElementById('verbData').textContent);
+  var levelSelect = document.getElementById('levelSelect');
+  var countSelect = document.getElementById('countSelect');
+  var output = document.getElementById('output');
+  var rangeInfo = document.getElementById('rangeInfo');
+  var genBtn = document.getElementById('genBtn');
+  var editBtn = document.getElementById('editBtn');
+  var printBtn = document.getElementById('printBtn');
+
+  // DATA.levels = ["8級","7級"]
+  var options = DATA.levels.slice();
+  if (options.length > 1) options.push(options.join('＋'));
+  options.forEach(function(opt){
+    var o = document.createElement('option');
+    o.value = opt;
+    o.textContent = opt === options[options.length - 1] && options.length > DATA.levels.length
+      ? (DATA.levels.join('＋') + '（両方）')
+      : opt;
+    levelSelect.appendChild(o);
+  });
+
+  function shuffle(arr){
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+  function pick(arr, n){
+    return shuffle(arr).slice(0, Math.min(n, arr.length));
+  }
+  function esc(s){
+    return String(s == null ? '' : s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function poolFor(levelVal){
+    if (DATA.verbs[levelVal]) return DATA.verbs[levelVal];
+    // 結合（例: "8級＋7級"）
+    var out = [];
+    DATA.levels.forEach(function(lv){ out = out.concat(DATA.verbs[lv] || []); });
+    return out;
+  }
+
+  function todayStr(){
+    var d = new Date();
+    return d.getFullYear() + '年' + (d.getMonth()+1) + '月' + d.getDate() + '日';
+  }
+
+  function render(){
+    var levelVal = levelSelect.value;
+    var reqCount = parseInt(countSelect.value, 10);
+    var pool = poolFor(levelVal);
+    var picked = pick(pool, reqCount);
+    var total = picked.length * 2; // 過去形・過去分詞形で各1点
+
+    rangeInfo.textContent = '出題範囲：' + levelVal + '（' + picked.length + '語×2点＝計' + total + '点）';
+
+    var qRows = '', aRows = '';
+    picked.forEach(function(v, i){
+      qRows += '<tr>' +
+        '<td class="vnum">' + (i+1) + '</td>' +
+        '<td class="vmeaning">' + esc(v.m) + '</td>' +
+        '<td class="vbase en">' + esc(v.base) + '</td>' +
+        '<td class="en"><span class="vblank-ul">&nbsp;</span></td>' +
+        '<td class="en"><span class="vblank-ul">&nbsp;</span></td>' +
+        '</tr>';
+      aRows += '<tr>' +
+        '<td class="vnum">' + (i+1) + '</td>' +
+        '<td class="vmeaning">' + esc(v.m) + '</td>' +
+        '<td class="vbase en">' + esc(v.base) + '</td>' +
+        '<td class="en"><span class="k">' + esc(v.past) + '</span></td>' +
+        '<td class="en"><span class="k">' + esc(v.pp) + '</span></td>' +
+        '</tr>';
+    });
+
+    var qTable = '<table class="verbtable"><thead><tr>' +
+      '<th></th><th>意味</th><th>現在形</th><th>過去形</th><th>過去分詞形</th>' +
+      '</tr></thead><tbody>' + qRows + '</tbody></table>';
+    var aTable = '<table class="verbtable"><thead><tr>' +
+      '<th></th><th>意味</th><th>現在形</th><th>過去形</th><th>過去分詞形</th>' +
+      '</tr></thead><tbody>' + aRows + '</tbody></table>';
+
+    var html = '';
+
+    html += '<div class="sheet" id="sheetQ">';
+    html += '<div class="scorebox"><div class="sb-label">得点</div><div class="sb-box">&nbsp;</div><div class="sb-max">／' + total + '点</div></div>';
+    html += '<h1>不規則動詞テスト　' + esc(levelVal) + '</h1>';
+    html += '<div class="sub">学習塾CONNECT／満点' + total + '点（各1点）</div>';
+    html += '<div class="namebox"><span>組　　番</span><span>名前　　　　　　　　　　　</span><span>' + todayStr() + '</span></div>';
+
+    html += '<div class="q">';
+    html += '<div class="qh"><span class="num">1</span><span class="inst">次の動詞の過去形・過去分詞形を書きなさい。<span class="pts">（各1点×' + (picked.length*2) + '）</span></span></div>';
+    html += qTable;
+    html += '</div>';
+
+    html += '</div>'; // sheetQ
+
+    html += '<div class="sheet pb ans">';
+    html += '<h1>解答・解説</h1>';
+    html += '<div class="sub">不規則動詞テスト　' + esc(levelVal) + '／配点：計' + total + '点</div>';
+
+    html += '<div class="memo"><div class="t">■ 出題範囲メモ</div>';
+    html += 'CONNECT単語帳「不規則変化動詞' + esc(levelVal) + '」のリストからランダム抽出して作成。( )内の別形は許容解として扱う。</div>';
+
+    html += '<h2>大問1　過去形・過去分詞形</h2>';
+    html += aTable;
+
+    html += '</div>'; // ans
+
+    output.innerHTML = html;
+  }
+
+  genBtn.addEventListener('click', render);
+  levelSelect.addEventListener('change', render);
+  countSelect.addEventListener('change', render);
+  printBtn.addEventListener('click', function(){ window.print(); });
+
+  var editing = false;
+  editBtn.addEventListener('click', function(){
+    editing = !editing;
+    document.body.classList.toggle('editmode', editing);
+    editBtn.classList.toggle('active', editing);
+    editBtn.textContent = editing ? '編集モード：ON' : '編集モード';
+    var targets = output.querySelectorAll('.sheet, h1, .sub, .memo, td, th');
+    targets.forEach(function(el){
+      el.setAttribute('contenteditable', editing ? 'true' : 'false');
+    });
+  });
+
+  levelSelect.value = options[options.length - 1];
+  render();
+})();
+</script>
+
+</body>
+</html>

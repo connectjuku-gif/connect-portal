@@ -1,0 +1,280 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小学生英単語テスト｜学習塾CONNECT</title>
+<style>
+  @page { size: A4; margin: 10mm 12mm; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+    font-size: 11.5pt;
+    color: #111;
+    background: #e9e9e9;
+  }
+  .en { font-family: "Century Gothic", "Yu Gothic", sans-serif; }
+
+  .controlbar {
+    position: sticky; top: 0; z-index: 10;
+    background: #1F3A5F; color: #fff;
+    padding: 14px 20px;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+    font-size: 13px;
+  }
+  .controlbar .title { font-weight: bold; font-size: 15px; margin-right: 8px; }
+  .controlbar select, .controlbar button {
+    font-family: inherit; font-size: 13px; padding: 7px 14px;
+    border-radius: 6px; border: none; cursor: pointer;
+  }
+  .controlbar select { background: #fff; color: #111; }
+  .controlbar button.primary { background: #C9972B; color: #fff; font-weight: bold; }
+  .controlbar button.secondary { background: #3A557A; color: #fff; }
+  .controlbar button.secondary.active { background: #8A2E2E; }
+  .controlbar .spacer { flex: 1; }
+  .controlbar .count { font-size: 12px; color: #D9E1EC; }
+
+  @media print {
+    .controlbar { display: none !important; }
+    body { background: #fff; }
+  }
+
+  .sheet {
+    position: relative;
+    width: 210mm;
+    min-height: 297mm;
+    margin: 16px auto;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+    padding: 10mm 12mm;
+  }
+  @media print {
+    .sheet { box-shadow: none; margin: 0; width: auto; min-height: 0; }
+    .sheet.pb { page-break-before: always; }
+  }
+
+  .scorebox {
+    position: absolute; top: 10mm; right: 12mm;
+    width: 24mm; border: 2px solid #111; text-align: center; font-size: 9pt;
+  }
+  .scorebox .sb-label { background: #111; color: #fff; padding: 1.5px 0; font-weight: bold; letter-spacing: 0.1em; }
+  .scorebox .sb-box { height: 13mm; display: flex; align-items: center; justify-content: center; font-size: 13pt; }
+  .scorebox .sb-max { font-size: 8pt; color: #555; border-top: 1px solid #111; padding: 1px 0; }
+
+  h1 { font-size: 16pt; text-align: center; margin: 0 0 2.5mm; letter-spacing: 0.03em; }
+  .sub { text-align: center; font-size: 10pt; color: #333; margin-bottom: 3.5mm; }
+
+  .namebox {
+    display: flex; justify-content: flex-end; gap: 18px; font-size: 10pt;
+    border-bottom: 1px solid #999; padding-bottom: 2.5mm; margin-bottom: 3.5mm;
+    padding-right: 30mm;
+  }
+
+  .memo {
+    border: 1px solid #999; border-radius: 4px; padding: 6px 10px;
+    font-size: 9.5pt; color: #333; margin-bottom: 4mm; line-height: 1.5;
+  }
+  .memo .t { font-weight: bold; margin-bottom: 2px; }
+
+  .q { margin-bottom: 5mm; }
+  .qh { display: flex; align-items: baseline; gap: 10px; margin-bottom: 2.5mm; border-bottom: 2px solid #111; padding-bottom: 1.5mm; }
+  .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border: 2px solid #111; border-radius: 3px;
+    font-weight: bold; font-size: 11pt; flex-shrink: 0;
+  }
+  .inst { flex: 1; font-weight: bold; }
+  .pts { font-weight: normal; font-size: 9.5pt; color: #333; white-space: nowrap; }
+
+  table.wtable { width: 100%; border-collapse: collapse; font-size: 11pt; margin-bottom: 4mm; }
+  table.wtable th {
+    border: 1px solid #999; background: #f0f0f0; padding: 4px 6px; font-size: 9.5pt;
+  }
+  table.wtable td {
+    border: 1px solid #bbb; padding: 5px 7px; vertical-align: middle;
+  }
+  table.wtable td.vnum { width: 22px; color: #666; font-size: 9pt; text-align: center; }
+  table.wtable td.vgiven { width: 42%; }
+  .vblank-ul { display: inline-block; border-bottom: 1px solid #333; height: 13px; width: 90%; }
+
+  .a .k { color: #000; font-weight: bold; text-decoration: underline; }
+  .ans h2 { font-size: 13pt; margin: 6mm 0 3mm; border-left: 5px solid #1F3A5F; padding-left: 8px; }
+
+  body.editmode [contenteditable="true"] { outline: 1px dashed #C9972B; }
+  @media print { [contenteditable] { outline: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="controlbar">
+  <span class="title">🔤 小学生英単語テスト｜学習塾CONNECT</span>
+  <select id="unitSelect"></select>
+  <select id="formatSelect">
+    <option value="e2j">英語→日本語</option>
+    <option value="j2e">日本語→英語</option>
+    <option value="mix" selected>ミックス（半分ずつ）</option>
+  </select>
+  <select id="countSelect">
+    <option value="10" selected>10問</option>
+    <option value="999">全問</option>
+  </select>
+  <button class="primary" id="genBtn">この範囲で作成</button>
+  <button class="secondary" id="editBtn">編集モード</button>
+  <button class="secondary" id="printBtn">印刷</button>
+  <span class="spacer"></span>
+  <span class="count" id="rangeInfo"></span>
+</div>
+
+<div id="output"></div>
+
+<script type="application/json" id="vocabData">{"units": ["unit1", "unit2", "unit3", "unit4", "unit5", "unit6", "unit7", "unit8", "unit9", "unit10", "unit11", "unit16", "unit17", "unit18", "unit19", "unit20", "unit21", "unit22", "unit23", "unit24", "unit25", "unit26", "unit27", "unit28", "unit29", "unit30", "unit31", "unit32", "unit33", "unit34", "unit35", "unit36", "unit37", "unit38", "unit39"], "words": {"unit1": [{"w": "eat", "m": "食べる"}, {"w": "have", "m": "持っている"}, {"w": "get", "m": "手に入れる"}, {"w": "go", "m": "行く"}, {"w": "like", "m": "好き"}, {"w": "look", "m": "見る"}, {"w": "play", "m": "する・演奏する"}, {"w": "read", "m": "読む"}, {"w": "run", "m": "走る"}, {"w": "see", "m": "見える"}, {"w": "stop", "m": "やめる・止まる"}, {"w": "study", "m": "勉強する"}, {"w": "want", "m": "ほしい"}, {"w": "watch", "m": "見る"}, {"w": "drink", "m": "飲む"}, {"w": "cook", "m": "作る・料理する"}], "unit2": [{"w": "speak", "m": "話す"}, {"w": "listen", "m": "聞く"}, {"w": "enjoy", "m": "楽しむ"}, {"w": "help", "m": "助ける・手伝う"}, {"w": "live", "m": "住む"}, {"w": "make", "m": "作る"}, {"w": "buy", "m": "買う"}, {"w": "use", "m": "使う"}, {"w": "come", "m": "来る"}, {"w": "sing", "m": "歌う"}, {"w": "swim", "m": "泳ぐ"}, {"w": "turn", "m": "曲がる"}, {"w": "try", "m": "試す"}, {"w": "think", "m": "思う・考える"}, {"w": "ride", "m": "乗る"}, {"w": "wash", "m": "洗う"}], "unit3": [{"w": "know", "m": "知っている"}, {"w": "talk", "m": "話す"}, {"w": "visit", "m": "訪れる"}, {"w": "write", "m": "書く"}, {"w": "take", "m": "つれていく"}, {"w": "join", "m": "加わる・参加する"}, {"w": "walk", "m": "歩く"}, {"w": "teach", "m": "教える"}, {"w": "jump", "m": "とぶ"}, {"w": "dance", "m": "おどる"}, {"w": "leave", "m": "去る"}, {"w": "practice", "m": "練習する"}, {"w": "clean", "m": "そうじをする"}, {"w": "do", "m": "する"}, {"w": "stand", "m": "立つ"}, {"w": "thank", "m": "感謝する"}], "unit4": [{"w": "call", "m": "呼ぶ"}, {"w": "cut", "m": "切る"}, {"w": "start", "m": "始める・始まる"}, {"w": "catch", "m": "つかむ・つかまえる"}, {"w": "touch", "m": "さわる"}, {"w": "put", "m": "置く"}, {"w": "meet", "m": "会う"}, {"w": "wait", "m": "待つ"}, {"w": "drive", "m": "運転する"}, {"w": "climb", "m": "登る"}, {"w": "draw", "m": "描く"}, {"w": "sit", "m": "座る"}, {"w": "kick", "m": "ける"}, {"w": "wear", "m": "着ている"}, {"w": "love", "m": "愛する"}, {"w": "fly", "m": "飛ぶ"}], "unit5": [{"w": "care", "m": "気にかける"}, {"w": "check", "m": "確認する"}, {"w": "collect", "m": "集める"}, {"w": "brush", "m": "みがく"}, {"w": "feed", "m": "えさをやる"}, {"w": "skate", "m": "スケートをする"}, {"w": "ski", "m": "スキーをする"}, {"w": "throw", "m": "投げる"}, {"w": "travel", "m": "旅行をする"}, {"w": "dive", "m": "もぐる・とびこむ"}, {"w": "hit", "m": "打つ"}, {"w": "spell", "m": "つづる"}, {"w": "ate", "m": "食べた"}, {"w": "had", "m": "持っていた"}, {"w": "saw", "m": "見えた"}, {"w": "went", "m": "行った"}], "unit6": [{"w": "active", "m": "活発な"}, {"w": "angry", "m": "怒った"}, {"w": "beautiful", "m": "美しい"}, {"w": "busy", "m": "いそがしい"}, {"w": "cool", "m": "かっこいい・すずしい"}, {"w": "cute", "m": "かわいい"}, {"w": "famous", "m": "有名な"}, {"w": "fine", "m": "元気な"}, {"w": "funny", "m": "おもしろい・おかしな"}, {"w": "happy", "m": "うれしい・幸せな"}, {"w": "hungry", "m": "空腹な"}, {"w": "kind", "m": "親切な"}, {"w": "good", "m": "よい・すぐれた"}, {"w": "great", "m": "すばらしい"}, {"w": "nice", "m": "よい・すてきな"}, {"w": "best", "m": "最もよい・最高の"}], "unit7": [{"w": "popular", "m": "人気のある"}, {"w": "sad", "m": "悲しい"}, {"w": "sleepy", "m": "ねむい"}, {"w": "sorry", "m": "申し訳なく思って"}, {"w": "special", "m": "特別な"}, {"w": "strong", "m": "強い"}, {"w": "tired", "m": "つかれた"}, {"w": "wonderful", "m": "すばらしい"}, {"w": "old", "m": "古い・年をとった"}, {"w": "young", "m": "若い"}, {"w": "many", "m": "多くの・たくさんの"}, {"w": "new", "m": "新しい"}, {"w": "exciting", "m": "わくわくさせる"}, {"w": "favorite", "m": "お気に入りの・いちばん好きな"}, {"w": "high", "m": "高い"}, {"w": "interesting", "m": "おもしろい"}], "unit8": [{"w": "sweet", "m": "甘い"}, {"w": "big", "m": "大きい"}, {"w": "large", "m": "大きい・広い"}, {"w": "small", "m": "小さい"}, {"w": "long", "m": "長い"}, {"w": "tall", "m": "高い"}, {"w": "short", "m": "短い"}, {"w": "fast", "m": "速い"}, {"w": "slow", "m": "おそい"}, {"w": "cold", "m": "寒い・冷たい"}, {"w": "hot", "m": "暑い・熱い"}, {"w": "easy", "m": "簡単な"}, {"w": "difficult", "m": "難しい"}, {"w": "hard", "m": "厳しい・難しい・かたい"}, {"w": "same", "m": "同じ"}, {"w": "different", "m": "ちがう"}], "unit9": [{"w": "one", "m": "１"}, {"w": "two", "m": "２"}, {"w": "three", "m": "３"}, {"w": "four", "m": "４"}, {"w": "five", "m": "５"}, {"w": "six", "m": "６"}, {"w": "seven", "m": "７"}, {"w": "eight", "m": "８"}, {"w": "nine", "m": "９"}, {"w": "ten", "m": "１０"}, {"w": "eleven", "m": "１１"}, {"w": "twelve", "m": "１２"}, {"w": "thirteen", "m": "１３"}, {"w": "fourteen", "m": "１４"}, {"w": "fifteen", "m": "１５"}, {"w": "sixteen", "m": "１６"}], "unit10": [{"w": "seventeen", "m": "１７"}, {"w": "eighteen", "m": "１８"}, {"w": "nineteen", "m": "１９"}, {"w": "twenty", "m": "２０"}, {"w": "thirty", "m": "３０"}, {"w": "forty", "m": "４０"}, {"w": "fifty", "m": "５０"}, {"w": "sixty", "m": "６０"}, {"w": "seventy", "m": "７０"}, {"w": "eighty", "m": "８０"}, {"w": "ninety", "m": "９０"}, {"w": "hundred", "m": "１００"}, {"w": "thousand", "m": "１０００"}, {"w": "first", "m": "１日・１番め"}, {"w": "second", "m": "２日・２番め"}, {"w": "third", "m": "３日・３番め"}], "unit11": [{"w": "fourth", "m": "４日・４番め"}, {"w": "fifth", "m": "５日・５番め"}, {"w": "sixth", "m": "６日・６番め"}, {"w": "seventh", "m": "７日・７番め"}, {"w": "eighth", "m": "８日・８番め"}, {"w": "ninth", "m": "９日・９番め"}, {"w": "tenth", "m": "１０日・１０番め"}, {"w": "eleventh", "m": "１１日・１１番め"}, {"w": "twelfth", "m": "１２日・１２番め"}, {"w": "thirteenth", "m": "１３日・１３番め"}, {"w": "fourteenth", "m": "１４日・１４番め"}, {"w": "fifteenth", "m": "１５日・１５番め"}, {"w": "sixteenth", "m": "１６日・１６番め"}, {"w": "seventeenth", "m": "１７日・１７番め"}, {"w": "eighteenth", "m": "１８日・１８番め"}, {"w": "nineteenth", "m": "１９日・１９番め"}], "unit16": [{"w": "English", "m": "英語"}, {"w": "Japanese", "m": "日本語、国語"}, {"w": "math", "m": "算数、数学"}, {"w": "music", "m": "音楽"}, {"w": "science", "m": "理科、科学"}, {"w": "subject", "m": "教科、科目"}, {"w": "class", "m": "クラス、授業"}, {"w": "classmate", "m": "同級生"}, {"w": "classroom", "m": "教室"}, {"w": "club", "m": "クラブ"}, {"w": "homework", "m": "宿題"}, {"w": "dictionary", "m": "辞書"}, {"w": "notebook", "m": "ノート"}, {"w": "pen", "m": "ペン"}, {"w": "pencil", "m": "えんぴつ"}, {"w": "textbook", "m": "教科書"}], "unit17": [{"w": "bed", "m": "ベッド"}, {"w": "chair", "m": "いす"}, {"w": "table", "m": "テーブル"}, {"w": "desk", "m": "つくえ"}, {"w": "book", "m": "本"}, {"w": "cup", "m": "カップ"}, {"w": "clock", "m": "時計"}, {"w": "TV", "m": "テレビ"}, {"w": "bath", "m": "風呂"}, {"w": "news", "m": "ニュース"}, {"w": "newspaper", "m": "新聞"}, {"w": "picture", "m": "絵、写真"}, {"w": "ball", "m": "ボール"}, {"w": "box", "m": "箱"}, {"w": "map", "m": "地図"}, {"w": "card", "m": "カード"}], "unit18": [{"w": "movie", "m": "映画"}, {"w": "name", "m": "名前"}, {"w": "dream", "m": "夢"}, {"w": "color", "m": "色"}, {"w": "memory", "m": "思い出、記憶"}, {"w": "umbrella", "m": "かさ"}, {"w": "bag", "m": "かばん"}, {"w": "cap", "m": "帽子(つば付き)"}, {"w": "hat", "m": "帽子"}, {"w": "shirt", "m": "シャツ"}, {"w": "clothes", "m": "衣服"}, {"w": "guitar", "m": "ギター"}, {"w": "piano", "m": "ピアノ"}, {"w": "breakfast", "m": "朝食"}, {"w": "lunch", "m": "昼食"}, {"w": "dinner", "m": "夕食"}], "unit19": [{"w": "bank", "m": "銀行"}, {"w": "hospital", "m": "病院"}, {"w": "library", "m": "図書館、図書室"}, {"w": "museum", "m": "美術館、博物館"}, {"w": "restaurant", "m": "レストラン"}, {"w": "shop", "m": "店"}, {"w": "zoo", "m": "動物園"}, {"w": "supermarket", "m": "スーパーマーケット"}, {"w": "post office", "m": "郵便局"}, {"w": "bookstore", "m": "書店"}, {"w": "stadium", "m": "スタジアム、競技場"}, {"w": "tower", "m": "塔"}, {"w": "shrine", "m": "神社"}, {"w": "temple", "m": "寺"}, {"w": "city", "m": "都市"}, {"w": "town", "m": "町"}], "unit20": [{"w": "street", "m": "通り"}, {"w": "park", "m": "公園"}, {"w": "station", "m": "駅"}, {"w": "school", "m": "学校"}, {"w": "garden", "m": "庭"}, {"w": "home", "m": "家、家庭"}, {"w": "house", "m": "家"}, {"w": "place", "m": "場所"}, {"w": "airplane", "m": "飛行機"}, {"w": "bicycle", "m": "自転車"}, {"w": "bike", "m": "自転車、バイク"}, {"w": "bus", "m": "バス"}, {"w": "car", "m": "車"}, {"w": "subway", "m": "地下鉄"}, {"w": "taxi", "m": "タクシー"}, {"w": "train", "m": "列車、電車"}], "unit21": [{"w": "artist", "m": "芸術家"}, {"w": "baker", "m": "パン職人"}, {"w": "dentist", "m": "歯医者、歯科医"}, {"w": "doctor", "m": "医者"}, {"w": "farmer", "m": "農場主"}, {"w": "musician", "m": "音楽家"}, {"w": "nurse", "m": "看護師"}, {"w": "player", "m": "競技者、選手"}, {"w": "pilot", "m": "パイロット"}, {"w": "scientist", "m": "科学者"}, {"w": "singer", "m": "歌手"}, {"w": "teacher", "m": "先生"}, {"w": "job", "m": "職、仕事"}, {"w": "hero", "m": "英雄、ヒーロー"}, {"w": "king", "m": "王"}, {"w": "queen", "m": "女王"}], "unit22": [{"w": "badminton", "m": "バドミントン"}, {"w": "baseball", "m": "野球"}, {"w": "basketball", "m": "バスケットボール"}, {"w": "rugby", "m": "ラグビー"}, {"w": "soccer", "m": "サッカー"}, {"w": "swimming", "m": "水泳"}, {"w": "table tennis", "m": "卓球"}, {"w": "tennis", "m": "テニス"}, {"w": "volleyball", "m": "バレーボール"}, {"w": "sport", "m": "スポーツ"}, {"w": "team", "m": "チーム"}, {"w": "Japan", "m": "日本"}, {"w": "Canada", "m": "カナダ"}, {"w": "Australia", "m": "オーストラリア"}, {"w": "country", "m": "国"}, {"w": "world", "m": "世界"}], "unit23": [{"w": "animal", "m": "動物"}, {"w": "bear", "m": "クマ"}, {"w": "bird", "m": "鳥"}, {"w": "cat", "m": "ネコ"}, {"w": "dog", "m": "イヌ"}, {"w": "horse", "m": "ウマ"}, {"w": "lion", "m": "ライオン"}, {"w": "monkey", "m": "サル"}, {"w": "mouse", "m": "ネズミ"}, {"w": "panda", "m": "パンダ"}, {"w": "pig", "m": "ブタ"}, {"w": "rabbit", "m": "ウサギ"}, {"w": "sheep", "m": "ヒツジ"}, {"w": "tiger", "m": "トラ"}, {"w": "flower", "m": "花"}, {"w": "tree", "m": "木"}], "unit24": [{"w": "mountain", "m": "山"}, {"w": "river", "m": "川"}, {"w": "beach", "m": "浜辺、海辺"}, {"w": "forest", "m": "森"}, {"w": "island", "m": "島"}, {"w": "lake", "m": "湖"}, {"w": "pond", "m": "池"}, {"w": "sea", "m": "海"}, {"w": "sky", "m": "空"}, {"w": "star", "m": "星"}, {"w": "moon", "m": "月"}, {"w": "sun", "m": "太陽"}, {"w": "rain", "m": "雨"}, {"w": "rainbow", "m": "にじ"}, {"w": "nature", "m": "自然"}, {"w": "weather", "m": "天気"}], "unit25": [{"w": "birthday", "m": "誕生日"}, {"w": "event", "m": "出来事、行事"}, {"w": "festival", "m": "祭り"}, {"w": "party", "m": "パーティー"}, {"w": "vacation", "m": "休暇"}, {"w": "computer", "m": "コンピュータ"}, {"w": "game", "m": "遊び、試合"}, {"w": "camping", "m": "キャンプ"}, {"w": "cooking", "m": "料理"}, {"w": "cycling", "m": "サイクリング"}, {"w": "dancing", "m": "おどり、ダンス"}, {"w": "fishing", "m": "(魚)つり"}, {"w": "hiking", "m": "ハイキング"}, {"w": "jogging", "m": "ジョギング"}, {"w": "reading", "m": "読書"}, {"w": "shopping", "m": "買い物"}], "unit26": [{"w": "boy", "m": "男の子"}, {"w": "girl", "m": "女の子"}, {"w": "man", "m": "男性"}, {"w": "woman", "m": "女性"}, {"w": "friend", "m": "友だち"}, {"w": "father", "m": "父"}, {"w": "mother", "m": "母"}, {"w": "brother", "m": "兄、弟"}, {"w": "sister", "m": "姉、妹"}, {"w": "family", "m": "家族"}, {"w": "ear", "m": "耳"}, {"w": "eye", "m": "目"}, {"w": "face", "m": "顔"}, {"w": "hand", "m": "手"}, {"w": "head", "m": "頭"}, {"w": "body", "m": "体"}], "unit27": [{"w": "date", "m": "日付"}, {"w": "day", "m": "日"}, {"w": "today", "m": "今日、現在"}, {"w": "hour", "m": "1時間"}, {"w": "minute", "m": "分"}, {"w": "time", "m": "時刻、時、時間"}, {"w": "morning", "m": "朝"}, {"w": "noon", "m": "正午、真昼"}, {"w": "afternoon", "m": "午後"}, {"w": "evening", "m": "夕方、晩"}, {"w": "night", "m": "夜"}, {"w": "future", "m": "未来、将来"}, {"w": "life", "m": "生活、生命"}], "unit28": [{"w": "I", "m": "私は"}, {"w": "my", "m": "私の"}, {"w": "me", "m": "私を[に]"}, {"w": "you", "m": "あなた(たち)は、あなた(たち)を[に]"}, {"w": "your", "m": "あなた(たち)の"}, {"w": "we", "m": "私たちは"}, {"w": "our", "m": "私たちの"}, {"w": "us", "m": "私たちを[に]"}, {"w": "he", "m": "彼は"}, {"w": "his", "m": "彼の"}, {"w": "him", "m": "彼を[に]"}, {"w": "she", "m": "彼女は"}, {"w": "her", "m": "彼女の、彼女を[に]"}, {"w": "it", "m": "それは、それを[に]"}, {"w": "that", "m": "あれ"}, {"w": "this", "m": "これ"}], "unit29": [{"w": "always", "m": "いつも"}, {"w": "usually", "m": "ふつう、たいてい"}, {"w": "often", "m": "しばしば、よく"}, {"w": "sometimes", "m": "ときどき"}, {"w": "never", "m": "決して～ない"}, {"w": "now", "m": "今、現在は"}, {"w": "someday", "m": "いつか"}, {"w": "down", "m": "下に[へ」"}, {"w": "right", "m": "右に[へ」"}, {"w": "left", "m": "左に[へ」"}, {"w": "straight", "m": "まっすぐに"}, {"w": "here", "m": "ここに[へ、で」"}, {"w": "out", "m": "外に[へ」"}, {"w": "much", "m": "とても"}, {"w": "really", "m": "本当に"}, {"w": "together", "m": "一緒に"}], "unit30": [{"w": "too", "m": "～もまた"}, {"w": "very", "m": "とても"}, {"w": "well", "m": "上手に"}, {"w": "yes", "m": "はい"}, {"w": "no", "m": "いいえ"}, {"w": "about", "m": "～について"}, {"w": "around", "m": "～のまわりに"}, {"w": "at", "m": "で[に」"}, {"w": "by", "m": "～のそばに"}, {"w": "for", "m": "～のために"}, {"w": "from", "m": "～から"}, {"w": "in", "m": "～の中に"}, {"w": "on", "m": "～の上に"}, {"w": "to", "m": "～へ[に」"}, {"w": "under", "m": "～の下に"}, {"w": "with", "m": "～と一緒に"}], "unit31": [{"w": "how", "m": "どのようにして"}, {"w": "what", "m": "何"}, {"w": "when", "m": "いつ"}, {"w": "where", "m": "どこに[へ」"}, {"w": "who", "m": "だれ"}, {"w": "why", "m": "なぜ"}, {"w": "and", "m": "～と…、そして"}, {"w": "but", "m": "しかし"}], "unit32": [{"w": "brave", "m": "勇敢な"}, {"w": "friendly", "m": "親しみやすい"}, {"w": "gentle", "m": "優しい、心が広い"}, {"w": "lucky", "m": "幸運な"}, {"w": "quick", "m": "すばやい、速い"}, {"w": "weak", "m": "弱い"}, {"w": "fantastic", "m": "すばらしい、すてきな"}, {"w": "heavy", "m": "重い"}, {"w": "international", "m": "国際的な"}, {"w": "little", "m": "小さい"}, {"w": "bitter", "m": "苦い"}, {"w": "delicious", "m": "美味しい"}, {"w": "fresh", "m": "新鮮な"}, {"w": "soft", "m": "やわらかい"}, {"w": "sour", "m": "すっぱい"}, {"w": "thirsty", "m": "のどがかわいた"}], "unit33": [{"w": "cherry", "m": "サクランボ"}, {"w": "grapes", "m": "ブドウ"}, {"w": "lemon", "m": "レモン"}, {"w": "melon", "m": "メロン"}, {"w": "pineapple", "m": "パイナップル"}, {"w": "strawberry", "m": "イチゴ"}, {"w": "watermelon", "m": "スイカ"}, {"w": "carrot", "m": "ニンジン"}, {"w": "corn", "m": "トウモロコシ"}, {"w": "onoin", "m": "タマネギ"}, {"w": "beef", "m": "牛肉"}, {"w": "chicken", "m": "ニワトリ、とり肉"}, {"w": "pork", "m": "ぶた肉"}, {"w": "bread", "m": "パン"}, {"w": "cheese", "m": "チーズ"}, {"w": "curry and rice", "m": "カレーライス"}], "unit34": [{"w": "French fries", "m": "フライドポテト"}, {"w": "fried chicken", "m": "フライドチキン"}, {"w": "hamburger", "m": "ハンバーガー"}, {"w": "grilled fish", "m": "焼き魚"}, {"w": "salad", "m": "サラダ"}, {"w": "sandwich", "m": "サンドイッチ"}, {"w": "soup", "m": "スープ"}, {"w": "spaghetti", "m": "スパゲッティ"}, {"w": "steak", "m": "ステーキ"}, {"w": "coffee", "m": "コーヒー"}, {"w": "juice", "m": "ジュース"}, {"w": "mineral water", "m": "ミネラルウォーター"}, {"w": "soda", "m": "ソーダ"}, {"w": "chocolate", "m": "チョコレート"}, {"w": "ice cream", "m": "アイスクリーム"}, {"w": "popcorn", "m": "ポップコーン"}], "unit35": [{"w": "arts and crafts", "m": "図画工作"}, {"w": "calligraphy", "m": "書道"}, {"w": "home economics", "m": "家庭科"}, {"w": "moral education", "m": "道徳"}, {"w": "P.E.", "m": "体育"}, {"w": "social studies", "m": "社会科"}, {"w": "eraser", "m": "消しゴム"}, {"w": "ink", "m": "インク"}, {"w": "rulre", "m": "定規"}, {"w": "scissors", "m": "はさみ"}, {"w": "entrance", "m": "入り口"}, {"w": "gym", "m": "体育館"}, {"w": "restroom", "m": "お手洗い"}, {"w": "entrance ceremony", "m": "入学式"}, {"w": "graduation ceremony", "m": "卒業式"}, {"w": "school trip", "m": "修学旅行"}], "unit36": [{"w": "calendar", "m": "カレンダー"}, {"w": "dish", "m": "皿"}, {"w": "garbage", "m": "生ごみ"}, {"w": "key", "m": "かぎ"}, {"w": "mirror", "m": "鏡"}, {"w": "racket", "m": "ラケット"}, {"w": "sofa", "m": "ソファー"}, {"w": "unicycle", "m": "一輪車"}], "unit37": [{"w": "window", "m": "窓"}, {"w": "wall", "m": "かべ"}, {"w": "glove", "m": "グローブ"}, {"w": "pants", "m": "ズボン"}, {"w": "sweater", "m": "セーター"}, {"w": "drum", "m": "ドラム"}, {"w": "recorder", "m": "リコーダー"}, {"w": "violin", "m": "バイオリン"}], "unit38": [{"w": "amusement　park", "m": "遊園地"}, {"w": "castle", "m": "城"}, {"w": "convenience store", "m": "コンビニエンスストア"}, {"w": "department store", "m": "デパート"}, {"w": "fire station", "m": "消防署"}, {"w": "flower shop", "m": "花屋"}, {"w": "gas station", "m": "ガソリンスタンド"}, {"w": "police station", "m": "警察署"}, {"w": "astronaut", "m": "宇宙飛行士"}, {"w": "comedian", "m": "コメディアン"}, {"w": "fire fighter", "m": "消防士"}, {"w": "flight attendant", "m": "客室乗務員"}, {"w": "florist", "m": "花屋の店主"}, {"w": "police officer", "m": "警察官"}, {"w": "vet", "m": "獣医"}, {"w": "zookeeper", "m": "動物園の飼育員"}], "unit39": [{"w": "football", "m": "アメリカンフットボール"}, {"w": "golf", "m": "ゴルフ"}, {"w": "marathon", "m": "マラソン"}, {"w": "softball", "m": "ソフトボール"}, {"w": "track and field", "m": "陸上競技"}, {"w": "Brazil", "m": "ブラジル"}, {"w": "China", "m": "中国"}, {"w": "France", "m": "フランス"}]}}</script>
+
+<script>
+(function(){
+  var DATA = JSON.parse(document.getElementById('vocabData').textContent);
+  var unitSelect = document.getElementById('unitSelect');
+  var formatSelect = document.getElementById('formatSelect');
+  var countSelect = document.getElementById('countSelect');
+  var output = document.getElementById('output');
+  var rangeInfo = document.getElementById('rangeInfo');
+  var genBtn = document.getElementById('genBtn');
+  var editBtn = document.getElementById('editBtn');
+  var printBtn = document.getElementById('printBtn');
+
+  DATA.units.forEach(function(u){
+    var o = document.createElement('option');
+    o.value = u;
+    o.textContent = u.replace('unit', 'Unit ');
+    unitSelect.appendChild(o);
+  });
+
+  function shuffle(arr){
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+  function pick(arr, n){
+    return shuffle(arr).slice(0, Math.min(n, arr.length));
+  }
+  function esc(s){
+    return String(s == null ? '' : s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+  function todayStr(){
+    var d = new Date();
+    return d.getFullYear() + '年' + (d.getMonth()+1) + '月' + d.getDate() + '日';
+  }
+
+  function qRow(i, given, givenCls, answerEl){
+    return '<tr><td class="vnum">' + (i+1) + '</td>' +
+      '<td class="vgiven ' + givenCls + '">' + esc(given) + '</td>' +
+      '<td>' + answerEl + '</td></tr>';
+  }
+
+  function render(){
+    var unit = unitSelect.value;
+    var format = formatSelect.value;
+    var reqCount = parseInt(countSelect.value, 10);
+    var pool = DATA.words[unit] || [];
+    var picked = pick(pool, reqCount);
+    var total = picked.length;
+    var passLine = Math.max(1, Math.ceil(total * 0.8));
+
+    rangeInfo.textContent = '出題範囲：' + unit.replace('unit','Unit ') + '（' + total + '問×1点＝計' + total + '点）';
+
+    var html = '';
+    var qBody = '', aBody = '';
+
+    if (format === 'mix') {
+      var half = Math.ceil(total / 2);
+      var first = picked.slice(0, half);
+      var second = picked.slice(half);
+
+      var qRows1 = '', aRows1 = '';
+      first.forEach(function(v, i){
+        qRows1 += qRow(i, v.w, 'en', '<span class="vblank-ul">&nbsp;</span>');
+        aRows1 += qRow(i, v.w, 'en', '<span class="k">' + esc(v.m) + '</span>');
+      });
+      var qRows2 = '', aRows2 = '';
+      second.forEach(function(v, i){
+        qRows2 += qRow(half + i, v.m, '', '<span class="vblank-ul en">&nbsp;</span>');
+        aRows2 += qRow(half + i, v.m, '', '<span class="k en">' + esc(v.w) + '</span>');
+      });
+
+      html += '<div class="q"><div class="qh"><span class="num">1</span><span class="inst">次の英単語の意味を答えなさい。<span class="pts">（各1点×' + first.length + '）</span></span></div>';
+      html += '<table class="wtable"><thead><tr><th></th><th>英単語</th><th>意味</th></tr></thead><tbody>' + qRows1 + '</tbody></table></div>';
+      html += '<div class="q"><div class="qh"><span class="num">2</span><span class="inst">次の日本語を英語に直しなさい。<span class="pts">（各1点×' + second.length + '）</span></span></div>';
+      html += '<table class="wtable"><thead><tr><th></th><th>日本語</th><th>英語</th></tr></thead><tbody>' + qRows2 + '</tbody></table></div>';
+      qBody = html;
+
+      var ahtml = '';
+      ahtml += '<h2>大問1　英語→日本語</h2><table class="wtable"><thead><tr><th></th><th>英単語</th><th>意味</th></tr></thead><tbody>' + aRows1 + '</tbody></table>';
+      ahtml += '<h2>大問2　日本語→英語</h2><table class="wtable"><thead><tr><th></th><th>日本語</th><th>英語</th></tr></thead><tbody>' + aRows2 + '</tbody></table>';
+      aBody = ahtml;
+    } else if (format === 'e2j') {
+      var qRows = '', aRows = '';
+      picked.forEach(function(v, i){
+        qRows += qRow(i, v.w, 'en', '<span class="vblank-ul">&nbsp;</span>');
+        aRows += qRow(i, v.w, 'en', '<span class="k">' + esc(v.m) + '</span>');
+      });
+      qBody = '<div class="q"><div class="qh"><span class="num">1</span><span class="inst">次の英単語の意味を答えなさい。<span class="pts">（各1点×' + total + '）</span></span></div>' +
+        '<table class="wtable"><thead><tr><th></th><th>英単語</th><th>意味</th></tr></thead><tbody>' + qRows + '</tbody></table></div>';
+      aBody = '<h2>大問1　英語→日本語</h2><table class="wtable"><thead><tr><th></th><th>英単語</th><th>意味</th></tr></thead><tbody>' + aRows + '</tbody></table>';
+    } else {
+      var qRows = '', aRows = '';
+      picked.forEach(function(v, i){
+        qRows += qRow(i, v.m, '', '<span class="vblank-ul en">&nbsp;</span>');
+        aRows += qRow(i, v.m, '', '<span class="k en">' + esc(v.w) + '</span>');
+      });
+      qBody = '<div class="q"><div class="qh"><span class="num">1</span><span class="inst">次の日本語を英語に直しなさい。<span class="pts">（各1点×' + total + '）</span></span></div>' +
+        '<table class="wtable"><thead><tr><th></th><th>日本語</th><th>英語</th></tr></thead><tbody>' + qRows + '</tbody></table></div>';
+      aBody = '<h2>大問1　日本語→英語</h2><table class="wtable"><thead><tr><th></th><th>日本語</th><th>英語</th></tr></thead><tbody>' + aRows + '</tbody></table>';
+    }
+
+    var out = '';
+    out += '<div class="sheet" id="sheetQ">';
+    out += '<div class="scorebox"><div class="sb-label">得点</div><div class="sb-box">&nbsp;</div><div class="sb-max">／' + total + '点</div></div>';
+    out += '<h1>英単語テスト　' + esc(unit.replace('unit','Unit ')) + '</h1>';
+    out += '<div class="sub">学習塾CONNECT／満点' + total + '点（' + passLine + '点以上で合格）</div>';
+    out += '<div class="namebox"><span>組　　番</span><span>名前　　　　　　　　　　　</span><span>' + todayStr() + '</span></div>';
+    out += qBody;
+    out += '</div>';
+
+    out += '<div class="sheet pb ans">';
+    out += '<h1>解答・解説</h1>';
+    out += '<div class="sub">英単語テスト　' + esc(unit.replace('unit','Unit ')) + '／配点：計' + total + '点</div>';
+    out += '<div class="memo"><div class="t">■ 出題範囲メモ</div>CONNECT単語帳「' + esc(unit.replace('unit','Unit ')) + '」の単語リストからランダム抽出して作成。</div>';
+    out += aBody;
+    out += '</div>';
+
+    output.innerHTML = out;
+  }
+
+  genBtn.addEventListener('click', render);
+  unitSelect.addEventListener('change', render);
+  formatSelect.addEventListener('change', render);
+  countSelect.addEventListener('change', render);
+  printBtn.addEventListener('click', function(){ window.print(); });
+
+  var editing = false;
+  editBtn.addEventListener('click', function(){
+    editing = !editing;
+    document.body.classList.toggle('editmode', editing);
+    editBtn.classList.toggle('active', editing);
+    editBtn.textContent = editing ? '編集モード：ON' : '編集モード';
+    var targets = output.querySelectorAll('.sheet, h1, .sub, .memo, td, th');
+    targets.forEach(function(el){
+      el.setAttribute('contenteditable', editing ? 'true' : 'false');
+    });
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>
