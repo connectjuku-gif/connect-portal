@@ -93,12 +93,17 @@ body.editmode [contenteditable="true"] { outline: 1px dashed #C9972B; }
 .vt { display:inline-flex; flex-direction:column; align-items:flex-end; vertical-align:top; }
 .vt .vt2 { border-bottom:1px solid #111; }
 .ans .ai .st .sys .br { font-size:1.9em; }
+.controlbar select { font-family:inherit; font-size:13px; padding:6px 8px; border-radius:6px; border:none; }
+.controlbar label { display:inline-flex; align-items:center; gap:6px; }
+.hw .tag { display:inline-block; font-size:8.5pt; border:1px solid #444; padding:0 4px; margin-right:6px; line-height:1.45; vertical-align:middle; white-space:nowrap; }
 </style>
 </head>
 <body>
 
 <div class="controlbar nop">
   <span class="title">🔢 中2数学 計算練習（式の計算・連立方程式）｜学習塾CONNECT</span>
+  <label>出し方 <select id="modeSel"><option value="step">STEP別（全6枚）</option><option value="mix">MIX（総合）</option></select></label>
+  <label id="countWrap" style="display:none">枚数 <select id="countSel"><option value="1">1枚</option><option value="2">2枚</option><option value="4">4枚</option><option value="6">6枚</option></select></label>
   <button class="primary" id="genBtn">問題を作り直す</button>
   <button class="secondary" id="editBtn">編集モード</button>
   <button class="secondary" id="printBtn">印刷</button>
@@ -489,7 +494,7 @@ body.editmode [contenteditable="true"] { outline: 1px dashed #C9972B; }
     return '答え <span class="blank w">&nbsp;</span>';
   }
 
-  function render(){
+  function renderSteps(){
     var out = '';
     var allAnswers = [];
     STEPS.forEach(function(step, si){
@@ -529,6 +534,68 @@ body.editmode [contenteditable="true"] { outline: 1px dashed #C9972B; }
     window.__lastAnswers = allAnswers; // for checking
   }
 
+  var CFG = { grade:'中2', mixH:'34mm', stepInfo:'STEP1〜6　計69問（各12問×5＋9問×1）',
+    al: function(sec,p){ return alHtml(p.al||sec.al); },
+    tag: function(sec,p){ if (p.al==='ab') return '問いに答える'; if (sec.al==='xy') return '連立方程式を解く'; if (sec.label.indexOf('等式')>=0) return '{ } 内の文字について解く'; if (sec.label.indexOf('式の値')>=0) return '式の値・計算'; return '計算'; } };
+  // ========== MIX（総合）: 各STEPから2問ずつ、1枚12問 ==========
+  function shuf(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+  function renderMix(n){
+    var out = '', allAnswers = [];
+    for (var s=0; s<n; s++){
+      var cells = '', items = [], qNo = 1;
+      STEPS.forEach(function(step){
+        var idx = shuf(step.sections.map(function(_,i){ return i; })).slice(0,2).sort();
+        idx.forEach(function(k){
+          var sec = step.sections[k], gen = sec.gens[Math.floor(Math.random()*sec.gens.length)], p = gen();
+          items.push({no:qNo, ex:p.ex, ans:p.ans, step:p.step, chk:p.chk});
+          cells += '<div class="cell"><div class="cq"><span class="no">('+qNo+')</span><span class="ex"><span class="tag">'+CFG.tag(sec,p)+'</span>'+p.ex+'</span></div><div class="al">'+CFG.al(sec,p)+'</div></div>';
+          qNo++;
+        });
+      });
+      out += '<div class="sheet hw'+(s>0?' pb':'')+'">';
+      out += '<div class="hh"><div class="hh1">CONNECT '+CFG.grade+'数学　計算練習（MIX）<span class="hno">第'+(s+1)+'枚／全'+n+'枚</span></div>';
+      out += '<div class="hh2">MIX　STEP 1〜6 総合<span class="gr">むずかしさ ★〜★★★★★★（後ろほど難しい）</span></div></div>';
+      out += '<div class="meta"><span>名前</span><span class="ln w1">&nbsp;</span><span>日付</span><span class="ln w2">&nbsp;</span><span>かかった時間</span><span class="ln w3">&nbsp;</span><span>分</span><span>○の数</span><span class="ln w3">&nbsp;</span><span>／12</span></div>';
+      out += '<div class="point"><b>やり方</b><ul><li>STEP 1〜6 の問題が2問ずつ、やさしい順に並んでいます。各問題の［　］の指示にしたがって答えましょう。</li><li>途中の式は消さずに書きます。まちがえた問題は、そのSTEPのプリントで練習し直しましょう。</li></ul></div>';
+      out += '<div class="grid" style="--h:'+CFG.mixH+'">'+cells+'</div>';
+      out += '</div>';
+      allAnswers.push({title:'MIX（総合）', no:s+1, items:items});
+    }
+    out += '<div class="sheet ans pb">';
+    out += '<h1>解答・解説</h1>';
+    out += '<div class="sub">CONNECT '+CFG.grade+'数学　計算練習 MIX（全'+n+'枚）</div>';
+    out += '<div class="memo"><b>■ MIXの使い方</b>・1枚に STEP 1〜6 から2問ずつ（(1)(2)がSTEP 1、(11)(12)がSTEP 6）。<br>・まちがえた問題の番号から、どのSTEPが苦手かがわかります。そのSTEPのプリントで練習し直しましょう。</div>';
+    allAnswers.forEach(function(a){
+      out += '<h2>第'+a.no+'枚　'+a.title+'</h2><div class="two">';
+      a.items.forEach(function(it){
+        out += '<div class="ai"><span class="no">('+it.no+')</span><span class="k">'+it.ans+'</span>'+(it.step?('<span class="st">'+it.step+'</span>'):'')+'</div>';
+      });
+      out += '</div>';
+    });
+    out += '</div>';
+    document.getElementById('output').innerHTML = out;
+    window.__lastAnswers = allAnswers;
+  }
+
+  var modeSel = document.getElementById('modeSel'), countSel = document.getElementById('countSel'), countWrap = document.getElementById('countWrap');
+  function render(){
+    var mix = modeSel.value === 'mix';
+    countWrap.style.display = mix ? '' : 'none';
+    if (mix){
+      var n = parseInt(countSel.value, 10);
+      renderMix(n);
+      document.getElementById('rangeInfo').textContent = 'MIX　'+n+'枚　計'+(n*12)+'問（各STEPから2問ずつ×'+n+'枚）';
+    } else {
+      renderSteps();
+      document.getElementById('rangeInfo').textContent = CFG.stepInfo;
+    }
+    // 係数の 1 は書かない（1x → x、−1x → −x）
+    var o = document.getElementById('output');
+    o.innerHTML = o.innerHTML.replace(/(^|[^\d.])1<i>/g, '$1<i>').replace(/ [+−] 0(?![.\d])/g, '');
+  }
+  modeSel.addEventListener('change', render);
+  countSel.addEventListener('change', render);
+
   document.getElementById('genBtn').addEventListener('click', render);
   document.getElementById('printBtn').addEventListener('click', function(){ window.print(); });
 
@@ -541,6 +608,11 @@ body.editmode [contenteditable="true"] { outline: 1px dashed #C9972B; }
     document.querySelectorAll('.sheet').forEach(function(el){ el.setAttribute('contenteditable', editing ? 'true' : 'false'); });
   });
 
+  // ポータルのカードから ?mode=mix（&n=枚数）で開いたときは MIX で表示
+  try {
+    var qp = new URLSearchParams(location.search);
+    if (qp.get('mode') === 'mix') { modeSel.value = 'mix'; if (['1','2','4','6'].indexOf(qp.get('n')) >= 0) countSel.value = qp.get('n'); }
+  } catch(e) {}
   render();
 })();
 </script>
