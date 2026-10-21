@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>英単語テスト作成ツール（ホライズン）</title>
+<style>
+  :root{
+    --navy:#1F3A5F;
+    --navy-light:#2F5586;
+    --gold:#C9972B;
+    --cream:#FAF8F2;
+    --line:#D8D2C2;
+    --text:#2A2A28;
+    --sub:#6B6354;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--text);
+    font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+    font-size:15px;
+    line-height:1.6;
+    padding:24px;
+  }
+  h1{
+    font-size:19px;
+    color:var(--navy);
+    margin:0 0 4px;
+  }
+  .lead{
+    color:var(--sub);
+    font-size:13px;
+    margin:0 0 20px;
+  }
+  .panel{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:18px 20px;
+    margin-bottom:18px;
+    max-width:900px;
+  }
+  .panel h2{
+    font-size:14px;
+    color:var(--navy);
+    margin:0 0 12px;
+    border-left:4px solid var(--gold);
+    padding-left:8px;
+  }
+  .tabs{
+    display:flex;
+    gap:8px;
+    margin-bottom:18px;
+  }
+  .tab{
+    flex:1;
+    max-width:160px;
+    padding:10px 0;
+    text-align:center;
+    border:1px solid var(--line);
+    border-radius:6px;
+    background:#fff;
+    color:var(--navy);
+    font-weight:600;
+    font-size:14px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .tab.active{
+    background:var(--navy);
+    color:#fff;
+    border-color:var(--navy);
+  }
+  .range-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:14px;
+  }
+  select{
+    padding:6px 8px;
+    border:1px solid var(--line);
+    border-radius:4px;
+    font-size:13px;
+    max-width:220px;
+  }
+  .btn{
+    display:inline-block;
+    padding:7px 14px;
+    border-radius:4px;
+    border:1px solid var(--navy);
+    background:#fff;
+    color:var(--navy);
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .btn:hover{ background:#F2EEE3; }
+  .btn.primary{
+    background:var(--navy);
+    color:#fff;
+  }
+  .btn.primary:hover{ background:var(--navy-light); }
+  .btn.small{
+    padding:4px 10px;
+    font-size:12px;
+  }
+  .unit-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(160px, 1fr));
+    gap:6px 14px;
+    max-height:300px;
+    overflow-y:auto;
+    padding:4px 4px 4px 0;
+    margin-bottom:10px;
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:10px;
+  }
+  .unit-item{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:13px;
+  }
+  .unit-item input{ flex:0 0 auto; }
+  .unit-item label{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    cursor:pointer;
+  }
+  .unit-count{
+    color:var(--sub);
+    font-size:11px;
+  }
+  .status-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:10px;
+  }
+  .selected-count{
+    font-size:13px;
+    color:var(--sub);
+  }
+  .selected-count b{
+    color:var(--navy);
+    font-size:15px;
+  }
+  .qty-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-top:14px;
+  }
+  .qty-row input[type=number]{
+    width:70px;
+    padding:6px 8px;
+    border:1px solid var(--line);
+    border-radius:4px;
+    font-size:14px;
+  }
+  .warn{
+    color:#9A5B1E;
+    font-size:12px;
+    margin-top:6px;
+  }
+  #createBtnWrap{
+    margin-top:16px;
+  }
+  /* ===== Result / print sheet ===== */
+  #resultArea{ display:none; }
+  .sheet{
+    background:#fff;
+    max-width:720px;
+    margin:0 auto 28px;
+    padding:28px 32px;
+    border:1px solid var(--line);
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);
+  }
+  .sheet h2.sheet-title{
+    text-align:center;
+    font-size:18px;
+    color:var(--navy);
+    margin:0 0 4px;
+    letter-spacing:.05em;
+  }
+  .sheet .sheet-sub{
+    text-align:center;
+    font-size:12px;
+    color:var(--sub);
+    margin:0 0 16px;
+  }
+  .namebox{
+    display:flex;
+    justify-content:flex-end;
+    gap:18px;
+    font-size:13px;
+    margin-bottom:14px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:10px;
+  }
+  .namebox span{ white-space:nowrap; }
+  .namebox .fill{
+    display:inline-block;
+    border-bottom:1px solid #999;
+    min-width:60px;
+    margin:0 4px;
+  }
+  table.qtable{
+    width:100%;
+    border-collapse:collapse;
+    font-size:14px;
+  }
+  table.qtable td, table.qtable th{
+    border-bottom:1px solid #EAE5D8;
+    padding:8px 6px;
+    vertical-align:middle;
+  }
+  table.qtable th{
+    text-align:left;
+    font-size:11px;
+    color:var(--sub);
+    font-weight:600;
+  }
+  td.num{
+    width:28px;
+    color:var(--sub);
+    font-size:12px;
+  }
+  td.en{
+    font-weight:600;
+    color:var(--navy);
+    font-size:15px;
+  }
+  td.ja-blank .line{
+    display:block;
+    border-bottom:1px solid #999;
+    height:20px;
+  }
+  table.answer-table td.ja{
+    color:#000;
+    font-weight:600;
+  }
+  .answer-table td.unit-note{
+    color:var(--sub);
+    font-size:11px;
+  }
+  .toolbar{
+    max-width:720px;
+    margin:0 auto 16px;
+    display:flex;
+    gap:10px;
+  }
+  @media print{
+    body{ padding:0; background:#fff; }
+    .panel, .tabs, .toolbar, h1, .lead{ display:none !important; }
+    #resultArea{ display:block !important; }
+    .sheet{ box-shadow:none; border:none; margin:0; page-break-after:always; }
+  }
+</style>
+</head>
+<body>
+
+<h1>英単語テスト作成ツール（ホライズン）</h1>
+<p class="lead">学年を選んで単元・範囲を指定し、英語→日本語で答える単語テストを作成します（最大10問）。</p>
+
+<div class="tabs" id="gradeTabs">
+  <div class="tab active" data-grade="1">中1（ホライズン）</div>
+  <div class="tab" data-grade="2">中2（ホライズン）</div>
+  <div class="tab" data-grade="3">中3（ホライズン）</div>
+</div>
+
+<div class="panel">
+  <h2>単元を選ぶ</h2>
+
+  <div class="range-row">
+    <span style="font-size:13px;color:var(--sub);">範囲指定：</span>
+    <select id="rangeFrom"></select>
+    <span style="font-size:13px;color:var(--sub);">〜</span>
+    <select id="rangeTo"></select>
+    <button class="btn small" id="applyRangeBtn">この範囲を選択</button>
+    <button class="btn small" id="allBtn">全選択</button>
+    <button class="btn small" id="noneBtn">全解除</button>
+  </div>
+
+  <div class="unit-grid" id="unitGrid"></div>
+
+  <div class="status-row">
+    <div class="selected-count">選択中の単語数：<b id="selectedCount">0</b> 語</div>
+  </div>
+
+  <div class="qty-row">
+    <label for="qtyInput" style="font-size:13px;color:var(--sub);">出題数（最大10問）：</label>
+    <input type="number" id="qtyInput" min="1" max="10" value="10">
+    <span id="qtyWarn" class="warn" style="display:none;"></span>
+  </div>
+
+  <div id="createBtnWrap">
+    <button class="btn primary" id="createBtn">テストを作成する</button>
+  </div>
+</div>
+
+<div id="resultArea">
+  <div class="toolbar">
+    <button class="btn primary" onclick="window.print()">印刷する</button>
+    <button class="btn" id="backBtn">条件を変更する</button>
+  </div>
+
+  <div class="sheet" id="problemSheet"></div>
+  <div class="sheet" id="answerSheet"></div>
+</div>
+
+<script>
+window.VOCAB = {
+  1: [["Unit 0-1", "nice", "すてきな、よい"], ["Unit 0-1", "to", "~する[である]こと"], ["Unit 0-1", "meet", "~と知り合いになる"], ["Unit 0-1", "you", "あなた(たち)を[に、は、が]"], ["Unit 0-1", "good", "よい"], ["Unit 0-1", "morning", "朝、午前"], ["Unit 0-1", "I", "私は[が]"], ["Unit 0-1", "am", "~です、〜だ"], ["Unit 0-1", "hi", "やあ、こんにちは"], ["Unit 0-1", "my", "私の"], ["Unit 0-1", "name", "名前"], ["Unit 0-1", "is", "~です、〜だ"], ["Unit 0-1", "hello", "やあ、こんにちは"], ["Unit 0-1", "do", "〔疑問文や応答を作る〕"], ["Unit 0-1", "like", "~を好む、〜が好きである"], ["Unit 0-1", "tennis", "テニス"], ["Unit 0-1", "yes", "はい、ええ、そうです"], ["Unit 0-2", "fan", "扇、うちわ、扇風機"], ["Unit 0-2", "pen", "ペン"], ["Unit 0-2", "ten", "10(の)"], ["Unit 0-2", "sun", "太陽、日"], ["Unit 0-2", "run", "走る、運行している"], ["Unit 0-2", "hat", "(ふちのある)帽子"], ["Unit 0-2", "hot", "熱い、暑い"], ["Unit 0-2", "cup", "カップ"], ["Unit 0-2", "cap", "(ふちがないか、ひさしのついた)帽子"], ["Unit 0-2", "map", "地図"], ["Unit 0-2", "mop", "モップ"], ["Unit 0-2", "cut", "~を切る、~の供給をとめる"], ["Unit 0-2", "TV", "テレビ(放送)"], ["Unit 0-2", "milk", "牛乳、ミルク"], ["Unit 0-2", "box", "箱"], ["Unit 0-2", "bag", "かばん、バッグ、ふくろ"], ["Unit 0-2", "desk", "机"], ["Unit 0-2", "bed", "ベッド"], ["Unit 0-3", "red", "赤、赤い"], ["Unit 0-3", "P.E.", "体育"], ["Unit 0-3", "play", "(競技・ゲームなどを)する"], ["Unit 0-3", "soccer", "サッカー"], ["Unit 0-3", "have", "~を持っている、〜がある"], ["Unit 0-3", "a", "1つの、1人の"], ["Unit 0-3", "want", "~がほしい"], ["Unit 1-1", "call", "~を(･･･と)呼ぶ、名づける"], ["Unit 1-1", "South Africa", "南アフリカ共和国"], ["Unit 1-1", "love", "~が大好きである、~を愛している"], ["Unit 1-1", "everyone", "みなさん、みんな、だれでも"], ["Unit 1-1", "me", "私を[に]"], ["Unit 1-1", "from", "~から、~出身の"], ["Unit 1-1", "Japanese", "日本の、日本人の、日本語の"], ["Unit 1-1", "sweet", "甘い菓子、キャンディー"], ["Unit 1-1", "and", "~と…"], ["Unit 1-1", "too", "~もまた、そのうえ"], ["Unit 1-1", "join", "~に加わる、参加する"], ["Unit 1-1", "the", "その"], ["Unit 1-1", "club", "クラブ、部"], ["Unit 1-1", "number", "数,数字"], ["Unit 1-2", "often", "よく、たびたび"], ["Unit 1-2", "with", "~といっしょに"], ["Unit 1-2", "but", "しかし、けれども"], ["Unit 1-2", "rugby", "ラグビー"], ["Unit 1-2", "watch", "~を(注意して)見る"], ["Unit 1-2", "friend", "友達"], ["Unit 1-2", "great", "すばらしい、とても楽しい"], ["Unit 1-2", "no", "いいえ、いや"], ["Unit 1-2", "not", "~でない"], ["Unit 1-2", "oh", "まあ、あら"], ["Unit 1-2", "don't", "do notの短縮形"], ["Unit 1-3", "class", "学級、組、クラス"], ["Unit 1-3", "our", "私たちの"], ["Unit 1-3", "Canada", "カナダ"], ["Unit 1-3", "America", "アメリカ"], ["Unit 1-3", "Ms.", "~さん、先生(女性)"], ["Unit 1-3", "Mr.", "~さん、先生(男性)"], ["Unit 1-3", "he", "彼は[が]"], ["Unit 1-3", "she", "彼女は[が]"], ["Unit 1-3", "new", "新しい、新任の"], ["Unit 1-3", "teacher", "先生、教師"], ["Unit 1-3", "on", "~の一員で"], ["Unit 1-3", "team", "チーム、組"], ["Unit 1-3", "at", "~に関して"], ["Unit 1-3", "cool", "かっこいい"], ["Unit 2-1", "Chinese", "中国の、中国人"], ["Unit 2-1", "cannot", "~できない"], ["Unit 2-1", "some", "いくつかの、いくらかの"], ["Unit 2-1", "parent", "親"], ["Unit 2-1", "China", "中国"], ["Unit 2-1", "food", "食べ物"], ["Unit 2-1", "father", "父、お父さん"], ["Unit 2-1", "can", "~することができる"], ["Unit 2-1", "make", "~を作る"], ["Unit 2-1", "very", "非常に、とても"], ["Unit 2-1", "well", "じょうずに、うまく"], ["Unit 2-1", "that", "そのこと、それ"], ["Unit 2-1", "read", "(~を)読む"], ["Unit 2-1", "really", "本当ですか、へえ"], ["Unit 2-1", "see", "(~が)わかる"], ["Unit 2-2", "excuse", "~を許す"], ["Unit 2-2", "oops", "おっと、うわっ"], ["Unit 2-2", "here", "さあ、ほら"], ["Unit 2-2", "welcome", "歓迎される"], ["Unit 2-3", "totem pole", "トーテムポール"], ["Unit 2-3", "thunderbird", "サンダーバード"], ["Unit 2-3", "your", "あなた(たち)の"], ["Unit 2-3", "thank", "~に感謝する"], ["Unit 2-3", "it", "それは[が]"], ["Unit 2-3", "bird", "鳥"], ["Unit 3-1", "symbol", "シンボル、象徴、記号"], ["Unit 3-1", "for", "~のかわりに、~に相当する"], ["Unit 3-1", "interesting", "おもしろい、興味深い"], ["Unit 3-1", "favorite", "いちばん好きな、お気に入りの"], ["Unit 3-1", "character", "登場人物"], ["Unit 3-1", "also", "〜もまた、そのうえ"], ["Unit 3-1", "what", "何、どんなもの[こと]"], ["Unit 3-1", "family", "一族、家族"], ["Unit 3-1", "who", "だれ、だれが"], ["Unit 3-1", "why", "なぜ、どうして"], ["Unit 3-1", "brave", "勇かんな、勇ましい"], ["Unit 3-1", "kind", "親切な、やさしい"], ["Unit 3-2", "around", "~の近くに"], ["Unit 3-2", "after", "~のあとに[て]"], ["Unit 3-2", "online", "オンラインで"], ["Unit 3-2", "live", "住む、住んでいる"], ["Unit 3-2", "come", "来る"], ["Unit 3-2", "by", "~によって"], ["Unit 3-2", "walk", "(~を)歩く、歩いていく"], ["Unit 3-2", "when", "いつ、どんなときに"], ["Unit 3-2", "study", "(~を)勉強する"], ["Unit 3-2", "week", "週、1週間"], ["Unit 3-3", "hallway", "ろうか"], ["Unit 3-3", "win", "(~に)勝つ"], ["Unit 3-3", "next", "次の、今度の"], ["Unit 3-3", "luck", "運、幸運"], ["Unit 3-3", "near", "~の近くに[て]"], ["Unit 3-3", "where", "どこに[て、へ]"], ["Unit 3-3", "practice", "(~を)練習する"], ["Unit 3-3", "hard", "熱心に、一生懸命に"], ["Unit 3-3", "go", "行く"], ["Unit 3-3", "park", "公園、遊園地"], ["Unit 3-3", "station", "駅"], ["Unit 3-3", "under", "~の下に[て]"], ["Unit 3-3", "month", "月、1か月"], ["Unit 3-3", "date", "日、日付"], ["Unit 4-1", "New Zealand", "ニュージーランド"], ["Unit 4-1", "puppy", "子イヌ"], ["Unit 4-1", "of", "~の中の"], ["Unit 4-1", "someday", "いつか"], ["Unit 4-1", "lots", "たくさん"], ["Unit 4-1", "they", "彼らは[が]"], ["Unit 4-1", "animal", "動物"], ["Unit 4-1", "visit", "(人・場所)を訪ねる"], ["Unit 4-1", "Japan", "日本"], ["Unit 4-1", "many", "たくさんの、多くの"], ["Unit 4-1", "one", "~の1つ"], ["Unit 4-2", "o'clock", "~時"], ["Unit 4-2", "netball", "ネットボール"], ["Unit 4-2", "time", "時刻"], ["Unit 4-2", "afternoon", "午後"], ["Unit 4-2", "sport", "スポーツ"], ["Unit 4-2", "a.m.", "午前"], ["Unit 4-2", "p.m.", "午後"], ["Unit 4-2", "basketball", "バスケットボール"], ["Unit 4-3", "front", "前、正面"], ["Unit 4-3", "be", "~である、~になる"], ["Unit 4-3", "nervous", "緊張して"], ["Unit 4-3", "worry", "心配する、悩む"], ["Unit 4-3", "yourself", "あなた自身を[に]"], ["Unit 4-3", "sheep", "ヒツジ"], ["Unit 4-3", "kiwi", "キーウィ、キウイフルーツ"], ["Unit 4-3", "right", "正しい、正確な"], ["Unit 4-3", "turn", "順番、番"], ["Unit 4-3", "please", "どうぞ、お願いします"], ["Unit 4-3", "look", "見る、目を向ける"], ["Unit 5-1", "as", "~として"], ["Unit 5-1", "tour", "旅行、ツアー"], ["Unit 5-1", "guide", "ガイド、案内人"], ["Unit 5-1", "write", "(~を)書く"], ["Unit 5-1", "blog", "ブログ"], ["Unit 5-1", "local", "(ある)地方の、地元の"], ["Unit 5-1", "beautiful", "美しい"], ["Unit 5-1", "spot", "地点、場所"], ["Unit 5-1", "his", "彼の"], ["Unit 5-1", "Honolulu", "ホノルル"], ["Unit 5-1", "Hawaii", "ハワイ"], ["Unit 5-1", "brother", "兄、弟、兄弟"], ["Unit 5-1", "year", "歳、年齢"], ["Unit 5-1", "old", "~歳の"], ["Unit 5-1", "work", "働く、作業をする"], ["Unit 5-1", "nature", "自然"], ["Unit 5-2", "any", "いくらかの、何らかの"], ["Unit 5-2", "there", "そこに[で]"], ["Unit 5-2", "surf", "サーフィンをする"], ["Unit 5-2", "life", "生活、暮らし"], ["Unit 5-2", "question", "質問、疑問"], ["Unit 5-2", "weekend", "週末"], ["Unit 5-2", "swim", "泳ぐ"], ["Unit 5-2", "sometimes", "ときどき"], ["Unit 5-2", "dolphin", "イルカ"], ["Unit 5-RT", "know", "(~を)知っている、わかる"], ["Unit 5-RT", "patty", "パティ"], ["Unit 5-RT", "fried", "油であげた"], ["Unit 5-RT", "top", "表面、上部"], ["Unit 5-RT", "wonderful", "すばらしい、すてきな"], ["Unit 5-RT", "Maria", "マリア"], ["Unit 5-RT", "loco moco", "ロコモコ"], ["Unit 5-RT", "restaurant", "レストラン"], ["Unit 5-RT", "friendly", "好意的な、親切な"], ["Unit 5-RT", "dish", "料理"], ["Unit 6-1", "him", "彼を[に]"], ["Unit 6-1", "say", "(~を)言う"], ["Unit 6-1", "everything", "何でも、全てのもの"], ["Unit 6-1", "show", "ショー"], ["Unit 6-1", "her", "彼女を[に]"], ["Unit 6-1", "performer", "演技者"], ["Unit 6-1", "the U.K.", "英国"], ["Unit 6-1", "together", "いっしょに、ともに"], ["Unit 6-1", "Tom", "トム"], ["Unit 6-1", "Dian Kichijitsu", "ダイアン吉日"], ["Unit 6-2", "minute", "分"], ["Unit 6-2", "wait", "待つ"], ["Unit 6-2", "whose", "だれの、だれのもの"], ["Unit 6-2", "yours", "あなた(たち)のもの"], ["Unit 6-2", "mine", "私のもの"], ["Unit 6-2", "maybe", "たぶん、もしかすると"], ["Unit 6-2", "careful", "注意深い"], ["Unit 6-2", "crowded", "こみ合った、満員の"], ["Unit 6-2", "history", "歴史"], ["Unit 6-2", "still", "まだ、今でも"], ["Unit 6-2", "over", "~より多く、~をこえて"], ["Unit 6-2", "start", "始まる、出発する"], ["Unit 6-2", "ticket", "切符、チケット"], ["Unit 6-RT", "cushion", "クッション、ざぶとん"], ["Unit 6-RT", "different", "いろいろな、違う"], ["Unit 6-RT", "role", "役割、役"], ["Unit 6-RT", "open", "(~を)開く、あける"], ["Unit 6-RT", "close", "~を閉じる、終える"], ["Unit 6-RT", "window", "窓"], ["Unit 6-RT", "sure", "もちろん、いいとも"], ["Unit 6-RT", "problem", "問題"], ["Unit 7-1", "tomorrow", "明日"], ["Unit 7-1", "plan", "計画、予定"], ["Unit 7-1", "mean", "~を意味する"], ["Unit 7-1", "busy", "忙しい"], ["Unit 7-1", "talk", "話す、しゃべる"], ["Unit 7-1", "sound", "~のように聞こえる"], ["Unit 7-2", "market", "市場"], ["Unit 7-2", "souvenir", "記念品、みやげ"], ["Unit 7-2", "place", "場所、ところ"], ["Unit 7-2", "appear", "現れる"], ["Unit 7-2", "these", "あれらの、それらの"], ["Unit 7-2", "Kate", "ケイト"], ["Unit 7-2", "London", "ロンドン"], ["Unit 7-2", "Harry Potter", "ハリー・ポッター"], ["Unit 7-2", "John", "ジョン"], ["Unit 7-2", "the Lake District", "湖水地方"], ["Unit 7-2", "Peter Rabbit", "ピーターラビット"], ["Unit 7-2", "buy", "~を買う"], ["Unit 7-2", "people", "人々"], ["Unit 7-RT", "mom", "お母さん"], ["Unit 7-RT", "dad", "お父さん"], ["Unit 7-RT", "travel", "旅行する"], ["Unit 7-RT", "angry", "怒った、腹を立てた"], ["Unit 7-RT", "palace", "宮殿、王宮"], ["Unit 7-RT", "exciting", "興奮させるような"], ["Unit 7-RT", "late", "遅い、おくれた"], ["Unit 7-RT", "Buckingham Palace", "バッキンガム宮殿"], ["Unit 7-RT", "sorry", "すまなく思って"], ["Unit 7-RT", "funny", "おかしな"], ["Unit 8-1", "ethnic", "民族(特有)の"], ["Unit 8-1", "Africa", "アフリカ"], ["Unit 8-1", "Kenya", "ケニア"], ["Unit 8-1", "volunteer", "ボランティア"], ["Unit 8-1", "poverty", "困っている状態、貧困"], ["Unit 8-1", "teach", "~に(･･･を)教える"], ["Unit 8-1", "try", "(~を)試す、やってみる"], ["Unit 8-1", "best", "最もよいもの"], ["Unit 8-1", "respect", "~を尊敬する"], ["Unit 8-1", "become", "~になる"], ["Unit 8-1", "cousin", "いとこ"], ["Unit 8-1", "children", "子供"], ["Unit 8-1", "country", "国"], ["Unit 8-1", "always", "いつも、常に"], ["Unit 8-2", "African", "アフリカ(人)の"], ["Unit 8-2", "reduce", "(サイズ・数量など)を減らす"], ["Unit 8-2", "waste", "ごみ、廃棄物"], ["Unit 8-2", "plastic", "プラスチック製の"], ["Unit 8-2", "paper", "紙の"], ["Unit 8-2", "straw", "ストロー"], ["Unit 8-2", "original", "独創的な、独自の"], ["Unit 8-2", "reusable", "再利用できる"], ["Unit 8-2", "meat", "肉"], ["Unit 8-2", "pie", "パイ"], ["Unit 8-2", "bean", "豆"], ["Unit 8-2", "soup", "スープ"], ["Unit 8-2", "chicken", "とり肉、チキン"], ["Unit 8-2", "curry", "カレー(料理)"], ["Unit 8-RT", "well", "井戸"], ["Unit 8-RT", "other", "もう1つの"], ["Unit 8-RT", "village", "村"], ["Unit 8-RT", "collect", "~を集める"], ["Unit 8-RT", "far", "遠くに"], ["Unit 8-RT", "group", "グループ、団体"], ["Unit 8-RT", "build", "~を建てる"], ["Unit 8-RT", "money", "金、通貨"], ["Unit 8-RT", "get", "~を得る、受け取る"], ["Unit 8-RT", "clean", "きれいな、清潔な"], ["Unit 8-RT", "happy", "幸せな、うれしい"], ["Unit 9-1", "back", "戻って、返して"], ["Unit 9-1", "during", "~の間ずっと"], ["Unit 9-1", "stay", "滞在する、泊まる"], ["Unit 9-1", "snowboarding", "スノーボード"], ["Unit 9-1", "Christmas Day", "クリスマス"], ["Unit 9-1", "relax", "くつろぐ"], ["Unit 9-1", "met", "meetの過去形"], ["Unit 9-1", "ice hockey", "アイスホッケー"], ["Unit 9-1", "Whistler Village", "ウィスラー村"], ["Unit 9-1", "Vancouver", "バンクーバー"], ["Unit 9-2", "went", "goの過去形"], ["Unit 9-2", "vacation", "休暇、休み"], ["Unit 9-2", "mountain", "山"], ["Unit 9-2", "saw", "seeの過去形"], ["Unit 9-2", "did", "doの過去形"], ["Unit 9-2", "traditional", "伝統的な"], ["Unit 9-2", "special", "特別な"], ["Unit 9-2", "grandparent", "祖父、祖母"], ["Unit 9-RT", "wrote", "writeの過去形"], ["Unit 9-RT", "New Year", "新年"], ["Unit 9-RT", "ate", "eatの過去形"], ["Unit 9-RT", "New Year's Eve", "大みそか"], ["Unit 9-RT", "card", "カード、はがき"], ["Unit 9-RT", "rice cake", "もち"], ["Unit 9-RT", "spent", "spendの過去形"], ["Unit 9-RT", "came", "comeの過去形"], ["Unit 9-RT", "bought", "buyの過去形"], ["Unit 9-RT", "fortune slip", "おみくじ"], ["Unit 9-RT", "read", "readの過去形"], ["Unit 10-1", "remember", "(~を)思い出す"], ["Unit 10-1", "bored", "退屈した、うんざりした"], ["Unit 10-1", "were", "areの過去形"], ["Unit 10-1", "realize", "~だと気づく"], ["Unit 10-1", "made", "makeの過去形"], ["Unit 10-1", "mistake", "誤り、まちがい"], ["Unit 10-1", "anyone", "だれでも"], ["Unit 10-1", "won", "winの過去形"], ["Unit 10-1", "anyway", "とにかく、それでも"], ["Unit 10-1", "chorus", "合唱"], ["Unit 10-1", "contest", "コンテスト、コンクール"], ["Unit 10-1", "was", "am, isの過去形"], ["Unit 10-1", "memory", "思い出"], ["Unit 10-2", "trip", "旅行"], ["Unit 10-2", "campground", "キャンプ場"], ["Unit 10-2", "hot spring", "温泉"], ["Unit 10-2", "set", "setの過去形"], ["Unit 10-2", "tent", "テント"], ["Unit 10-2", "main", "主な、主要な"], ["Unit 10-2", "campfire", "キャンプファイア"], ["Unit 10-RT", "camping", "キャンプ(生活)"], ["Unit 10-RT", "night", "夜、晩"], ["Unit 10-RT", "event", "出来事、行事"], ["Let's Read", "naughty", "いたずらな"], ["Let's Read", "trick", "いたずら"], ["Let's Read", "crept", "creepの過去形"], ["Let's Read", "creep", "はう、こっそり進む"], ["Let's Read", "let", "letの過去形"], ["Let's Read", "shout", "(~と)叫ぶ"], ["Let's Read", "escape", "(~から)逃げる"], ["Let's Read", "later", "もっと遅く、あとで"], ["Let's Read", "thought", "thinkの過去形"], ["Let's Read", "die", "死ぬ"], ["Let's Read", "alone", "ひとりだけの"], ["Let's Read", "out", "外へ"], ["Let's Read", "took", "takeの過去形"], ["Let's Read", "vendor", "(屋台の)もの売り"], ["Let's Read", "cart", "カート、手押し車"], ["Let's Read", "left", "leaveの過去形"], ["Let's Read", "leave", "~を置いていく"], ["Let's Read", "brought", "bringの過去形"], ["Let's Read", "chestnut", "クリ"], ["Let's Read", "heard", "hearの過去形"], ["Let's Read", "hear", "~が聞こえる"], ["Let's Read", "something", "何か、あるもの"], ["Let's Read", "himself", "彼自身を"], ["Let's Read", "neighbor", "近所の人、隣人"], ["Let's Read", "receive", "~を受け取る"], ["Let's Read", "someone", "だれか、ある人"], ["Let's Read", "thing", "もの、こと"], ["Let's Read", "god", "神"], ["Let's Read", "door", "ドア、戸"], ["Let's Read", "gun", "銃"], ["Let's Read", "bang", "バン、ズドン"], ["Let's Read", "ground", "地面、土地"], ["Let's Read", "fresh", "新鮮な"], ["Let's Read", "floor", "床"], ["Let's Read", "nod", "うなずく"], ["Let's Read", "weakly", "弱く、弱々しく"], ["Let's Read", "drop", "~を落とす"], ["Let's Read", "smoke", "煙"], ["Let's Read", "rose", "riseの過去形"], ["Let's Read", "rise", "のぼる、上がる"]],
+  2: [["Unit 0", "same", "同じ、同一の"], ["Unit 0", "experience", "経験、体験"], ["Unit 0", "actually", "実は、本当は"], ["Unit 0", "ramen", "ラーメン"], ["Unit 0", "instant", "即座の、(食べ物が)即席の"], ["Unit 0", "noodle", "ヌードル、めん"], ["Unit 0", "by the way", "ところで"], ["Unit 1-1", "golden", "金色の、すばらしい"], ["Unit 1-1", "holiday", "休日、休暇"], ["Unit 1-1", "Singapore", "シンガポール"], ["Unit 1-1", "flight", "飛ぶこと、飛行、(飛行機の)便、空の旅"], ["Unit 1-1", "arrive", "到着する"], ["Unit 1-1", "airport", "空港、飛行場"], ["Unit 1-1", "soon", "すぐに、まもなく"], ["Unit 1-1", "Daniel", "ダニエル（男子の名）"], ["Unit 1-1", "the \"Golden Week\" holidays", "ゴールデンウィーク"], ["Unit 1-1", "See you.", "またね。"], ["Unit 1-2", "will", "〜でしょう、〜だろう"], ["Unit 1-2", "excited", "わくわくした"], ["Unit 1-2", "seafood", "シーフード"], ["Unit 1-2", "reservation", "予約"], ["Unit 1-2", "Merlion Park", "マーライオン公園"], ["Unit 1-2", "the Merlion", "マーライオン"], ["Unit 1-RT1", "meter", "メートル"], ["Unit 1-RT1", "tall", "身長［高さ］が〜ある"], ["Unit 1-RT1", "weigh", "〜の重さがある"], ["Unit 1-RT1", "ton", "トン"], ["Unit 1-RT1", "found", "findの過去形"], ["Unit 1-RT1", "find", "〜を見つける、発見する"], ["Unit 1-RT1", "language", "言語、言葉"], ["Unit 1-RT1", "dollar", "ドル"], ["Unit 1-RT1", "example", "例、実例"], ["Unit 1-RT1", "communicate", "連絡する、意思の疎通をする"], ["Unit 1-RT1", "Malay", "マレー語"], ["Unit 1-RT1", "Tamil", "タミル語"], ["Unit 1-RT1", "for example", "例えば"], ["Unit 1-RT2", "painting", "（絵の具でかいた）絵、絵画"], ["Unit 1-RT2", "wall", "壁"], ["Unit 1-RT2", "surprised", "おどろいた"], ["Unit 2-1", "especially", "特に、とりわけ"], ["Unit 2-1", "order", "〜を注文する"], ["Unit 2-1", "topping", "トッピング"], ["Unit 2-1", "various", "いろいろな"], ["Unit 2-1", "flavor", "（独特な）味、（香りもふくめた）風味"], ["Unit 2-1", "soy sauce", "しょうゆ"], ["Unit 2-1", "salt", "塩、食塩"], ["Unit 2-1", "and so on", "〜など"], ["Unit 2-2", "speech", "スピーチ、演説"], ["Unit 2-2", "sometime", "いつか、そのうち"], ["Unit 2-2", "if", "もし〜ならば"], ["Unit 2-2", "add", "（･･･に）〜を加える、足す"], ["Unit 2-2", "butter", "バター"], ["Unit 2-2", "would love to ~", "〜したい（のですが）"], ["Unit 2-RT1", "interested", "興味を持っている"], ["Unit 2-RT1", "forget", "（〜を）忘れる"], ["Unit 2-RT1", "kind", "種類"], ["Unit 2-RT1", "-based", "〜をベースにした"], ["Unit 2-RT1", "because", "〜だから、〜なので"], ["Unit 2-RT1", "thick", "濃い、どろっとした"], ["Unit 2-RT1", "recommended", "おすすめの"], ["Unit 2-RT1", "manufacturer", "製造業者、メーカー"], ["Unit 2-RT1", "early", "早く"], ["Unit 2-RT1", "sweet corn", "スイートコーン"], ["Unit 2-RT1", "be interested in ~", "〜に興味がある"], ["Unit 2-RT2", "reflect", "（物事・考えなど）を反映する"], ["Unit 2-RT2", "climate", "気候"], ["Unit 2-RT2", "lives", "lifeの複数形"], ["Unit 2-RT2", "creativity", "創造性［力］、独創性［力］"], ["Unit 2-RT2", "chef", "シェフ、コック長"], ["Unit 2-RT2", "foreign", "外国（へ［から］）の"], ["Unit 2-RT2", "variation", "変化、変種"], ["Unit 2-RT2", "Italy", "イタリア"], ["Unit 2-RT2", "create", "〜を創造する、つくり出す"], ["Unit 2-RT2", "sauce", "ソース"], ["Unit 2-RT2", "change", "変わる、変化する"], ["Unit 2-RT2", "Naples", "ナポリ"], ["Unit 2-RT2", "come from ~", "〜出身である、〜から来ている"], ["Unit 2-RT2", "Here is ~.", "これが〜です。ここに〜があります。"], ["Unit 2-RT2", "name after ~", "〜にちなんで名づける"], ["Unit 2-Scene 2", "traveler", "旅行者"], ["Unit 2-Scene 2", "resident", "住民、居住者"], ["Unit 2-Scene 2", "may", "〜してもよい"], ["Unit 2-Scene 2", "ask", "〜に（･･･を）たのむ"], ["Unit 2-Scene 2", "favor", "親切な行為"], ["Unit 2-Scene 2", "could", "〜してくださいませんか"], ["Unit 2-Scene 2", "menu", "メニュー"], ["Unit 2-Scene 2", "ask a favor", "〜にお願いする"], ["Unit 2-Scene 2", "Say cheese!", "はい、チーズ！"], ["Unit 3-1", "career", "職業"], ["Unit 3-1", "information", "情報"], ["Unit 3-1", "international", "国際的な"], ["Unit 3-1", "nursery", "保育所、託児所"], ["Unit 3-1", "note", "メモ、覚え書き"], ["Unit 3-1", "own", "自分自身の、独自の"], ["Unit 3-1", "tag", "つけ札、荷札"], ["Unit 3-1", "chopstick", "（ふつうchopsticksで）はし"], ["Unit 3-1", "picture book", "絵本、図鑑"], ["Unit 3-1", "Career Day", "職業体験日"], ["Unit 3-2", "chose", "chooseの過去形"], ["Unit 3-2", "choose", "〜を選ぶ"], ["Unit 3-2", "colorful", "色彩に富んだ"], ["Unit 3-2", "illustration", "挿絵、図、イラスト"], ["Unit 3-2", "How about ~?", "〜はどうですか"], ["Unit 3-2", "The Very Hungry Caterpillar", "はらぺこあおむし"], ["Unit 3-RT1", "pretty", "かわいい、きれいな"], ["Unit 3-RT1", "taught", "teachの過去形"], ["Unit 3-RT1", "important", "重要な、大切な"], ["Unit 3-RT2", "story", "話、物語"], ["Unit 3-RT2", "difficult", "難しい、困難な"], ["Unit 3-RT2", "sentence", "文"], ["Unit 3-RT2", "clearly", "はっきりと"], ["Unit 3-RT2", "understand", "（〜を）理解する、わかる"], ["Unit 3-RT2", "smile", "ほほえむ、微笑する"], ["Unit 3-RT2", "clap", "（手）をたたく、拍手する"], ["Unit 3-RT2", "glad", "うれしい"], ["Unit 3-RT2", "loud", "大きな声で"], ["Unit 3-RT2", "sincerely", "心から、本気で、誠実に"], ["Unit 3-RT2", "Thanks for ~.", "〜をありがとう。"], ["Unit 3-RT2", "again and again", "何度も何度も"], ["Unit 3-RT2", "from now on", "これからは、今後は"], ["Stage Activity 1", "flour", "小麦粉"], ["Stage Activity 1", "cabbage", "キャベツ"], ["Stage Activity 1", "crispy", "カリカリした"], ["Stage Activity 1", "tasty", "おいしい、味がよい"], ["Stage Activity 1", "easily", "簡単に、楽に、すぐに"], ["Stage Activity 1", "ingredient", "（料理などの）材料"], ["Let's Read 1", "reason", "理由、根拠"], ["Let's Read 1", "check", "〜を調べる、チェックする"], ["Let's Read 1", "however", "しかしながら、けれども"], ["Let's Read 1", "easy", "やさしい、簡単な"], ["Let's Read 1", "ago", "（今から）〜前に"], ["Let's Read 1", "timekeeping", "時間の計測"], ["Let's Read 1", "ancient", "古代の"], ["Let's Read 1", "Egyptian", "エジプト人"], ["Let's Read 1", "put", "〜を置く、入れる、つける"], ["Let's Read 1", "stick", "棒"], ["Let's Read 1", "shadow", "影"], ["Let's Read 1", "told", "tellの過去形"], ["Let's Read 1", "long ago", "ずっと前に"], ["Let's Read 1", "some of ~", "〜のうちいくつか"], ["Let's Read 1", "measure", "〜をはかる"], ["Let's Read 1", "without", "〜なしで［に］"], ["Let's Read 1", "pot", "つぼ、かめ"], ["Let's Read 1", "hole", "穴"], ["Let's Read 1", "decrease", "減る、減少する"], ["Let's Read 1", "line", "線、電線、路線"], ["Let's Read 1", "fire", "火、炎"], ["Let's Read 1", "burn", "〜を燃やす"], ["Let's Read 1", "candle", "ろうそく"], ["Let's Read 1", "gave", "giveの過去形"], ["Let's Read 1", "give", "（･･･に）〜を与える、渡す"], ["Let's Read 1", "at night", "夜に（は）"], ["Let's Read 1", "little by little", "少しずつ"], ["Let's Read 1", "mechanical", "機械の"], ["Let's Read 1", "weight", "重いもの、おもり"], ["Let's Read 1", "power", "〜に動力を供給する"], ["Let's Read 1", "hour", "時刻"], ["Let's Read 1", "bell", "ベルや鈴、かね（の音）"], ["Let's Read 1", "heavy", "重い"], ["Let's Read 1", "move", "〜を動かす"], ["Let's Read 1", "improve", "〜を改善する、上達させる"], ["Let's Read 1", "light", "軽い"], ["Let's Read 1", "eventually", "最後には、ようやく"], ["Let's Read 1", "began", "beginの過去形"], ["Let's Read 1", "begin", "〜を始める"], ["Let's Read 1", "carry", "〜を（持ち）運ぶ"], ["Let's Read 1", "type", "タイプ、種類"], ["Let's Read 1", "result", "結果"], ["Let's Read 1", "invention", "発明、発明品"], ["Let's Read 1", "effort", "努力"], ["Let's Read 1", "even", "〜でさえ"], ["Let's Read 1", "recognize", "〜とわかる、〜を認識する"], ["Let's Read 1", "idea", "考え、アイディア"], ["Let's Read 1", "technology", "（科学）技術、テクノロジー"], ["Let's Read 1", "wisdom", "知恵、英知"], ["Unit 4-1", "homestay", "ホームステイ"], ["Unit 4-1", "advice", "忠告、助言"], ["Unit 4-1", "member", "一員、メンバー"], ["Unit 4-1", "guest", "客、泊まり客"], ["Unit 4-1", "follow", "〜に従う、〜を守る"], ["Unit 4-1", "rule", "規則、ルール"], ["Unit 4-1", "host", "（客をもてなす）主人（役）"], ["Unit 4-1", "perfect", "完全な、完ぺきな"], ["Unit 4-1", "have to", "〜しなければならない"], ["Unit 4-2", "must", "〜しなければならない"], ["Unit 4-2", "shower", "シャワー"], ["Unit 4-2", "limit", "限界、限度、制限"], ["Unit 4-2", "Wilson", "ウィルソン（姓）"], ["Unit 4-RT1", "elderly", "年配の"], ["Unit 4-RT1", "couple", "夫婦"], ["Unit 4-RT1", "living room", "居間、リビングルーム"], ["Unit 4-RT1", "finish", "〜を終える"], ["Unit 4-RT1", "nothing", "何も〜ない"], ["Unit 4-RT1", "should", "〜すべきである"], ["Unit 4-RT1", "plate", "（浅い）取り皿"], ["Unit 4-RT1", "hurt", "〜を傷つける"], ["Unit 4-RT1", "feeling", "感情、気持ち"], ["Unit 4-RT1", "Lucas", "ルーカス（男子の名）"], ["Unit 4-RT1", "Yuna", "ヨナ（女子の名）"], ["Unit 4-RT1", "go to bed", "床につく、寝る"], ["Unit 4-RT2", "answer", "〜に答える"], ["Unit 4-RT2", "enter", "（場所）に入る"], ["Unit 4-RT2", "explain", "〜を説明する"], ["Unit 4-RT2", "felt", "feelの過去形"], ["Unit 4-RT2", "feel", "〜と感じる、気持ちがする"], ["Unit 4-RT2", "end", "（期間・行為などの）終わり"], ["Unit 4-RT2", "kept", "keepの過去形"], ["Unit 4-RT2", "carefully", "注意深く"], ["Unit 4-RT2", "Kevin", "ケビン（男子の名）"], ["Unit 4-RT2", "take off", "（服など）を脱ぐ"], ["Unit 4-RT2", "feel like ~ing", "〜したい気がする"], ["Unit 4-RT2", "in the end", "結局"], ["Unit 4-RT2", "each other", "たがい（に）"], ["Unit 4-RT2", "keep ~ing", "〜し続ける"], ["Unit 4-RT2", "in the future", "未来に、将来に"], ["Unit 4-Scene 4", "Mrs.", "〜さん、先生（既婚女性）"], ["Unit 4-Scene 4", "precious", "貴重な、大切な"], ["Unit 4-Scene 4", "be able to", "〜することができる"], ["Unit 4-Scene 4", "Best wishes,", "それでは（手紙の結び）"], ["Unit 5-1", "universal", "全ての人々の"], ["Unit 5-1", "design", "デザイン"], ["Unit 5-1", "fair", "博覧会、フェア"], ["Unit 5-1", "bottle", "びん、ボトル"], ["Unit 5-1", "automatic", "（機械などが）自動式の"], ["Unit 5-1", "adjustable", "調節可能な"], ["Unit 5-1", "public", "公の、公共の"], ["Unit 5-1", "touch", "〜にさわる、ふれる"], ["Unit 5-1", "product", "製品"], ["Unit 5-1", "facility", "施設、設備"], ["Unit 5-1", "city hall", "市役所"], ["Unit 5-2", "staff", "職員、従業員"], ["Unit 5-2", "tap", "〜を軽くたたく"], ["Unit 5-2", "castanets", "カスタネット"], ["Unit 5-2", "both ~ and ...", "〜も･･･も両方"], ["Unit 5-2", "left-handed", "左利きの、左利き用の"], ["Unit 5-2", "right-handed", "右利きの、右利き用の"], ["Unit 5-2", "over here", "こちらに、こちらでは"], ["Unit 5-2", "thanks to ~", "〜のおかげで"], ["Unit 5-RT1", "useful", "役に立つ、有用な"], ["Unit 5-RT1", "sign", "標識、看板、掲示"], ["Unit 5-RT1", "young", "若い、幼い"], ["Unit 5-RT1", "ramp", "スロープ"], ["Unit 5-RT1", "stair", "［stairsで］階段"], ["Unit 5-RT1", "wheelchair", "車いす"], ["Unit 5-RT1", "pull", "〜をひく、ひっぱる"], ["Unit 5-RT1", "baggage", "（旅行者の）手荷物"], ["Unit 5-RT1", "baby", "赤ん坊"], ["Unit 5-RT1", "presentation", "発表、プレゼンテーション"], ["Unit 5-RT2", "American", "アメリカの、アメリカ人の"], ["Unit 5-RT2", "professor", "教授"], ["Unit 5-RT2", "childhood", "子供のころ"], ["Unit 5-RT2", "remove", "〜を取り除く"], ["Unit 5-RT2", "barrier", "壁、障壁"], ["Unit 5-RT2", "disabled", "体の不自由な"], ["Unit 5-RT2", "regardless", "何があっても、とにかく"], ["Unit 5-RT2", "ability", "（〜する）能力、才能"], ["Unit 5-RT2", "situation", "立場、境遇、状況"], ["Unit 5-RT2", "found", "〜を創立する"], ["Unit 5-RT2", "center", "（活動などの）中心地"], ["Unit 5-RT2", "spread", "〜を広げる、広める"], ["Unit 5-RT2", "accessible", "（〜にとって）使いやすい"], ["Unit 5-RT2", "Ronald Mace", "ロナルド・メイス"], ["Unit 5-RT2", "regardless of ~", "〜にかかわらず"], ["Unit 6-1", "trivia", "雑学的な知識"], ["Unit 6-1", "quiz", "クイズ"], ["Unit 6-1", "court", "コート"], ["Unit 6-1", "than", "〜よりも"], ["Unit 6-2", "survey", "調査"], ["Unit 6-2", "curling", "カーリング"], ["Unit 6-2", "more", "［比較級を作る］（〜より）もっと〜"], ["Unit 6-2", "strategy", "戦略、作戦"], ["Unit 6-2", "skill", "腕前、技術"], ["Unit 6-2", "most", "［最上級を作る］いちばん〜"], ["Unit 6-RT1", "graph", "グラフ、図表"], ["Unit 6-RT1", "according to ~", "〜によれば"], ["Unit 6-RT1", "percent", "パーセント"], ["Unit 6-RT1", "such", "そのような、このような"], ["Unit 6-RT1", "conclusion", "結論、決定"], ["Unit 6-RT1", "half", "半分、2分の1"], ["Unit 6-RT1", "better", "よりよく、より以上に"], ["Unit 6-RT1", "as for ~", "〜について言えば"], ["Unit 6-RT1", "such as ~", "･･･のような〜"], ["Unit 6-RT1", "in conclusion", "最後に、結論として"], ["Unit 6-RT1", "more than ~", "〜より多くの"], ["Unit 6-RT2", "feedback", "意見、フィードバック"], ["Unit 6-RT2", "speaker", "話す人、演説者"], ["Unit 6-RT2", "content", "中身、内容"], ["Unit 6-RT2", "delivery", "話しぶり"], ["Unit 6-RT2", "clear", "はっきりした"], ["Unit 6-RT2", "contact", "接触"], ["Unit 6-RT2", "comment", "批評、コメント"], ["Unit 6-RT2", "topic", "話題、トピック"], ["Unit 6-RT2", "spoke", "speakの過去形"], ["Unit 6-RT2", "data", "資料、データ"], ["Unit 6-RT2", "slide", "（プレゼン用の）スライド"], ["Unit 6-RT2", "letter", "文字"], ["Unit 6-Scene 6", "goodbye", "さようなら"], ["Unit 6-Scene 6", "Shall I [we] ~?", "〜しましょうか"], ["Unit 6-Scene 6", "direction", "方向、方角"], ["Stage Activity 2", "artificial", "人工の、人工的な"], ["Stage Activity 2", "turf", "芝、芝地"], ["Stage Activity 2", "field", "競技場、フィールド"], ["Stage Activity 2", "video", "映像、動画"], ["Stage Activity 2", "unique", "特有の、独特な"], ["Stage Activity 2", "almost", "ほとんど"], ["Stage Activity 2", "belong to ~", "〜に所属する"], ["Stage Activity 2", "clean up", "きれいにそうじする"], ["Let's Read 2", "once", "かつて、以前、昔"], ["Let's Read 2", "poor", "貧しい、かわいそうな"], ["Let's Read 2", "rich", "金持ちの、裕福な"], ["Let's Read 2", "sell", "〜を売る"], ["Let's Read 2", "candy", "キャンディー"], ["Let's Read 2", "door-to-door", "戸別に、1軒ずつ"], ["Let's Read 2", "earn", "〜をかせぐ"], ["Let's Read 2", "few", "少しの"], ["Let's Read 2", "coin", "硬貨、コイン"], ["Let's Read 2", "knock", "ノックする"], ["Let's Read 2", "well-off", "裕福な"], ["Let's Read 2", "herself", "彼女自身、自ら"], ["Let's Read 2", "a glass of ~", "コップ1杯（の量）の"], ["Let's Read 2", "a few", "少数の、いくらかの"], ["Let's Read 2", "be about to ~", "今にも〜しようとしている"], ["Let's Read 2", "pocket", "ポケット"], ["Let's Read 2", "reply", "〜と答える"], ["Let's Read 2", "pay", "（代金などを）払う"], ["Let's Read 2", "kindness", "親切、親切な行為"], ["Let's Read 2", "away", "はなれて、去って"], ["Let's Read 2", "wonder", "思いをめぐらす"], ["Let's Read 2", "hope", "〜を望む"], ["Let's Read 2", "ill", "病気で、気分が悪い"], ["Let's Read 2", "sent", "sendの過去形"], ["Let's Read 2", "send", "（･･･に）〜をおくる"], ["Let's Read 2", "operation", "手術"], ["Let's Read 2", "woke", "wakeの過去形"], ["Let's Read 2", "alive", "生きて、生きた状態で"], ["Let's Read 2", "envelope", "封筒"], ["Let's Read 2", "bill", "請求書"], ["Let's Read 2", "afraid", "こわがって"], ["Let's Read 2", "inside", "内側に、内部に"], ["Let's Read 2", "paid", "支払い済みの"], ["Let's Read 2", "go by", "（時間が）過ぎる"], ["Let's Read 2", "in front of ~", "〜の前で［に］"], ["Let's Read 2", "right away", "すぐに"], ["Let's Read 2", "be afraid to ~", "〜するのがこわい"], ["Let's Read 2", "in full", "全部"], ["Unit 7-1", "select", "〜を選ぶ"], ["Unit 7-1", "heritage", "（文化的な）遺産"], ["Unit 7-1", "site", "遺跡"], ["Unit 7-1", "natural", "自然の"], ["Unit 7-1", "cultural", "文化の"], ["Unit 7-1", "mixed", "混合した"], ["Unit 7-1", "selection", "選択"], ["Unit 7-1", "standard", "基準"], ["Unit 7-1", "decide", "〜を決める"], ["Unit 7-1", "general", "一般的な、総合的な"], ["Unit 7-1", "conference", "会議、評議会"], ["Unit 7-1", "World Heritage site", "世界遺産"], ["Unit 7-1", "UNESCO", "ユネスコ"], ["Unit 7-2", "fantastic", "すばらしい、すてきな"], ["Unit 7-2", "hometown", "故郷"], ["Unit 7-2", "floral", "花の"], ["Unit 7-2", "region", "地方、地域"], ["Unit 7-2", "known", "knowの過去分詞"], ["Unit 7-2", "plant", "植物"], ["Unit 7-2", "diversity", "（〜の）多様性"], ["Unit 7-2", "species", "（生物学上の）種"], ["Unit 7-2", "the Cape Floral Region", "ケープ植物区"], ["Unit 7-2", "rooibos", "ルイボス"], ["Unit 7-RT1", "built", "buildの過去分詞"], ["Unit 7-RT1", "emperor", "皇帝"], ["Unit 7-RT1", "wife", "妻"], ["Unit 7-RT1", "architecture", "建築、建築様式"], ["Unit 7-RT1", "cover", "〜をおおう、包む"], ["Unit 7-RT1", "marble", "大理石"], ["Unit 7-RT1", "jewel", "宝石"], ["Unit 7-RT1", "material", "原料、材料"], ["Unit 7-RT1", "pollution", "汚染、公害"], ["Unit 7-RT1", "government", "政府"], ["Unit 7-RT1", "the Taj Mahal", "タージ・マハル"], ["Unit 7-RT2", "list", "〜を（文化財のリストに）載せる"], ["Unit 7-RT2", "seen", "seeの過去分詞"], ["Unit 7-RT2", "tourist", "観光客、旅行者"], ["Unit 7-RT2", "climb", "〜に［を］のぼる"], ["Unit 7-RT2", "sunrise", "日の出"], ["Unit 7-RT2", "cloud", "雲"], ["Unit 7-RT2", "crater", "噴火口、（隕石の衝突などによる地面の）穴、（月面の）クレーター"], ["Unit 7-RT2", "amount", "量、額"], ["Unit 7-RT2", "trail", "（通ってきた）小道"], ["Unit 7-RT2", "recently", "最近、近ごろ"], ["Unit 7-RT2", "cleanup", "大そうじ"], ["Unit 7-RT2", "campaign", "キャンペーン"], ["Unit 7-RT2", "forever", "永久に、永遠に"], ["Unit 7-RT2", "more and more", "ますます（多くの）"], ["Unit 7-RT2", "amount of", "〜の量の･･･"], ["unit7-scene7", "goods", "商品、品物"], ["unit7-scene7", "size", "サイズ、寸法"], ["unit7-scene7", "price", "値段"], ["unit7-scene7", "medium", "中くらいの、Mサイズの"], ["unit7-scene7", "clerk", "店員"], ["unit7-scene7", "customer", "客、顧客"], ["unit7-scene7", "sari", "サリー"], ["unit7-scene7", "rupee", "ルピー"], ["Stage Activity 3", "discussion", "討論、話し合い"], ["Stage Activity 3", "chosen", "chooseの過去分詞"], ["Stage Activity 3", "tourism", "観光"], ["Stage Activity 3", "industry", "産業、工業"], ["Stage Activity 3", "develop", "〜を発展させる"], ["Stage Activity 3", "against", "〜に反対して"], ["Stage Activity 3", "increase", "増加"], ["Stage Activity 3", "cause", "〜の原因となる"], ["Stage Activity 3", "traffic jam", "交通渋滞"], ["Stage Activity 3", "pollute", "（水・空気など）を汚す"], ["Stage Activity 3", "environment", "環境"], ["Stage Activity 3", "therefore", "それゆえに、したがって"], ["Stage Activity 3", "review", "〜を見直す"], ["Stage Activity 3", "value", "価値"], ["Stage Activity 3", "destroy", "〜を破壊する"], ["Stage Activity 3", "attract", "（人）をひきつける"], ["Stage Activity 3", "possible", "（物事が）可能な"], ["Stage Activity 3", "point", "論点"], ["Stage Activity 3", "agree", "賛成する"], ["Stage Activity 3", "concern", "（人）を心配させる"], ["Stage Activity 3", "crime", "罪、犯罪"], ["Stage Activity 3", "be afraid of ~", "〜をおそれる"], ["Stage Activity 3", "due to ~", "〜のために、〜が原因で"], ["Let's Read 3", "planet", "惑星"], ["Let's Read 3", "photograph", "写真"], ["Let's Read 3", "university", "大学"], ["Let's Read 3", "attracted", "ひきつけられる"], ["Let's Read 3", "middle", "中央、真ん中"], ["Let's Read 3", "wilderness", "荒野"], ["Let's Read 3", "mayor", "市長、町長"], ["Let's Read 3", "invite", "〜を招待する"], ["Let's Read 3", "dream", "夢"], ["Let's Read 3", "TRUE", "本当の、真実の"], ["Let's Read 3", "Alaska", "アラスカ"], ["Let's Read 3", "Shishmaref", "シシュマレフ"], ["Let's Read 3", "in the middle of ~", "〜の真ん中に［の］"], ["Let's Read 3", "for himself", "自分で、独力で"], ["Let's Read 3", "come true", "実現する"], ["Let's Read 3", "among", "〜の中で［に］"], ["Let's Read 3", "convenience", "便利なこと［もの］"], ["Let's Read 3", "hunt", "〜を狩る"], ["Let's Read 3", "gather", "〜を集める"], ["Let's Read 3", "berry", "ベリー"], ["Let's Read 3", "tradition", "伝統"], ["Let's Read 3", "harmoniously", "調和して"], ["Let's Read 3", "understood", "understandの過去形"], ["Let's Read 3", "living", "生きている"], ["Let's Read 3", "share", "〜を共有する"], ["Let's Read 3", "became", "becomeの過去形"], ["Let's Read 3", "part", "部分、一部"], ["Let's Read 3", "Inuit", "イヌイット"], ["Let's Read 3", "Alaskan", "アラスカの"], ["Let's Read 3", "return", "帰る、戻る"], ["Let's Read 3", "photographer", "写真家"], ["Let's Read 3", "camp", "キャンプをする"], ["Let's Read 3", "severe", "厳しい"], ["Let's Read 3", "wild", "野生の"], ["Let's Read 3", "lonely", "ひとりぼっちの、さびしい"], ["Let's Read 3", "freedom", "自由"], ["Let's Read 3", "playful", "楽しげな、陽気な"], ["Let's Read 3", "scene", "景色、光景"], ["Let's Read 3", "suddenly", "突然、急に"], ["Let's Read 3", "kill", "〜を殺す"], ["Let's Read 3", "tundra", "ツンドラ"], ["Let's Read 3", "caribou", "カリブー"], ["Let's Read 3", "polar bear", "ホッキョクグマ"], ["Let's Read 3", "Kamchatka", "カムチャツカ半島"], ["Let's Read 3", "glacier", "氷河"], ["Let's Read 3", "disappear", "姿を消す、消滅する"], ["Let's Read 3", "global warming", "地球温暖化"], ["Let's Read 3", "enough", "十分な"], ["Let's Read 3", "habitat", "生息地"], ["Let's Read 3", "grow", "（しだいに）〜になる"], ["Let's Read 3", "lose", "〜を失う"], ["Let's Read 3", "land", "土地"], ["Let's Read 3", "island", "島"], ["Let's Read 3", "slowly", "ゆっくりと"], ["Let's Read 3", "twice", "2倍、2度"], ["Let's Read 3", "rest", "残り、その他"], ["Let's Read 3", "Earth", "地球"], ["Let's Read 3", "remind", "〜に思い出させる"], ["Let's Read 3", "past", "過去"], ["Let's Read 3", "pass", "（･･･に）〜を手渡す"], ["Let's Read 3", "beauty", "美しさ、美"], ["Let's Read 3", "sea level", "海水面"], ["Let's Read 3", "the Arctic", "北極地方"]],
+  3: [["Unit 0", "discover", "~を発見する"], ["Unit 0", "side", "側、面"], ["Unit 0", "finally", "ついに、やっと"], ["Unit 0", "musical", "ミュージカル"], ["Unit 0", "actor", "俳優"], ["Unit 0", "The Lion King", "「ライオンキング」"], ["Unit 1-1", "global", "全世界の、世界的な"], ["Unit 1-1", "genre", "ジャンル、部門、分野"], ["Unit 1-1", "adventure", "冒険、冒険心"], ["Unit 1-1", "adult", "おとな、成人"], ["Unit 1-2", "quality", "質、品質、良質"], ["Unit 1-2", "animation", "アニメーション、動画"], ["Unit 1-2", "drawing", "絵、図、スケッチ"], ["Unit 1-2", "delicate", "上品な、優美な、繊細な"], ["Unit 1-2", "addition", "足し算、加えること"], ["Unit 1-2", "match", "~と調和する、~に匹敵する"], ["Unit 1-2", "positive", "肯定の、前向きな"], ["Unit 1-RT1", "ignore", "~を無視する"], ["Unit 1-RT1", "existence", "存在すること、生存"], ["Unit 1-RT1", "root", "起源"], ["Unit 1-RT1", "drawn", "drawの過去分詞"], ["Unit 1-RT1", "express", "~を表現する、言い表す"], ["Unit 1-RT1", "movement", "動き"], ["Unit 1-RT1", "scroll", "巻物、掛け軸"], ["Unit 1-RT1", "technique", "手法、テクニック"], ["Unit 1-RT2", "influence", "~に影響を及ぼす"], ["Unit 1-RT2", "advantage", "有利な点、強み"], ["Unit 1-RT2", "taste", "味、味覚"], ["Unit 1-RT2", "link", "~をつなぐ、連結する"], ["Unit 1-RT2", "entirely", "全く、すっかり"], ["Unit 2-1", "accessory", "付属品、アクセサリー"], ["Unit 2-1", "recycle", "リサイクルする"], ["Unit 2-1", "eco-friendly", "環境にやさしい"], ["Unit 2-1", "become", "becomeの過去分詞"], ["Unit 2-1", "impact", "影響、衝撃"], ["Unit 2-1", "since", "~(して)以来"], ["Unit 2-1", "introduce", "~を導入する"], ["Unit 2-2", "morally", "道徳上、道徳的に見て"], ["Unit 2-2", "clothing", "衣類、衣料品"], ["Unit 2-2", "company", "会社"], ["Unit 2-2", "chemical", "化学物質"], ["Unit 2-2", "lead", "(~に)通じる"], ["Unit 2-2", "less", "もっと少ない"], ["Unit 2-2", "negative", "否定的な、よくない"], ["Unit 2-2", "animal-free", "動物性原料を含んでいない"], ["Unit 2-2", "include", "~を含む、含める"], ["Unit 2-2", "vegan", "絶対菜食主義者"], ["Unit 2-2", "leather", "革、なめし革"], ["Unit 2-2", "avoid", "~を避ける"], ["Unit 2-2", "wool", "羊毛、毛糸"], ["Unit 2-2", "fur", "毛皮、毛皮製品"], ["Unit 2-RT1", "moreover", "なおそのうえに、さらに"], ["Unit 2-RT1", "worker", "働く人、労働者"], ["Unit 2-RT1", "developing", "発展途上の"], ["Unit 2-RT1", "condition", "状況、条件"], ["Unit 2-RT1", "wage", "賃金、給料"], ["Unit 2-RT1", "working", "働く"], ["Unit 2-RT2", "fair", "公平な、相当の"], ["Unit 2-RT2", "prohibit", "~を禁止する"], ["Unit 2-RT2", "labor", "労働"], ["Unit 2-RT2", "responsible", "責任がある"], ["Unit 3-1", "population", "人口、個体数"], ["Unit 3-1", "rapidly", "速く、急速に"], ["Unit 3-1", "beginning", "最初の部分"], ["Unit 3-1", "century", "世紀、100年"], ["Unit 3-1", "shock", "~に衝撃をあたえる"], ["Unit 3-1", "safely", "安全に、無事に"], ["Unit 3-1", "overhunting", "乱獲"], ["Unit 3-1", "oil", "油、石油"], ["Unit 3-1", "spill", "流出"], ["Unit 3-1", "hunting", "狩り"], ["Unit 3-1", "killer whale", "シャチ"], ["Unit 3-2", "ecosystem", "生態系"], ["Unit 3-2", "human being", "人間"], ["Unit 3-2", "relate", "~を関係させる"], ["Unit 3-2", "action", "アクション、行動"], ["Unit 3-RT1", "breed", "~を繁殖させる"], ["Unit 3-RT1", "release", "~を放す"], ["Unit 3-RT1", "reach", "~に達する"], ["Unit 3-RT1", "nowadays", "このごろは、今日では"], ["Unit 3-RT1", "continue", "~を続ける"], ["Unit 3-RT1", "crested ibis", "トキ"], ["Unit 3-RT1", "item", "品目"], ["Unit 3-RT1", "piece", "部分、断片"], ["Unit 3-RT1", "cloth", "布、服地"], ["Unit 3-RT1", "wrap", "~を包む"], ["Unit 3-RT1", "fold", "~を折る"], ["Unit 3-RT1", "convenient", "便利な"], ["Unit 3-RT1", "instead", "そのかわりに"], ["Unit 3-RT1", "resource", "資源"], ["Unit 3-RT2", "lullaby", "子守歌"], ["Unit 3-RT2", "road", "道路、道"], ["Unit 3-RT2", "bomb", "爆弾"], ["Unit 3-RT2", "lost", "loseの過去形"], ["Unit 3-RT2", "injure", "~を傷つける"], ["Unit 3-RT2", "shade", "陰、日陰"], ["Unit 3-RT2", "dead", "死んだ"], ["Unit 3-RT2", "weak", "弱い、かすかな"], ["Unit 3-RT2", "mommy", "お母さん、ママ"], ["Unit 3-RT2", "cry", "泣く"], ["Unit 3-RT2", "held", "holdの過去形"], ["Unit 3-RT2", "hold", "~を持つ、つかむ"], ["Unit 3-RT2", "real", "本当の、本物の"], ["Unit 3-RT2", "tightly", "しっかりと"], ["Unit 3-RT2", "while", "時間、間"], ["Unit 3-RT2", "quietly", "静かに、落ち着いて"], ["Unit 3-RT2", "Barack Obama", "バラク・オバマ"], ["Unit 3-RT2", "sitting", "現職の"], ["Unit 3-RT2", "guest book", "記名帳"], ["Unit 3-RT2", "agony", "激しい痛み"], ["Unit 4-1", "prepared", "用意ができている、備えた"], ["Unit 4-1", "disaster", "災害"], ["Unit 4-1", "shelter", "避難所"], ["Unit 4-1", "store", "~を蓄える"], ["Unit 4-1", "case", "場合"], ["Unit 4-1", "extinguisher", "消火器"], ["Unit 4-2", "done", "doの過去分詞"], ["Unit 4-2", "prepare", "準備をする、備える"], ["Unit 4-2", "emergency", "緊急事態"], ["Unit 4-2", "kit", "道具一式"], ["Unit 4-2", "recommend", "~をすすめる、推薦する"], ["Unit 4-2", "earthquake", "地震"], ["Unit 4-RT1", "several", "いくつかの"], ["Unit 4-RT1", "bridge", "橋、かけ橋"], ["Unit 4-RT1", "between", "~の間で"], ["Unit 4-RT1", "energetic", "精力的な、エネルギッシュな"], ["Unit 4-RT1", "encourage", "~を勇気づける、励ます"], ["Unit 4-RT1", "personality", "個性、性格、人格"], ["Unit 4-RT1", "hit", "襲う"], ["Unit 4-RT1", "comfort", "~を慰める、元気づける"], ["Unit 4-RT1", "nearby", "近くの"], ["Unit 4-RT1", "safe", "安全な"], ["Unit 4-RT1", "Taylor Anderson", "テイラー・アンダーソン"], ["Unit 4-RT1", "ALT", "外国語指導補助教員"], ["Unit 4-RT2", "rode", "rideの過去形"], ["Unit 4-RT2", "bicycle", "自転車"], ["Unit 4-RT2", "toward", "~のほうへ、~に向かって"], ["Unit 4-RT2", "apartment", "アパートの部屋"], ["Unit 4-RT2", "caught", "catchの過去形・過去分詞"], ["Unit 4-RT2", "tsunami", "津波"], ["Unit 4-RT2", "sudden", "突然の、不意の"], ["Unit 4-RT2", "news", "ニュース、知らせ"], ["Unit 4-RT2", "shortly", "まもなく、すぐに"], ["Unit 4-RT2", "corner", "コーナー"], ["Unit 4-RT2", "exchange", "交流、やりとり"], ["Unit 4-RT2", "program", "プログラム、計画"], ["Unit 4-RT2", "support", "~を支援する、応援する"], ["Unit 4-RT2", "ordinary", "ふつうの、通常の"], ["Unit 4-RT2", "crisis", "危機、難局"], ["Unit 5-1", "internet", "インターネット"], ["Unit 5-1", "person", "人、個人"], ["Unit 5-1", "image", "像、肖像、印象"], ["Unit 5-1", "print", "~を印刷する"], ["Unit 5-1", "leader", "指導者、リーダー"], ["Unit 5-1", "greatly", "おおいに、非常に"], ["Unit 5-1", "born", "生まれる"], ["Unit 5-1", "national", "国の"], ["Unit 5-1", "non-violence", "非暴力"], ["Unit 5-1", "Mahatma Gandhi", "マハトマ・ガンディー"], ["Unit 5-1", "Indian", "インドの"], ["Unit 5-1", "rupee", "ルピー"], ["Unit 5-2", "independence", "独立"], ["Unit 5-2", "violence", "暴力"], ["Unit 5-2", "fight", "たたかう"], ["Unit 5-2", "protest", "抗議する"], ["Unit 5-2", "tough", "困難な、難しい"], ["Unit 5-2", "fast", "断食"], ["Unit 5-2", "human rights", "人権"], ["Unit 5-RT1", "lawyer", "弁護士"], ["Unit 5-RT1", "British", "イギリスの"], ["Unit 5-RT1", "discrimination", "差別"], ["Unit 5-RT1", "freely", "自由に"], ["Unit 5-RT1", "sidewalk", "歩道"], ["Unit 5-RT1", "accept", "~を受け入れる"], ["Unit 5-RT1", "law", "法律、法"], ["Unit 5-RT1", "unfair", "不公平な、不当な"], ["Unit 5-RT1", "stood", "standの過去形"], ["Unit 5-RT1", "arrest", "~を逮捕する"], ["Unit 5-RT1", "jail", "刑務所"], ["Unit 5-RT1", "non-violent", "非暴力の"], ["Unit 5-RT1", "effective", "効果的な"], ["Unit 5-RT2", "colony", "植民地"], ["Unit 5-RT2", "produce", "~を生産する"], ["Unit 5-RT2", "tax", "税、税金"], ["Unit 5-RT2", "expensive", "高価な"], ["Unit 5-RT2", "follower", "信奉者、支持者"], ["Unit 5-RT2", "thousand", "1000の"], ["Unit 5-RT2", "kilometer", "キロメートル"], ["Unit 5-RT2", "march", "行進、マーチ"], ["Unit 5-RT2", "peaceful", "平和な"], ["Unit 5-RT2", "legacy", "遺産"], ["Unit 5-RT2", "Martin Luther King, Jr.", "マーティン・ルーサー・キング・ジュニア"], ["Unit 5-RT2", "Nelson Mandela", "ネルソン・マンデラ"], ["Unit 5-RT2", "text", "メッセージをおくる"], ["Unit 5-RT2", "ban", "~を禁止する"], ["Unit 5-RT2", "electronic", "電子の"], ["Unit 5-RT2", "device", "装置"], ["Unit 5-RT2", "cross", "~を横切る"], ["Unit 5-RT2", "decision", "決定、結論"], ["Unit 5-RT2", "bother", "面倒"], ["Unit 5-RT2", "common", "ふつうの、よくある"], ["Unit 6-1", "backpack", "バックパック"], ["Unit 6-1", "overseas", "外国へ、海外へ"], ["Unit 6-1", "unused", "未使用の"], ["Unit 6-1", "supply", "必需品"], ["Unit 6-1", "abroad", "外国に、海外に"], ["Unit 6-1", "donate", "~を寄付する"], ["Unit 6-2", "Afghanistan", "アフガニスタン"], ["Unit 6-2", "definitely", "もちろん、確かに"], ["Unit 6-RT1", "imagine", "~を想像する"], ["Unit 6-RT1", "illiterate", "読み書きのできない"], ["Unit 6-RT1", "son", "息子"], ["Unit 6-RT1", "daughter", "娘"], ["Unit 6-RT1", "ready", "用意ができて"], ["Unit 6-RT1", "air", "空気、空中"], ["Unit 6-RT1", "service", "サービス、公的事業"], ["Unit 6-RT1", "globe", "地球"], ["Unit 6-RT1", "connect", "~を結びつける"], ["Unit 6-RT1", "border", "国境"], ["Unit 6-RT2", "electricity", "電気、電力"], ["Unit 6-RT2", "cut", "cutの過去分詞"], ["Unit 6-RT2", "happen", "起こる、生じる"], ["Unit 6-RT2", "charge", "~を充電する"], ["Unit 6-RT2", "chart", "図表"], ["Unit 6-RT2", "relatively", "比較的"], ["Unit 6-RT2", "cheap", "安い"], ["Unit 6-RT2", "furthermore", "そのうえ、さらに"], ["Unit 6-RT2", "fossil fuel", "化石燃料"], ["Unit 6-RT2", "carbon dioxide", "二酸化炭素"], ["Unit 6-RT2", "energy", "エネルギー"], ["Unit 6-RT2", "control", "~を管理する"], ["Unit 6-RT2", "radiation", "放射能"], ["Unit 6-RT2", "handle", "~を処理する"], ["Unit 6-RT2", "sunshine", "日光"], ["Unit 6-RT2", "wind", "風"], ["Unit 6-RT2", "steam", "蒸気"], ["Unit 6-RT2", "wave", "波"], ["Unit 6-RT2", "renewable", "再生可能な"], ["Unit 6-RT2", "dangerous", "危険な"], ["Unit 6-RT2", "dam", "ダム"], ["Unit 6-RT2", "damage", "~に損害を与える"], ["Unit 6-RT2", "progress", "進歩する"], ["Unit 6-RT2", "Denmark", "デンマーク"], ["Unit 6-RT2", "quarter", "4分の1"], ["Unit 6-RT2", "Iceland", "アイスランド"], ["Unit 6-RT2", "heat", "熱"], ["Unit 6-RT2", "solve", "~を解決する"], ["Let's Read 2", "Azerbaijan", "アゼルバイジャン"], ["Let's Read 2", "invent", "~を発明する"], ["Let's Read 2", "lamp", "明かり、ランプ"], ["Let's Read 2", "second", "秒"], ["Let's Read 2", "liter", "リットル"], ["Let's Read 2", "rainwater", "雨水"], ["Let's Read 2", "battery", "電池、バッテリー"], ["Let's Read 2", "sustainable", "持続可能な"], ["Let's Read 2", "consumer", "消費者"], ["Let's Read 2", "inventor", "発明家"], ["Let's Read 2", "Reyhan Jamalova", "レイハン・ジャマロバ"], ["Let's Read 2", "LED", "発光ダイオード"], ["Let's Read 3", "probably", "十中八九、たぶん"], ["Let's Read 3", "count", "数える"], ["Let's Read 3", "author", "著者、作家"], ["Let's Read 3", "Germany", "ドイツ"], ["Let's Read 3", "art school", "美術学校"], ["Let's Read 3", "graphic designer", "グラフィックデザイナー"], ["Let's Read 3", "Eric Carle", "エリック・カール"], ["Let's Read 3", "New York", "ニューヨーク"], ["Let's Read 3", "The New York Times", "ニューヨークタイムズ"], ["Let's Read 3", "believe", "~だと思う、信じる"], ["Let's Read 3", "publish", "~を出版する"], ["Let's Read 3", "printer", "印刷工"], ["Let's Read 3", "unusual", "ふつうでない"], ["Let's Read 3", "bestseller", "ベストセラー"], ["Let's Read 3", "worldwide", "世界中に、世界的に"], ["Let's Read 3", "toy", "おもちゃ"], ["Let's Read 3", "feature", "特色、特徴"], ["Let's Read 3", "cow", "ウシ"], ["Let's Read 3", "deliver", "~を届ける"], ["Let's Read 3", "reader", "読者"], ["Let's Read 3", "colorfulness", "色の鮮やかさ"], ["Let's Read 3", "represent", "~を象徴する"], ["Let's Read 3", "colorless", "無色の"], ["Let's Read 3", "spirit", "精神、心"], ["Let's Read 3", "unfold", "~を広げる、開く"], ["Let's Read 3", "wing", "羽"], ["Let's Read 3", "Barbara", "バーバラ"], ["Let's Read 3", "pass away", "亡くなる"]]
+};
+
+// ===== App logic =====
+var state = {
+  grade: 1,
+  units: [],          // ordered unique unit names for current grade
+  unitChecked: {},     // unit name -> bool
+};
+
+function getGradeData(g){ return window.VOCAB[g]; }
+
+function buildUnitList(g){
+  var data = getGradeData(g);
+  var seen = {};
+  var units = [];
+  data.forEach(function(row){
+    var u = row[0];
+    if(!seen[u]){ seen[u]=true; units.push(u); }
+  });
+  return units;
+}
+
+function unitWordCount(g, unitName){
+  var data = getGradeData(g);
+  var c = 0;
+  for(var i=0;i<data.length;i++){ if(data[i][0]===unitName) c++; }
+  return c;
+}
+
+function renderGrade(g){
+  state.grade = g;
+  state.units = buildUnitList(g);
+  state.unitChecked = {};
+  state.units.forEach(function(u){ state.unitChecked[u] = true; });
+
+  // tabs
+  document.querySelectorAll('.tab').forEach(function(t){
+    t.classList.toggle('active', Number(t.getAttribute('data-grade'))===g);
+  });
+
+  // range selects
+  var fromSel = document.getElementById('rangeFrom');
+  var toSel = document.getElementById('rangeTo');
+  fromSel.innerHTML = '';
+  toSel.innerHTML = '';
+  state.units.forEach(function(u, idx){
+    var o1 = document.createElement('option');
+    o1.value = idx; o1.textContent = u;
+    fromSel.appendChild(o1);
+    var o2 = document.createElement('option');
+    o2.value = idx; o2.textContent = u;
+    toSel.appendChild(o2);
+  });
+  toSel.selectedIndex = state.units.length - 1;
+
+  // unit grid
+  var grid = document.getElementById('unitGrid');
+  grid.innerHTML = '';
+  state.units.forEach(function(u, idx){
+    var wrap = document.createElement('div');
+    wrap.className = 'unit-item';
+    var cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.checked = true;
+    cb.id = 'u_' + idx;
+    cb.addEventListener('change', function(){
+      state.unitChecked[u] = cb.checked;
+      updateSelectedCount();
+    });
+    var lab = document.createElement('label');
+    lab.setAttribute('for', cb.id);
+    lab.textContent = u + '（' + unitWordCount(g, u) + '語）';
+    wrap.appendChild(cb);
+    wrap.appendChild(lab);
+    grid.appendChild(wrap);
+  });
+
+  updateSelectedCount();
+}
+
+function selectedWordPool(){
+  var data = getGradeData(state.grade);
+  return data.filter(function(row){ return state.unitChecked[row[0]]; });
+}
+
+function updateSelectedCount(){
+  var n = selectedWordPool().length;
+  document.getElementById('selectedCount').textContent = n;
+  var qtyInput = document.getElementById('qtyInput');
+  var warn = document.getElementById('qtyWarn');
+  var qty = Math.min(10, Math.max(1, parseInt(qtyInput.value||'10',10)));
+  if(n < qty){
+    warn.style.display = 'inline';
+    warn.textContent = '選択中の単語数が少ないため、実際の出題数は ' + n + ' 問になります。';
+  } else {
+    warn.style.display = 'none';
+  }
+}
+
+document.querySelectorAll('.tab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    renderGrade(Number(tab.getAttribute('data-grade')));
+  });
+});
+
+document.getElementById('applyRangeBtn').addEventListener('click', function(){
+  var from = parseInt(document.getElementById('rangeFrom').value, 10);
+  var to = parseInt(document.getElementById('rangeTo').value, 10);
+  if(from > to){ var t=from; from=to; to=t; }
+  state.units.forEach(function(u, idx){
+    var checked = (idx >= from && idx <= to);
+    state.unitChecked[u] = checked;
+    var cb = document.getElementById('u_' + idx);
+    if(cb) cb.checked = checked;
+  });
+  updateSelectedCount();
+});
+
+document.getElementById('allBtn').addEventListener('click', function(){
+  state.units.forEach(function(u, idx){
+    state.unitChecked[u] = true;
+    var cb = document.getElementById('u_' + idx);
+    if(cb) cb.checked = true;
+  });
+  updateSelectedCount();
+});
+
+document.getElementById('noneBtn').addEventListener('click', function(){
+  state.units.forEach(function(u, idx){
+    state.unitChecked[u] = false;
+    var cb = document.getElementById('u_' + idx);
+    if(cb) cb.checked = false;
+  });
+  updateSelectedCount();
+});
+
+document.getElementById('qtyInput').addEventListener('input', function(){
+  var v = parseInt(this.value||'1',10);
+  if(isNaN(v)) v = 1;
+  if(v > 10) v = 10;
+  if(v < 1) v = 1;
+  this.value = v;
+  updateSelectedCount();
+});
+
+function shuffle(arr){
+  var a = arr.slice();
+  for(var i=a.length-1;i>0;i--){
+    var j = Math.floor(Math.random()*(i+1));
+    var tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+  }
+  return a;
+}
+
+function escapeHtml(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+document.getElementById('createBtn').addEventListener('click', function(){
+  var pool = selectedWordPool();
+  if(pool.length === 0){
+    alert('単元が1つも選択されていません。単元を選んでください。');
+    return;
+  }
+  var qty = Math.min(10, Math.max(1, parseInt(document.getElementById('qtyInput').value||'10',10)));
+  var n = Math.min(qty, pool.length);
+  var picked = shuffle(pool).slice(0, n);
+
+  var gradeLabel = {1:'中学1年', 2:'中学2年', 3:'中学3年'}[state.grade];
+  var dateStr = new Date().toLocaleDateString('ja-JP');
+
+  // Problem sheet
+  var rows = picked.map(function(row, i){
+    return '<tr>' +
+      '<td class="num">' + (i+1) + '</td>' +
+      '<td class="en">' + escapeHtml(row[1]) + '</td>' +
+      '<td class="ja-blank"><span class="line"></span></td>' +
+      '</tr>';
+  }).join('');
+
+  var problemHtml =
+    '<h2 class="sheet-title">英単語テスト（' + gradeLabel + '　ホライズン）</h2>' +
+    '<p class="sheet-sub">英語 → 日本語　全' + picked.length + '問　' + dateStr + '</p>' +
+    '<div class="namebox">' +
+      '<span>組<span class="fill">&nbsp;</span>　番</span>' +
+      '<span>名前<span class="fill" style="min-width:140px;">&nbsp;</span></span>' +
+      '<span>得点<span class="fill">&nbsp;</span>／' + picked.length + '</span>' +
+    '</div>' +
+    '<table class="qtable">' +
+      '<tr><th style="width:28px;"></th><th>英語</th><th>日本語（意味を書きましょう）</th></tr>' +
+      rows +
+    '</table>';
+  document.getElementById('problemSheet').innerHTML = problemHtml;
+
+  // Answer sheet
+  var aRows = picked.map(function(row, i){
+    return '<tr>' +
+      '<td class="num">' + (i+1) + '</td>' +
+      '<td class="en">' + escapeHtml(row[1]) + '</td>' +
+      '<td class="ja">' + escapeHtml(row[2]) + '</td>' +
+      '<td class="unit-note">' + escapeHtml(row[0]) + '</td>' +
+      '</tr>';
+  }).join('');
+
+  var answerHtml =
+    '<h2 class="sheet-title">解答</h2>' +
+    '<p class="sheet-sub">' + gradeLabel + '　ホライズン　全' + picked.length + '問</p>' +
+    '<table class="qtable answer-table">' +
+      '<tr><th style="width:28px;"></th><th>英語</th><th>日本語</th><th>単元</th></tr>' +
+      aRows +
+    '</table>';
+  document.getElementById('answerSheet').innerHTML = answerHtml;
+
+  document.getElementById('resultArea').style.display = 'block';
+  document.getElementById('resultArea').scrollIntoView({behavior:'smooth'});
+});
+
+document.getElementById('backBtn').addEventListener('click', function(){
+  document.getElementById('resultArea').style.display = 'none';
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
+// init
+renderGrade(1);
+</script>
+</body>
+</html>
