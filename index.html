@@ -142,6 +142,10 @@
     padding: 4px 11px; white-space: nowrap;
   }
   .card .pill:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+  /* 単元ごとの行（ラベル＋やさしめ・標準など） */
+  .card .prows { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+  .card .prow { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; }
+  .card .prow .plab { flex: 0 0 100%; font-size: 11.5px; font-weight: 700; color: #4A4F59; line-height: 1.35; }
   .set-group {
     grid-column: span 2;
     position: relative;
@@ -238,69 +242,27 @@
       <h3>文法解説 <span class="count">中1英語 総復習文法・全6種</span></h3>
       <p class="cat-note">確認テスト①②③（単元ごと）と、総復習ランダム英文法（基礎／標準／応用）。各カードから「やさしめ・標準」または「A・B」を選べます。</p>
       <div class="card-grid">
-        <div class="card material-item" data-grade="1" data-tags="文法 be動詞">
+        <div class="card material-item" data-grade="1" data-tags="文法 be動詞 一般動詞 三人称単数">
           <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📄</span><img class="timg" src="thumbs/g1-eng-check1-be-easy.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge gb-1">中1</span></div>
           <div class="body">
-            <div class="card-title">確認テスト① be動詞まで</div>
-            <div class="desc">中1英語 総復習文法（PDF）</div>
-            <div class="pills">
-              <a href="g1-eng-check1-be-easy.html" class="pill">やさしめ</a>
-              <a href="g1-eng-check1-be-standard.html" class="pill">標準</a>
-            </div>
-          </div>
-        </div>
-        <div class="card material-item" data-grade="1" data-tags="文法 一般動詞">
-          <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📄</span><img class="timg" src="thumbs/g1-eng-check2-genv-easy.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge gb-1">中1</span></div>
-          <div class="body">
-            <div class="card-title">確認テスト② 一般動詞まで</div>
-            <div class="desc">中1英語 総復習文法（PDF）</div>
-            <div class="pills">
-              <a href="g1-eng-check2-genv-easy.html" class="pill">やさしめ</a>
-              <a href="g1-eng-check2-genv-standard.html" class="pill">標準</a>
-            </div>
-          </div>
-        </div>
-        <div class="card material-item" data-grade="1" data-tags="文法 三人称単数">
-          <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📄</span><img class="timg" src="thumbs/g1-eng-check3-3rdsg-easy.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge gb-1">中1</span></div>
-          <div class="body">
-            <div class="card-title">確認テスト③ 三人称単数まで</div>
-            <div class="desc">中1英語 総復習文法（PDF）</div>
-            <div class="pills">
-              <a href="g1-eng-check3-3rdsg-easy.html" class="pill">やさしめ</a>
-              <a href="g1-eng-check3-3rdsg-standard.html" class="pill">標準</a>
+            <div class="card-title">中1英語 確認テスト</div>
+            <div class="desc">教材の段階ごと（やさしめ・標準）</div>
+            <div class="prows">
+              <div class="prow"><span class="plab">① be動詞まで</span><a href="g1-eng-check1-be-easy.html" class="pill">やさしめ</a><a href="g1-eng-check1-be-standard.html" class="pill">標準</a></div>
+              <div class="prow"><span class="plab">② 一般動詞まで</span><a href="g1-eng-check2-genv-easy.html" class="pill">やさしめ</a><a href="g1-eng-check2-genv-standard.html" class="pill">標準</a></div>
+              <div class="prow"><span class="plab">③ 三人称単数まで</span><a href="g1-eng-check3-3rdsg-easy.html" class="pill">やさしめ</a><a href="g1-eng-check3-3rdsg-standard.html" class="pill">標準</a></div>
             </div>
           </div>
         </div>
         <div class="card material-item" data-grade="1" data-tags="文法">
           <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📘</span><img class="timg" src="thumbs/g1-eng-review-basic.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge gb-1">中1</span></div>
           <div class="body">
-            <div class="card-title">総復習ランダム英文法 基礎</div>
-            <div class="desc">中1英語 総復習文法（PDF）</div>
-            <div class="pills">
-              <a href="g1-eng-review-basic.html" class="pill">A</a>
-              <a href="g1-eng-review-basicB.html" class="pill">B</a>
-            </div>
-          </div>
-        </div>
-        <div class="card material-item" data-grade="1" data-tags="文法">
-          <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📗</span><img class="timg" src="thumbs/g1-eng-review-standard.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge gb-1">中1</span></div>
-          <div class="body">
-            <div class="card-title">総復習ランダム英文法 標準</div>
-            <div class="desc">中1英語 総復習文法（PDF）</div>
-            <div class="pills">
-              <a href="g1-eng-review-standard.html" class="pill">A</a>
-              <a href="g1-eng-review-standardB.html" class="pill">B</a>
-            </div>
-          </div>
-        </div>
-        <div class="card material-item" data-grade="1" data-tags="文法">
-          <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📙</span><img class="timg" src="thumbs/g1-eng-review-advanced-jtoe.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge gb-1">中1</span></div>
-          <div class="body">
-            <div class="card-title">総復習ランダム英文法 応用（和文英訳）</div>
-            <div class="desc">中1英語 総復習文法（PDF）</div>
-            <div class="pills">
-              <a href="g1-eng-review-advanced-jtoe.html" class="pill">A</a>
-              <a href="g1-eng-review-advancedB-jtoe.html" class="pill">B</a>
+            <div class="card-title">中1英語 総復習ランダム英文法</div>
+            <div class="desc">レベルを選んでA・Bの2パターン</div>
+            <div class="prows">
+              <div class="prow"><span class="plab">基礎</span><a href="g1-eng-review-basic.html" class="pill">A</a><a href="g1-eng-review-basicB.html" class="pill">B</a></div>
+              <div class="prow"><span class="plab">標準</span><a href="g1-eng-review-standard.html" class="pill">A</a><a href="g1-eng-review-standardB.html" class="pill">B</a></div>
+              <div class="prow"><span class="plab">応用（和文英訳）</span><a href="g1-eng-review-advanced-jtoe.html" class="pill">A</a><a href="g1-eng-review-advancedB-jtoe.html" class="pill">B</a></div>
             </div>
           </div>
         </div>
@@ -311,25 +273,14 @@
       <h3>文法確認テスト <span class="count">中2英語 Unit 4・5</span></h3>
       <p class="cat-note">ニューホライズン2年 Unit 4〜5の確認テスト。「やさしめ・標準」を選べます。</p>
       <div class="card-grid">
-        <div class="card material-item" data-grade="2" data-tags="文法 have to must 動名詞">
+        <div class="card material-item" data-grade="2" data-tags="文法 have to must 動名詞 疑問詞+to 不定詞 that">
           <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📄</span><img class="timg" src="thumbs/g2-eng-check-u4-easy.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge gb-2">中2</span></div>
           <div class="body">
-            <div class="card-title">確認テスト Unit 4 have to・must・動名詞</div>
-            <div class="desc">中2英語 文法確認テスト（単語5問＋文法6大問／100点）</div>
-            <div class="pills">
-              <a href="g2-eng-check-u4-easy.html" class="pill">やさしめ</a>
-              <a href="g2-eng-check-u4-standard.html" class="pill">標準</a>
-            </div>
-          </div>
-        </div>
-        <div class="card material-item" data-grade="2" data-tags="文法 疑問詞+to 不定詞 that">
-          <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📄</span><img class="timg" src="thumbs/g2-eng-check-u5-easy.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge gb-2">中2</span></div>
-          <div class="body">
-            <div class="card-title">確認テスト Unit 5 疑問詞＋to・that</div>
-            <div class="desc">中2英語 文法確認テスト（単語5問＋文法6大問／100点）</div>
-            <div class="pills">
-              <a href="g2-eng-check-u5-easy.html" class="pill">やさしめ</a>
-              <a href="g2-eng-check-u5-standard.html" class="pill">標準</a>
+            <div class="card-title">中2英語 文法確認テスト（ニューホライズン）</div>
+            <div class="desc">単語＋文法／やさしめ・標準</div>
+            <div class="prows">
+              <div class="prow"><span class="plab">Unit 4 have to・must・動名詞</span><a href="g2-eng-check-u4-easy.html" class="pill">やさしめ</a><a href="g2-eng-check-u4-standard.html" class="pill">標準</a></div>
+              <div class="prow"><span class="plab">Unit 5 疑問詞＋to・that</span><a href="g2-eng-check-u5-easy.html" class="pill">やさしめ</a><a href="g2-eng-check-u5-standard.html" class="pill">標準</a></div>
             </div>
           </div>
         </div>
@@ -340,47 +291,25 @@
       <h3>文法確認テスト <span class="count">中3英語 関係代名詞・仮定法</span></h3>
       <p class="cat-note">ニューホライズン3年 Unit 5〜6、サンシャイン3年 PROGRAM 5〜6の確認テストと、関係代名詞だけをまとめて確認できる総合問題。「やさしめ・標準」を選べます。</p>
       <div class="card-grid">
-        <div class="card material-item" data-grade="3" data-tags="文法 関係代名詞 who that which ニューホライズン">
+        <div class="card material-item" data-grade="3" data-tags="文法 関係代名詞 who that which ニューホライズン 仮定法 wish if">
           <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📄</span><img class="timg" src="thumbs/g3-eng-check-u5-easy.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge gb-3">中3</span></div>
           <div class="body">
-            <div class="card-title">確認テスト Unit 5 関係代名詞（ニューホライズン）</div>
-            <div class="desc">中3英語 文法確認テスト（単語5問＋文法6大問／100点）</div>
-            <div class="pills">
-              <a href="g3-eng-check-u5-easy.html" class="pill">やさしめ</a>
-              <a href="g3-eng-check-u5-standard.html" class="pill">標準</a>
+            <div class="card-title">中3英語 文法確認テスト（ニューホライズン）</div>
+            <div class="desc">単語5問＋文法6大問／100点</div>
+            <div class="prows">
+              <div class="prow"><span class="plab">Unit 5 関係代名詞</span><a href="g3-eng-check-u5-easy.html" class="pill">やさしめ</a><a href="g3-eng-check-u5-standard.html" class="pill">標準</a></div>
+              <div class="prow"><span class="plab">Unit 6 仮定法</span><a href="g3-eng-check-u6-easy.html" class="pill">やさしめ</a><a href="g3-eng-check-u6-standard.html" class="pill">標準</a></div>
             </div>
           </div>
         </div>
-        <div class="card material-item" data-grade="3" data-tags="文法 仮定法 wish if ニューホライズン">
-          <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📄</span><img class="timg" src="thumbs/g3-eng-check-u6-easy.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge gb-3">中3</span></div>
-          <div class="body">
-            <div class="card-title">確認テスト Unit 6 仮定法（ニューホライズン）</div>
-            <div class="desc">中3英語 文法確認テスト（単語5問＋文法6大問／100点）</div>
-            <div class="pills">
-              <a href="g3-eng-check-u6-easy.html" class="pill">やさしめ</a>
-              <a href="g3-eng-check-u6-standard.html" class="pill">標準</a>
-            </div>
-          </div>
-        </div>
-        <div class="card material-item" data-grade="3" data-tags="文法 関係代名詞 主格 who which that サンシャイン">
+        <div class="card material-item" data-grade="3" data-tags="文法 関係代名詞 主格 who which that サンシャイン 目的格 省略">
           <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📄</span><img class="timg" src="thumbs/g3-eng-check-sunshine-p5-easy.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge gb-3">中3</span></div>
           <div class="body">
-            <div class="card-title">確認テスト PROGRAM 5 関係代名詞・主格（サンシャイン）</div>
-            <div class="desc">中3英語 文法確認テスト（単語5問＋文法6大問／100点）</div>
-            <div class="pills">
-              <a href="g3-eng-check-sunshine-p5-easy.html" class="pill">やさしめ</a>
-              <a href="g3-eng-check-sunshine-p5-standard.html" class="pill">標準</a>
-            </div>
-          </div>
-        </div>
-        <div class="card material-item" data-grade="3" data-tags="文法 関係代名詞 目的格 which that 省略 サンシャイン">
-          <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📄</span><img class="timg" src="thumbs/g3-eng-check-sunshine-p6-easy.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge gb-3">中3</span></div>
-          <div class="body">
-            <div class="card-title">確認テスト PROGRAM 6 関係代名詞・目的格（サンシャイン）</div>
-            <div class="desc">中3英語 文法確認テスト（単語5問＋文法6大問／100点）</div>
-            <div class="pills">
-              <a href="g3-eng-check-sunshine-p6-easy.html" class="pill">やさしめ</a>
-              <a href="g3-eng-check-sunshine-p6-standard.html" class="pill">標準</a>
+            <div class="card-title">中3英語 文法確認テスト（サンシャイン）</div>
+            <div class="desc">単語5問＋文法6大問／100点</div>
+            <div class="prows">
+              <div class="prow"><span class="plab">PROGRAM 5 関係代名詞・主格</span><a href="g3-eng-check-sunshine-p5-easy.html" class="pill">やさしめ</a><a href="g3-eng-check-sunshine-p5-standard.html" class="pill">標準</a></div>
+              <div class="prow"><span class="plab">PROGRAM 6 関係代名詞・目的格</span><a href="g3-eng-check-sunshine-p6-easy.html" class="pill">やさしめ</a><a href="g3-eng-check-sunshine-p6-standard.html" class="pill">標準</a></div>
             </div>
           </div>
         </div>
