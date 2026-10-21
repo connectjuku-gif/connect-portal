@@ -108,9 +108,11 @@ table.chk td.l { text-align:left; }
 .ansfig { display:flex; gap:8mm; align-items:flex-start; margin:2px 0 6px 1.2em; }
 @media print { .sheet { padding:0 !important; } }
 
-.figs2 { display:grid; grid-template-columns:1fr 1fr; gap:3mm 8mm; align-items:end; }
+.figs2 { display:grid; grid-template-columns:1fr 1fr; gap:3mm 8mm; align-items:stretch; }
+.figs2 > div { display:flex; flex-direction:column; min-width:0; }
 .figs2 .cap { font-size:10.5pt; font-weight:700; }
-.figs2 svg.fig { margin:0 auto; }
+.figs2 svg.fig { margin:auto; }
+.figs2 .abox { margin-top:3px; }
 .wbox { border:1px solid #333; height:62mm; margin-top:4px; }
 </style>
 </head>
