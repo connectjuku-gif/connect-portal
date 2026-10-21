@@ -108,6 +108,22 @@
   .card .thumb {
     height: 72px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 26px;
   }
+  /* ===== サムネイル表示 =====
+     <body class="thumbs"> のときサムネイル、class を外すと元の絵文字表示に戻る */
+  .card .thumb { position: relative; overflow: hidden; }
+  .card .thumb .timg, .card .thumb .gbadge { display: none; }
+  body.thumbs .card .thumb.has-img { height: 128px; background: #EFECE4 !important; align-items: flex-start; }
+  body.thumbs .card .thumb.has-img .timg {
+    display: block; position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: top center;
+  }
+  body.thumbs .card .thumb.has-img .temoji { display: none; }
+  body.thumbs .card .thumb.has-img.noimg .temoji { display: inline; margin-top: 46px; }
+  body.thumbs .card .thumb.has-img .gbadge {
+    display: inline-block; position: absolute; top: 8px; left: 8px; z-index: 1;
+    font-size: 11px; font-weight: 700; color: #fff; background: rgba(31,58,95,.88);
+    border-radius: 999px; padding: 3px 10px; letter-spacing: .02em;
+  }
   .card .body { padding: 14px 16px 16px; flex: 1; display: flex; flex-direction: column; }
   .card .card-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
   .card .desc { font-size: 12px; color: #8A93A1; margin-top: auto; padding-top: 6px; }
@@ -136,7 +152,7 @@
   }
 </style>
 </head>
-<body>
+<body class="thumbs">
 
 <header>
   <div class="header-inner">
@@ -214,7 +230,7 @@
       <p class="cat-note">確認テスト①②③（単元ごと）と、総復習ランダム英文法（基礎／標準／応用）。各カードから「やさしめ・標準」または「A・B」を選べます。</p>
       <div class="card-grid">
         <div class="card material-item" data-grade="1" data-tags="文法 be動詞">
-          <div class="thumb" style="background:#EFF2F6;">📄</div>
+          <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📄</span><img class="timg" src="thumbs/g1-eng-check1-be-easy.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中1</span></div>
           <div class="body">
             <div class="card-title">確認テスト① be動詞まで</div>
             <div class="desc">中1英語 総復習文法（PDF）</div>
@@ -225,7 +241,7 @@
           </div>
         </div>
         <div class="card material-item" data-grade="1" data-tags="文法 一般動詞">
-          <div class="thumb" style="background:#EFF2F6;">📄</div>
+          <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📄</span><img class="timg" src="thumbs/g1-eng-check2-genv-easy.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中1</span></div>
           <div class="body">
             <div class="card-title">確認テスト② 一般動詞まで</div>
             <div class="desc">中1英語 総復習文法（PDF）</div>
@@ -236,7 +252,7 @@
           </div>
         </div>
         <div class="card material-item" data-grade="1" data-tags="文法 三人称単数">
-          <div class="thumb" style="background:#EFF2F6;">📄</div>
+          <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📄</span><img class="timg" src="thumbs/g1-eng-check3-3rdsg-easy.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中1</span></div>
           <div class="body">
             <div class="card-title">確認テスト③ 三人称単数まで</div>
             <div class="desc">中1英語 総復習文法（PDF）</div>
@@ -247,7 +263,7 @@
           </div>
         </div>
         <div class="card material-item" data-grade="1" data-tags="文法">
-          <div class="thumb" style="background:#EFF2F6;">📘</div>
+          <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📘</span><img class="timg" src="thumbs/g1-eng-review-basic.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中1</span></div>
           <div class="body">
             <div class="card-title">総復習ランダム英文法 基礎</div>
             <div class="desc">中1英語 総復習文法（PDF）</div>
@@ -258,7 +274,7 @@
           </div>
         </div>
         <div class="card material-item" data-grade="1" data-tags="文法">
-          <div class="thumb" style="background:#EFF2F6;">📗</div>
+          <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📗</span><img class="timg" src="thumbs/g1-eng-review-standard.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中1</span></div>
           <div class="body">
             <div class="card-title">総復習ランダム英文法 標準</div>
             <div class="desc">中1英語 総復習文法（PDF）</div>
@@ -269,7 +285,7 @@
           </div>
         </div>
         <div class="card material-item" data-grade="1" data-tags="文法">
-          <div class="thumb" style="background:#EFF2F6;">📙</div>
+          <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📙</span><img class="timg" src="thumbs/g1-eng-review-advanced-jtoe.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中1</span></div>
           <div class="body">
             <div class="card-title">総復習ランダム英文法 応用（和文英訳）</div>
             <div class="desc">中1英語 総復習文法（PDF）</div>
@@ -305,7 +321,7 @@
       <div class="card-grid">
         <a href="materials/todai-eng-exam-strategy.html" class="material-link material-item" data-grade="3" data-tags="都立入試 英作文 長文読解">
           <div class="card">
-            <div class="thumb" style="background:#EFF2F6;">📝</div>
+            <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📝</span><img class="timg" src="thumbs/todai-eng-exam-strategy.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中3</span></div>
             <div class="body">
               <div class="card-title">都立入試英語攻略</div>
               <div class="desc">出題傾向と対策・指導のポイント（講師用）</div>
@@ -329,7 +345,7 @@
       <div class="card-grid">
         <a href="vocab-test.html" class="material-link material-item" data-grade="3" data-tags="英単語">
           <div class="card">
-            <div class="thumb" style="background:#EFF2F6;">🔤</div>
+            <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">🔤</span><img class="timg" src="thumbs/vocab-test.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中3</span></div>
             <div class="body">
               <div class="card-title">ランダム英単語テスト（中3）</div>
               <div class="desc">20級〜15段／級を選んで20問を自動生成・印刷</div>
@@ -338,7 +354,7 @@
         </a>
         <a href="vocab-test-g12.html" class="material-link material-item" data-grade="1 2" data-tags="英単語">
           <div class="card">
-            <div class="thumb" style="background:#EFF2F6;">🔤</div>
+            <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">🔤</span><img class="timg" src="thumbs/vocab-test-g12.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中1・中2</span></div>
             <div class="body">
               <div class="card-title">ランダム英単語テスト（中1・中2）</div>
               <div class="desc">20級〜15段／級を選んで20問を自動生成・印刷</div>
@@ -347,7 +363,7 @@
         </a>
         <a href="vocab-test-horizon.html" class="material-link material-item" data-grade="1 2 3" data-tags="英単語">
           <div class="card">
-            <div class="thumb" style="background:#EFF2F6;">📘</div>
+            <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📘</span><img class="timg" src="thumbs/vocab-test-horizon.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中1〜中3</span></div>
             <div class="body">
               <div class="card-title">ホライズン　ランダム英単語</div>
               <div class="desc">中1〜中3／単元・範囲を選んで英→日の問題を最大10問自動生成・印刷</div>
@@ -356,7 +372,7 @@
         </a>
         <a href="vocab-test-sunshine.html" class="material-link material-item" data-grade="1 2" data-tags="英単語">
           <div class="card">
-            <div class="thumb" style="background:#EFF2F6;">📗</div>
+            <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📗</span><img class="timg" src="thumbs/vocab-test-sunshine.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中1・中2</span></div>
             <div class="body">
               <div class="card-title">サンシャイン　ランダム英単語</div>
               <div class="desc">中1・中2／単元・範囲を選んで英→日の問題を最大10問自動生成・印刷（中3は準備中）</div>
@@ -365,7 +381,7 @@
         </a>
         <a href="elem-vocab-test.html" class="material-link material-item" data-grade="el" data-tags="英単語">
           <div class="card">
-            <div class="thumb" style="background:#EFF2F6;">🧒</div>
+            <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">🧒</span><img class="timg" src="thumbs/elem-vocab-test.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">小学生</span></div>
             <div class="body">
               <div class="card-title">小学生英単語テスト</div>
               <div class="desc">Unit1〜39／英→日・日→英・ミックスを自動生成</div>
@@ -374,7 +390,7 @@
         </a>
         <a href="irregular-verb-test.html" class="material-link material-item" data-grade="1 2 3" data-tags="文法 英単語">
           <div class="card">
-            <div class="thumb" style="background:#EFF2F6;">🔁</div>
+            <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">🔁</span><img class="timg" src="thumbs/irregular-verb-test.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中1〜中3</span></div>
             <div class="body">
               <div class="card-title">不規則動詞テスト</div>
               <div class="desc">8級・7級／過去形・過去分詞形をランダム出題</div>
@@ -383,7 +399,7 @@
         </a>
         <a href="vocab-test-target.html" class="material-link material-item" data-grade="hs" data-tags="英単語">
           <div class="card">
-            <div class="thumb" style="background:#EFF2F6;">📙</div>
+            <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📙</span><img class="timg" src="thumbs/vocab-test-target.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">高校生</span></div>
             <div class="body">
               <div class="card-title">ランダム英単語テスト（市販単語帳）</div>
               <div class="desc">ターゲット1900/1400/1200/1000／開始番号と語数を指定して自動生成</div>
@@ -392,7 +408,7 @@
         </a>
         <a href="vocab-test-pass2.html" class="material-link material-item" data-grade="3" data-tags="英単語">
           <div class="card">
-            <div class="thumb" style="background:#EFF2F6;">📙</div>
+            <div class="thumb has-img" style="background:#EFF2F6;"><span class="temoji">📙</span><img class="timg" src="thumbs/vocab-test-pass2.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中3</span></div>
             <div class="body">
               <div class="card-title">ランダム英単語テスト（英検準2級パス単）</div>
               <div class="desc">Section1〜15／範囲を選んで20問を自動生成・印刷</div>
@@ -416,7 +432,7 @@
       <div class="card-grid">
         <a href="math-formulas-kishu.html" class="material-link material-item" data-grade="3" data-tags="公式">
           <div class="card">
-            <div class="thumb" style="background:#FBF3E3;">📐</div>
+            <div class="thumb has-img" style="background:#FBF3E3;"><span class="temoji">📐</span><img class="timg" src="thumbs/math-formulas-kishu.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中3</span></div>
             <div class="body">
               <div class="card-title">数学公式集（既習内容編）</div>
               <div class="desc">関数の式・円・おうぎ形・体積・表面積の公式まとめ（PDF）</div>
@@ -425,7 +441,7 @@
         </a>
         <a href="math-formulas-solid-data.html" class="material-link material-item" data-grade="1 2" data-tags="図形 データ活用">
           <div class="card">
-            <div class="thumb" style="background:#FBF3E3;">📦</div>
+            <div class="thumb has-img" style="background:#FBF3E3;"><span class="temoji">📦</span><img class="timg" src="thumbs/math-formulas-solid-data.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中1・中2</span></div>
             <div class="body">
               <div class="card-title">立体・データの活用</div>
               <div class="desc">柱体・錐体・球の体積表面積／度数分布表・箱ひげ図</div>
@@ -434,7 +450,7 @@
         </a>
         <a href="function-review.html" class="material-link material-item" data-grade="3" data-tags="関数">
           <div class="card">
-            <div class="thumb" style="background:#FBF3E3;">📈</div>
+            <div class="thumb has-img" style="background:#FBF3E3;"><span class="temoji">📈</span><img class="timg" src="thumbs/function-review.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中3</span></div>
             <div class="body">
               <div class="card-title">関数の総復習</div>
               <div class="desc">比例・反比例・一次関数・y=ax²</div>
@@ -443,7 +459,7 @@
         </a>
         <a href="linear-function-basics.html" class="material-link material-item" data-grade="2" data-tags="関数 一次関数">
           <div class="card">
-            <div class="thumb" style="background:#FBF3E3;">📈</div>
+            <div class="thumb has-img" style="background:#FBF3E3;"><span class="temoji">📈</span><img class="timg" src="thumbs/linear-function-basics.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中2</span></div>
             <div class="body">
               <div class="card-title">一次関数（超基本からていねいに）</div>
               <div class="desc">一次関数の導入をゼロから</div>
@@ -455,7 +471,7 @@
           <div class="card-grid">
             <a href="linear-function-explained.html" class="material-link">
               <div class="card">
-                <div class="thumb" style="background:#FBF3E3;">📘</div>
+                <div class="thumb has-img" style="background:#FBF3E3;"><span class="temoji">📘</span><img class="timg" src="thumbs/linear-function-explained.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中2</span></div>
                 <div class="body">
                   <div class="card-title">一次関数 解説書</div>
                   <div class="desc">一次関数の考え方・解き方の解説</div>
@@ -464,7 +480,7 @@
             </a>
             <a href="linear-function-practice.html" class="material-link">
               <div class="card">
-                <div class="thumb" style="background:#FBF3E3;">✏️</div>
+                <div class="thumb has-img" style="background:#FBF3E3;"><span class="temoji">✏️</span><img class="timg" src="thumbs/linear-function-practice.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中2</span></div>
                 <div class="body">
                   <div class="card-title">一次関数 練習問題</div>
                   <div class="desc">一次関数の演習プリント</div>
@@ -475,7 +491,7 @@
         </div>
         <a href="equation-determination-test.html" class="material-link material-item" data-grade="2" data-tags="関数 一次関数">
           <div class="card">
-            <div class="thumb" style="background:#FBF3E3;">✅</div>
+            <div class="thumb has-img" style="background:#FBF3E3;"><span class="temoji">✅</span><img class="timg" src="thumbs/equation-determination-test.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中2</span></div>
             <div class="body">
               <div class="card-title">式の決定 確認テスト（3セット）</div>
               <div class="desc">一次関数の式を求める確認テスト3種</div>
@@ -484,7 +500,7 @@
         </a>
         <a href="yax2-explained.html" class="material-link material-item" data-grade="3" data-tags="関数">
           <div class="card">
-            <div class="thumb" style="background:#FBF3E3;">📘</div>
+            <div class="thumb has-img" style="background:#FBF3E3;"><span class="temoji">📘</span><img class="timg" src="thumbs/yax2-explained.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中3</span></div>
             <div class="body">
               <div class="card-title">関数 y＝ax²（超基本）解説書</div>
               <div class="desc">中3・y＝ax²の考え方をゼロから</div>
@@ -499,7 +515,7 @@
       <div class="card-grid">
         <a href="todai-math-q4-drill.html" class="material-link material-item" data-grade="3" data-tags="都立入試 図形">
           <div class="card">
-            <div class="thumb" style="background:#FBF3E3;">🧩</div>
+            <div class="thumb has-img" style="background:#FBF3E3;"><span class="temoji">🧩</span><img class="timg" src="thumbs/todai-math-q4-drill.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中3</span></div>
             <div class="body">
               <div class="card-title">大問4 部品ドリル（全30問）</div>
               <div class="desc">都立入試 大問4（平面図形）の頻出パーツを反復演習</div>
@@ -508,7 +524,7 @@
         </a>
         <a href="todai-math-q4-plane-figure.html" class="material-link material-item" data-grade="3" data-tags="都立入試 図形">
           <div class="card">
-            <div class="thumb" style="background:#FBF3E3;">📐</div>
+            <div class="thumb has-img" style="background:#FBF3E3;"><span class="temoji">📐</span><img class="timg" src="thumbs/todai-math-q4-plane-figure.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中3</span></div>
             <div class="body">
               <div class="card-title">大問4（平面図形）問2② 演習</div>
               <div class="desc">H19〜R6の出題傾向と対策・演習問題</div>
@@ -517,7 +533,7 @@
         </a>
         <a href="todai-math-q5-drill.html" class="material-link material-item" data-grade="3" data-tags="都立入試 図形">
           <div class="card">
-            <div class="thumb" style="background:#FBF3E3;">🧩</div>
+            <div class="thumb has-img" style="background:#FBF3E3;"><span class="temoji">🧩</span><img class="timg" src="thumbs/todai-math-q5-drill.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中3</span></div>
             <div class="body">
               <div class="card-title">大問5 部品ドリル（全30問）</div>
               <div class="desc">都立入試 大問5（立体図形）の頻出パーツを反復演習</div>
@@ -526,7 +542,7 @@
         </a>
         <a href="todai-math-q5-solid-figure.html" class="material-link material-item" data-grade="3" data-tags="都立入試 図形">
           <div class="card">
-            <div class="thumb" style="background:#FBF3E3;">📦</div>
+            <div class="thumb has-img" style="background:#FBF3E3;"><span class="temoji">📦</span><img class="timg" src="thumbs/todai-math-q5-solid-figure.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中3</span></div>
             <div class="body">
               <div class="card-title">大問5（立体図形）傾向と対策</div>
               <div class="desc">H19〜R6の出題傾向・解答解説</div>
@@ -540,7 +556,7 @@
       <h3>計算プリント</h3>
       <div class="card-grid">
         <div class="card material-item" data-grade="1" data-tags="計算">
-          <div class="thumb" style="background:#FBF3E3;">🔢</div>
+          <div class="thumb has-img" style="background:#FBF3E3;"><span class="temoji">🔢</span><img class="timg" src="thumbs/math-calc-practice-1.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中1</span></div>
           <div class="body">
             <div class="card-title">中1数学 計算練習（正負の数・文字式・方程式）</div>
             <div class="desc">STEP別（全6枚）か、全STEPから12問のMIX（1・2・4・6枚）を選べる／毎回ランダム生成</div>
@@ -551,7 +567,7 @@
           </div>
         </div>
         <div class="card material-item" data-grade="2" data-tags="計算">
-          <div class="thumb" style="background:#FBF3E3;">🔢</div>
+          <div class="thumb has-img" style="background:#FBF3E3;"><span class="temoji">🔢</span><img class="timg" src="thumbs/math-calc-practice-2.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中2</span></div>
           <div class="body">
             <div class="card-title">中2数学 計算練習（式の計算・連立方程式）</div>
             <div class="desc">STEP別（全6枚）か、全STEPから12問のMIX（1・2・4・6枚）を選べる／毎回ランダム生成</div>
@@ -569,7 +585,7 @@
       <div class="card-grid">
         <a href="math-g1-ch4-proportion-test.html" class="material-link material-item" data-grade="1" data-tags="関数">
           <div class="card">
-            <div class="thumb" style="background:#EEF3EC;">📊</div>
+            <div class="thumb has-img" style="background:#EEF3EC;"><span class="temoji">📊</span><img class="timg" src="thumbs/math-g1-ch4-proportion-test.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中1</span></div>
             <div class="body">
               <div class="card-title">中1数学 第4章「比例と反比例」総合テスト</div>
               <div class="desc">20問・100点／単元をまぜて定着度をチェック（式・座標・グラフ・見分け方・利用）＋単元チェック表</div>
@@ -578,7 +594,7 @@
         </a>
         <a href="math-g2-ch3-linear-function-test.html" class="material-link material-item" data-grade="2" data-tags="関数 一次関数">
           <div class="card">
-            <div class="thumb" style="background:#EEF3EC;">📈</div>
+            <div class="thumb has-img" style="background:#EEF3EC;"><span class="temoji">📈</span><img class="timg" src="thumbs/math-g2-ch3-linear-function-test.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中2</span></div>
             <div class="body">
               <div class="card-title">中2数学 第3章「一次関数」総合テスト</div>
               <div class="desc">20問・100点／単元をまぜて定着度をチェック（変化の割合・グラフ・式・利用）＋単元チェック表</div>
@@ -587,7 +603,7 @@
         </a>
         <a href="math-g2-ch4-parallel-congruence-test.html" class="material-link material-item" data-grade="2" data-tags="図形">
           <div class="card">
-            <div class="thumb" style="background:#EEF3EC;">📐</div>
+            <div class="thumb has-img" style="background:#EEF3EC;"><span class="temoji">📐</span><img class="timg" src="thumbs/math-g2-ch4-parallel-congruence-test.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中2</span></div>
             <div class="body">
               <div class="card-title">中2数学 第4章「平行と合同」総合テスト</div>
               <div class="desc">20問・100点／単元をまぜて定着度をチェック（角度・多角形・合同・証明）＋単元チェック表</div>
@@ -596,7 +612,7 @@
         </a>
         <a href="math-g3-ch4-yax2-test.html" class="material-link material-item" data-grade="3" data-tags="関数">
           <div class="card">
-            <div class="thumb" style="background:#EEF3EC;">📈</div>
+            <div class="thumb has-img" style="background:#EEF3EC;"><span class="temoji">📈</span><img class="timg" src="thumbs/math-g3-ch4-yax2-test.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中3</span></div>
             <div class="body">
               <div class="card-title">中3数学 第4章「関数 y＝ax²」総合テスト</div>
               <div class="desc">18問・100点／単元をまぜて定着度をチェック（意味・表・グラフ・変域・変化の割合・利用）＋単元チェック表</div>
@@ -605,7 +621,7 @@
         </a>
         <a href="math-g3-ch5-similarity-test.html" class="material-link material-item" data-grade="3" data-tags="図形">
           <div class="card">
-            <div class="thumb" style="background:#EEF3EC;">🔺</div>
+            <div class="thumb has-img" style="background:#EEF3EC;"><span class="temoji">🔺</span><img class="timg" src="thumbs/math-g3-ch5-similarity-test.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge">中3</span></div>
             <div class="body">
               <div class="card-title">中3数学 第5章「相似な図形」総合テスト</div>
               <div class="desc">20問・100点／単元をまぜて定着度をチェック（相似条件・三角形と比・中点連結・面積比体積比・証明）＋単元チェック表</div>

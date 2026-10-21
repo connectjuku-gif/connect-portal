@@ -4,3 +4,4 @@ wrangler.toml
 .gitignore
 README.md
 .git/
+tools/
