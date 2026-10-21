@@ -112,7 +112,8 @@ def main():
         if not os.path.exists(os.path.join(THUMBS, name + '.jpg')):
             continue
         attrs = m.group(1)
-        badge = '<span class="gbadge">%s</span>' % grade_label(grade) if grade else ''
+        gcls = 'gb-' + grade if grade in GRADE else 'gb-multi'
+        badge = '<span class="gbadge %s">%s</span>' % (gcls, grade_label(grade)) if grade else ''
         new = ('<div class="thumb has-img"%s><span class="temoji">%s</span>'
                '<img class="timg" src="thumbs/%s.jpg" alt="" loading="lazy" '
                'onerror="this.parentNode.classList.add(\'noimg\');this.remove()">%s</div>'
