@@ -1,0 +1,549 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CONNECT中2数学_計算練習（式の計算・連立方程式）</title>
+<style>
+@page { size: A4; margin: 16mm 14mm; }
+* { box-sizing: border-box; }
+body { font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif; color:#111; line-height:1.7; font-size:11.5pt; margin:0; background:#e9e9e9; }
+.sheet { background:#fff; max-width: 190mm; margin: 12px auto; padding: 14mm 12mm; box-shadow: 0 1px 6px rgba(0,0,0,.15); }
+@media print { body{background:#fff;} .sheet{ box-shadow:none; margin:0; padding:0; max-width:none; } .nop{display:none !important;} .pb{ page-break-before: always; } }
+h1 { text-align:center; font-size:16pt; margin:0 0 4px; letter-spacing:.05em; }
+.sub { text-align:center; font-size:10.5pt; color:#444; margin-bottom:10px; }
+.namebox { border:1px solid #333; padding:6px 10px; display:flex; gap:24px; justify-content:flex-end; margin: 6px 0 14px; font-size:11pt; }
+.rules { border:1px solid #333; padding:8px 12px; font-size:10pt; margin-bottom:14px; }
+.q { margin: 18px 0 10px; }
+.qh { display:flex; align-items:flex-start; gap:8px; }
+.num { display:inline-block; border:1.5px solid #222; min-width:24px; text-align:center; font-weight:bold; line-height:1.4; padding:1px 4px; flex-shrink:0; }
+.pts { float:right; font-size:10pt; color:#333; }
+.inst { flex:1; }
+ol.items { list-style:none; padding-left: 1.5em; margin:6px 0; }
+ol.items li { margin: 5px 0; }
+.blank { display:inline-block; border-bottom:1px solid #222; min-width:64px; text-align:center; vertical-align:bottom; }
+.blank.w { min-width:110px; }
+.box { border:1px solid #222; padding:10px 14px; margin: 8px 0; }
+.note { font-size:9.5pt; color:#333; margin-top:6px; }
+.hint { color:#444; }
+.ans { background:#fbfbfb; }
+.ans h2 { font-size:13pt; border-left:5px solid #222; padding-left:8px; margin:20px 0 6px; }
+.ans .a { margin:4px 0 4px 1em; }
+.ans .k { color:#000; font-weight:bold; text-decoration: underline; }
+.ans .ex { font-size:10pt; color:#333; margin-left:1em; }
+.q, .box, .unit { break-inside: avoid; page-break-inside: avoid; }
+.unit { margin-bottom: 6px; }
+.memo { border:2px solid #222; padding:10px 14px; margin:10px 0 16px; font-size:10.5pt; }
+.memo b { display:block; margin-bottom:4px; }
+.u { text-decoration: underline; }
+.two { columns: 2; column-gap: 28px; }
+i { font-family: "Times New Roman", "Hiragino Mincho ProN", serif; font-size:1.08em; }
+.fr { display:inline-flex; flex-direction:column; text-align:center; vertical-align:middle; margin:0 3px; line-height:1.35; }
+.fr > span:first-child { border-bottom:1px solid #111; padding:0 4px; }
+.fr > span:last-child { padding:0 4px; }
+.sys { display:inline-flex; align-items:center; vertical-align:middle; }
+.hw .hh { border-bottom:2px solid #222; padding-bottom:3px; margin-bottom:6px; }
+.hw .hh1 { font-size:10.5pt; color:#333; letter-spacing:.05em; display:flex; justify-content:space-between; }
+.hw .hh2 { font-size:15pt; font-weight:bold; margin-top:1px; }
+.hw .gr, .ans .gr { font-size:10pt; font-weight:normal; margin-left:8px; color:#333; }
+.hw .meta { display:flex; align-items:flex-end; gap:6px; font-size:10.5pt; margin:4px 0 6px; }
+.hw .meta .ln { display:inline-block; border-bottom:1px solid #222; }
+.hw .meta .w1 { min-width:38mm; } .hw .meta .w2 { min-width:22mm; } .hw .meta .w3 { min-width:11mm; }
+.hw .meta span:nth-child(5) { margin-left:8px; } .hw .meta span:nth-child(9) { margin-left:8px; }
+.hw .point { border:1px solid #222; padding:4px 10px 4px; font-size:9.5pt; line-height:1.55; }
+.hw .point ul { margin:2px 0 0 1.1em; padding:0; } .hw .point li { margin:0; }
+.hw .grid { display:grid; grid-template-columns: 1fr 1fr; column-gap:12mm; margin-top:2mm; }
+.hw .sec { grid-column:1 / -1; font-weight:bold; font-size:10.5pt; border-bottom:1px solid #222; margin:2mm 0 1mm; padding-bottom:1px; }
+.hw .cell { height:var(--h); display:flex; flex-direction:column; border-bottom:1px dotted #888; padding:1.5mm 0 1mm; break-inside:avoid; }
+.hw .cq .ex { display:block; }
+.hw .cq .pq { display:block; margin-top:2px; }
+.hw .cq { display:flex; gap:6px; align-items:baseline; font-size:12.5pt; line-height:1.55; }
+.hw .no, .ans .no { font-size:10pt; font-weight:bold; flex-shrink:0; margin-right:4px; }
+.hw .al { margin-top:auto; text-align:right; font-size:10.5pt; }
+.hw .al .blank { min-width:22mm; } .hw .al .blank.w { min-width:30mm; }
+.ans .two { columns:2; column-gap:10mm; }
+.ans .ai { break-inside:avoid; font-size:10.5pt; margin:0 0 5px; line-height:1.7; padding-bottom:3px; border-bottom:1px dotted #bbb; }
+.ans .ai .st { display:block; font-size:9.5pt; color:#333; margin-left:2.2em; }
+.ans .ai .nt { display:block; font-size:9.5pt; color:#333; margin-left:2.2em; }
+.ans h2 { break-after: avoid; page-break-after: avoid; margin-top:14px; }
+
+.controlbar {
+  position: sticky; top: 0; z-index: 10;
+  background: #1F3A5F; color: #fff;
+  padding: 14px 20px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+  font-size: 13px;
+}
+.controlbar .title { font-weight: bold; font-size: 15px; margin-right: 8px; }
+.controlbar button {
+  font-family: inherit; font-size: 13px; padding: 7px 14px;
+  border-radius: 6px; border: none; cursor: pointer;
+}
+.controlbar button.primary { background: #C9972B; color: #fff; font-weight: bold; }
+.controlbar button.secondary { background: #3A557A; color: #fff; }
+.controlbar button.secondary.active { background: #8A2E2E; }
+.controlbar .spacer { flex: 1; }
+.controlbar .count { font-size: 12px; color: #D9E1EC; }
+@media print { .controlbar { display: none !important; } }
+body.editmode [contenteditable="true"] { outline: 1px dashed #C9972B; }
+@media print { [contenteditable] { outline: none !important; } }
+.sys .br { font-size:2.3em; line-height:1; margin-right:3px; font-weight:300; transform:scaleX(.8); }
+.sys .eqs { display:inline-flex; flex-direction:column; line-height:1.5; }
+.sys .eqs .fr { line-height:1.15; font-size:.92em; }
+.vt { display:inline-flex; flex-direction:column; align-items:flex-end; vertical-align:top; }
+.vt .vt2 { border-bottom:1px solid #111; }
+.ans .ai .st .sys .br { font-size:1.9em; }
+</style>
+</head>
+<body>
+
+<div class="controlbar nop">
+  <span class="title">🔢 中2数学 計算練習（式の計算・連立方程式）｜学習塾CONNECT</span>
+  <button class="primary" id="genBtn">問題を作り直す</button>
+  <button class="secondary" id="editBtn">編集モード</button>
+  <button class="secondary" id="printBtn">印刷</button>
+  <span class="spacer"></span>
+  <span class="count" id="rangeInfo">STEP1〜6　計69問（各12問×5＋9問×1）</span>
+</div>
+
+<div id="output"></div>
+
+<script>
+(function(){
+  // ---------- helpers ----------
+  function ri(min, max){ return Math.floor(Math.random()*(max-min+1))+min; }
+  function rnz(min, max){ var v; do{ v = ri(min,max); }while(v===0); return v; }
+  function rs(){ return Math.random()<0.5 ? -1 : 1; }
+  function gcd(a,b){ a=Math.abs(a); b=Math.abs(b); while(b){ var t=a%b; a=b; b=t; } return a||1; }
+  function lcm(a,b){ return Math.abs(a*b)/gcd(a,b); }
+  function signed(v){ return v<0 ? ('−'+Math.abs(v)) : String(v); }
+  function dvar(v){ return '<i>'+v+'</i>'; }
+  function fa(n,d){ return '<span class="fr"><span>'+n+'</span><span>'+d+'</span></span>'; }
+  function vr(pool){ return pool[ri(0, pool.length-1)]; }
+  // retry wrapper: generator returns null when the random values are unsuitable
+  function G(f){ return function(){ for(var i=0;i<500;i++){ var r=f(); if(r) return r; } throw new Error('gen failed'); }; }
+
+  // ---------- rational numbers [n,d] ----------
+  function Q(n,d){ if(d===undefined) d=1; if(d<0){ n=-n; d=-d; } var g=gcd(n,d); return [n/g, d/g]; }
+  function qa(a,b){ return Q(a[0]*b[1]+b[0]*a[1], a[1]*b[1]); }
+  function qm(a,b){ return Q(a[0]*b[0], a[1]*b[1]); }
+  function qd(a,b){ return Q(a[0]*b[1], a[1]*b[0]); }
+  function qn(a){ return [-a[0], a[1]]; }
+  function qz(a){ return a[0]===0; }
+  function qStr(a){ if(a[1]===1) return signed(a[0]); return (a[0]<0?'−':'')+fa(Math.abs(a[0]), a[1]); }
+
+  // ---------- monomials {c:[n,d], v:{x:1,...}} and polynomials (arrays) ----------
+  var ORDER = 'abcmhSVxyℓ';
+  function parseV(s){ var v={}, re=/([^\d])(\d*)/g, m; while((m=re.exec(s))){ v[m[1]]=(v[m[1]]||0)+(m[2]?parseInt(m[2],10):1); } return v; }
+  function M(c, vs){ return {c: (typeof c==='number') ? Q(c) : Q(c[0],c[1]), v: parseV(vs||'')}; }
+  function vkeys(v){ return Object.keys(v).filter(function(k){return v[k]>0;}).sort(function(a,b){ return ORDER.indexOf(a)-ORDER.indexOf(b); }); }
+  function vKey(v){ return vkeys(v).map(function(k){ return k+v[k]; }).join(''); }
+  function vStr(v){ return vkeys(v).map(function(k){ return dvar(k)+(v[k]>1?'<sup>'+v[k]+'</sup>':''); }).join(''); }
+  function body(m){ // coefficient (absolute) + variables
+    var n=Math.abs(m.c[0]), d=m.c[1], vs=vStr(m.v);
+    if (vs && n===1 && d===1) return vs;
+    if (d===1) return n+vs;
+    return fa(n,d)+vs;
+  }
+  function P(list){ // polynomial to html
+    var L = list.filter(function(m){ return !qz(m.c); });
+    if (!L.length) return '0';
+    return L.map(function(m,i){
+      var neg = m.c[0]<0;
+      if (i===0) return (neg?'−':'')+body(m);
+      return (neg?' − ':' + ')+body(m);
+    }).join('');
+  }
+  function F(m){ var s=P([m]); return m.c[0]<0 ? '('+s+')' : s; } // monomial as a factor
+  function PP(list){ return '('+P(list)+')'; }
+  function merge(list){
+    var keys=[], map={};
+    list.forEach(function(m){ var k=vKey(m.v); if(!(k in map)){ keys.push(k); map[k]={c:Q(0), v:m.v}; } map[k].c = qa(map[k].c, m.c); });
+    return keys.map(function(k){ return map[k]; }).filter(function(m){ return !qz(m.c); });
+  }
+  function scale(list, k){ var kk = (typeof k==='number')?Q(k):k; return list.map(function(m){ return {c:qm(m.c,kk), v:m.v}; }); }
+  function mmul(a,b){ var v={}, k; for(k in a.v) v[k]=(v[k]||0)+a.v[k]; for(k in b.v) v[k]=(v[k]||0)+b.v[k]; return {c:qm(a.c,b.c), v:v}; }
+  function mdiv(a,b){ var v={}, k; for(k in a.v) v[k]=(v[k]||0)+a.v[k]; for(k in b.v) v[k]=(v[k]||0)-b.v[k]; return {c:qd(a.c,b.c), v:v}; }
+  function kStr(k){ return k===1 ? '' : (k===-1 ? '−' : signed(k)); } // coefficient in front of ( )
+
+  // ---------- simultaneous equations ----------
+  function eq(a,b,c){ return P([M(a,'x'),M(b,'y')])+' = '+signed(c); }
+  function sys(e1, e2){ return '<span class="sys"><span class="br">{</span><span class="eqs"><span>'+e1+'</span><span>'+e2+'</span></span></span>'; }
+  function xy(x,y){ return dvar('x')+' = '+signed(x)+'、'+dvar('y')+' = '+signed(y); }
+  function sol(){ return [rnz(-6,6), rnz(-6,6)]; }
+  function dFmt(t){ var s=t<0?'−':'', v=Math.abs(t); return v%10===0 ? s+(v/10) : s+Math.floor(v/10)+'.'+(v%10); }
+  function decEq(at, bt, ct){ // coefficients in tenths
+    function term(t, vname, first){
+      var sg = t<0 ? (first?'−':' − ') : (first?'':' + ');
+      var a = Math.abs(t);
+      return sg + (a===10 ? '' : dFmt(a)) + dvar(vname);
+    }
+    return term(at,'x',true)+term(bt,'y',false)+' = '+dFmt(ct);
+  }
+
+  // ========== STEP 1: 式の加法・減法 ==========
+  function likeTerms(vars){ return G(function(){
+    var cs = [ri(1,9), rnz(-9,9), rnz(-9,9), rnz(-9,9)];
+    var L = vars.map(function(v,i){ return M(cs[i], v); });
+    var R = merge(L); if (R.length<2) return null;
+    return {ex: P(L), ans: P(R)};
+  }); }
+  var s1a1 = likeTerms(['x','y','x','y']);
+  var s1a2 = likeTerms(['x2','x','x2','x']);
+  var s1a3 = likeTerms(['xy','x','x','xy']);
+  var s1a4 = likeTerms(['a','','a','']);
+
+  var s1b1 = G(function(){
+    var P1=[M(ri(1,6),'x'), M(rnz(-7,7),'y')], P2=[M(ri(1,6),'x'), M(rnz(-7,7),'y')];
+    var R=merge(P1.concat(P2)); if(R.length<2) return null;
+    return {ex: PP(P1)+' + '+PP(P2), ans: P(R)}; });
+  var s1b2 = G(function(){
+    var P1=[M(ri(1,7),'x'), M(rnz(-7,7),'y')], P2=[M(ri(1,6),'x'), M(rnz(-7,7),'y')];
+    var E=P1.concat(scale(P2,-1)), R=merge(E); if(R.length<2) return null;
+    return {ex: PP(P1)+' − '+PP(P2), ans: P(R), step:'途中：'+P(E)}; });
+  var s1b3 = G(function(){
+    var P1=[M(ri(1,3),'x2'), M(rnz(-7,7),'x'), M(rnz(-9,9),'')], P2=[M(ri(1,4),'x2'), M(rnz(-7,7),'x'), M(rnz(-9,9),'')];
+    var E=P1.concat(scale(P2,-1)), R=merge(E); if(R.length<3) return null;
+    return {ex: PP(P1)+' − '+PP(P2), ans: P(R), step:'途中：'+P(E)}; });
+  var s1b4 = G(function(){ // 縦書き
+    var P1=[M(ri(2,9),'a'), M(rnz(-9,9),'b'), M(rnz(-9,9),'')], P2=[M(ri(1,9),'a'), M(rnz(-9,9),'b'), M(rnz(-9,9),'')];
+    var plus = Math.random()<0.5;
+    var R = merge(P1.concat(plus?P2:scale(P2,-1))); if(R.length<3) return null;
+    var ex = '<span class="vt"><span>'+P(P1)+'</span><span class="vt2">'+(plus?'+)':'−)')+'　'+P(P2)+'</span></span>';
+    return {ex: ex, ans: P(R)}; });
+
+  var s1c1 = G(function(){ var k=ri(2,6), L=[M(ri(1,6),'x'), M(rnz(-7,7),'y')];
+    return {ex: k+PP(L), ans: P(scale(L,k))}; });
+  var s1c2 = G(function(){ var k=-ri(2,6), L=[M(ri(1,6),'x'), M(rnz(-7,7),'y'), M(rnz(-9,9),'')];
+    return {ex: kStr(k)+PP(L), ans: P(scale(L,k)), step:'途中：かっこの前が − なので、かっこの中の符号がすべて変わる'}; });
+  var s1c3 = G(function(){ var k=ri(2,6), L=[M(k*ri(1,5),'x'), M(k*rnz(-5,5),'y')];
+    return {ex: PP(L)+' ÷ '+k, ans: P(scale(L,Q(1,k))), step:'途中：'+fa(P(L),k)}; });
+  var s1c4 = G(function(){ var k=-ri(2,5), L=[M(-k*ri(1,5),'x'), M(-k*rnz(-5,5),'y')];
+    return {ex: PP(L)+' ÷ ('+signed(k)+')', ans: P(scale(L,Q(1,k)))}; });
+
+  // ========== STEP 2: 単項式の乗法・除法 ==========
+  var s2a1 = G(function(){ var a=M(ri(2,9)*rs(),'x'), b=M(ri(2,9)*rs(),'y');
+    return {ex: P([a])+' × '+F(b), ans: P([mmul(a,b)])}; });
+  var s2a2 = G(function(){ var a=M(ri(2,6)*rs(),'x'), b=M(ri(2,6)*rs(),'xy');
+    return {ex: P([a])+' × '+F(b), ans: P([mmul(a,b)])}; });
+  var s2a3 = G(function(){ var a=M(-ri(2,6), vr(['x','a','y'])), sq=mmul(a,a);
+    return {ex: '('+P([a])+')<sup>2</sup>', ans: P([sq]), step:'途中：'+F(a)+' × '+F(a)}; });
+  var s2a4 = G(function(){ var a=M(-ri(2,4),'x'), b=M(ri(2,5)*rs(),'y'), sq=mmul(a,a);
+    return {ex: '('+P([a])+')<sup>2</sup> × '+F(b), ans: P([mmul(sq,b)]), step:'途中：'+P([sq])+' × '+F(b)}; });
+
+  var s2b1 = G(function(){ var a=ri(2,6)*rs(), b=ri(2,6)*rs(); var dd=M(a*b,'xy'), dv=M(a,'x');
+    return {ex: P([dd])+' ÷ '+F(dv), ans: P([mdiv(dd,dv)]), step:'途中：'+(a*b<0?'−':'')+fa(body(dd), body(dv))+'（符号を先に決める）'}; });
+  var s2b2 = G(function(){ var d=ri(2,6)*rs(), k=ri(2,6)*rs(); var dd=M(d*k,'a2b'), dv=M(d,'ab');
+    return {ex: P([dd])+' ÷ '+F(dv), ans: P([mdiv(dd,dv)])}; });
+  var s2b3 = G(function(){ var c=ri(2,12), d=ri(2,9); if(c%d===0 || d%c===0) return null; c*=rs();
+    var dd=M(c,'xy'), dv=M(d,'x');
+    return {ex: P([dd])+' ÷ '+F(dv), ans: P([mdiv(dd,dv)]), step:'途中：'+(c<0?'−':'')+fa(body(dd), body(dv))+' を約分'}; });
+  var s2b4 = G(function(){ var d=ri(2,6)*rs(), k=ri(2,5)*rs(); var dd=M(d*k,'x2y2'), dv=M(d,'xy');
+    return {ex: P([dd])+' ÷ '+F(dv), ans: P([mdiv(dd,dv)])}; });
+
+  var s2c1 = G(function(){ var q=ri(2,5), p=ri(1,q-1); if(gcd(p,q)!==1) return null;
+    var a=M(q*ri(1,4)*rs(),'x'), b=M([p*rs(),q],'y');
+    return {ex: P([a])+' × '+F(b), ans: P([mmul(a,b)])}; });
+  var s2c2 = G(function(){ var p=ri(1,8), q=ri(2,9), r=ri(1,4), s=ri(2,5);
+    if(gcd(p,q)!==1 || gcd(r,s)!==1) return null;
+    var a=M([p*rs(),q],'xy'), b=M([r*rs(),s],'x'), res=mdiv(a,b);
+    var recip = (b.c[0]<0?'(−':'')+fa(String(s), (r===1?'':r)+dvar('x'))+(b.c[0]<0?')':'');
+    return {ex: P([a])+' ÷ '+F(b), ans: P([res]), step:'途中：'+P([a])+' × '+recip+'（逆数をかける）'}; });
+  var s2c3 = G(function(){ var c2=ri(2,4)*rs(), c1=c2*ri(2,4)*rs(), c3=ri(2,5)*rs();
+    var a=M(c1,'x2y'), b=M(c2,'x'), c=M(c3,'y');
+    return {ex: P([a])+' ÷ '+F(b)+' × '+F(c), ans: P([mmul(mdiv(a,b),c)]),
+      step:'途中：'+(a.c[0]*b.c[0]*c.c[0]<0?'−':'')+fa(body(a)+' × '+body(c), body(b))}; });
+  var s2c4 = G(function(){ var q=ri(2,5), p=ri(1,q-1), s=ri(2,5), r=ri(1,s-1);
+    if(gcd(p,q)!==1 || gcd(r,s)!==1) return null;
+    var a=M(ri(1,6)*rs(),'xy2'), b=M([p,q],'y'), c=M([-r,s],'x');
+    var res=mmul(mdiv(a,b),c); if(res.c[1]===1 && Math.abs(res.c[0])===1 && Math.random()<0.7) return null;
+    return {ex: P([a])+' ÷ '+F(b)+' × '+F(c), ans: P([res])}; });
+
+  // ========== STEP 3: いろいろな式・式の値・等式の変形 ==========
+  function lin(){ return [M(ri(1,6)*(Math.random()<0.85?1:-1),'x'), M(rnz(-7,7),'y')]; }
+  var s3a1 = G(function(){ var k1=ri(2,5), k2=ri(2,5), A=lin(), B=lin();
+    var E=scale(A,k1).concat(scale(B,k2)), R=merge(E); if(R.length<2) return null;
+    return {ex: k1+PP(A)+' + '+k2+PP(B), ans: P(R), step:'途中：'+P(E)}; });
+  var s3a2 = G(function(){ var k1=ri(2,5), k2=ri(2,5), A=lin(), B=lin();
+    var E=scale(A,k1).concat(scale(B,-k2)), R=merge(E); if(R.length<2) return null;
+    return {ex: k1+PP(A)+' − '+k2+PP(B), ans: P(R), step:'途中：'+P(E)}; });
+  function fracSum(minus){ return G(function(){
+    var p=ri(2,6), q=ri(2,6); if(p===q) return null;
+    var L=lcm(p,q), A=lin(), B=lin();
+    var N=merge(scale(A,L/p).concat(scale(B,(minus?-1:1)*L/q))); if(N.length<2) return null;
+    var g=L; N.forEach(function(m){ g=gcd(g,m.c[0]); });
+    var Nr=scale(N,Q(1,g)), den=L/g;
+    var ans = den===1 ? P(Nr) : fa(P(Nr), den);
+    var step = '途中：'+fa((L/p===1?'':L/p)+PP(A)+(minus?' − ':' + ')+(L/q===1?'':L/q)+PP(B), L);
+    return {ex: fa(P(A),p)+(minus?' − ':' + ')+fa(P(B),q), ans: ans, step: step};
+  }); }
+  var s3a3 = fracSum(false), s3a4 = fracSum(true);
+
+  function cond(vals){ return vals.map(function(p){ return dvar(p[0])+' = '+p[1]; }).join('、')+' のとき、'; }
+  function subStr(list, vals){ // "3 × 5 × (−3) − 4 × (−3)²"
+    return list.map(function(m,i){
+      var parts=[]; var n=Math.abs(m.c[0]);
+      if(n!==1) parts.push(String(n));
+      vkeys(m.v).forEach(function(k){ var v=vals[k], s=v<0?'(−'+Math.abs(v)+')':String(v); parts.push(s+(m.v[k]>1?'<sup>'+m.v[k]+'</sup>':'')); });
+      var t=parts.join(' × ');
+      return (i===0 ? (m.c[0]<0?'−':'') : (m.c[0]<0?' − ':' + '))+t;
+    }).join('');
+  }
+  function evalP(list, vals){ var s=Q(0); list.forEach(function(m){ var t=m.c; vkeys(m.v).forEach(function(k){ for(var e=0;e<m.v[k];e++) t=qm(t, vals[k]); }); s=qa(s,t); }); return s; }
+  var s3b1 = G(function(){ var X=rnz(-5,5), Y=rnz(-5,5), L=vr([[M(ri(2,5),'xy'),M(rnz(-5,5),'y2')],[M(ri(2,5),'x2'),M(rnz(-5,5),'xy')]]);
+    var v=evalP(L,{x:Q(X),y:Q(Y)});
+    return {ex: cond([['x',signed(X)],['y',signed(Y)]])+P(L)+' の値', ans: qStr(v), step:'途中：'+subStr(L,{x:X,y:Y})}; });
+  var s3b2 = G(function(){ var X=rnz(-5,5), Y=rnz(-5,5), k1=ri(2,4), k2=ri(1,4), A=lin(), B=lin();
+    var R=merge(scale(A,k1).concat(scale(B,-k2))); if(R.length<2) return null;
+    var v=evalP(R,{x:Q(X),y:Q(Y)});
+    return {ex: cond([['x',signed(X)],['y',signed(Y)]])+k1+PP(A)+' − '+(k2===1?'':k2)+PP(B)+' の値', ans: qStr(v), step:'途中：式を簡単にすると '+P(R)}; });
+  var s3b3 = G(function(){ var d=ri(2,6)*rs(), k=ri(2,6)*rs(), p=ri(2,4), an=rs(), B=rnz(-6,6);
+    var dd=M(d*k,'a2b'), dv=M(d,'a'), S=mdiv(dd,dv);
+    var v=evalP([S],{a:Q(an,p), b:Q(B)});
+    return {ex: dvar('a')+' = '+(an<0?'−':'')+fa(1,p)+'、'+dvar('b')+' = '+signed(B)+' のとき、'+P([dd])+' ÷ '+F(dv)+' の値', ans: qStr(v), step:'途中：式を簡単にすると '+P([S])}; });
+  var s3b4 = G(function(){ var A=lin(), B=lin(), c1=ri(2,4), c3=ri(1,c1-1), c2=rnz(-3,3);
+    var exAB = (c1===1?'':c1)+dvar('A')+' − ('+(c2<0?'−':'')+(Math.abs(c2)===1?'':Math.abs(c2))+dvar('B')+' + '+(c3===1?'':c3)+dvar('A')+')';
+    var simp = P([M(c1-c3,'A'), M(-c2,'B')]);
+    var R=merge(scale(A,c1-c3).concat(scale(B,-c2))); if(R.length<2) return null;
+    return {ex: dvar('A')+' = '+P(A)+'、'+dvar('B')+' = '+P(B)+' として、'+exAB+' を計算', ans: P(R), step:'途中：'+simp+' に代入'}; });
+
+  var s3c1 = G(function(){ var b=rnz(-6,6), c=rnz(-9,9), solveX=Math.random()<0.5;
+    if(solveX) return {ex: P([M(1,'x'),M(b,'y')])+' = '+signed(c)+'　{'+dvar('x')+'}', ans: dvar('x')+' = '+P([M(-b,'y'),M(c,'')])};
+    return {ex: P([M(b,'x'),M(1,'y')])+' = '+signed(c)+'　{'+dvar('y')+'}', ans: dvar('y')+' = '+P([M(-b,'x'),M(c,'')])}; });
+  var s3c2 = G(function(){ var a=ri(2,12), b=ri(2,6)*rs(), c=rnz(-9,9); if(a%Math.abs(b)!==0 && Math.random()<0.5) return null;
+    var R=[M([-a,b],'x'), M([c,b],'')];
+    return {ex: P([M(a,'x'),M(b,'y')])+' = '+signed(c)+'　{'+dvar('y')+'}', ans: dvar('y')+' = '+P(R),
+      step:'途中：'+P([M(b,'y')])+' = '+P([M(-a,'x'),M(c,'')])}; });
+  var s3c3 = G(function(){ var forms = [
+      {ex: dvar('S')+' = '+fa(1,2)+dvar('a')+dvar('h')+'　{'+dvar('h')+'}', ans: dvar('h')+' = '+fa('2'+dvar('S'), dvar('a'))},
+      {ex: dvar('ℓ')+' = 2('+dvar('a')+' + '+dvar('b')+')　{'+dvar('a')+'}', ans: dvar('a')+' = '+fa(dvar('ℓ'),2)+' − '+dvar('b')+'（'+fa(dvar('ℓ')+' − 2'+dvar('b'),2)+' でもよい）'},
+      {ex: dvar('V')+' = '+fa(1,3)+dvar('S')+dvar('h')+'　{'+dvar('h')+'}', ans: dvar('h')+' = '+fa('3'+dvar('V'), dvar('S'))},
+      {ex: dvar('x')+' = 2'+dvar('a')+'('+dvar('y')+' + '+dvar('h')+')　{'+dvar('y')+'}', ans: dvar('y')+' = '+fa(dvar('x'),'2'+dvar('a'))+' − '+dvar('h')},
+      {ex: dvar('m')+' = '+fa(dvar('a')+' + '+dvar('b'),2)+'　{'+dvar('b')+'}', ans: dvar('b')+' = 2'+dvar('m')+' − '+dvar('a')},
+      {ex: dvar('c')+' = '+fa(1,2)+dvar('a')+dvar('b')+'　{'+dvar('b')+'}', ans: dvar('b')+' = '+fa('2'+dvar('c'), dvar('a'))}
+    ]; return vr(forms); });
+  var s3c4 = G(function(){ var p=ri(2,4), q=ri(2,4), r=ri(1,5), s=ri(2,7); if(s===p) return null;
+    var g=gcd(gcd(s, p*r), p*q), num=P([M(s/g,'y'),M(p*r/g,'')]), den=p*q/g;
+    return {ex: dvar('y')+' = '+fa(p+'('+q+dvar('x')+' − '+r+')', s)+'　{'+dvar('x')+'}',
+      ans: dvar('x')+' = '+(den===1 ? num : fa(num, den)),
+      step:'途中：'+s+dvar('y')+' = '+p+'('+q+dvar('x')+' − '+r+')'}; });
+
+  // ========== STEP 4: 連立方程式（加減法） ==========
+  function mk(a1,b1,a2,b2,x,y,step){
+    if (a1*b2-a2*b1===0) return null;
+    return {ex: sys(eq(a1,b1,a1*x+b1*y), eq(a2,b2,a2*x+b2*y)), ans: xy(x,y), step: step, chk:[[a1,b1,a1*x+b1*y],[a2,b2,a2*x+b2*y],[x,y]]};
+  }
+  var s4a = G(function(){ var s=sol(), t=ri(0,3), a1=ri(1,6), b1=rnz(-6,6), c=rnz(-6,6);
+    if(t===0) return mk(a1,b1,a1,c,s[0],s[1],'途中：① − ② で '+dvar('x')+' を消去');
+    if(t===1) return mk(a1,b1,-a1,c,s[0],s[1],'途中：① + ② で '+dvar('x')+' を消去');
+    if(t===2) return mk(a1,b1,ri(1,6),b1,s[0],s[1],'途中：① − ② で '+dvar('y')+' を消去');
+    return mk(a1,b1,ri(1,6),-b1,s[0],s[1],'途中：① + ② で '+dvar('y')+' を消去'); });
+  var s4b = G(function(){ var s=sol(), k=ri(2,4), b1=rs(), b2=k*rs(), a1=ri(1,6), a2=rnz(-6,6);
+    if(Math.abs(a1)===Math.abs(a2)) return null;
+    var same = (b1*k)===b2;
+    return mk(a1,b1,a2,b2,s[0],s[1],'途中：①×'+k+(same?' − ':' + ')+'② で '+dvar('y')+' を消去'); });
+  var s4c = G(function(){ var s=sol(), a1=ri(2,6), a2=ri(2,6)*rs(), b1=ri(2,6)*rs(), b2=ri(2,6)*rs();
+    function bad(p,q){ p=Math.abs(p); q=Math.abs(q); return p%q===0 || q%p===0; }
+    if(bad(a1,a2) || bad(b1,b2)) return null;
+    var L=lcm(a1,a2), m1=L/a1, m2=L/Math.abs(a2), same=a2>0;
+    return mk(a1,b1,a2,b2,s[0],s[1],'途中：①×'+m1+(same?' − ':' + ')+'②×'+m2+' で '+dvar('x')+' を消去'); });
+
+  // ========== STEP 5: 連立方程式（代入法・かっこ） ==========
+  var s5a = G(function(){ var s=sol(), x=s[0], y=s[1], a=rnz(-4,4), c=rnz(-6,6), d=rnz(-6,6);
+    var yForm = Math.random()<0.6;
+    if (yForm){ var b=y-a*x; if(c+d*a===0) return null;
+      var e1 = dvar('y')+' = '+P([M(a,'x'),M(b,'')]), e2 = eq(c,d,c*x+d*y);
+      var step = '途中：'+P([M(c,'x')])+(d<0?' − ':' + ')+(Math.abs(d)===1?'':Math.abs(d))+PP([M(a,'x'),M(b,'')])+' = '+signed(c*x+d*y);
+      var first = Math.random()<0.5;
+      return {ex: first?sys(e1,e2):sys(e2,e1), ans: xy(x,y), step: step, chk:[[-a,1,b],[c,d,c*x+d*y],[x,y]]};
+    } else { var b2=x-a*y; if(d+c*a===0) return null;
+      var f1 = dvar('x')+' = '+P([M(a,'y'),M(b2,'')]), f2 = eq(c,d,c*x+d*y);
+      var step2 = '途中：'+(c<0?'−':'')+(Math.abs(c)===1?'':Math.abs(c))+PP([M(a,'y'),M(b2,'')])+(d<0?' − ':' + ')+body(M(d,'y'))+' = '+signed(c*x+d*y);
+      return {ex: Math.random()<0.5?sys(f1,f2):sys(f2,f1), ans: xy(x,y), step: step2, chk:[[1,-a,b2],[c,d,c*x+d*y],[x,y]]};
+    } });
+  var s5b = G(function(){ var s=sol(), x=s[0], y=s[1], a1=rnz(-6,6), a2=rnz(-6,6); if(a1===a2) return null;
+    if (Math.random()<0.6){ var b1=y-a1*x, b2=y-a2*x;
+      var L1=[M(a1,'x'),M(b1,'')], L2=[M(a2,'x'),M(b2,'')];
+      return {ex: sys(dvar('y')+' = '+P(L1), dvar('y')+' = '+P(L2)), ans: xy(x,y), step:'途中：'+P(L1)+' = '+P(L2), chk:[[-a1,1,b1],[-a2,1,b2],[x,y]]};
+    } var c1=x-a1*y, c2=x-a2*y;
+    var K1=[M(a1,'y'),M(c1,'')], K2=[M(a2,'y'),M(c2,'')];
+    return {ex: sys(dvar('x')+' = '+P(K1), dvar('x')+' = '+P(K2)), ans: xy(x,y), step:'途中：'+P(K1)+' = '+P(K2), chk:[[1,-a1,c1],[1,-a2,c2],[x,y]]}; });
+  var s5c = G(function(){ var s=sol(), x=s[0], y=s[1], a=ri(2,6), k=rnz(-4,4), b=ri(1,3), c=rnz(-4,4);
+    if(Math.abs(k)===1 && Math.random()<0.5) return null;
+    var A=a+k*b, B=k*c; if(A===0 || B===0) return null;
+    var d=rnz(-5,5), f=rnz(-5,5); if(A*f-d*B===0) return null;
+    var e1 = P([M(a,'x')])+(k<0?' − ':' + ')+(Math.abs(k)===1?'':Math.abs(k))+PP([M(b,'x'),M(c,'y')])+' = '+signed(A*x+B*y);
+    var big = Math.random()<0.5, m = big?10:1;
+    var e2 = eq(d*m, f*m, (d*x+f*y)*m);
+    return {ex: sys(e1,e2), ans: xy(x,y), step:'途中：① → '+eq(A,B,A*x+B*y)+(big?'、② ÷ 10 → '+eq(d,f,d*x+f*y):''), chk:[[A,B,A*x+B*y],[d*m,f*m,(d*x+f*y)*m],[x,y]]}; });
+
+  // ========== STEP 6: 連立方程式（小数・分数・A = B = C） ==========
+  function dt(){ var t; do{ t=ri(1,19); }while(t%10===0); return t*rs(); }
+  var s6a1 = G(function(){ var s=sol(), x=s[0], y=s[1], at=dt(), bt=dt(), a2=rnz(-5,5), b2=rnz(-5,5);
+    if(at*b2-a2*bt===0) return null;
+    var c=at*x+bt*y, g=gcd(gcd(at,bt),c);
+    return {ex: sys(decEq(at,bt,c), eq(a2,b2,a2*x+b2*y)), ans: xy(x,y), step:'途中：①×10 → '+eq(at,bt,c)+(g>1?'（さらに ÷'+g+'）':''), chk:[[Q(at,10),Q(bt,10),Q(c,10)],[a2,b2,a2*x+b2*y],[x,y]]}; });
+  var s6a2 = G(function(){ var s=sol(), x=s[0], y=s[1], a1=dt(), b1=dt(), a2=dt(), b2=dt();
+    if(a1*b2-a2*b1===0) return null;
+    return {ex: sys(decEq(a1,b1,a1*x+b1*y), decEq(a2,b2,a2*x+b2*y)), ans: xy(x,y), step:'途中：①×10 → '+eq(a1,b1,a1*x+b1*y)+'、②×10 → '+eq(a2,b2,a2*x+b2*y),
+      chk:[[Q(a1,10),Q(b1,10),Q(a1*x+b1*y,10)],[Q(a2,10),Q(b2,10),Q(a2*x+b2*y,10)],[x,y]]}; });
+  var s6a3 = G(function(){ var x=ri(5,30), y=ri(5,30), p=ri(5,15)*10, q=ri(5,15)*10; if(p===q) return null;
+    var c=p*x+q*y, g=gcd(gcd(p,q),c);
+    return {ex: sys(eq(1,1,x+y), eq(p,q,c)), ans: xy(x,y), step:'途中：② ÷ '+g+' → '+eq(p/g,q/g,c/g), chk:[[1,1,x+y],[p,q,c],[x,y]]}; });
+  function fracSys(eq2kind){ return G(function(){
+    var q1=ri(2,5), q2=ri(2,5), p1=ri(1,q1-1)*rs(), p2=ri(1,q2-1)*rs();
+    if(gcd(p1,q1)!==1 || gcd(p2,q2)!==1) return null;
+    var x=q1*rnz(-2,2), y=q2*rnz(-2,2), r=p1*x/q1+p2*y/q2;
+    var L=lcm(q1,q2), A1=p1*L/q1, B1=p2*L/q2;
+    var e1 = P([M([p1,q1],'x'), M([p2,q2],'y')])+' = '+signed(r), e2, c2, a2, b2;
+    if (eq2kind==='int'){ a2=rnz(-5,5); b2=rnz(-5,5); if(A1*b2-a2*B1===0) return null; e2=eq(a2,b2,a2*x+b2*y); c2=[a2,b2,a2*x+b2*y]; }
+    else if (eq2kind==='dec'){ a2=dt(); b2=dt(); if(A1*b2-a2*B1===0) return null; e2=decEq(a2,b2,a2*x+b2*y); c2=[Q(a2,10),Q(b2,10),Q(a2*x+b2*y,10)]; }
+    else { var s1=ri(2,5), s2=ri(2,5), u1=ri(1,s1-1)*rs(), u2=ri(1,s2-1)*rs();
+      if(gcd(u1,s1)!==1 || gcd(u2,s2)!==1) return null;
+      var rr=qa(Q(u1*x,s1), Q(u2*y,s2)); if(rr[1]!==1) return null; var L2=lcm(s1,s2);
+      if(A1*(u2*L2/s2) - (u1*L2/s1)*B1===0) return null;
+      e2 = P([M([u1,s1],'x'), M([u2,s2],'y')])+' = '+qStr(rr); c2=[Q(u1,s1),Q(u2,s2),rr]; }
+    return {ex: sys(e1,e2), ans: xy(x,y), step:'途中：①×'+L+' → '+eq(A1,B1,r*L), chk:[[Q(p1,q1),Q(p2,q2),r],c2,[x,y]]};
+  }); }
+  var s6b1=fracSys('int'), s6b2=fracSys('dec'), s6b3=fracSys('frac');
+  var s6c1 = G(function(){ var x=rnz(-5,5), y=rnz(-5,5), a1=ri(1,5), b1=rnz(-5,5), c=a1*x+b1*y; if(c===0) return null;
+    var a2=rnz(-5,5); if((c-a2*x)%y!==0) return null; var b2=(c-a2*x)/y;
+    if(b2===0 || Math.abs(b2)>9 || a1*b2-a2*b1===0) return null;
+    var E1=P([M(a1,'x'),M(b1,'y')]), E2=P([M(a2,'x'),M(b2,'y')]);
+    return {ex: E1+' = '+E2+' = '+signed(c), ans: xy(x,y), step:'途中：'+sys(E1+' = '+signed(c), E2+' = '+signed(c))+' を解く', chk:[[a1,b1,c],[a2,b2,c],[x,y]]}; });
+  var s6c2 = G(function(){ var x=rnz(-5,5), y=rnz(-5,5), a2=rnz(-6,6), b2=rnz(-6,6), V=a2*x+b2*y;
+    var a3=rnz(-4,4); if((V-a3*x)%y!==0) return null; var b3=(V-a3*x)/y; if(b3===0 || Math.abs(b3)>9) return null;
+    var a1=rnz(-6,6), b1=rnz(-6,6), k1=V-a1*x-b1*y; if(k1===0) return null;
+    var A1=a1-a3, B1=b1-b3, A2=a2-a3, B2=b2-b3; if(A1*B2-A2*B1===0) return null;
+    var E1=P([M(a1,'x'),M(b1,'y'),M(k1,'')]), E2=P([M(a2,'x'),M(b2,'y')]), E3=P([M(a3,'x'),M(b3,'y')]);
+    return {ex: E1+' = '+E2+' = '+E3, ans: xy(x,y), step:'途中：'+sys(E1+' = '+E3, E2+' = '+E3)+' などを整理して解く', chk:[[A1,B1,-k1],[A2,B2,0],[x,y]]}; });
+  var s6c3 = G(function(){ var A=rnz(-5,5), B=rnz(-5,5), x0=rnz(-4,4), y0=rnz(-4,4);
+    var R1=A*x0-B*y0, R2=A*x0+B*y0;
+    var e1=dvar('a')+dvar('x')+' − '+dvar('b')+dvar('y')+' = '+signed(R1), e2=dvar('a')+dvar('x')+' + '+dvar('b')+dvar('y')+' = '+signed(R2);
+    return {ex: sys(e1,e2)+' の解が '+xy(x0,y0)+' のとき、'+dvar('a')+'、'+dvar('b')+' の値を求めなさい',
+      ans: dvar('a')+' = '+signed(A)+'、'+dvar('b')+' = '+signed(B), al:'ab',
+      step:'途中：'+sys(P([M(x0,'a'),M(-y0,'b')])+' = '+signed(R1), P([M(x0,'a'),M(y0,'b')])+' = '+signed(R2))+' を解く'}; });
+
+  // ---------- assemble ----------
+  var STEPS = [
+    { title:'STEP 1　式の加法・減法', star:'★☆☆☆☆☆', max:12, pts:[
+        '同類項（文字の部分が同じ項）どうしをまとめる。'+dvar('x')+' と '+dvar('x')+'<sup>2</sup> は同類項ではない',
+        'ひき算はかっこをはずすと、ひく式の各項の符号が変わる：−('+dvar('a')+' − '+dvar('b')+') = −'+dvar('a')+' + '+dvar('b'),
+        '数 × 多項式は分配法則、多項式 ÷ 数は各項をその数でわる'
+      ], sections:[
+        {label:'同類項をまとめる　次の計算をしなさい。', gens:[s1a1,s1a2,s1a3,s1a4]},
+        {label:'多項式のたし算・ひき算　次の計算をしなさい。', gens:[s1b1,s1b2,s1b3,s1b4]},
+        {label:'数と多項式のかけ算・わり算　次の計算をしなさい。', gens:[s1c1,s1c2,s1c3,s1c4]}
+      ]},
+    { title:'STEP 2　単項式の乗法・除法', star:'★★☆☆☆☆', max:12, pts:[
+        '乗法は、係数どうし・文字どうしをかける。(−2'+dvar('x')+')<sup>2</sup> = (−2'+dvar('x')+') × (−2'+dvar('x')+')',
+        '除法は分数の形にして約分する。分数でわるときは逆数をかける',
+        '先に符号を決める：負の数が奇数個なら −、偶数個なら ＋'
+      ], sections:[
+        {label:'単項式の乗法　次の計算をしなさい。', gens:[s2a1,s2a2,s2a3,s2a4]},
+        {label:'単項式の除法　次の計算をしなさい。', gens:[s2b1,s2b2,s2b3,s2b4]},
+        {label:'分数をふくむ乗除・3つの式の乗除　次の計算をしなさい。', gens:[s2c1,s2c2,s2c3,s2c4]}
+      ]},
+    { title:'STEP 3　いろいろな式の計算・式の値・等式の変形', star:'★★★☆☆☆', max:12, pts:[
+        '分数の式は通分して、分子にかっこをつけて1つの分数にまとめる',
+        '式の値：式を簡単にしてから代入すると計算がラク。負の数は（　）をつけて代入',
+        '等式の変形：求める文字以外の項を移項し、最後に係数でわる'
+      ], sections:[
+        {label:'かっこ・分数をふくむ式の計算　次の計算をしなさい。', gens:[s3a1,s3a2,s3a3,s3a4]},
+        {label:'式の値　次の問いに答えなさい。', gens:[s3b1,s3b2,s3b3,s3b4]},
+        {label:'等式の変形　次の等式を { } 内の文字について解きなさい。', gens:[s3c1,s3c2,s3c3,s3c4]}
+      ]},
+    { title:'STEP 4　連立方程式（加減法）', star:'★★★★☆☆', max:12, pts:[
+        '係数の絶対値がそろっている文字を消す：符号が同じならひく、ちがうならたす',
+        'そろっていないときは、式を何倍かして係数の絶対値をそろえる',
+        '求めた値をもとの式に代入して、もう一方の文字の値を求める'
+      ], sections:[
+        {label:'そのまま加減する　次の連立方程式を解きなさい。', gens:[s4a,s4a,s4a,s4a], al:'xy'},
+        {label:'一方の式を何倍かする　次の連立方程式を解きなさい。', gens:[s4b,s4b,s4b,s4b], al:'xy'},
+        {label:'両方の式を何倍かする　次の連立方程式を解きなさい。', gens:[s4c,s4c,s4c,s4c], al:'xy'}
+      ]},
+    { title:'STEP 5　連立方程式（代入法・かっこ）', star:'★★★★★☆', max:12, pts:[
+        '代入法：'+dvar('y')+' = ～（'+dvar('x')+' = ～）の式を、もう一方の式に<b>かっこをつけて</b>代入する',
+        dvar('y')+' = ～ どうしなら、右辺どうしを = で結んで解く',
+        'かっこがある式は、かっこをはずして整理してから解く。係数が大きい式はわって小さくする'
+      ], sections:[
+        {label:'代入法　次の連立方程式を解きなさい。', gens:[s5a,s5a,s5a,s5a], al:'xy'},
+        {label:'代入法（同じ文字＝の形）　次の連立方程式を解きなさい。', gens:[s5b,s5b,s5b,s5b], al:'xy'},
+        {label:'かっこ・大きな係数がある式　次の連立方程式を解きなさい。', gens:[s5c,s5c,s5c,s5c], al:'xy'}
+      ]},
+    { title:'STEP 6　連立方程式（小数・分数・A = B = C）', star:'★★★★★★', max:9, h:'29.8mm', pts:[
+        '小数は10倍、分数は分母の最小公倍数を<b>すべての項</b>にかけて、係数を整数にする',
+        dvar('A')+' = '+dvar('B')+' = '+dvar('C')+' の形は、{ '+dvar('A')+' = '+dvar('C')+'、'+dvar('B')+' = '+dvar('C')+' } などの連立方程式になおす',
+        '解がわかっているときは、その値を代入して '+dvar('a')+'、'+dvar('b')+' の連立方程式をつくる'
+      ], sections:[
+        {label:'小数・大きな係数　次の連立方程式を解きなさい。', gens:[s6a1,s6a2,s6a3], al:'xy'},
+        {label:'分数　次の連立方程式を解きなさい。', gens:[s6b1,s6b2,s6b3], al:'xy'},
+        {label:'A = B = C の形・解から係数を求める　次の問いに答えなさい。', gens:[s6c1,s6c2,s6c3], al:'xy'}
+      ]}
+  ];
+
+  function alHtml(kind){
+    var b = '<span class="blank">&nbsp;</span>';
+    if (kind==='xy') return dvar('x')+' = '+b+'　'+dvar('y')+' = '+b;
+    if (kind==='ab') return dvar('a')+' = '+b+'　'+dvar('b')+' = '+b;
+    return '答え <span class="blank w">&nbsp;</span>';
+  }
+
+  function render(){
+    var out = '';
+    var allAnswers = [];
+    STEPS.forEach(function(step, si){
+      var qNo = 1, items = [], body = '';
+      step.sections.forEach(function(sec){
+        body += '<div class="sec">'+sec.label+'</div>';
+        sec.gens.forEach(function(gen){
+          var p = gen();
+          items.push({no:qNo, ex:p.ex, ans:p.ans, step:p.step, chk:p.chk});
+          body += '<div class="cell"><div class="cq"><span class="no">('+qNo+')</span><span class="ex">'+p.ex+'</span></div><div class="al">'+alHtml(p.al||sec.al)+'</div></div>';
+          qNo++;
+        });
+      });
+      out += '<div class="sheet hw'+(si>0?' pb':'')+'">';
+      out += '<div class="hh"><div class="hh1">CONNECT 中2数学　計算練習<span class="hno">第'+(si+1)+'枚／全6枚</span></div>';
+      out += '<div class="hh2">'+step.title+'<span class="gr">むずかしさ '+step.star+'</span></div></div>';
+      out += '<div class="meta"><span>名前</span><span class="ln w1">&nbsp;</span><span>日付</span><span class="ln w2">&nbsp;</span><span>かかった時間</span><span class="ln w3">&nbsp;</span><span>分</span><span>○の数</span><span class="ln w3">&nbsp;</span><span>／'+step.max+'</span></div>';
+      out += '<div class="point"><b>ポイント</b><ul>'+step.pts.map(function(t){return '<li>'+t+'</li>';}).join('')+'</ul></div>';
+      out += '<div class="grid" style="--h:'+(step.h||'27.8mm')+'">'+body+'</div>';
+      out += '</div>';
+      allAnswers.push({title: step.title, no: si+1, items: items});
+    });
+
+    out += '<div class="sheet ans pb">';
+    out += '<h1>解答・解説</h1>';
+    out += '<div class="sub">CONNECT 中2数学　計算練習（式の計算・連立方程式）（全6枚）</div>';
+    out += '<div class="memo"><b>■ 進め方の目安</b>・1枚あたり15〜20分。STEP 1 から順に、1日1枚ずつ進めます（STEP が上がるほど、少しずつ難しくなります）。<br>・先に「ポイント」を読んでから解きます。途中の式は消さずに書いてください。<br>・答え合わせはこのページで。○をつけて、まちがえた問題は「途中」を見ながら解き直します。<br>・連立方程式は、求めた答えを2つの式の両方に代入して、成り立つか確かめましょう。</div>';
+    allAnswers.forEach(function(a){
+      out += '<h2>第'+a.no+'枚　'+a.title+'</h2><div class="two">';
+      a.items.forEach(function(it){
+        out += '<div class="ai"><span class="no">('+it.no+')</span><span class="k">'+it.ans+'</span>'+(it.step?('<span class="st">'+it.step+'</span>'):'')+'</div>';
+      });
+      out += '</div>';
+    });
+    out += '</div>';
+    document.getElementById('output').innerHTML = out;
+    window.__lastAnswers = allAnswers; // for checking
+  }
+
+  document.getElementById('genBtn').addEventListener('click', render);
+  document.getElementById('printBtn').addEventListener('click', function(){ window.print(); });
+
+  var editing = false;
+  document.getElementById('editBtn').addEventListener('click', function(){
+    editing = !editing;
+    document.body.classList.toggle('editmode', editing);
+    this.classList.toggle('active', editing);
+    this.textContent = editing ? '編集モード：ON' : '編集モード';
+    document.querySelectorAll('.sheet').forEach(function(el){ el.setAttribute('contenteditable', editing ? 'true' : 'false'); });
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>
