@@ -81,9 +81,6 @@
   .no-results { display: none; text-align: center; color: #A9A294; font-size: 14px; padding: 60px 0; }
   .no-results.show { display: block; }
   .category.filter-hidden, .material-item.filter-hidden, .subject.filter-hidden { display: none !important; }
-  .category .empty-note { font-size: 12px; color: #A9A294; padding: 10px 0; display: none; }
-  .category.filter-empty .card-grid { display: none; }
-  .category.filter-empty .empty-note { display: block; }
   .quick-links { padding: 18px 0 6px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
   .quick-links .label { font-size: 12px; color: #A9A294; margin-right: 2px; }
   .quick-links a {
@@ -213,7 +210,6 @@
     <div id="eng-grammar" class="category">
       <h3>文法解説 <span class="count">中1英語 総復習文法・全6種</span></h3>
       <p class="cat-note">確認テスト①②③（単元ごと）と、総復習ランダム英文法（基礎／標準／応用）。各カードから「やさしめ・標準」または「A・B」を選べます。</p>
-      <p class="empty-note">条件に合う教材がありません。</p>
       <div class="card-grid">
         <div class="card material-item" data-grade="1" data-tags="文法 be動詞">
           <div class="thumb" style="background:#EFF2F6;">📄</div>
@@ -286,7 +282,6 @@
 
     <div id="eng-exam" class="category">
       <h3>都立入試対策 <span class="count">1種</span></h3>
-      <p class="empty-note">条件に合う教材がありません。</p>
       <div class="card-grid">
         <a href="materials/todai-eng-exam-strategy.html" class="material-link material-item" data-grade="3" data-tags="都立入試 英作文 長文読解">
           <div class="card">
@@ -311,7 +306,6 @@
 
     <div id="eng-vocab" class="category" style="margin-bottom:8px;">
       <h3>単語・読解 <span class="count">6種</span></h3>
-      <p class="empty-note">条件に合う教材がありません。</p>
       <div class="card-grid">
         <a href="vocab-test.html" class="material-link material-item" data-grade="3" data-tags="英単語">
           <div class="card">
@@ -381,7 +375,6 @@
 
     <div id="math-formula" class="category">
       <h3>公式・総復習 <span class="count">8種</span></h3>
-      <p class="empty-note">条件に合う教材がありません。</p>
       <div class="card-grid">
         <a href="math-formulas-kishu.html" class="material-link material-item" data-grade="3" data-tags="公式">
           <div class="card">
@@ -465,7 +458,6 @@
 
     <div id="math-exam" class="category">
       <h3>都立入試対策 <span class="count">4種</span></h3>
-      <p class="empty-note">条件に合う教材がありません。</p>
       <div class="card-grid">
         <a href="todai-math-q4-drill.html" class="material-link material-item" data-grade="3" data-tags="都立入試 図形">
           <div class="card">
@@ -508,7 +500,6 @@
 
     <div id="math-calc" class="category">
       <h3>計算プリント</h3>
-      <p class="empty-note">条件に合う教材がありません。</p>
       <div class="card-grid">
         <a href="math-calc-practice-1.html" class="material-link material-item" data-grade="1" data-tags="計算">
           <div class="card">
@@ -524,7 +515,6 @@
 
     <div id="math-shape" class="category" style="margin-bottom:8px;">
       <h3>図形・文章題</h3>
-      <p class="empty-note">条件に合う教材がありません。</p>
       <div class="card-grid">
         <a href="#" class="material-link">
           <div class="card placeholder">
@@ -603,16 +593,15 @@
     });
     document.querySelectorAll('.category').forEach(function(cat){
       var catItems = cat.querySelectorAll('.material-item');
-      if (catItems.length === 0) { cat.classList.remove('filter-empty'); cat.classList.remove('filter-hidden'); return; }
+      if (catItems.length === 0) { cat.classList.remove('filter-hidden'); return; }
       var anyVisible = false;
       catItems.forEach(function(it){ if (!it.classList.contains('filter-hidden')) anyVisible = true; });
-      // 全体で1件もヒットしない場合はカテゴリごとの「ありません」を繰り返さず、
-      // 下の案内メッセージ1つにまとめる
-      cat.classList.toggle('filter-hidden', !anyVisible && !anyItemVisibleAtAll);
-      cat.classList.toggle('filter-empty', !anyVisible && anyItemVisibleAtAll);
+      // 該当する教材が1件もないカテゴリはまるごと非表示（「ありません」は出さない）
+      cat.classList.toggle('filter-hidden', !anyVisible);
     });
     document.querySelectorAll('.subject').forEach(function(sec){
-      sec.classList.toggle('filter-hidden', !anyItemVisibleAtAll);
+      var anyVisibleCat = sec.querySelector('.category:not(.filter-hidden)');
+      sec.classList.toggle('filter-hidden', !anyVisibleCat);
     });
     var noResults = document.getElementById('noResults');
     if (noResults) noResults.classList.toggle('show', !anyItemVisibleAtAll);
