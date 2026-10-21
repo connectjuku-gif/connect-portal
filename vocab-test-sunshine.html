@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>サンシャイン　ランダム英単語</title>
+<style>
+  :root{
+    --navy:#1F3A5F;
+    --navy-light:#2F5586;
+    --gold:#C9972B;
+    --cream:#FAF8F2;
+    --line:#D8D2C2;
+    --text:#2A2A28;
+    --sub:#6B6354;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--text);
+    font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+    font-size:15px;
+    line-height:1.6;
+    padding:24px;
+  }
+  h1{
+    font-size:19px;
+    color:var(--navy);
+    margin:0 0 4px;
+  }
+  .lead{
+    color:var(--sub);
+    font-size:13px;
+    margin:0 0 20px;
+  }
+  .panel{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:18px 20px;
+    margin-bottom:18px;
+    max-width:900px;
+  }
+  .panel h2{
+    font-size:14px;
+    color:var(--navy);
+    margin:0 0 12px;
+    border-left:4px solid var(--gold);
+    padding-left:8px;
+  }
+  .tabs{
+    display:flex;
+    gap:8px;
+    margin-bottom:18px;
+  }
+  .tab{
+    flex:1;
+    max-width:160px;
+    padding:10px 0;
+    text-align:center;
+    border:1px solid var(--line);
+    border-radius:6px;
+    background:#fff;
+    color:var(--navy);
+    font-weight:600;
+    font-size:14px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .tab.active{
+    background:var(--navy);
+    color:#fff;
+    border-color:var(--navy);
+  }
+  .range-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:14px;
+  }
+  select{
+    padding:6px 8px;
+    border:1px solid var(--line);
+    border-radius:4px;
+    font-size:13px;
+    max-width:220px;
+  }
+  .btn{
+    display:inline-block;
+    padding:7px 14px;
+    border-radius:4px;
+    border:1px solid var(--navy);
+    background:#fff;
+    color:var(--navy);
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .btn:hover{ background:#F2EEE3; }
+  .btn.primary{
+    background:var(--navy);
+    color:#fff;
+  }
+  .btn.primary:hover{ background:var(--navy-light); }
+  .btn.small{
+    padding:4px 10px;
+    font-size:12px;
+  }
+  .unit-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(160px, 1fr));
+    gap:6px 14px;
+    max-height:300px;
+    overflow-y:auto;
+    padding:4px 4px 4px 0;
+    margin-bottom:10px;
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:10px;
+  }
+  .unit-item{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:13px;
+  }
+  .unit-item input{ flex:0 0 auto; }
+  .unit-item label{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    cursor:pointer;
+  }
+  .unit-count{
+    color:var(--sub);
+    font-size:11px;
+  }
+  .status-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:10px;
+  }
+  .selected-count{
+    font-size:13px;
+    color:var(--sub);
+  }
+  .selected-count b{
+    color:var(--navy);
+    font-size:15px;
+  }
+  .qty-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-top:14px;
+  }
+  .qty-row input[type=number]{
+    width:70px;
+    padding:6px 8px;
+    border:1px solid var(--line);
+    border-radius:4px;
+    font-size:14px;
+  }
+  .warn{
+    color:#9A5B1E;
+    font-size:12px;
+    margin-top:6px;
+  }
+  #createBtnWrap{
+    margin-top:16px;
+  }
+  /* ===== Result / print sheet ===== */
+  #resultArea{ display:none; }
+  .sheet{
+    background:#fff;
+    max-width:720px;
+    margin:0 auto 28px;
+    padding:28px 32px;
+    border:1px solid var(--line);
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);
+  }
+  .sheet h2.sheet-title{
+    text-align:center;
+    font-size:18px;
+    color:var(--navy);
+    margin:0 0 4px;
+    letter-spacing:.05em;
+  }
+  .sheet .sheet-sub{
+    text-align:center;
+    font-size:12px;
+    color:var(--sub);
+    margin:0 0 16px;
+  }
+  .namebox{
+    display:flex;
+    justify-content:flex-end;
+    gap:18px;
+    font-size:13px;
+    margin-bottom:14px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:10px;
+  }
+  .namebox span{ white-space:nowrap; }
+  .namebox .fill{
+    display:inline-block;
+    border-bottom:1px solid #999;
+    min-width:60px;
+    margin:0 4px;
+  }
+  table.qtable{
+    width:100%;
+    border-collapse:collapse;
+    font-size:14px;
+  }
+  table.qtable td, table.qtable th{
+    border-bottom:1px solid #EAE5D8;
+    padding:8px 6px;
+    vertical-align:middle;
+  }
+  table.qtable th{
+    text-align:left;
+    font-size:11px;
+    color:var(--sub);
+    font-weight:600;
+  }
+  td.num{
+    width:28px;
+    color:var(--sub);
+    font-size:12px;
+  }
+  td.en{
+    font-weight:600;
+    color:var(--navy);
+    font-size:15px;
+  }
+  td.ja-blank .line{
+    display:block;
+    border-bottom:1px solid #999;
+    height:20px;
+  }
+  table.answer-table td.ja{
+    color:#000;
+    font-weight:600;
+  }
+  .answer-table td.unit-note{
+    color:var(--sub);
+    font-size:11px;
+  }
+  .toolbar{
+    max-width:720px;
+    margin:0 auto 16px;
+    display:flex;
+    gap:10px;
+  }
+  @media print{
+    body{ padding:0; background:#fff; }
+    .panel, .tabs, .toolbar, h1, .lead{ display:none !important; }
+    #resultArea{ display:block !important; }
+    .sheet{ box-shadow:none; border:none; margin:0; page-break-after:always; }
+  }
+</style>
+</head>
+<body>
+
+<h1>サンシャイン　ランダム英単語</h1>
+<p class="lead">学年を選んで単元・範囲を指定し、英語→日本語で答える単語テストを作成します（最大10問）。</p>
+
+<div class="tabs" id="gradeTabs">
+  <div class="tab active" data-grade="1">中1（サンシャイン）</div>
+  <div class="tab" data-grade="2">中2（サンシャイン）</div>
+</div>
+
+<div class="panel">
+  <h2>単元を選ぶ</h2>
+
+  <div class="range-row">
+    <span style="font-size:13px;color:var(--sub);">範囲指定：</span>
+    <select id="rangeFrom"></select>
+    <span style="font-size:13px;color:var(--sub);">〜</span>
+    <select id="rangeTo"></select>
+    <button class="btn small" id="applyRangeBtn">この範囲を選択</button>
+    <button class="btn small" id="allBtn">全選択</button>
+    <button class="btn small" id="noneBtn">全解除</button>
+  </div>
+
+  <div class="unit-grid" id="unitGrid"></div>
+
+  <div class="status-row">
+    <div class="selected-count">選択中の単語数：<b id="selectedCount">0</b> 語</div>
+  </div>
+
+  <div class="qty-row">
+    <label for="qtyInput" style="font-size:13px;color:var(--sub);">出題数（最大10問）：</label>
+    <input type="number" id="qtyInput" min="1" max="10" value="10">
+    <span id="qtyWarn" class="warn" style="display:none;"></span>
+  </div>
+
+  <div id="createBtnWrap">
+    <button class="btn primary" id="createBtn">テストを作成する</button>
+  </div>
+</div>
+
+<div id="resultArea">
+  <div class="toolbar">
+    <button class="btn primary" onclick="window.print()">印刷する</button>
+    <button class="btn" id="backBtn">条件を変更する</button>
+  </div>
+
+  <div class="sheet" id="problemSheet"></div>
+  <div class="sheet" id="answerSheet"></div>
+</div>
+
+<script>
+window.VOCAB = {
+  1: [["Get Ready-1,2", "Bob", "ボブ（男子の名）"],["Get Ready-1,2", "great", "すごい、すばらしい"],["Get Ready-1,2", "I", "私は［が］"],["Get Ready-1,2", "Kate", "ケイト（女子の名）"],["Get Ready-1,2", "Lucy", "ルーシー（女子の名）"],["Get Ready-1,2", "me", "私を［に］"],["Get Ready-1,2", "Mike", "マイク（男子の名）"],["Get Ready-1,2", "really", "ほんとうに"],["Get Ready-1,2", "see", "わかる"],["Get Ready-1,2", "I see.", "なるほど。わかりました。"],["Get Ready-1,2", "too", "〜もまた"],["Get Ready-3", "are", "〜です、〜である"],["Get Ready-3", "be", "〜になる、〜である"],["Get Ready-3", "birthday", "誕生日"],["Get Ready-3", "can", "〜することができる"],["Get Ready-3", "Daniel", "ダニエル（男子の名）"],["Get Ready-3", "do", "〜する、行う"],["Get Ready-4", "Ms.", "〜さん、〜先生（女性）"],["Get Ready-4", "play", "（スポーツ等を）する"],["Get Ready-4", "subject", "教科、科目"],["Get Ready-4", "time", "時刻、時間"],["Get Ready-4", "want", "ほしい、望む"],["Get Ready-4", "what", "何、何の、どの"],["Get Ready-4", "when", "いつ"],["Get Ready-4", "where", "どこ"],["Get Ready-4", "you", "あなたは［が］"],["Get Ready-4", "your", "あなたの"],["Get Ready-4", "get up", "起きる"],["Get Ready-5", "apple", "リンゴ"],["Get Ready-5", "bear", "クマ"],["Get Ready-5", "box", "箱"],["Get Ready-5", "cat", "ネコ"],["Get Ready-5", "doctor", "医師、博士"],["Get Ready-5", "egg", "卵"],["Get Ready-5", "fox", "キツネ"],["Get Ready-5", "hat", "帽子"],["Get Ready-5", "ice cream", "アイスクリーム"],["Get Ready-5", "kangaroo", "カンガルー"],["Get Ready-5", "lemon", "レモン"],["Get Ready-5", "monkey", "サル"],["Get Ready-5", "nurse", "看護師"],["Get Ready-5", "panda", "パンダ"],["Get Ready-5", "rabbit", "ウサギ"],["Get Ready-5", "soccer", "サッカー"],["Get Ready-5", "tiger", "トラ"],["Get Ready-5", "umbrella", "かさ"],["Get Ready-5", "violin", "バイオリン"],["Get Ready-5", "zoo", "動物園"],["PROGRAM 1-Scenes 1", "shy", "恥ずかしがりの"],["PROGRAM 1-Scenes 1", "hi", "やあ、こんにちは"],["PROGRAM 1-Scenes 1", "am", "〜です、〜である"],["PROGRAM 1-Scenes 1", "sorry", "すみません、申し訳ない"],["PROGRAM 1-Scenes 1", "not", "〜でない"],["PROGRAM 1-Scenes 1", "oh", "まあ、おお、ああ"],["PROGRAM 1-Scenes 1", "thirty", "30（の）"],["PROGRAM 1-Scenes 1", "teacher", "先生、教師"],["PROGRAM 1-Scenes 1", "kind", "親切な"],["PROGRAM 1-Scenes 1", "student", "生徒、学生"],["PROGRAM 1-Scenes 1", "fifteen", "15（の）"],["PROGRAM 1-Scenes 1", "junior", "年下の"],["PROGRAM 1-Scenes 1", "at", "〜に［て］"],["PROGRAM 1-Scenes 1", "forty", "40（の）"],["PROGRAM 1-Scenes 1", "firefighter", "消防士"],["PROGRAM 1-Scenes 1", "friendly", "人なつっこい"],["PROGRAM 1-Scenes 1", "goodbye", "さようなら"],["PROGRAM 1-Part 1", "Kent", "ケント（男子の名）"],["PROGRAM 1-Part 1", "Thomas Edison", "トマス・エジソン"],["PROGRAM 1-Part 1", "from", "〜の出身である"],["PROGRAM 1-Part 1", "Excuse me.", "すみません。"],["PROGRAM 1-Part 1", "Pardon?", "何とおっしゃいましたか。"],["PROGRAM 1-Part 1", "Australia", "オーストラリア"],["PROGRAM 1-Part 1", "no", "いいえ"],["PROGRAM 1-Part 1", "Brazil", "ブラジル"],["PROGRAM 1-Part 1", "hello", "やあ、こんにちは"],["PROGRAM 1-Part 1", "yes", "はい"],["PROGRAM 1-Part 1", "Japan", "日本"],["PROGRAM 1-Part 2", "problem", "問題"],["PROGRAM 1-Part 2", "want to ~", "〜したい"],["PROGRAM 1-Part 2", "No problem.", "どういたしまして"],["PROGRAM 1-Part 2", "new", "新しい、新入りの"],["PROGRAM 1-Part 2", "class", "クラス、学級"],["PROGRAM 1-Part 2", "go", "行く"],["PROGRAM 1-Part 2", "thank", "感謝する、ありがとう"],["PROGRAM 1-Action", "quiet", "おとなしい、静かな"],["PROGRAM 1-Action", "of", "〜の"],["PROGRAM 1-Action", "polite", "礼儀正しい"],["PROGRAM 1-Action", "cheerful", "明るい、元気のよい"],["PROGRAM 1-Action", "honest", "正直な"],["PROGRAM 1-Action", "careful", "注意深い"],["PROGRAM 1-Action", "social studies", "社会科"],["PROGRAM 2-Scenes 1", "don't", "do notの短縮形"],["PROGRAM 2-Scenes 1", "Ann", "アン（女子の名）"],["PROGRAM 2-Scenes 1", "after", "〜のあとに［て］"],["PROGRAM 2-Scenes 1", "grow", "栽培する、育てる"],["PROGRAM 2-Scenes 1", "use", "使う"],["PROGRAM 2-Scenes 1", "home", "家、家庭"],["PROGRAM 2-Scenes 1", "five", "5（の）"],["PROGRAM 2-Scenes 1", "frog", "カエル"],["PROGRAM 2-Scenes 1", "town", "町"],["PROGRAM 2-Scenes 1", "walk", "散歩させる、歩く"],["PROGRAM 2-Scenes 1", "ride", "乗る"],["PROGRAM 2-Scenes 1", "bicycle", "自転車"],["PROGRAM 2-Scenes 1", "beautiful", "美しい、すばらしい"],["PROGRAM 2-Scenes 1", "many", "たくさんの"],["PROGRAM 2-Scenes 1", "flower", "花"],["PROGRAM 2-Scenes 1", "sometimes", "ときどき"],["PROGRAM 2-Scenes 1", "piano", "ピアノ"],["PROGRAM 2-Scenes 1", "watch", "見る、腕時計"],["PROGRAM 2-Scenes 1", "read", "読む"],["PROGRAM 2-Scenes 1", "book", "本"],["PROGRAM 2-Scenes 1", "clean", "掃除する"],["PROGRAM 2-Part 1", "flip", "すばやくめくること"],["PROGRAM 2-Part 1", "draw", "描く"],["PROGRAM 2-Part 1", "picture", "絵、写真"],["PROGRAM 2-Part 1", "look", "見る"],["PROGRAM 2-Part 1", "notebook", "ノート"],["PROGRAM 2-Part 1", "artist", "芸術家"],["PROGRAM 2-Scenes 2", "weekend", "週末"],["PROGRAM 2-Scenes 2", "but", "しかし"],["PROGRAM 2-Scenes 2", "before", "〜の前に"],["PROGRAM 2-Part 2", "study", "勉強する"],["PROGRAM 2-Part 2", "dinner", "夕食"],["PROGRAM 2-Part 2", "Anya", "アーニャ（女子の名）"],["PROGRAM 2-Part 2", "question", "質問"],["PROGRAM 2-Part 2", "sure", "もちろん、確信して"],["PROGRAM 2-Part 2", "during", "〜の間（のいつか）に"],["PROGRAM 2-Part 2", "break", "休憩"],["PROGRAM 2-Part 2", "tomorrow", "明日"],["PROGRAM 3-Scenes 1", "grandmother", "おばあさん、祖母"],["PROGRAM 3-Scenes 1", "father", "お父さん、父"],["PROGRAM 3-Scenes 1", "mother", "お母さん、母"],["PROGRAM 3-Scenes 1", "grandfather", "おじいさん、祖父"],["PROGRAM 3-Part 1", "talent", "才能（のある人）"],["PROGRAM 3-Part 1", "show", "見せ物、ショー"],["PROGRAM 3-Part 1", "perform", "行う、演じる"],["PROGRAM 3-Part 1", "choose", "選ぶ"],["PROGRAM 3-Part 1", "excited", "わくわくして"],["PROGRAM 3-Part 1", "wonderful", "すばらしい"],["PROGRAM 3-Part 1", "luck", "幸運"],["PROGRAM 3-Scenes 2", "French", "フランス語"],["PROGRAM 3-Scenes 2", "magic", "魔法の"],["PROGRAM 3-Scenes 2", "trick", "芸、いたずら"],["PROGRAM 3-Scenes 2", "guitar", "ギター"],["PROGRAM 3-Scenes 2", "skate", "スケートをする"],["PROGRAM 3-Scenes 2", "curry", "カレー"],["PROGRAM 3-Scenes 2", "soup", "スープ"],["PROGRAM 3-Scenes 2", "fast", "速く"],["PROGRAM 3-Scenes 2", "map", "地図"],["PROGRAM 3-Part 2", "often", "しばしば、よく"],["PROGRAM 3-Part 2", "internet", "インターネット"],["PROGRAM 3-Part 2", "our", "私たちの"],["PROGRAM 3-Part 2", "dancer", "ダンサー"],["PROGRAM 3-Action", "robot", "ロボット"],["PROGRAM 3-Action", "rescue", "救助"],["PROGRAM 3-Action", "carry", "運ぶ"],["PROGRAM 3-Action", "heavy", "重い"],["PROGRAM 3-Action", "thing", "もの、こと"],["PROGRAM 3-Action", "find", "見つける"],["PROGRAM 3-Action", "water", "水"],["PROGRAM 4-Scenes 1", "jelly", "ゼリー"],["PROGRAM 4-Scenes 1", "butterfly", "チョウ"],["PROGRAM 4-Scenes 1", "zebra", "シマウマ"],["PROGRAM 4-Scenes 1", "elephant", "ゾウ"],["PROGRAM 4-Scenes 1", "horse", "ウマ"],["PROGRAM 4-Scenes 1", "ant", "アリ"],["PROGRAM 4-Part 1", "ready", "準備ができて"],["PROGRAM 4-Part 1", "meat", "肉"],["PROGRAM 4-Part 1", "worry", "心配する"],["PROGRAM 4-Part 1", "deep-fried", "油で揚げた"],["PROGRAM 4-Part 1", "legend", "伝説"],["PROGRAM 4-Part 1", "favorite", "お気に入りの"],["PROGRAM 4-Scenes 2", "cookie", "クッキー"],["PROGRAM 4-Scenes 2", "traditional", "伝統的な"],["PROGRAM 4-Scenes 2", "sister", "姉妹"],["PROGRAM 4-Scenes 2", "chef", "シェフ、料理長"],["PROGRAM 4-Scenes 2", "cool", "かっこいい"],["PROGRAM 4-Scenes 2", "excellent", "すばらしい"],["PROGRAM 4-Scenes 2", "sweet", "甘い"],["PROGRAM 4-Action", "answer", "答え"],["PROGRAM 4-早わかり", "drone", "ドローン"],["PROGRAM 4-早わかり", "programmer", "プログラマー"],["PROGRAM 4-早わかり", "high school", "高校"],["PROGRAM 5-Scenes 2", "clothes", "衣服、着物"],["PROGRAM 5-Part 2", "player", "選手"],["PROGRAM 5-Part 2", "only", "ただ〜だけ"],["PROGRAM 5-Part 2", "company", "会社"],["PROGRAM 5-Part 2", "work", "働く"],["PROGRAM 5-Part 2", "all", "すべての"],["PROGRAM 5-Part 2", "proud", "誇りに思って"],["PROGRAM 5-Part 2", "mean", "意味する"],["PROGRAM 5-Part 2", "charity", "チャリティー"],["PROGRAM 5-Part 2", "support", "支援する"],["PROGRAM 5-Part 2", "talk", "話す"],["PROGRAM 5-Part 2", "about", "〜について"],["PROGRAM 5-Part 2", "sick", "病気の"],["PROGRAM 5-Part 2", "children", "子どもたち"],["PROGRAM 5-Part 2", "hospital", "病院"],["PROGRAM 5-Action", "elementary school", "小学校"],["PROGRAM 5-Action", "event", "行事、出来事"],["Power-Up 2", "which", "どの、どちらの"],["Power-Up 2", "yours", "あなたのもの"],["Power-Up 2", "mine", "私のもの"],["Power-Up 2", "whose", "だれの"],["Power-Up 2", "bike", "自転車"],["Power-Up 2", "hers", "彼女のもの"],["Power-Up 2", "ours", "私たちのもの"],["PROGRAM 6-Scenes 1", "way", "道、方法"],["PROGRAM 6-Scenes 1", "him", "彼を［に］"],["PROGRAM 6-Part 1", "detective", "探偵、刑事"],["PROGRAM 6-Part 1", "monster", "怪獣、モンスター"],["PROGRAM 6-Part 1", "pirate", "海賊"],["PROGRAM 6-Part 1", "respect", "尊敬する"],["PROGRAM 6-Part 1", "tell", "伝える、言う"],["PROGRAM 6-Part 1", "hour", "時間、1時間"],["PROGRAM 6-Part 1", "across", "〜を横切って"],["PROGRAM 6-Part 1", "savanna", "サバンナ"],["PROGRAM 6-Part 1", "tough", "困難な、つらい"],["PROGRAM 6-Part 1", "morning", "朝"],["PROGRAM 6-Scenes 2", "because", "〜だから"],["PROGRAM 6-Scenes 2", "early", "早く"],["PROGRAM 6-Scenes 2", "there", "そこに"],["PROGRAM 6-Scenes 2", "romantic", "ロマンチックな"],["PROGRAM 6-Scenes 2", "singer", "歌手"],["PROGRAM 6-Scenes 2", "why", "なぜ"],["PROGRAM 6-Scenes 2", "always", "いつも"],["PROGRAM 6-Scenes 2", "hard", "一生懸命に、難しい"],["PROGRAM 6-Scenes 2", "park", "公園"],["PROGRAM 6-Part 2", "amazing", "すばらしい"],["PROGRAM 6-Part 2", "dangerous", "危険な"],["PROGRAM 6-Part 2", "attack", "襲う、攻撃する"],["PROGRAM 6-Part 2", "safe", "安全な"],["PROGRAM 6-Part 2", "parent", "親"],["PROGRAM 6-Part 2", "pray", "祈る"],["PROGRAM 6-Part 2", "safety", "無事、安全"],["PROGRAM 6-Part 2", "airplane", "飛行機"],["PROGRAM 6-Part 2", "place", "場所"],["PROGRAM 6-Part 2", "dream", "夢、願い"],["PROGRAM 6-Part 2", "think", "考える、思う"],["PROGRAM 7-Scenes 1", "lot", "たくさん"],["PROGRAM 7-Scenes 1", "unique", "独特な、珍しい"],["PROGRAM 7-Scenes 1", "animal", "動物"],["PROGRAM 7-Scenes 1", "koala", "コアラ"],["PROGRAM 7-Scenes 2", "full", "おなかがいっぱいの"],["PROGRAM 7-Scenes 2", "something", "何か"],["PROGRAM 7-Scenes 2", "little", "少し"],["PROGRAM 7-Scenes 2", "far", "遠くに"],["PROGRAM 7-Scenes 2", "plane", "飛行機"],["PROGRAM 7-Scenes 2", "cake", "ケーキ"],["PROGRAM 7-Scenes 2", "shop", "店"],["PROGRAM 7-Scenes 2", "bus", "バス"],["PROGRAM 7-Part 2", "rich", "豊かな、金持ちの"],["PROGRAM 7-Part 2", "helicopter", "ヘリコプター"],["PROGRAM 7-Part 2", "scenery", "景色、風景"],["PROGRAM 7-Part 2", "gorgeous", "豪華な、すばらしい"],["PROGRAM 7-Part 2", "land", "着陸する"],["PROGRAM 7-Part 2", "someday", "いつか"],["PROGRAM 7-Part 2", "around", "あちこちを"],["PROGRAM 7-Part 2", "heart", "ハート形"],["PROGRAM 7-Part 2", "island", "島"],["PROGRAM 7-Action", "next", "隣の、次の"],["PROGRAM 7-Action", "gate", "門"],["Power-Up 3", "stair", "階段"],["Power-Up 3", "third", "3番目の"],["Power-Up 3", "turn", "曲がる"],["Power-Up 3", "left", "左に"],["Power-Up 3", "welcome", "歓迎される"],["Power-Up 3", "office", "事務室"],["Power-Up 3", "entrance", "入り口、玄関"],["Power-Up 3", "second", "2番目の"],["Power-Up 3", "corner", "角"],["Power-Up 3", "straight", "まっすぐに"],["PROGRAM 8-Scenes 1", "happy", "幸福な、楽しい"],["PROGRAM 8-Scenes 1", "need", "必要とする"],["PROGRAM 8-Scenes 1", "bathroom", "浴室、トイレ"],["PROGRAM 8-Scenes 1", "shower", "シャワー"],["PROGRAM 8-Scenes 1", "grape", "ブドウ"],["PROGRAM 8-Scenes 1", "supermarket", "スーパーマーケット"],["PROGRAM 8-Scenes 1", "busy", "忙しい"],["PROGRAM 8-Scenes 1", "air", "空、空中"],["PROGRAM 8-Scenes 1", "peach", "モモ"],["PROGRAM 8-Scenes 1", "pineapple", "パイナップル"],["PROGRAM 8-Scenes 1", "strawberry", "イチゴ"],["PROGRAM 8-Part 1", "front", "前"],["PROGRAM 8-Part 1", "almost", "ほとんど"],["PROGRAM 8-Part 1", "midnight", "真夜中"],["PROGRAM 8-Part 1", "stand", "屋台、立つ"],["PROGRAM 8-Scenes 2", "still", "まだ、今でも"],["PROGRAM 8-Scenes 2", "prepare", "準備する"],["PROGRAM 8-Scenes 2", "countdown", "カウントダウン"],["PROGRAM 8-Scenes 2", "feel", "感じる"],["PROGRAM 8-Scenes 2", "sunny", "晴れの"],["PROGRAM 8-Scenes 2", "today", "今日（は）"],["PROGRAM 8-Scenes 2", "listen", "聞く、耳を傾ける"],["PROGRAM 8-Part 2", "skillful", "熟練した、じょうずな"],["PROGRAM 8-Part 2", "tiny", "ちっちゃな"],["PROGRAM 8-Part 2", "figure", "人形、数字"],["PROGRAM 8-Part 2", "important", "重要な、大切な"],["PROGRAM 8-Part 2", "expensive", "高価な、高い"],["PROGRAM 8-Part 2", "France", "フランス"],["PROGRAM 8-Part 2", "January", "1月"],["PROGRAM 8-Part 2", "put", "置く、入れる"],["PROGRAM 8-Action", "oyster", "カキ（貝）"],["PROGRAM 8-Action", "cut", "切る"],["PROGRAM 8-Action", "tuna", "マグロ"],["PROGRAM 8-Action", "market", "市場"],["PROGRAM 8-Action", "family", "家族"],["PROGRAM 8-Action", "fun", "楽しみ、喜び"],["PROGRAM 9-Scenes 1", "pretty", "かなり、綺麗な"],["PROGRAM 9-Scenes 1", "sauna", "サウナ"],["PROGRAM 9-Scenes 1", "invent", "発明する"],["PROGRAM 9-Scenes 1", "jealous", "うらやましい"],["PROGRAM 9-Scenes 1", "into", "〜の中へ"],["PROGRAM 9-Scenes 2", "bought", "buyの過去形"],["PROGRAM 9-Scenes 2", "found", "findの過去形"],["PROGRAM 9-Scenes 2", "course", "コース"],["PROGRAM 9-Scenes 2", "bitter", "苦い"],["PROGRAM 9-Scenes 2", "salty", "塩辛い"],["PROGRAM 9-Scenes 2", "candy", "あめ、キャンディー"],["PROGRAM 9-Scenes 3", "did", "doの過去形"],["PROGRAM 9-Scenes 3", "sleep", "眠る"],["PROGRAM 9-Scenes 3", "win", "勝つ"],["PROGRAM 9-Part 3", "reindeer", "トナカイ"],["PROGRAM 9-Part 3", "road", "道路、道"],["PROGRAM 9-Part 3", "rise", "昇る"],["PROGRAM 9-Part 3", "until", "〜まで"],["PROGRAM 9-Part 3", "set", "沈む、セットする"],["PROGRAM 9-Part 3", "outside", "戸外で"],["PROGRAM 9-Part 3", "sun", "太陽"],["PROGRAM 9-Part 3", "June", "6月"],["PROGRAM 9-Part 3", "world", "世界"],["PROGRAM 10-Scenes 1", "grandma", "おばあさん"],["PROGRAM 10-Scenes 1", "warming", "暖まること"],["PROGRAM 10-Scenes 1", "idea", "考え、アイディア"],["PROGRAM 10-Scenes 1", "finish", "終える"],["PROGRAM 10-Scenes 1", "awesome", "とてもよい、すばらしい"],["PROGRAM 10-Scenes 1", "fine", "元気な"],["PROGRAM 10-Scenes 1", "tired", "疲れて"],["PROGRAM 10-Scenes 1", "homework", "宿題"],["PROGRAM 10-Scenes 1", "sleepy", "眠い"],["PROGRAM 10-Part 1", "matter", "困ったこと、問題"],["PROGRAM 10-Part 1", "young", "若い"],["PROGRAM 10-Part 1", "freezing", "凍りつくほど寒い"],["PROGRAM 10-Part 1", "bedroom", "寝室"],["PROGRAM 10-Part 1", "follow", "従う、ついていく"],["PROGRAM 10-Part 1", "snowy", "雪の降る"],["PROGRAM 10-Part 1", "bed", "ベッド"],["PROGRAM 10-Scenes 2", "terrible", "恐ろしい、ひどい"],["PROGRAM 10-Scenes 2", "sound", "音"],["PROGRAM 10-Scenes 2", "enough", "十分に"],["PROGRAM 10-Scenes 2", "bad", "悪い"],["PROGRAM 10-Scenes 2", "sleigh", "そり"],["PROGRAM 10-Scenes 2", "hill", "丘"],["PROGRAM 10-Scenes 2", "hold", "持つ、つかむ"],["PROGRAM 10-Scenes 2", "slope", "斜面、坂"],["PROGRAM 10-Scenes 2", "speed", "スピード"],["PROGRAM 10-Scenes 2", "leg", "脚"],["PROGRAM 10-Scenes 2", "start", "出発する、始める"]],
+  2: [["PROGRAM 1-Scenes 1", "plan", "予定, 計画"],["PROGRAM 1-Part 1", "nothing", "何も〜ない"],["PROGRAM 1-Part 1", "move", "引っ越す"],["PROGRAM 1-Part 1", "farewell", "別れの, 送別の"],["PROGRAM 1-Part 1", "party", "パーティー, 会"],["PROGRAM 1-Part 1", "by the way", "ところで"],["PROGRAM 1-Part 1", "What's up?", "どうしたの。"],["PROGRAM 1-Part 1", "You're kidding.", "冗談でしょう。まさか。"],["PROGRAM 1-Part 1", "again", "再び, また"],["PROGRAM 1-Part 1", "special", "特別な"],["PROGRAM 1-Part 1", "leave", "出発する, 去る"],["PROGRAM 1-Scenes 2", "will", "〜でしょう, 〜するつもりだ"],["PROGRAM 1-Scenes 2", "late", "（時刻が）遅い, 遅刻して"],["PROGRAM 1-Scenes 2", "soon", "すぐに"],["PROGRAM 1-Part 2", "care", "注意, 用心"],["PROGRAM 1-Part 2", "local", "地元の, 現地の"],["PROGRAM 1-Part 2", "bit", "少量, 小片"],["PROGRAM 1-Part 2", "worried", "心配して, 不安な"],["PROGRAM 1-Part 2", "hope", "望む, 希望する"],["PROGRAM 1-Part 2", "forget", "忘れる"],["PROGRAM 1-Part 2", "either", "（否定文で）〜もまた（…ない）"],["PROGRAM 1-Part 2", "keep", "（ある状態）のままでいる"],["PROGRAM 1-Part 2", "text", "（携帯電話で）メールを送る"],["PROGRAM 1-Part 2", "take care", "気をつける, 注意する"],["PROGRAM 1-Part 2", "a bit", "少し"],["PROGRAM 1-Part 2", "keep in touch", "連絡をとり続ける"],["PROGRAM 1-Scenes 3", "quiz", "小テスト, クイズ"],["PROGRAM 1-Scenes 3", "camp", "キャンプする"],["Step 1", "gray", "灰色（の）"],["Step 1", "under water", "水中で［に］"],["Step 1", "short", "短い"],["PROGRAM 2-Scenes 1", "project", "プロジェクト, 計画"],["PROGRAM 2-Scenes 1", "Africa", "アフリカ"],["PROGRAM 2-Scenes 1", "free", "自由な, ひまな"],["PROGRAM 2-Scenes 1", "hear", "〜だと聞いている"],["PROGRAM 2-Scenes 1", "root", "応援する, 励ます"],["PROGRAM 2-Scenes 1", "easy", "やさしい, 簡単な"],["PROGRAM 2-Scenes 1", "difficult", "難しい"],["PROGRAM 2-Scenes 1", "history", "歴史"],["PROGRAM 2-Scenes 1", "interested", "興味［関心］のある"],["PROGRAM 2-Scenes 1", "scarf", "スカーフ, マフラー"],["PROGRAM 2-Scenes 1", "root for ~", "〜を応援する"],["PROGRAM 2-Scenes 1", "be interested in ~", "〜に興味［関心］を持っている"],["PROGRAM 2-Scenes 1", "eraser", "消しゴム"],["PROGRAM 2-Scenes 1", "shirt", "シャツ"],["PROGRAM 2-Part 1", "promote", "促進する"],["PROGRAM 2-Part 1", "successful", "成功した"],["PROGRAM 2-Part 1", "passionate", "情熱的な"],["PROGRAM 2-Part 1", "person", "人, 個人"],["PROGRAM 2-Part 1", "take place", "開催される, 起こる"],["PROGRAM 2-Scenes 2", "cheering", "励ましの"],["PROGRAM 2-Scenes 2", "flag", "旗"],["PROGRAM 2-Scenes 2", "program", "番組, プログラム"],["PROGRAM 2-Part 2", "professionally", "プロとして"],["PROGRAM 2-Part 2", "university", "（総合）大学"],["PROGRAM 2-Part 2", "coach", "コーチ［指導］する"],["PROGRAM 2-Part 2", "national", "国の, 代表の"],["PROGRAM 2-Part 2", "believe", "信じる, 思う"],["PROGRAM 2-Part 2", "create", "作り出す, 生み出す"],["PROGRAM 2-Part 2", "peace", "平和"],["PROGRAM 2-Scenes 3", "if", "もし〜ならば"],["PROGRAM 2-Scenes 3", "hit", "打つ"],["PROGRAM 2-Scenes 3", "home run", "ホームラン"],["PROGRAM 2-Scenes 3", "cycle", "自転車に乗る"],["PROGRAM 2-Scenes 3", "rain", "雨が降る"],["PROGRAM 2-Scenes 3", "go cycling", "サイクリングに行く"],["PROGRAM 2-Part 3", "goal", "ゴール, 目標"],["PROGRAM 2-Part 3", "education", "教育"],["PROGRAM 2-Part 3", "foster", "育てる"],["PROGRAM 2-Part 3", "sportsmanship", "スポーツマンシップ"],["PROGRAM 2-Part 3", "through", "〜を通じて"],["PROGRAM 2-Part 3", "fact", "事実"],["PROGRAM 2-Part 3", "as", "〜として"],["PROGRAM 2-Part 3", "tool", "道具"],["PROGRAM 2-Part 3", "learn", "学ぶ, 習う"],["PROGRAM 2-Part 3", "manner", "（複数形で）行儀, マナー"],["PROGRAM 2-Part 3", "effect", "効果, 影響"],["PROGRAM 2-Part 3", "power", "力, 影響力"],["PROGRAM 2-Part 3", "one of ~", "〜のうちの1つ"],["PROGRAM 2-Part 3", "in fact", "実のところ, 実際は"],["PROGRAM 2-Part 3", "believe in ~", "〜（可能性・存在）を信じる"],["PROGRAM 3-Part 2", "lemonade", "レモネード"],["PROGRAM 3-Part 2", "themselves", "彼ら自身"],["PROGRAM 3-Part 2", "sell", "売る"],["PROGRAM 3-Part 2", "earn", "得る, かせぐ"],["PROGRAM 3-Part 2", "sometime", "いつか"],["PROGRAM 3-Part 2", "forward", "先へ"],["PROGRAM 3-Part 2", "by oneself", "自力で, ひとりて"],["PROGRAM 3-Part 2", "sometime soon", "そのうちすぐ"],["PROGRAM 3-Part 2", "look forward to ~", "〜を楽しみに待つ"],["PROGRAM 3-Scenes 3", "caught", "catchの過去形"],["PROGRAM 3-Scenes 3", "job", "仕事"],["PROGRAM 3-Scenes 3", "bowl", "どんぶり, わん"],["PROGRAM 3-Scenes 3", "Good job.", "よくやったね。"],["PROGRAM 3-Scenes 3", "catch", "つかまえる"],["PROGRAM 3-Scenes 3", "white", "白（い）"],["PROGRAM 3-Scenes 3", "soft", "柔らかい"],["PROGRAM 3-Scenes 3", "cheese", "チーズ"],["PROGRAM 3-Part 3", "Dutch", "オランダ（人）の"],["PROGRAM 3-Part 3", "toothpick", "つまようじ"],["PROGRAM 3-Part 3", "each", "それぞれの"],["PROGRAM 3-Action", "smell", "におい, 香り"],["PROGRAM 3-Action", "easily", "簡単に"],["PROGRAM 3-Action", "handmade", "手作りの"],["PROGRAM 3-Action", "donate", "寄付する"],["Project 4", "cabbage", "キャベツ"],["PROGRAM 4-Scenes 2", "mustn't", "〜してはならない"],["PROGRAM 4-Scenes 2", "potato chip", "ポテトチップ"],["PROGRAM 4-Scenes 2", "hallway", "廊下"],["PROGRAM 4-Scenes 2", "turn down ~", "（音量を）下げる"],["PROGRAM 4-Part 2", "breathtaking", "すごい, 息をのむような"],["PROGRAM 4-Part 2", "hiking", "ハイキング"],["PROGRAM 4-Part 2", "rule", "規則, ルール"],["PROGRAM 4-Part 2", "forest", "森"],["PROGRAM 4-Part 2", "protect", "守る, 保護する"],["PROGRAM 4-Part 2", "trouble", "困ったこと"],["PROGRAM 4-Part 2", "first of all", "何よりもまず"],["PROGRAM 4-Part 2", "garbage", "ごみ, 生ごみ"],["PROGRAM 4-Scenes 3", "cover", "おおう"],["PROGRAM 4-Scenes 3", "hood", "フード"],["PROGRAM 4-Scenes 3", "have to", "〜する必要がある"],["PROGRAM 4-Scenes 3", "don't have to", "〜する必要がない"],["PROGRAM 4-Scenes 3", "head", "頭, 頭部"],["PROGRAM 5-Scenes 2", "meter", "メートル"],["PROGRAM 5-Scenes 2", "become", "〜になる"],["PROGRAM 5-Scenes 2", "athlete", "運動選手, アスリート"],["PROGRAM 5-Scenes 2", "happen", "起こる"],["PROGRAM 5-Part 3", "nursery school", "保育園"],["PROGRAM 5-Part 3", "nap", "昼寝, うたた寝"],["PROGRAM 5-Part 3", "beside", "〜のそばに"],["PROGRAM 5-Part 3", "fell", "fallの過去形"],["PROGRAM 5-Part 3", "asleep", "眠って"],["PROGRAM 5-Part 3", "gave", "giveの過去形"],["PROGRAM 5-Part 3", "thank-you", "感謝［お礼］の"],["PROGRAM 5-Part 3", "taught", "teachの過去形"],["PROGRAM 5-Part 3", "importance", "大切さ, 重要性"],["PROGRAM 5-Part 3", "future", "将来の, 未来の"],["PROGRAM 5-Part 3", "take ~ for a walk", "〜を散歩に連れて行く"],["PROGRAM 5-Part 3", "after a while", "しばらくすると"],["PROGRAM 5-Part 3", "fall asleep", "眠りに落ちる"],["PROGRAM 5-Part 3", "make use of", "〜を利用する"],["PROGRAM 5-Action", "piece", "1つ, 1片"],["PROGRAM 5-Action", "honey", "はちみつ"],["PROGRAM 5-Action", "heat", "熱, 暑さ"],["PROGRAM 6-Scenes 1", "high-tech", "ハイテクの"],["PROGRAM 6-Scenes 1", "cafe", "カフェ, 喫茶店"],["PROGRAM 6-Scenes 1", "than", "〜よりも"],["PROGRAM 6-Scenes 1", "more", "もっと"],["PROGRAM 6-Part 1", "lotus", "ハス"],["PROGRAM 6-Part 1", "leaf", "葉"],["PROGRAM 6-Part 1", "wet", "ぬれた, 湿った"],["PROGRAM 6-Part 1", "raindrop", "雨粒"],["PROGRAM 6-Part 1", "lid", "ふた"],["PROGRAM 6-Part 1", "stick", "くつろぐ, くっつく"],["PROGRAM 6-Part 1", "another", "別の, もう1つの"],["PROGRAM 6-Part 1", "stick to ~", "〜にくっつく"],["PROGRAM 6-Part 1", "yogurt", "ヨーグルト"],["PROGRAM 6-Scenes 2", "parfait", "パフェ"],["PROGRAM 6-Scenes 2", "most", "もっとも"],["PROGRAM 6-Scenes 2", "useful", "役に立つ"],["PROGRAM 6-Part 2", "pet", "ペット"],["PROGRAM 6-Part 2", "icy", "氷の（張った）"],["PROGRAM 6-Part 2", "without", "〜なしで"],["PROGRAM 6-Part 2", "slip", "すべる"],["PROGRAM 6-Part 2", "paw", "（動物の）足"],["PROGRAM 6-Part 2", "groove", "溝"],["PROGRAM 6-Part 2", "invention", "発明"],["PROGRAM 6-Part 2", "deck", "（船の）甲板, デッキ"],["PROGRAM 6-Part 2", "sail", "航海する"],["PROGRAM 6-Part 2", "survive", "生き延びる"],["PROGRAM 6-Part 2", "develop", "発展させる, 開発する"],["PROGRAM 6-Part 2", "non-slip", "すべり止めのある"],["PROGRAM 6-Part 2", "inspiration", "インスピレーション, ひらめき"],["PROGRAM 6-Part 2", "sole", "足の裏, 靴の底"],["PROGRAM 6-Part 2", "boat shoe", "デッキシューズ"],["PROGRAM 6-Part 2", "one day", "ある日"],["PROGRAM 6-Part 2", "fall into ~", "〜に落ちる"],["PROGRAM 6-Part 2", "sea", "海"],["PROGRAM 6-Scenes 3", "stylish", "流行の, しゃれた"],["PROGRAM 6-Scenes 3", "centimeter", "センチメートル"],["PROGRAM 6-Scenes 3", "tall", "背が高い"],["PROGRAM 6-Part 3", "bee", "ハチ, ミツバチ"],["PROGRAM 6-Part 3", "quarter", "25セント硬貨"],["PROGRAM 6-Part 3", "coin", "硬貨"],["PROGRAM 6-Part 3", "paper clip", "紙ばさみ, クリップ"],["PROGRAM 6-Part 3", "able", "できる, 能力がある"],["PROGRAM 6-Part 3", "potential", "可能性, 潜在能力"],["PROGRAM 6-Part 3", "agriculture", "農業"],["PROGRAM 6-Part 3", "pollen", "花粉"],["PROGRAM 6-Part 3", "search", "検索, 探索"],["PROGRAM 6-Part 3", "narrow", "狭い"],["PROGRAM 6-Part 3", "space", "空間"],["PROGRAM 6-Part 3", "living", "生きている"],["PROGRAM 6-Part 3", "plant", "植物"],["PROGRAM 6-Part 3", "creature", "生物"],["PROGRAM 6-Part 3", "be able to ~", "〜することができる"],["PROGRAM 6-Other", "better", "よりよい（goodの比較級）"],["PROGRAM 6-Other", "guinea pig", "モルモット"],["PROGRAM 6-Other", "relaxing", "くつろげる"],["Step 4", "sauce", "ソース"],["Step 4", "mayonnaise", "マヨネーズ"],["Step 4", "square", "正方形の, 四角い"],["Step 4", "cloth", "布, 布切れ"],["Step 4", "wrap", "包む, くるむ"],["Step 4", "plastic bag", "ビニール袋"],["Step 4", "soy sauce", "しょうゆ"],["Step 4", "sugar", "砂糖"],["Step 4", "a piece of ~", "1つ［1枚］の〜"],["Step 4", "beef", "牛肉"],["Project 5", "magical", "魔法の, 不思議な"],["Project 5", "stone", "石"],["Project 5", "building", "建物, ビル"],["Project 5", "material", "材料, 原料"],["Project 5", "prefecture", "県, 都道府県"],["Project 5", "cave", "洞くつ, ほら穴"],["Project 5", "even", "〜でさえ"],["Project 5", "escape", "逃げる, のがれる"],["Project 5", "comfortable", "心地よい"],["Project 5", "display", "展示, ディスプレー"],["Project 5", "film", "撮影する"],["Project 5", "souvenir", "みやげ"],["Project 5", "handicraft", "手工芸（品）"],["Project 5", "car", "車, 自動車"],["Reading 2-1", "friendship", "親交, 友情"],["Reading 2-1", "beyond", "〜を越えて"],["Reading 2-1", "border", "国境, 境界（線）"],["Reading 2-1", "war", "戦争"],["Reading 2-1", "president", "大統領"],["Reading 2-1", "above", "〜の上（のほう）に"],["Reading 2-1", "at war", "戦争中で"],["Reading 2-1", "shoot down ~", "〜を撃ち落とす"],["Reading 2-1", "one after another", "次々と"],["Reading 2-1", "airport", "空港"],["Reading 2-2", "tourist", "観光客, 旅行者"],["Reading 2-2", "paint", "（絵の具等で絵を）描く"],["Reading 2-2", "monument", "記念碑, 慰霊碑"],["Reading 2-2", "victim", "犠牲者"],["Reading 2-2", "atomic", "原子（力）の"],["Reading 2-2", "bomb", "爆弾"],["Reading 2-2", "pass away", "亡くなる"],["Reading 2-3", "fill", "満たす"],["Reading 2-3", "wood", "木材"],["Reading 2-3", "butter", "バター"],["Reading 2-3", "milk", "牛乳, ミルク"],["Reading 2-3", "brown", "茶色（の）"],["Reading 2-3", "receive", "受け取る"],["Reading 2-3", "million", "100万（の）"],["Reading 2-3", "recycle", "再利用する"],["Reading 2-3", "relay", "伝える, 中継する"],["Reading 2-3", "fold", "折る"],["Reading 2-3", "renew", "新たにする"],["Project 6", "planet", "地球, 惑星"],["Project 6", "pioneer", "先駆者, 開拓者"],["Project 6", "in those days", "当時, そのころ"],["Project 6", "because of", "〜のために, 〜の理由で"],["Project 6", "hero", "英雄, あこがれの的"],["Reading 3-1", "emergency", "非常［緊急］事態"],["Reading 3-1", "solution", "解決策"],["Reading 3-1", "safely", "安全に, 無事に"],["Reading 3-1", "crew", "乗組員"],["Reading 3-1", "re-entry", "再突入"],["Reading 3-1", "approach", "近づく, 接近する"],["Reading 3-1", "might", "〜かもしれない"],["Reading 3-1", "damage", "ダメージを与える"],["Reading 3-1", "extremely", "極度に, 非常に"],["Reading 3-1", "fire", "火"],["Reading 3-1", "at last", "ついに"],["Reading 3-2", "contact", "連絡をとる"],["Reading 3-2", "sign", "きざし, 兆候"],["Reading 3-2", "parachute", "パラシュート"],["Reading 3-2", "appear", "現れる"],["Reading 3-2", "calm", "落ち着いた"],["Reading 3-2", "voice", "声"],["Reading 3-2", "successfully", "成功して"],["Reading 3-2", "wisdom", "智慧, 知恵"],["Reading 3-2", "teamwork", "チームワーク"],["Reading 3-2", "situation", "状況"],["Reading 3-2", "failure", "失敗"],["Reading 3-2", "option", "選択肢"],["Reading 3-2", "explosion", "爆発"],["Reading 3-2", "give up", "諦める"]]
+};
+
+// ===== App logic =====
+var state = {
+  grade: 1,
+  units: [],          // ordered unique unit names for current grade
+  unitChecked: {},     // unit name -> bool
+};
+
+function getGradeData(g){ return window.VOCAB[g]; }
+
+function buildUnitList(g){
+  var data = getGradeData(g);
+  var seen = {};
+  var units = [];
+  data.forEach(function(row){
+    var u = row[0];
+    if(!seen[u]){ seen[u]=true; units.push(u); }
+  });
+  return units;
+}
+
+function unitWordCount(g, unitName){
+  var data = getGradeData(g);
+  var c = 0;
+  for(var i=0;i<data.length;i++){ if(data[i][0]===unitName) c++; }
+  return c;
+}
+
+function renderGrade(g){
+  state.grade = g;
+  state.units = buildUnitList(g);
+  state.unitChecked = {};
+  state.units.forEach(function(u){ state.unitChecked[u] = true; });
+
+  // tabs
+  document.querySelectorAll('.tab').forEach(function(t){
+    t.classList.toggle('active', Number(t.getAttribute('data-grade'))===g);
+  });
+
+  // range selects
+  var fromSel = document.getElementById('rangeFrom');
+  var toSel = document.getElementById('rangeTo');
+  fromSel.innerHTML = '';
+  toSel.innerHTML = '';
+  state.units.forEach(function(u, idx){
+    var o1 = document.createElement('option');
+    o1.value = idx; o1.textContent = u;
+    fromSel.appendChild(o1);
+    var o2 = document.createElement('option');
+    o2.value = idx; o2.textContent = u;
+    toSel.appendChild(o2);
+  });
+  toSel.selectedIndex = state.units.length - 1;
+
+  // unit grid
+  var grid = document.getElementById('unitGrid');
+  grid.innerHTML = '';
+  state.units.forEach(function(u, idx){
+    var wrap = document.createElement('div');
+    wrap.className = 'unit-item';
+    var cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.checked = true;
+    cb.id = 'u_' + idx;
+    cb.addEventListener('change', function(){
+      state.unitChecked[u] = cb.checked;
+      updateSelectedCount();
+    });
+    var lab = document.createElement('label');
+    lab.setAttribute('for', cb.id);
+    lab.textContent = u + '（' + unitWordCount(g, u) + '語）';
+    wrap.appendChild(cb);
+    wrap.appendChild(lab);
+    grid.appendChild(wrap);
+  });
+
+  updateSelectedCount();
+}
+
+function selectedWordPool(){
+  var data = getGradeData(state.grade);
+  return data.filter(function(row){ return state.unitChecked[row[0]]; });
+}
+
+function updateSelectedCount(){
+  var n = selectedWordPool().length;
+  document.getElementById('selectedCount').textContent = n;
+  var qtyInput = document.getElementById('qtyInput');
+  var warn = document.getElementById('qtyWarn');
+  var qty = Math.min(10, Math.max(1, parseInt(qtyInput.value||'10',10)));
+  if(n < qty){
+    warn.style.display = 'inline';
+    warn.textContent = '選択中の単語数が少ないため、実際の出題数は ' + n + ' 問になります。';
+  } else {
+    warn.style.display = 'none';
+  }
+}
+
+document.querySelectorAll('.tab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    renderGrade(Number(tab.getAttribute('data-grade')));
+  });
+});
+
+document.getElementById('applyRangeBtn').addEventListener('click', function(){
+  var from = parseInt(document.getElementById('rangeFrom').value, 10);
+  var to = parseInt(document.getElementById('rangeTo').value, 10);
+  if(from > to){ var t=from; from=to; to=t; }
+  state.units.forEach(function(u, idx){
+    var checked = (idx >= from && idx <= to);
+    state.unitChecked[u] = checked;
+    var cb = document.getElementById('u_' + idx);
+    if(cb) cb.checked = checked;
+  });
+  updateSelectedCount();
+});
+
+document.getElementById('allBtn').addEventListener('click', function(){
+  state.units.forEach(function(u, idx){
+    state.unitChecked[u] = true;
+    var cb = document.getElementById('u_' + idx);
+    if(cb) cb.checked = true;
+  });
+  updateSelectedCount();
+});
+
+document.getElementById('noneBtn').addEventListener('click', function(){
+  state.units.forEach(function(u, idx){
+    state.unitChecked[u] = false;
+    var cb = document.getElementById('u_' + idx);
+    if(cb) cb.checked = false;
+  });
+  updateSelectedCount();
+});
+
+document.getElementById('qtyInput').addEventListener('input', function(){
+  var v = parseInt(this.value||'1',10);
+  if(isNaN(v)) v = 1;
+  if(v > 10) v = 10;
+  if(v < 1) v = 1;
+  this.value = v;
+  updateSelectedCount();
+});
+
+function shuffle(arr){
+  var a = arr.slice();
+  for(var i=a.length-1;i>0;i--){
+    var j = Math.floor(Math.random()*(i+1));
+    var tmp=a[i]; a[i]=a[j]; a[j]=tmp;
+  }
+  return a;
+}
+
+function escapeHtml(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+document.getElementById('createBtn').addEventListener('click', function(){
+  var pool = selectedWordPool();
+  if(pool.length === 0){
+    alert('単元が1つも選択されていません。単元を選んでください。');
+    return;
+  }
+  var qty = Math.min(10, Math.max(1, parseInt(document.getElementById('qtyInput').value||'10',10)));
+  var n = Math.min(qty, pool.length);
+  var picked = shuffle(pool).slice(0, n);
+
+  var gradeLabel = {1:'中学1年', 2:'中学2年'}[state.grade];
+  var dateStr = new Date().toLocaleDateString('ja-JP');
+
+  // Problem sheet
+  var rows = picked.map(function(row, i){
+    return '<tr>' +
+      '<td class="num">' + (i+1) + '</td>' +
+      '<td class="en">' + escapeHtml(row[1]) + '</td>' +
+      '<td class="ja-blank"><span class="line"></span></td>' +
+      '</tr>';
+  }).join('');
+
+  var problemHtml =
+    '<h2 class="sheet-title">英単語テスト（' + gradeLabel + '　サンシャイン）</h2>' +
+    '<p class="sheet-sub">英語 → 日本語　全' + picked.length + '問　' + dateStr + '</p>' +
+    '<div class="namebox">' +
+      '<span>組<span class="fill">&nbsp;</span>　番</span>' +
+      '<span>名前<span class="fill" style="min-width:140px;">&nbsp;</span></span>' +
+      '<span>得点<span class="fill">&nbsp;</span>／' + picked.length + '</span>' +
+    '</div>' +
+    '<table class="qtable">' +
+      '<tr><th style="width:28px;"></th><th>英語</th><th>日本語（意味を書きましょう）</th></tr>' +
+      rows +
+    '</table>';
+  document.getElementById('problemSheet').innerHTML = problemHtml;
+
+  // Answer sheet
+  var aRows = picked.map(function(row, i){
+    return '<tr>' +
+      '<td class="num">' + (i+1) + '</td>' +
+      '<td class="en">' + escapeHtml(row[1]) + '</td>' +
+      '<td class="ja">' + escapeHtml(row[2]) + '</td>' +
+      '<td class="unit-note">' + escapeHtml(row[0]) + '</td>' +
+      '</tr>';
+  }).join('');
+
+  var answerHtml =
+    '<h2 class="sheet-title">解答</h2>' +
+    '<p class="sheet-sub">' + gradeLabel + '　サンシャイン　全' + picked.length + '問</p>' +
+    '<table class="qtable answer-table">' +
+      '<tr><th style="width:28px;"></th><th>英語</th><th>日本語</th><th>単元</th></tr>' +
+      aRows +
+    '</table>';
+  document.getElementById('answerSheet').innerHTML = answerHtml;
+
+  document.getElementById('resultArea').style.display = 'block';
+  document.getElementById('resultArea').scrollIntoView({behavior:'smooth'});
+});
+
+document.getElementById('backBtn').addEventListener('click', function(){
+  document.getElementById('resultArea').style.display = 'none';
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
+// init
+renderGrade(1);
+</script>
+</body>
+</html>
