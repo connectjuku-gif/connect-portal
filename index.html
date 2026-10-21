@@ -544,9 +544,17 @@
   var gchips = document.querySelectorAll('.gchip');
   gchips.forEach(function(chip){
     chip.addEventListener('click', function(){
+      var alreadyActive = chip.classList.contains('active');
+      var isAllChip = chip.getAttribute('data-grade') === 'all';
       gchips.forEach(function(c){ c.classList.remove('active'); });
-      chip.classList.add('active');
-      state.grade = chip.getAttribute('data-grade');
+      if (alreadyActive && !isAllChip) {
+        // もう一度押したら解除して「すべて」に戻す
+        document.querySelector('.gchip[data-grade="all"]').classList.add('active');
+        state.grade = 'all';
+      } else {
+        chip.classList.add('active');
+        state.grade = chip.getAttribute('data-grade');
+      }
       updateVisibility();
     });
   });
@@ -554,9 +562,17 @@
   var tchips = document.querySelectorAll('.tchip');
   tchips.forEach(function(chip){
     chip.addEventListener('click', function(){
+      var alreadyActive = chip.classList.contains('active');
+      var isAllChip = chip.getAttribute('data-tag') === 'all';
       tchips.forEach(function(c){ c.classList.remove('active'); });
-      chip.classList.add('active');
-      state.tag = chip.getAttribute('data-tag');
+      if (alreadyActive && !isAllChip) {
+        // もう一度押したら解除して「すべて」に戻す
+        document.querySelector('.tchip[data-tag="all"]').classList.add('active');
+        state.tag = 'all';
+      } else {
+        chip.classList.add('active');
+        state.tag = chip.getAttribute('data-tag');
+      }
       updateVisibility();
     });
   });
