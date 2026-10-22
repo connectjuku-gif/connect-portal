@@ -99,6 +99,8 @@
   table.wordtable td.wnum { width: 22px; text-align: center; color: #666; font-size: 9.5pt; }
   table.wordtable td.wword { width: 32%; font-weight: bold; }
   table.wordtable td.wmeaning { }
+  table.wordtable th.wdir { font-size: 9.5pt; font-weight: bold; background: #F3F1EC; padding: 3px 6px; text-align: center; letter-spacing: .05em; }
+  table.wordtable td.jpm { font-weight: normal; font-size: 10.5pt; }
   .blankline { display: inline-block; min-width: 100%; border-bottom: 1px solid #333; height: 12px; }
 
   /* 大問2: 文章完成 */
@@ -211,23 +213,25 @@
   function buildWordSection(levels, num){
     var pool = poolAcross(DATA.words, levels);
     var picked = pick(pool, num);
-    // pad to even number for 2-column layout
-    if (picked.length % 2 === 1) picked = picked.slice(0, picked.length - 1);
-    var rowsHtml = '';
-    var ansRowsHtml = '';
-    for (var i = 0; i < picked.length; i += 2) {
-      var a = picked[i], b = picked[i+1];
+    // 前半：英語→日本語、後半：日本語→英語（半分ずつ）
+    var half = Math.floor(picked.length / 2);
+    var ej = picked.slice(0, half), je = picked.slice(half, half * 2);
+    var rowsHtml = '<tr><th colspan="3" class="wdir">英語 → 日本語</th><th colspan="3" class="wdir">日本語 → 英語</th></tr>';
+    var ansRowsHtml = rowsHtml;
+    for (var i = 0; i < half; i++) {
+      var a = ej[i], b = je[i];
       rowsHtml += '<tr>' +
         '<td class="wnum">' + (i+1) + '</td><td class="wword en">' + esc(a.w) + '</td><td class="wmeaning"><span class="blankline"></span></td>' +
-        '<td class="wnum">' + (i+2) + '</td><td class="wword en">' + esc(b.w) + '</td><td class="wmeaning"><span class="blankline"></span></td>' +
+        '<td class="wnum">' + (half+i+1) + '</td><td class="wword jpm">' + esc(b.m) + '</td><td class="wmeaning"><span class="blankline"></span></td>' +
         '</tr>';
       ansRowsHtml += '<tr>' +
         '<td class="wnum">' + (i+1) + '</td><td class="wword en">' + esc(a.w) + '</td><td class="wmeaning"><span class="k">' + esc(a.m) + '</span></td>' +
-        '<td class="wnum">' + (i+2) + '</td><td class="wword en">' + esc(b.w) + '</td><td class="wmeaning"><span class="k">' + esc(b.m) + '</span></td>' +
+        '<td class="wnum">' + (half+i+1) + '</td><td class="wword jpm">' + esc(b.m) + '</td><td class="wmeaning en"><span class="k">' + esc(b.w) + '</span></td>' +
         '</tr>';
     }
     return {
-      count: picked.length,
+      count: half * 2,
+      half: half,
       q: '<table class="wordtable"><tbody>' + rowsHtml + '</tbody></table>',
       a: '<table class="wordtable"><tbody>' + ansRowsHtml + '</tbody></table>'
     };
@@ -320,7 +324,7 @@
     html += '<div class="namebox"><span>組　　番</span><span>名前　　　　　　　　　　　</span><span>' + todayStr() + '</span></div>';
 
     html += '<div class="q">';
-    html += '<div class="qh"><span class="num">1</span><span class="inst">次の英単語の意味を書きなさい。<span class="pts">（各1点×' + wordSec.count + '）</span></span></div>';
+    html += '<div class="qh"><span class="num">1</span><span class="inst">1〜' + wordSec.half + 'は英語を日本語に、' + (wordSec.half + 1) + '〜' + wordSec.count + 'は日本語を英語に直しなさい。<span class="pts">（各1点×' + wordSec.count + '）</span></span></div>';
     html += wordSec.q;
     html += '</div>';
 
@@ -337,9 +341,9 @@
     html += '<div class="sub">ランダム英単語テスト　' + esc(label) + '／配点：大問1（' + wordSec.count + '点）＋大問2（' + sentSec.count + '点）＝計' + total + '点</div>';
 
     html += '<div class="memo"><div class="t">■ 出題範囲メモ</div>';
-    html += 'CONNECT単語帳「' + esc(label) + '」の単語・例文リストからランダム抽出して作成。大問1は単語→意味、大問2は英日・和英の空欄補充（文脈から適切な語を判断）。</div>';
+    html += 'CONNECT単語帳「' + esc(label) + '」の単語・例文リストからランダム抽出して作成。大問1は前半が英語→日本語、後半が日本語→英語、大問2は英日・和英の空欄補充（文脈から適切な語を判断）。</div>';
 
-    html += '<h2>大問1　単語の意味</h2>';
+    html += '<h2>大問1　英語→日本語・日本語→英語</h2>';
     html += wordSec.a;
 
     html += '<h2>大問2　空欄補充</h2>';
