@@ -1,0 +1,203 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小6算数 単元確認テスト⑫　比例と反比例</title>
+<style>
+  @page { size: A4; margin: 14mm 12mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "UD Digi Kyokasho NP-R","BIZ UDPGothic","Hiragino Maru Gothic ProN","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    font-size: 12.5pt; line-height: 1.65; color: #111; background: #e9e9e9; margin: 0; padding: 20px 0;
+  }
+  .sheet { width: 210mm; min-height: 297mm; margin: 0 auto 24px; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.25); padding: 14mm 12mm; position: relative; }
+  .pb { page-break-before: always; }
+  h1 { text-align: center; font-size: 19pt; margin: 0 0 2mm; letter-spacing: .06em; }
+  .sub { text-align: center; font-size: 11pt; color: #333; margin-bottom: 2mm; }
+  .cheer { text-align: center; font-size: 10.5pt; color: #333; margin-bottom: 4mm; }
+  .namebox { display: flex; justify-content: flex-end; gap: 14px; font-size: 10pt; border-top: 1px solid #999; border-bottom: 1px solid #999; padding: 3px 0; margin-bottom: 5mm; }
+  .namebox span { white-space: nowrap; }
+  .namebox .line { display:inline-block; border-bottom:1px solid #333; width:60px; height:1em; }
+  .rules { font-size: 10pt; border: 1.5px solid #333; border-radius: 10px; padding: 6px 10px; margin-bottom: 5mm; line-height: 1.6; }
+  .q { margin-bottom: 6mm; border: 1.3px solid #555; border-radius: 12px; padding: 4mm 5mm; }
+  .qh { display: flex; align-items: center; gap: 8px; border-bottom: 1.5px dashed #888; padding-bottom: 3px; margin-bottom: 3mm; }
+  .num { display: inline-flex; align-items: center; justify-content: center; width: 1.9em; height: 1.9em; border-radius: 50%; border: 2px solid #111; font-weight: bold; font-size: 1.05em; flex-shrink: 0; }
+  .inst { font-size: 10.8pt; flex: 1; }
+  .pts { float: right; font-size: 9.5pt; color: #333; }
+  ol.items { margin: 0; padding-left: 1.5em; }
+  ol.items > li { margin-bottom: 3.2mm; }
+  .figwrap { display:flex; justify-content:center; margin: 3mm 0; gap: 14px; flex-wrap: wrap; }
+  .ansline { display:inline-block; border-bottom:1.3px solid #333; min-width: 70px; height: 1.3em; }
+  .blank { display:inline-block; min-width: 1.6em; border-bottom: 1.3px solid #333; text-align:center; }
+  .conf-row { display:flex; justify-content:flex-end; align-items:center; gap:7px; font-size:9.3pt; color:#333; margin-top:3mm; border-top: 1px dashed #ccc; padding-top: 2.5mm; }
+  .conf-row .label { margin-right:3px; color:#555; }
+  .conf-row .face { display:inline-flex; align-items:center; gap:2px; white-space:nowrap; }
+  .conf-row svg { display:block; }
+  table.dt { border-collapse: collapse; margin: 2mm auto; font-size: 10.8pt; }
+  table.dt th, table.dt td { border: 1px solid #333; padding: 4px 10px; text-align:center; }
+  table.dt th { background:#f0f0f0; }
+  .grid-box { border: 1.5px solid #333; border-radius: 10px; overflow: hidden; }
+  .choice-box { border: 1.3px solid #333; border-radius: 10px; padding: 5px 12px; display:inline-block; margin: 2mm auto; font-size: 10.8pt; }
+  .k { color:#000; font-weight:bold; text-decoration: underline; }
+  .memo { border: 1.3px dashed #333; border-radius: 10px; padding: 6px 10px; font-size: 9.6pt; margin-bottom: 5mm; background: #fafafa; }
+  .ex { font-size: 9.8pt; color:#222; margin: 1mm 0 0 0; line-height:1.55; }
+  .a { margin: 1mm 0; }
+  .reflect { border: 1.3px solid #333; border-radius: 12px; padding: 7px 12px; margin-top: 6mm; font-size: 10pt; line-height: 2; }
+  .reflect .line2 { border-bottom: 1px solid #999; display:block; height: 1.6em; }
+  .editbtn { position: fixed; top: 10px; right: 10px; z-index: 999; padding: 7px 14px; background:#333; color:#fff; border:none; border-radius:4px; font-size:12px; cursor:pointer; }
+  [contenteditable="true"] { outline: 1px dashed #4a90d9; }
+  @media print { body { background:#fff; padding:0; } .sheet { box-shadow:none; margin:0; width:auto; min-height:0; } .editbtn { display:none; } }
+</style>
+</head>
+<body>
+
+<button class="editbtn" onclick="toggleEdit()">編集モード</button>
+
+<div class="sheet">
+  <h1>小6算数　単元確認テスト⑫</h1>
+  <div class="sub">比例と反比例</div>
+  <div class="cheer">★　さいごまで、じぶんのペースでがんばろう！　★</div>
+  <div class="namebox">
+    <span>6年　<span class="line"></span>組　<span class="line"></span>番</span>
+    <span>名前　<span class="line" style="width:110px;"></span></span>
+    <span>／100点</span>
+  </div>
+  <div class="rules">
+    ・むずかしい問題はとばして、できる問題から先にやってもOKです。　・おわったら、見直しをしてみよう。
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">1</span><span class="inst">1個80円のりんごをx個買ったときの代金をy円とします。<span class="pts">（20点）</span></span></div>
+    <ol class="items">
+      <li>yをxの式で表しましょう。　y＝（　<span class="ansline"></span>　）</li>
+      <li>下の表を完成させましょう。
+        <table class="dt" style="margin-top:2mm;">
+          <tr><th>x（個）</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+          <tr><th>y（円）</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        </table>
+      </li>
+      <li>xが2倍、3倍になると、yはそれぞれ何倍になりますか。　（　<span class="ansline"></span>　）</li>
+    </ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">2</span><span class="inst">面積が24c㎡の長方形の縦の長さをxcm、横の長さをycmとします。<span class="pts">（20点）</span></span></div>
+    <ol class="items">
+      <li>yをxの式で表しましょう。　y＝（　<span class="ansline"></span>　）</li>
+      <li>下の表を完成させましょう。
+        <table class="dt" style="margin-top:2mm;">
+          <tr><th>x（cm）</th><td>2</td><td>3</td><td>4</td><td>6</td><td>8</td></tr>
+          <tr><th>y（cm）</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        </table>
+      </li>
+      <li>xが2倍になると、yは何倍になりますか。　（　<span class="ansline"></span>　）</li>
+    </ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q pb">
+    <div class="qh"><span class="num">3</span><span class="inst">次のうち、yがxに比例するもの、反比例するもの、どちらでもないものを選びましょう。<span class="pts">（20点）</span></span></div>
+    <ol class="items">
+      <li>あ　1m80円のリボンをxm買ったときの代金y円</li>
+      <li>い　面積が36c㎡の平行四辺形の底辺xcmと高さycm</li>
+      <li>う　60Lの水そうにxL入れたときの残りの水の量y L</li>
+      <li>え　時速xkmで3時間走ったときの道のりykm</li>
+    </ol>
+    <p style="font-size:10.5pt;">比例するもの（　<span class="ansline"></span>　）　反比例するもの（　<span class="ansline"></span>　）　どちらでもないもの（　<span class="ansline"></span>　）</p>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">4</span><span class="inst">下のグラフは、ある比例の関係を表しています。<span class="pts">（20点）</span></span></div>
+    <div class="figwrap">
+      <svg width="220" height="170" viewBox="0 0 220 170">
+        <line x1="30" y1="150" x2="200" y2="150" stroke="#333" stroke-width="1.3"/>
+        <line x1="30" y1="150" x2="30" y2="20" stroke="#333" stroke-width="1.3"/>
+        <text x="205" y="155" font-size="10">x</text><text x="18" y="18" font-size="10">y</text>
+        <line x1="30" y1="150" x2="150" y2="30" stroke="#111" stroke-width="2"/>
+        <circle cx="90" cy="90" r="2.5" fill="#111"/>
+        <text x="94" y="88" font-size="10">(3, 6)</text>
+      </svg>
+    </div>
+    <ol class="items">
+      <li>yをxの式で表しましょう。　y＝（　<span class="ansline"></span>　）</li>
+      <li>x＝7のときのyの値を求めましょう。　（　<span class="ansline"></span>　）</li>
+    </ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">5</span><span class="inst">60kmの道のりを進むときの時速xkmとかかる時間y時間の関係について。<span class="pts">（20点）</span></span></div>
+    <ol class="items">
+      <li>yをxの式で表しましょう。　y＝（　<span class="ansline"></span>　）</li>
+      <li>時速15kmで進むと何時間かかりますか。　（　<span class="ansline"></span>　）</li>
+      <li>4時間で進むには、時速何kmで進めばよいですか。　（　<span class="ansline"></span>　）</li>
+    </ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+</div>
+
+<div class="sheet ans pb">
+  <h1>解答・解説</h1>
+  <div class="sub">小6算数　単元確認テスト⑫　比例と反比例（配点：各20点×5＝100点）</div>
+
+  <div class="memo">
+    ■ 出題範囲メモ：啓林館教科書6年「12.比例と反比例」相当。比例・反比例の式、表、グラフの読み取り、どちらの関係かを見分ける判断まで。数値・場面はすべてオリジナルです。
+  </div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px;">1　比例の式と表</h2>
+  <div class="a">① <span class="k">y＝80×x</span><br>
+  ②
+  <table class="dt" style="margin-top:2mm;">
+    <tr><th>x（個）</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+    <tr><th>y（円）</th><td><span class="k">80</span></td><td><span class="k">160</span></td><td><span class="k">240</span></td><td><span class="k">320</span></td><td><span class="k">400</span></td></tr>
+  </table><br>
+  ③ <span class="k">それぞれ2倍、3倍になる</span></div>
+  <div class="ex">比例ではxが2倍、3倍、…になると、yも同じ倍数で2倍、3倍、…になるのが特ちょう。</div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">2　反比例の式と表</h2>
+  <div class="a">① <span class="k">y＝24÷x</span><br>
+  ②
+  <table class="dt" style="margin-top:2mm;">
+    <tr><th>x（cm）</th><td>2</td><td>3</td><td>4</td><td>6</td><td>8</td></tr>
+    <tr><th>y（cm）</th><td><span class="k">12</span></td><td><span class="k">8</span></td><td><span class="k">6</span></td><td><span class="k">4</span></td><td><span class="k">3</span></td></tr>
+  </table><br>
+  ③ <span class="k">1/2倍（半分）になる</span></div>
+  <div class="ex">反比例ではxが2倍になると、yは1/2倍になる（x×yがいつも一定＝24になる）のが特ちょう。</div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">3　比例・反比例の見分け</h2>
+  <div class="a">比例するもの　<span class="k">あ、え</span>　　反比例するもの　<span class="k">い</span>　　どちらでもないもの　<span class="k">う</span></div>
+  <div class="ex">あ：y＝80x（比例）。い：底辺×高さ＝36で一定なのでy＝36÷x（反比例）。う：y＝60－x で、xが2倍になってもyは2倍にならない（どちらでもない）。え：道のり＝速さ×時間、時間が一定（3時間）なのでy＝3x（比例）。</div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">4　グラフの読み取り</h2>
+  <div class="a">① <span class="k">y＝2×x</span>　② <span class="k">14</span></div>
+  <div class="ex">グラフが原点を通る直線で、点(3,6)を通ることから、比例定数は6÷3＝2。y＝2×7＝14。</div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">5　反比例の文章題</h2>
+  <div class="a">① <span class="k">y＝60÷x</span>　② <span class="k">4時間</span>　③ <span class="k">時速15km</span></div>
+  <div class="ex">道のりが一定（60km）のとき、速さと時間は反比例の関係。②60÷15＝4。③60÷4＝15。</div>
+
+  <div class="memo" style="margin-top:6mm;">
+    ■ この確認テストのねらい（講師メモ）：比例・反比例それぞれの式・表・グラフの扱いを確認するとともに、大問3で「どちらの関係にも当てはまらない場合もある」ことに気づかせる構成。中学1年の比例・反比例の単元に直結するため、ここで土台を固めておきたい。</div>
+
+  <div class="reflect">
+    ★　この学習は楽しかったですか。（　はい　・　まあまあ　・　少し　・　いいえ　）<br>
+    ◆　この学習はよくわかりましたか。（　はい　・　まあまあ　・　少し　・　いいえ　）<br>
+    ●　感想を自由にかきましょう。<br>
+    <span class="line2"></span><span class="line2"></span>
+  </div>
+</div>
+
+<script>
+function toggleEdit(){
+  const sheets = document.querySelectorAll('.sheet');
+  const on = sheets[0].getAttribute('contenteditable') === 'true';
+  sheets.forEach(s => s.setAttribute('contenteditable', on ? 'false' : 'true'));
+  event.target.textContent = on ? '編集モード' : '編集モード：ON（もう一度押すと解除）';
+}
+</script>
+
+</body>
+</html>

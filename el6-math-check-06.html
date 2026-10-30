@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小6算数 単元確認テスト⑥　場合を順序よく整理して</title>
+<style>
+  @page { size: A4; margin: 14mm 12mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "UD Digi Kyokasho NP-R","BIZ UDPGothic","Hiragino Maru Gothic ProN","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    font-size: 12.5pt; line-height: 1.65; color: #111; background: #e9e9e9; margin: 0; padding: 20px 0;
+  }
+  .sheet { width: 210mm; min-height: 297mm; margin: 0 auto 24px; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.25); padding: 14mm 12mm; position: relative; }
+  .pb { page-break-before: always; }
+  h1 { text-align: center; font-size: 19pt; margin: 0 0 2mm; letter-spacing: .06em; }
+  .sub { text-align: center; font-size: 11pt; color: #333; margin-bottom: 2mm; }
+  .cheer { text-align: center; font-size: 10.5pt; color: #333; margin-bottom: 4mm; }
+  .namebox { display: flex; justify-content: flex-end; gap: 14px; font-size: 10pt; border-top: 1px solid #999; border-bottom: 1px solid #999; padding: 3px 0; margin-bottom: 5mm; }
+  .namebox span { white-space: nowrap; }
+  .namebox .line { display:inline-block; border-bottom:1px solid #333; width:60px; height:1em; }
+  .rules { font-size: 10pt; border: 1.5px solid #333; border-radius: 10px; padding: 6px 10px; margin-bottom: 5mm; line-height: 1.6; }
+  .q { margin-bottom: 6mm; border: 1.3px solid #555; border-radius: 12px; padding: 4mm 5mm; }
+  .qh { display: flex; align-items: center; gap: 8px; border-bottom: 1.5px dashed #888; padding-bottom: 3px; margin-bottom: 3mm; }
+  .num { display: inline-flex; align-items: center; justify-content: center; width: 1.9em; height: 1.9em; border-radius: 50%; border: 2px solid #111; font-weight: bold; font-size: 1.05em; flex-shrink: 0; }
+  .inst { font-size: 10.8pt; flex: 1; }
+  .pts { float: right; font-size: 9.5pt; color: #333; }
+  ol.items { margin: 0; padding-left: 1.5em; }
+  ol.items > li { margin-bottom: 3.2mm; }
+  .figwrap { display:flex; justify-content:center; margin: 3mm 0; }
+  .ansline { display:inline-block; border-bottom:1.3px solid #333; min-width: 70px; height: 1.3em; }
+  .blank { display:inline-block; min-width: 1.6em; border-bottom: 1.3px solid #333; text-align:center; }
+  .conf-row { display:flex; justify-content:flex-end; align-items:center; gap:7px; font-size:9.3pt; color:#333; margin-top:3mm; border-top: 1px dashed #ccc; padding-top: 2.5mm; }
+  .conf-row .label { margin-right:3px; color:#555; }
+  .conf-row .face { display:inline-flex; align-items:center; gap:2px; white-space:nowrap; }
+  .conf-row svg { display:block; }
+  table.dt { border-collapse: collapse; margin: 2mm auto; font-size: 10.8pt; }
+  table.dt th, table.dt td { border: 1px solid #333; padding: 4px 10px; text-align:center; }
+  table.dt th { background:#f0f0f0; }
+  .grid-box { border: 1.5px solid #333; border-radius: 10px; overflow: hidden; }
+  .choice-box { border: 1.3px solid #333; border-radius: 10px; padding: 5px 12px; display:inline-block; margin: 2mm auto; font-size: 10.8pt; }
+  .k { color:#000; font-weight:bold; text-decoration: underline; }
+  .memo { border: 1.3px dashed #333; border-radius: 10px; padding: 6px 10px; font-size: 9.6pt; margin-bottom: 5mm; background: #fafafa; }
+  .ex { font-size: 9.8pt; color:#222; margin: 1mm 0 0 0; line-height:1.55; }
+  .a { margin: 1mm 0; }
+  .reflect { border: 1.3px solid #333; border-radius: 12px; padding: 7px 12px; margin-top: 6mm; font-size: 10pt; line-height: 2; }
+  .reflect .line2 { border-bottom: 1px solid #999; display:block; height: 1.6em; }
+  .editbtn { position: fixed; top: 10px; right: 10px; z-index: 999; padding: 7px 14px; background:#333; color:#fff; border:none; border-radius:4px; font-size:12px; cursor:pointer; }
+  [contenteditable="true"] { outline: 1px dashed #4a90d9; }
+  @media print { body { background:#fff; padding:0; } .sheet { box-shadow:none; margin:0; width:auto; min-height:0; } .editbtn { display:none; } }
+</style>
+</head>
+<body>
+
+<button class="editbtn" onclick="toggleEdit()">編集モード</button>
+
+<div class="sheet">
+  <h1>小6算数　単元確認テスト⑥</h1>
+  <div class="sub">場合を順序よく整理して</div>
+  <div class="cheer">★　さいごまで、じぶんのペースでがんばろう！　★</div>
+  <div class="namebox">
+    <span>6年　<span class="line"></span>組　<span class="line"></span>番</span>
+    <span>名前　<span class="line" style="width:110px;"></span></span>
+    <span>／100点</span>
+  </div>
+  <div class="rules">
+    ・表や図（樹形図など）をかいて、順序よく調べましょう。　・むずかしい問題はとばして、できる問題から先にやってもOKです。
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">1</span><span class="inst">A、B、C、D、E、Fの6チームがサッカーの試合をします。それぞれ、どのチームとも1回ずつあたるようにします。<span class="pts">（20点）</span></span></div>
+    <ol class="items">
+      <li>6チームで試合をするとき、全部で何試合になりますか。図や表をかいて求めましょう。　（　<span class="ansline"></span>　）</li>
+      <li>もし7チームで同じように試合をするとしたら、全部で何試合になりますか。　（　<span class="ansline"></span>　）</li>
+    </ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">2</span><span class="inst">赤、青、黄、緑、白、紫の6色のボールがあります。<span class="pts">（20点）</span></span></div>
+    <ol class="items">
+      <li>この中から2色を選ぶときの組み合わせは、全部で何通りありますか。　（　<span class="ansline"></span>　）</li>
+      <li>この中から4色を選ぶときの組み合わせは、全部で何通りありますか。（ヒント：選ばない2色を決めると考えましょう）　（　<span class="ansline"></span>　）</li>
+    </ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q pb">
+    <div class="qh"><span class="num">3</span><span class="inst">たろう、じろう、はなこ、ゆいの4人でリレーのチームをつくります。4人の走る順番は、全部で何通りありますか。樹形図をかいて調べましょう。<span class="pts">（20点）</span></span></div>
+    <div class="figwrap">
+      <svg width="280" height="110" viewBox="0 0 280 110" class="grid-box">
+        <rect width="280" height="110" fill="#fafafa"/>
+        <text x="10" y="55" font-size="12">（ここに樹形図をかこう）</text>
+      </svg>
+    </div>
+    <ol class="items">
+      <li>（　<span class="ansline" style="min-width:140px;"></span>　）</li>
+    </ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">4</span><span class="inst">次のような3枚のカードがあります。この3枚のうち、2枚を並べてできる2けたの整数は、全部で何個ありますか。樹形図をかいて調べましょう。<span class="pts">（20点）</span></span></div>
+    <div class="choice-box">0　　3　　5</div>
+    <ol class="items">
+      <li>（　<span class="ansline" style="min-width:140px;"></span>　）</li>
+    </ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">5</span><span class="inst">子ども会で、50人にアメとガムを配ることになりました。アメがほしい人は35人、ガムがほしい人は28人で、もらわない人はいませんでした。<span class="pts">（20点）</span></span></div>
+    <div class="choice-box" style="display:block;">
+      ・アメだけほしい人…アメ3個　　・ガムだけほしい人…ガム4枚　　・両方ほしい人…アメ1個とガム2枚
+    </div>
+    <ol class="items">
+      <li>アメだけほしい人、ガムだけほしい人、両方ほしい人は、それぞれ何人になりますか。<br>
+        アメだけ（　<span class="ansline"></span>　）　ガムだけ（　<span class="ansline"></span>　）　両方（　<span class="ansline"></span>　）</li>
+      <li>アメは何個、ガムは何枚用意すればよいですか。<br>
+        アメ（　<span class="ansline"></span>　）　ガム（　<span class="ansline"></span>　）</li>
+    </ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+</div>
+
+<div class="sheet ans pb">
+  <h1>解答・解説</h1>
+  <div class="sub">小6算数　単元確認テスト⑥　場合を順序よく整理して（配点：各20点×5＝100点）</div>
+
+  <div class="memo">
+    ■ 出題範囲メモ：啓林館教科書6年「6-1・6-2.場合を順序よく整理して」相当。総当たり戦の試合数、組み合わせ（選び方）、順列（並び方）、集合の考え方（配布問題）まで。数値・場面はすべてオリジナルです。
+  </div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px;">1　試合数</h2>
+  <div class="a">① <span class="k">15試合</span>　② <span class="k">21試合</span></div>
+  <div class="ex">n チームの総当たり戦の試合数は、1チームあたり(n－1)試合と対戦し、2回ずつ数えているので (n×(n－1))÷2 で求められる。6チームなら6×5÷2＝15、7チームなら7×6÷2＝21。</div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">2　色の組み合わせ</h2>
+  <div class="a">① <span class="k">15通り</span>　② <span class="k">15通り</span></div>
+  <div class="ex">6色から4色選ぶことは、6色から「選ばない2色」を決めることと同じなので、①と同じ15通りになる。このような「残す方を考える」発想は、選ぶ数が多いときに便利。</div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">3　リレーの順番</h2>
+  <div class="a"><span class="k">24通り</span></div>
+  <div class="ex">1走は4通り、2走は残り3通り、3走は残り2通り、4走は残り1通り。4×3×2×1＝24（通り）。</div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">4　2けたの整数</h2>
+  <div class="a"><span class="k">4個</span>（30、35、50、53）</div>
+  <div class="ex">十の位に0は使えないため、十の位は3か5の2通り、一の位は残り2枚から2通り。2×2＝4（個）。0から並べ始める「03」などは2けたの整数として数えない点に注意。</div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">5　配布問題</h2>
+  <div class="a">
+    ① アメだけ　<span class="k">22人</span>　ガムだけ　<span class="k">15人</span>　両方　<span class="k">13人</span><br>
+    ② アメ　<span class="k">79個</span>　ガム　<span class="k">86枚</span>
+  </div>
+  <div class="ex">両方ほしい人数＝35＋28－50＝13（人）。アメだけの人数＝35－13＝22（人）、ガムだけの人数＝28－13＝15（人）。アメの総数＝22×3＋13×1＝79（個）、ガムの総数＝15×4＋13×2＝86（枚）。</div>
+
+  <div class="memo" style="margin-top:6mm;">
+    ■ この確認テストのねらい（講師メモ）：樹形図・表による整理の仕方が身についているか、組み合わせと順列のちがいを理解しているかを確認する。5の集合の問題は中学数学の集合・場合の数の土台になる。
+  </div>
+
+  <div class="reflect">
+    ★　この学習は楽しかったですか。（　はい　・　まあまあ　・　少し　・　いいえ　）<br>
+    ◆　この学習はよくわかりましたか。（　はい　・　まあまあ　・　少し　・　いいえ　）<br>
+    ●　感想を自由にかきましょう。<br>
+    <span class="line2"></span><span class="line2"></span>
+  </div>
+</div>
+
+<script>
+function toggleEdit(){
+  const sheets = document.querySelectorAll('.sheet');
+  const on = sheets[0].getAttribute('contenteditable') === 'true';
+  sheets.forEach(s => s.setAttribute('contenteditable', on ? 'false' : 'true'));
+  event.target.textContent = on ? '編集モード' : '編集モード：ON（もう一度押すと解除）';
+}
+</script>
+
+</body>
+</html>

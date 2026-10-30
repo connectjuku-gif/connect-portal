@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小6算数 単元確認テスト⑨　データの整理と活用</title>
+<style>
+  @page { size: A4; margin: 14mm 12mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "UD Digi Kyokasho NP-R","BIZ UDPGothic","Hiragino Maru Gothic ProN","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    font-size: 12.5pt; line-height: 1.65; color: #111; background: #e9e9e9; margin: 0; padding: 20px 0;
+  }
+  .sheet { width: 210mm; min-height: 297mm; margin: 0 auto 24px; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.25); padding: 14mm 12mm; position: relative; }
+  .pb { page-break-before: always; }
+  h1 { text-align: center; font-size: 19pt; margin: 0 0 2mm; letter-spacing: .06em; }
+  .sub { text-align: center; font-size: 11pt; color: #333; margin-bottom: 2mm; }
+  .cheer { text-align: center; font-size: 10.5pt; color: #333; margin-bottom: 4mm; }
+  .namebox { display: flex; justify-content: flex-end; gap: 14px; font-size: 10pt; border-top: 1px solid #999; border-bottom: 1px solid #999; padding: 3px 0; margin-bottom: 5mm; }
+  .namebox span { white-space: nowrap; }
+  .namebox .line { display:inline-block; border-bottom:1px solid #333; width:60px; height:1em; }
+  .rules { font-size: 10pt; border: 1.5px solid #333; border-radius: 10px; padding: 6px 10px; margin-bottom: 5mm; line-height: 1.6; }
+  .q { margin-bottom: 6mm; border: 1.3px solid #555; border-radius: 12px; padding: 4mm 5mm; }
+  .qh { display: flex; align-items: center; gap: 8px; border-bottom: 1.5px dashed #888; padding-bottom: 3px; margin-bottom: 3mm; }
+  .num { display: inline-flex; align-items: center; justify-content: center; width: 1.9em; height: 1.9em; border-radius: 50%; border: 2px solid #111; font-weight: bold; font-size: 1.05em; flex-shrink: 0; }
+  .inst { font-size: 10.8pt; flex: 1; }
+  .pts { float: right; font-size: 9.5pt; color: #333; }
+  ol.items { margin: 0; padding-left: 1.5em; }
+  ol.items > li { margin-bottom: 3.2mm; }
+  .figwrap { display:flex; justify-content:center; margin: 3mm 0; gap: 14px; flex-wrap: wrap; }
+  .ansline { display:inline-block; border-bottom:1.3px solid #333; min-width: 70px; height: 1.3em; }
+  .blank { display:inline-block; min-width: 1.6em; border-bottom: 1.3px solid #333; text-align:center; }
+  .conf-row { display:flex; justify-content:flex-end; align-items:center; gap:7px; font-size:9.3pt; color:#333; margin-top:3mm; border-top: 1px dashed #ccc; padding-top: 2.5mm; }
+  .conf-row .label { margin-right:3px; color:#555; }
+  .conf-row .face { display:inline-flex; align-items:center; gap:2px; white-space:nowrap; }
+  .conf-row svg { display:block; }
+  table.dt { border-collapse: collapse; margin: 2mm auto; font-size: 10.8pt; }
+  table.dt th, table.dt td { border: 1px solid #333; padding: 4px 10px; text-align:center; }
+  table.dt th { background:#f0f0f0; }
+  .grid-box { border: 1.5px solid #333; border-radius: 10px; overflow: hidden; }
+  .choice-box { border: 1.3px solid #333; border-radius: 10px; padding: 5px 12px; display:inline-block; margin: 2mm auto; font-size: 10.8pt; }
+  .k { color:#000; font-weight:bold; text-decoration: underline; }
+  .memo { border: 1.3px dashed #333; border-radius: 10px; padding: 6px 10px; font-size: 9.6pt; margin-bottom: 5mm; background: #fafafa; }
+  .ex { font-size: 9.8pt; color:#222; margin: 1mm 0 0 0; line-height:1.55; }
+  .a { margin: 1mm 0; }
+  .reflect { border: 1.3px solid #333; border-radius: 12px; padding: 7px 12px; margin-top: 6mm; font-size: 10pt; line-height: 2; }
+  .reflect .line2 { border-bottom: 1px solid #999; display:block; height: 1.6em; }
+  .editbtn { position: fixed; top: 10px; right: 10px; z-index: 999; padding: 7px 14px; background:#333; color:#fff; border:none; border-radius:4px; font-size:12px; cursor:pointer; }
+  [contenteditable="true"] { outline: 1px dashed #4a90d9; }
+  @media print { body { background:#fff; padding:0; } .sheet { box-shadow:none; margin:0; width:auto; min-height:0; } .editbtn { display:none; } }
+</style>
+</head>
+<body>
+
+<button class="editbtn" onclick="toggleEdit()">編集モード</button>
+
+<div class="sheet">
+  <h1>小6算数　単元確認テスト⑨</h1>
+  <div class="sub">データの整理と活用</div>
+  <div class="cheer">★　さいごまで、じぶんのペースでがんばろう！　★</div>
+  <div class="namebox">
+    <span>6年　<span class="line"></span>組　<span class="line"></span>番</span>
+    <span>名前　<span class="line" style="width:110px;"></span></span>
+    <span>／100点</span>
+  </div>
+  <div class="rules">
+    ・むずかしい問題はとばして、できる問題から先にやってもOKです。　・おわったら、見直しをしてみよう。
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">1</span><span class="inst">8人のソフトボール投げの記録（m）は、次のとおりです。<span class="pts">（20点）</span></span></div>
+    <div class="choice-box">70　100　60　70　90　80　70　100</div>
+    <ol class="items">
+      <li>平均値を求めましょう。　（　<span class="ansline"></span>　）</li>
+      <li>中央値を求めましょう。　（　<span class="ansline"></span>　）</li>
+      <li>最頻値を求めましょう。　（　<span class="ansline"></span>　）</li>
+    </ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">2</span><span class="inst">下の表は、25人の1週間の読書時間を整理したものです。<span class="pts">（20点）</span></span></div>
+    <table class="dt">
+      <tr><th>時間（分）</th><th>0〜10</th><th>10〜20</th><th>20〜30</th><th>30〜40</th><th>40〜50</th><th>50〜60</th><th>合計</th></tr>
+      <tr><th>人数（人）</th><td>2</td><td>5</td><td>8</td><td>6</td><td>3</td><td>1</td><td>25</td></tr>
+    </table>
+    <ol class="items">
+      <li>上の表をヒストグラムに表しましょう。
+        <div class="figwrap">
+          <svg width="320" height="170" viewBox="0 0 320 170" class="grid-box">
+            <rect width="320" height="170" fill="#fafafa"/>
+            <line x1="40" y1="150" x2="300" y2="150" stroke="#333" stroke-width="1.3"/>
+            <line x1="40" y1="20" x2="40" y2="150" stroke="#333" stroke-width="1.3"/>
+            <text x="30" y="20" font-size="10" text-anchor="end">人</text>
+            <text x="300" y="165" font-size="10" text-anchor="end">分</text>
+          </svg>
+        </div>
+      </li>
+      <li>読書時間が25分の人は、どの階級に入っていますか。　（　<span class="ansline" style="min-width:150px;"></span>　）</li>
+      <li>読書時間が30分未満の人は、全体の何％ですか。　（　<span class="ansline"></span>　）</li>
+    </ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q pb">
+    <div class="qh"><span class="num">3</span><span class="inst">下の表は、A市とB市の年齢別人口の割合を表したものです。<span class="pts">（20点）</span></span></div>
+    <table class="dt">
+      <tr><th>年齢</th><th>0〜14歳</th><th>15〜64歳</th><th>65歳以上</th></tr>
+      <tr><th>A市</th><td>12%</td><td>58%</td><td>30%</td></tr>
+      <tr><th>B市</th><td>18%</td><td>66%</td><td>16%</td></tr>
+    </table>
+    <ol class="items">
+      <li>65歳以上の人口の割合が多いのはどちらの市ですか。　（　<span class="ansline"></span>　）</li>
+      <li>A市の人口を20万人とすると、65歳以上の人口は何万人ですか。　（　<span class="ansline"></span>　）</li>
+      <li>次のうち、正しいものには〇、正しくないものには×、この表だけからは分からないものには△をかきましょう。
+        <table class="dt" style="margin-top:2mm;">
+          <tr><td style="text-align:left;">あ　B市は0〜14歳の人口の割合が、A市より高い。</td><td style="min-width:40px;">&nbsp;</td></tr>
+          <tr><td style="text-align:left;">い　A市の15〜64歳の人口は、B市の15〜64歳の人口より多い。</td><td>&nbsp;</td></tr>
+          <tr><td style="text-align:left;">う　B市の65歳以上の人口の割合は、A市の半分より少ない。</td><td>&nbsp;</td></tr>
+        </table>
+      </li>
+    </ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">4</span><span class="inst">15人の1週間のゲームをする時間（時間）を調べました。<span class="pts">（20点）</span></span></div>
+    <div class="choice-box">2　3　3　4　4　4　5　5　5　5　6　6　7　8　10</div>
+    <ol class="items">
+      <li>平均値を求めましょう。四捨五入して、10の位までの概数で求めましょう。　（　<span class="ansline"></span>　）</li>
+      <li>中央値を求めましょう。　（　<span class="ansline"></span>　）</li>
+      <li>最頻値を求めましょう。　（　<span class="ansline"></span>　）</li>
+      <li>ちらばりのようすを、下の表に整理しましょう。
+        <table class="dt" style="margin-top:2mm;">
+          <tr><th>時間（時間）</th><td>0以上2未満</td><td>2以上4未満</td><td>4以上6未満</td><td>6以上8未満</td><td>8以上10未満</td><td>10以上12未満</td></tr>
+          <tr><th>人数（人）</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        </table>
+      </li>
+    </ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+</div>
+
+<div class="sheet ans pb">
+  <h1>解答・解説</h1>
+  <div class="sub">小6算数　単元確認テスト⑨　データの整理と活用（配点：各20点×5＝100点、大問5の表は大問4に含む）</div>
+
+  <div class="memo">
+    ■ 出題範囲メモ：啓林館教科書6年「9.データの整理と活用」相当。平均値・中央値・最頻値、ヒストグラムと階級、割合の読み取り、ドットプロットの整理まで。数値・場面はすべてオリジナルです。
+  </div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px;">1　代表値（平均値・中央値・最頻値）</h2>
+  <div class="a">① <span class="k">80m</span>（合計640÷8）　② <span class="k">75m</span>（小さい順に並べ、4番目70と5番目80の平均）　③ <span class="k">70m</span></div>
+  <div class="ex">中央値はデータを大きさの順に並べたときの真ん中の値（人数が偶数のときは真ん中2つの平均）、最頻値はいちばん多く出てくる値。</div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">2　ヒストグラム</h2>
+  <div class="a">
+    ① 各階級の人数の分だけ棒をかく（0〜10:2人、10〜20:5人、20〜30:8人、30〜40:6人、40〜50:3人、50〜60:1人）<br>
+    ② <span class="k">20分以上30分未満</span><br>
+    ③ <span class="k">60%</span>（2＋5＋8＝15人、15÷25×100＝60）
+  </div>
+  <div class="ex">「以上・未満」の区切り方に注意。30分ちょうどの人は「30分以上40分未満」の階級に入るため、30分未満には数えない。</div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">3　割合の読み取り</h2>
+  <div class="a">
+    ① <span class="k">A市</span><br>
+    ② <span class="k">6万人</span>（20×0.30）<br>
+    ③ あ　<span class="k">〇</span>　い　<span class="k">△</span>　う　<span class="k">×</span>
+  </div>
+  <div class="ex">割合だけでは実際の人口（市の大きさ）が分からないので、「どちらが多いか」を割合だけで判断できない項目は△にする（い）。うは、A市65歳以上30%の半分＝15%に対し、B市は16%で15%より多いので×。</div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">4　ドットプロットの整理</h2>
+  <div class="a">
+    ① <span class="k">約5.1時間</span>（77÷15＝5.13…）　② <span class="k">5時間</span>　③ <span class="k">5時間</span><br>
+    ④
+    <table class="dt" style="margin-top:2mm;">
+      <tr><th>時間（時間）</th><td>0〜2</td><td>2〜4</td><td>4〜6</td><td>6〜8</td><td>8〜10</td><td>10〜12</td></tr>
+      <tr><th>人数（人）</th><td><span class="k">0</span></td><td><span class="k">3</span></td><td><span class="k">7</span></td><td><span class="k">3</span></td><td><span class="k">1</span></td><td><span class="k">1</span></td></tr>
+    </table>
+  </div>
+  <div class="ex">15個のデータを順番に数え、どの階級にいくつ入るかをもれなく・重なりなく数える練習。合計が15人になっているか必ず確認する。</div>
+
+  <div class="memo" style="margin-top:6mm;">
+    ■ この確認テストのねらい（講師メモ）：代表値の計算だけでなく、ヒストグラムや割合の資料を「読み取る」力、資料だけでは分からないことを判断する力（3の△）まで確認する構成。中学の統計分野・資料の活用にそのままつながる。
+  </div>
+
+  <div class="reflect">
+    ★　この学習は楽しかったですか。（　はい　・　まあまあ　・　少し　・　いいえ　）<br>
+    ◆　この学習はよくわかりましたか。（　はい　・　まあまあ　・　少し　・　いいえ　）<br>
+    ●　感想を自由にかきましょう。<br>
+    <span class="line2"></span><span class="line2"></span>
+  </div>
+</div>
+
+<script>
+function toggleEdit(){
+  const sheets = document.querySelectorAll('.sheet');
+  const on = sheets[0].getAttribute('contenteditable') === 'true';
+  sheets.forEach(s => s.setAttribute('contenteditable', on ? 'false' : 'true'));
+  event.target.textContent = on ? '編集モード' : '編集モード：ON（もう一度押すと解除）';
+}
+</script>
+
+</body>
+</html>

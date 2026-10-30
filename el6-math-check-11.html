@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小6算数 単元確認テスト⑪　図形の拡大と縮小</title>
+<style>
+  @page { size: A4; margin: 14mm 12mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "UD Digi Kyokasho NP-R","BIZ UDPGothic","Hiragino Maru Gothic ProN","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    font-size: 12.5pt; line-height: 1.65; color: #111; background: #e9e9e9; margin: 0; padding: 20px 0;
+  }
+  .sheet { width: 210mm; min-height: 297mm; margin: 0 auto 24px; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.25); padding: 14mm 12mm; position: relative; }
+  .pb { page-break-before: always; }
+  h1 { text-align: center; font-size: 19pt; margin: 0 0 2mm; letter-spacing: .06em; }
+  .sub { text-align: center; font-size: 11pt; color: #333; margin-bottom: 2mm; }
+  .cheer { text-align: center; font-size: 10.5pt; color: #333; margin-bottom: 4mm; }
+  .namebox { display: flex; justify-content: flex-end; gap: 14px; font-size: 10pt; border-top: 1px solid #999; border-bottom: 1px solid #999; padding: 3px 0; margin-bottom: 5mm; }
+  .namebox span { white-space: nowrap; }
+  .namebox .line { display:inline-block; border-bottom:1px solid #333; width:60px; height:1em; }
+  .rules { font-size: 10pt; border: 1.5px solid #333; border-radius: 10px; padding: 6px 10px; margin-bottom: 5mm; line-height: 1.6; }
+  .q { margin-bottom: 6mm; border: 1.3px solid #555; border-radius: 12px; padding: 4mm 5mm; }
+  .qh { display: flex; align-items: center; gap: 8px; border-bottom: 1.5px dashed #888; padding-bottom: 3px; margin-bottom: 3mm; }
+  .num { display: inline-flex; align-items: center; justify-content: center; width: 1.9em; height: 1.9em; border-radius: 50%; border: 2px solid #111; font-weight: bold; font-size: 1.05em; flex-shrink: 0; }
+  .inst { font-size: 10.8pt; flex: 1; }
+  .pts { float: right; font-size: 9.5pt; color: #333; }
+  ol.items { margin: 0; padding-left: 1.5em; }
+  ol.items > li { margin-bottom: 3.2mm; }
+  .figwrap { display:flex; justify-content:center; margin: 3mm 0; gap: 14px; flex-wrap: wrap; }
+  .ansline { display:inline-block; border-bottom:1.3px solid #333; min-width: 70px; height: 1.3em; }
+  .blank { display:inline-block; min-width: 1.6em; border-bottom: 1.3px solid #333; text-align:center; }
+  .conf-row { display:flex; justify-content:flex-end; align-items:center; gap:7px; font-size:9.3pt; color:#333; margin-top:3mm; border-top: 1px dashed #ccc; padding-top: 2.5mm; }
+  .conf-row .label { margin-right:3px; color:#555; }
+  .conf-row .face { display:inline-flex; align-items:center; gap:2px; white-space:nowrap; }
+  .conf-row svg { display:block; }
+  table.dt { border-collapse: collapse; margin: 2mm auto; font-size: 10.8pt; }
+  table.dt th, table.dt td { border: 1px solid #333; padding: 4px 10px; text-align:center; }
+  table.dt th { background:#f0f0f0; }
+  .grid-box { border: 1.5px solid #333; border-radius: 10px; overflow: hidden; }
+  .choice-box { border: 1.3px solid #333; border-radius: 10px; padding: 5px 12px; display:inline-block; margin: 2mm auto; font-size: 10.8pt; }
+  .k { color:#000; font-weight:bold; text-decoration: underline; }
+  .memo { border: 1.3px dashed #333; border-radius: 10px; padding: 6px 10px; font-size: 9.6pt; margin-bottom: 5mm; background: #fafafa; }
+  .ex { font-size: 9.8pt; color:#222; margin: 1mm 0 0 0; line-height:1.55; }
+  .a { margin: 1mm 0; }
+  .reflect { border: 1.3px solid #333; border-radius: 12px; padding: 7px 12px; margin-top: 6mm; font-size: 10pt; line-height: 2; }
+  .reflect .line2 { border-bottom: 1px solid #999; display:block; height: 1.6em; }
+  .editbtn { position: fixed; top: 10px; right: 10px; z-index: 999; padding: 7px 14px; background:#333; color:#fff; border:none; border-radius:4px; font-size:12px; cursor:pointer; }
+  [contenteditable="true"] { outline: 1px dashed #4a90d9; }
+  @media print { body { background:#fff; padding:0; } .sheet { box-shadow:none; margin:0; width:auto; min-height:0; } .editbtn { display:none; } }
+</style>
+</head>
+<body>
+
+<button class="editbtn" onclick="toggleEdit()">編集モード</button>
+
+<div class="sheet">
+  <h1>小6算数　単元確認テスト⑪</h1>
+  <div class="sub">図形の拡大と縮小</div>
+  <div class="cheer">★　さいごまで、じぶんのペースでがんばろう！　★</div>
+  <div class="namebox">
+    <span>6年　<span class="line"></span>組　<span class="line"></span>番</span>
+    <span>名前　<span class="line" style="width:110px;"></span></span>
+    <span>／100点</span>
+  </div>
+  <div class="rules">
+    ・むずかしい問題はとばして、できる問題から先にやってもOKです。　・おわったら、見直しをしてみよう。
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">1</span><span class="inst">下の三角形ABCの2倍の拡大図が三角形DEFです。<span class="pts">（20点）</span></span></div>
+    <div class="figwrap">
+      <svg width="320" height="150" viewBox="0 0 320 150">
+        <polygon points="30,120 80,120 55,40" fill="none" stroke="#111" stroke-width="2"/>
+        <text x="25" y="135" font-size="13">A</text><text x="83" y="135" font-size="13">B</text><text x="50" y="30" font-size="13">C</text>
+        <text x="35" y="100" font-size="11">3cm</text>
+        <polygon points="160,130 260,130 210,10" fill="none" stroke="#111" stroke-width="2"/>
+        <text x="152" y="145" font-size="13">D</text><text x="265" y="145" font-size="13">E</text><text x="205" y="2" font-size="13">F</text>
+      </svg>
+    </div>
+    <ol class="items">
+      <li>辺ABが3cmのとき、対応する辺DEの長さは何cmですか。　（　<span class="ansline"></span>　）</li>
+      <li>角Aが70°のとき、対応する角Dの大きさは何度ですか。　（　<span class="ansline"></span>　）</li>
+      <li>三角形ABCの面積が9c㎡のとき、三角形DEFの面積は何c㎡ですか。　（　<span class="ansline"></span>　）</li>
+    </ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">2</span><span class="inst">方眼を使って、三角形を拡大・縮小しましょう。<span class="pts">（20点）</span></span></div>
+    <ol class="items">
+      <li>下の三角形の2倍の拡大図を、右の方眼にかきましょう。
+        <div class="figwrap">
+          <svg width="120" height="110" viewBox="0 0 120 110" class="grid-box">
+            <defs><pattern id="g1" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M0,0 H12 V12" fill="none" stroke="#ccc" stroke-width="0.5"/></pattern></defs>
+            <rect width="120" height="110" fill="url(#g1)"/>
+            <polygon points="24,96 60,96 24,48" fill="none" stroke="#111" stroke-width="2"/>
+          </svg>
+          <svg width="220" height="180" viewBox="0 0 220 180" class="grid-box">
+            <defs><pattern id="g2" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M0,0 H12 V12" fill="none" stroke="#ccc" stroke-width="0.5"/></pattern></defs>
+            <rect width="220" height="180" fill="url(#g2)"/>
+          </svg>
+        </div>
+      </li>
+      <li>下の四角形の1/2の縮図を、右の方眼にかきましょう。
+        <div class="figwrap">
+          <svg width="150" height="100" viewBox="0 0 150 100" class="grid-box">
+            <defs><pattern id="g3" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M0,0 H12 V12" fill="none" stroke="#ccc" stroke-width="0.5"/></pattern></defs>
+            <rect width="150" height="100" fill="url(#g3)"/>
+            <polygon points="24,84 120,84 132,24 36,24" fill="none" stroke="#111" stroke-width="2"/>
+          </svg>
+          <svg width="90" height="70" viewBox="0 0 90 70" class="grid-box">
+            <defs><pattern id="g4" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M0,0 H12 V12" fill="none" stroke="#ccc" stroke-width="0.5"/></pattern></defs>
+            <rect width="90" height="70" fill="url(#g4)"/>
+          </svg>
+        </div>
+      </li>
+    </ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q pb">
+    <div class="qh"><span class="num">3</span><span class="inst">縮尺1：25000の地図上で、2つの駅の間の長さが6cmでした。<span class="pts">（20点）</span></span></div>
+    <ol class="items">
+      <li>実際の2つの駅の間の距離は何mですか。　（　<span class="ansline"></span>　）</li>
+      <li>実際の距離が3kmの道を、この地図上では何cmで表せますか。　（　<span class="ansline"></span>　）</li>
+    </ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">4</span><span class="inst">木の高さを調べるために、縮図を使って求めます。<span class="pts">（20点）</span></span></div>
+    <p style="font-size:10.8pt;">木から10m離れた地点から木の先端を見上げると、見上げた角度が40°でした。この三角形を1/500の縮図にかいたところ、縮図上の木の高さにあたる辺の長さは1.7cmでした。</p>
+    <ol class="items">
+      <li>実際の木の高さは何mですか（目の高さは考えないものとします）。　（　<span class="ansline"></span>　）</li>
+    </ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">5</span><span class="inst">次の問いに答えましょう。<span class="pts">（20点）</span></span></div>
+    <ol class="items">
+      <li>三角形DEFが三角形ABCの1/3の縮図であるとき、辺ABと辺DEの長さの比を書きましょう。　（　<span class="ansline"></span>　）</li>
+      <li>拡大・縮小しても変わらないものを2つ選びましょう（あ　辺の長さ　い　角の大きさ　う　面積　え　形）。　（　<span class="ansline"></span>　）</li>
+    </ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+</div>
+
+<div class="sheet ans pb">
+  <h1>解答・解説</h1>
+  <div class="sub">小6算数　単元確認テスト⑪　図形の拡大と縮小（配点：各20点×5＝100点）</div>
+
+  <div class="memo">
+    ■ 出題範囲メモ：啓林館教科書6年「11.図形の拡大と縮小」相当。拡大図・縮図の対応する辺・角・面積、方眼を使った作図、縮図を利用した実際の距離・高さの計算まで。数値・場面はすべてオリジナルです。
+  </div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px;">1　拡大図の性質</h2>
+  <div class="a">① <span class="k">6cm</span>（3×2）　② <span class="k">70°</span>　③ <span class="k">36c㎡</span>（9×2×2）</div>
+  <div class="ex">対応する辺の長さは拡大・縮小の倍率（比）に比例するが、角の大きさは変わらない。面積は、辺の比の2乗（2×2＝4倍）になることに注意。</div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">2　方眼を使った作図</h2>
+  <div class="a">① 各頂点のマス目の数を2倍にして点をとり、結ぶ。　② 各頂点のマス目の数を1/2にして点をとり、結ぶ。</div>
+  <div class="ex">1つの頂点（基準点）を決め、そこから「右へ◯マス、上へ△マス」のように数えて、その数を2倍・1/2にして新しい点を打つのがポイント。</div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">3　縮尺の利用</h2>
+  <div class="a">① <span class="k">1500m</span>　② <span class="k">12cm</span></div>
+  <div class="ex">①地図上6cmは実際には6×25000＝150000cm＝1500m。②実際3km＝300000cmを縮尺で縮めると、300000÷25000＝12cm。</div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">4　縮図を使った高さの測定</h2>
+  <div class="a"><span class="k">8.5m</span></div>
+  <div class="ex">縮図は1/500なので、縮図上の1.7cmは実際には1.7×500＝850cm＝8.5m。</div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">5　拡大・縮小の性質の整理</h2>
+  <div class="a">① <span class="k">3：1</span>　② <span class="k">い、え</span></div>
+  <div class="ex">1/3の縮図なのでAB：DE＝3：1。角の大きさ（い）と形（え）は拡大・縮小によって変わらないが、辺の長さ（あ）と面積（う）は変わる。</div>
+
+  <div class="memo" style="margin-top:6mm;">
+    ■ この確認テストのねらい（講師メモ）：対応する辺・角の理解から、方眼上の作図技能、そして「縮図を実際の大きさに戻す」という逆算（×縮尺の逆数）まで段階的に確認。④は中学の三角比・測量の素地になる単元。</div>
+
+  <div class="reflect">
+    ★　この学習は楽しかったですか。（　はい　・　まあまあ　・　少し　・　いいえ　）<br>
+    ◆　この学習はよくわかりましたか。（　はい　・　まあまあ　・　少し　・　いいえ　）<br>
+    ●　感想を自由にかきましょう。<br>
+    <span class="line2"></span><span class="line2"></span>
+  </div>
+</div>
+
+<script>
+function toggleEdit(){
+  const sheets = document.querySelectorAll('.sheet');
+  const on = sheets[0].getAttribute('contenteditable') === 'true';
+  sheets.forEach(s => s.setAttribute('contenteditable', on ? 'false' : 'true'));
+  event.target.textContent = on ? '編集モード' : '編集モード：ON（もう一度押すと解除）';
+}
+</script>
+
+</body>
+</html>

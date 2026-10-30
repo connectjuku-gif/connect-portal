@@ -1,0 +1,403 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>西戸山中 2年 2学期期末 数学 予想問題</title>
+<style>
+  @page { size: A4; margin: 16mm 14mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif; color:#111; line-height:1.7; font-size:11.5pt; margin:0; background:#f2f2f2; }
+  .sheet { background:#fff; max-width: 190mm; margin: 12px auto; padding: 14mm 12mm; box-shadow: 0 1px 6px rgba(0,0,0,.15); }
+  @media print { body{background:#fff;} .sheet{ box-shadow:none; margin:0; padding:0; max-width:none; } .nop{display:none;} .pb{ page-break-before: always; } }
+  h1 { text-align:center; font-size:16pt; margin:0 0 4px; letter-spacing:.05em; }
+  .sub { text-align:center; font-size:10.5pt; color:#444; margin-bottom:10px; }
+  .namebox { border:1px solid #333; padding:6px 10px; display:flex; gap:24px; justify-content:flex-end; margin: 6px 0 14px; font-size:11pt; }
+  .rules { border:1px solid #333; padding:8px 12px; font-size:10pt; margin-bottom:14px; }
+  .q { margin: 18px 0 10px; }
+  .qh { display:flex; align-items:flex-start; gap:8px; }
+  .num { display:inline-block; border:1.5px solid #222; min-width:24px; text-align:center; font-weight:bold; line-height:1.4; padding:1px 4px; flex-shrink:0; }
+  .pts { float:right; font-size:10pt; color:#333; }
+  .inst { flex:1; }
+  ol.items { list-style:none; padding-left: 1.5em; margin:6px 0; }
+  ol.items li { margin: 7px 0; }
+  .blank { display:inline-block; border-bottom:1px solid #222; min-width:64px; text-align:center; vertical-align:bottom; }
+  .box { border:1px solid #222; padding:10px 14px; margin: 8px 0; }
+  .box p { margin: 3px 0; }
+  .note { font-size:9.5pt; color:#333; margin-top:6px; }
+  .sub2 { margin: 8px 0 2px; }
+  .hint { color:#444; }
+  .ans { background:#fbfbfb; }
+  .ans h2 { font-size:13pt; border-left:5px solid #222; padding-left:8px; margin:20px 0 6px; }
+  .ans .a { margin:4px 0 4px 1em; }
+  .ans .k { color:#000; font-weight:bold; text-decoration:underline; }
+  .ans .ex { font-size:10pt; color:#333; margin-left:1em; }
+  .memo { border:2px solid #222; padding:10px 14px; margin:10px 0 16px; font-size:10.5pt; }
+  .memo b { display:block; margin-bottom:4px; }
+  .frac { display:inline-flex; flex-direction:column; vertical-align:middle; text-align:center; margin:0 3px; line-height:1.15; font-size:10.5pt; }
+  .frac .fnum { border-bottom:1px solid #000; padding:0 3px; }
+  .frac .fden { padding:0 3px; }
+  .figwrap { text-align:center; margin:8px 0; }
+  .figcap { font-size:9.5pt; color:#444; text-align:center; margin-top:2px; }
+  svg { display:block; margin:6px auto; }
+  .editbtn { position:fixed; top:10px; right:10px; z-index:100; padding:6px 14px; font-size:10pt; cursor:pointer; border:1px solid #333; background:#fff; border-radius:4px; }
+  body.editing .sheet { outline: 2px dashed #888; }
+</style>
+</head>
+<body>
+
+<button class="editbtn nop" onclick="toggleEdit()">編集モード</button>
+
+<!-- ================= 問題用紙 ================= -->
+<div class="sheet">
+  <h1>第2学年 数学　2学期 期末考査 予想問題</h1>
+  <div class="sub">西戸山中学校 対策　／　範囲：3章 1次関数（8〜12）・4章 平行と合同（13〜15）</div>
+  <div class="namebox"><span>2年　　組　　番</span><span>名前　　　　　　　　　　　　　　</span><span>／100点</span></div>
+
+  <div class="rules">
+    ・大問8は証明問題です。仮定・結論を整理してから、根拠となることがら（仮定／対頂角／共通な辺　など）を必ず書くこと。<br>
+    ・円周率は π を用いなさい。座標平面を使う問題は、ことわりがない限り座標の1目盛りを1cmとします。<br>
+    ・答えだけでなく、途中の式も残しておくと見直しがしやすいです。
+  </div>
+
+  <!-- 1 -->
+  <div class="q">
+    <div class="qh"><span class="num">1</span><span class="inst">次の問いに答えなさい。<span class="pts">［知識・技能（2点×5）］</span></span></div>
+    <ol class="items">
+      <li>(1) 1次関数 y=-3x+5 について、グラフの傾きと切片をそれぞれ求めなさい。</li>
+      <li>(2) 1次関数 y=<span class="frac"><span class="fnum">2</span><span class="fden">3</span></span>x-4 について、グラフの傾きと切片をそれぞれ求めなさい。</li>
+      <li>(3) 1次関数 y=2x-1 について、xの変域が -2≦x≦3 のときのyの変域を求めなさい。</li>
+      <li>(4) グラフの傾きが -2 で、点(1, 3)を通る1次関数の式を求めなさい。</li>
+      <li>(5) グラフが2点(1, 4), (3, 10)を通る1次関数の式を求めなさい。</li>
+    </ol>
+  </div>
+
+  <!-- 2 -->
+  <div class="q">
+    <div class="qh"><span class="num">2</span><span class="inst">弟は9時に家を出発し、2400m離れた図書館まで一定の速さで歩いて行った。下のグラフは、弟が家を出発してからx分後の家からの道のりをy mとして、その関係を表したものである。<span class="pts">［思・判・表（3点×4）］</span></span></div>
+    <div class="figwrap">
+      <svg viewBox="0 0 380 300" width="320" height="252">
+        <line x1="50" y1="260" x2="365" y2="260" stroke="#000" stroke-width="1.2"/>
+        <polygon points="365,260 357,256 357,264" fill="#000"/>
+        <line x1="50" y1="260" x2="50" y2="15" stroke="#000" stroke-width="1.2"/>
+        <polygon points="50,15 46,23 54,23" fill="#000"/>
+        <line x1="110" y1="256" x2="110" y2="264" stroke="#000"/><text x="110" y="276" font-size="9" text-anchor="middle">6</text>
+        <line x1="170" y1="256" x2="170" y2="264" stroke="#000"/><text x="170" y="276" font-size="9" text-anchor="middle">12</text>
+        <line x1="230" y1="256" x2="230" y2="264" stroke="#000"/><text x="230" y="276" font-size="9" text-anchor="middle">18</text>
+        <line x1="290" y1="256" x2="290" y2="264" stroke="#000"/><text x="290" y="276" font-size="9" text-anchor="middle">24</text>
+        <line x1="350" y1="256" x2="350" y2="264" stroke="#000"/><text x="350" y="276" font-size="9" text-anchor="middle">30</text>
+        <text x="330" y="292" font-size="9">（分）</text>
+        <line x1="46" y1="200" x2="54" y2="200" stroke="#000"/><text x="40" y="203" font-size="9" text-anchor="end">600</text>
+        <line x1="46" y1="140" x2="54" y2="140" stroke="#000"/><text x="40" y="143" font-size="9" text-anchor="end">1200</text>
+        <line x1="46" y1="80" x2="54" y2="80" stroke="#000"/><text x="40" y="83" font-size="9" text-anchor="end">1800</text>
+        <line x1="46" y1="20" x2="54" y2="20" stroke="#000"/><text x="40" y="23" font-size="9" text-anchor="end">2400</text>
+        <text x="12" y="12" font-size="9">（m）</text>
+        <line x1="50" y1="20" x2="290" y2="20" stroke="#000" stroke-dasharray="3,3"/>
+        <text x="296" y="17" font-size="9">図書館</text>
+        <line x1="50" y1="260" x2="290" y2="20" stroke="#000" stroke-width="1.6"/>
+        <text x="212" y="108" font-size="10">弟</text>
+      </svg>
+    </div>
+    <ol class="items">
+      <li>(1) 弟の歩く速さは毎分何mか求めなさい。</li>
+      <li>(2) 兄は9時6分に家を出発し、毎分200mの自転車で同じ道を通って図書館に向かった。兄のようすを表すグラフを、上の図にかき入れなさい。</li>
+      <li>(3) 兄が弟に追いつく時刻を求めなさい。</li>
+      <li>(4) 兄が図書館に着いた時刻を求めなさい。</li>
+    </ol>
+  </div>
+
+  <!-- 3 -->
+  <div class="q pb">
+    <div class="qh"><span class="num">3</span><span class="inst">次の問いに答えなさい。<span class="pts">［知識・技能（3点×4）］</span></span></div>
+    <ol class="items">
+      <li>(1) 方程式 3x+2y=12 のグラフの傾きと切片をそれぞれ求めなさい。</li>
+      <li>(2) 連立方程式 <span style="display:inline-block;vertical-align:middle;">{ y=2x-1<br>&nbsp;y=-x+5 }</span> の解を求めなさい。</li>
+      <li>(3) 直線ℓは、x軸との交点のx座標が3で、直線 y=-x+9 との交点Aのx座標が5である。直線ℓの式を求めなさい。</li>
+      <li>(4) 2直線 y=3x-2、y=-2x+8 の交点の座標を求めなさい。</li>
+    </ol>
+  </div>
+
+  <!-- 4 -->
+  <div class="q">
+    <div class="qh"><span class="num">4</span><span class="inst">次の問いに答えなさい。座標の1目盛りを1cmとする。<span class="pts">［思・判・表（6+4+4点）］</span></span></div>
+    <ol class="items">
+      <li>(1) 直線 y=x+1 と直線 y=-2x+10 の交点をA、それぞれの直線とy軸との交点をB、Cとする。<br>
+        ① 3点A, B, Cの座標をそれぞれ求めなさい。<br>
+        ② △ABCの面積を求めなさい。</li>
+      <li>(2) 直線 y=-x+6 と、x軸、y軸との交点をそれぞれA, Bとする。△OABを、x軸を軸として回転させてできる立体の体積を求めなさい。</li>
+    </ol>
+  </div>
+
+  <!-- 5 -->
+  <div class="q pb">
+    <div class="qh"><span class="num">5</span><span class="inst">次の問いに答えなさい。<span class="pts">［知識・技能（2点×4）］</span></span></div>
+    <ol class="items">
+      <li>(1) 正九角形の1つの内角の大きさを求めなさい。</li>
+      <li>(2) 正九角形の1つの外角の大きさを求めなさい。</li>
+      <li>(3) 内角の和が1980°になる多角形は何角形か求めなさい。</li>
+      <li>(4) 右の図で、∠xの大きさを求めなさい。
+        <div class="figwrap">
+          <svg viewBox="0 0 260 180" width="220" height="152">
+            <polygon points="40,140 90,40 190,30 220,130" fill="none" stroke="#000" stroke-width="1.3"/>
+            <text x="18" y="150" font-size="11">x</text>
+            <text x="95" y="35" font-size="11">95°</text>
+            <text x="195" y="22" font-size="11">110°</text>
+            <text x="218" y="148" font-size="11">80°</text>
+          </svg>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <!-- 6 -->
+  <div class="q">
+    <div class="qh"><span class="num">6</span><span class="inst">次の問いに答えなさい。<span class="pts">［知識・技能（3点×5）］</span></span></div>
+    <ol class="items">
+      <li>(1) 下の図で、ℓ//mのとき、∠xの大きさを求めなさい。
+        <div class="figwrap">
+          <svg viewBox="0 0 260 220" width="220" height="186">
+            <line x1="10" y1="40" x2="250" y2="40" stroke="#000"/><text x="2" y="35" font-size="10">ℓ</text>
+            <line x1="10" y1="180" x2="250" y2="180" stroke="#000"/><text x="2" y="195" font-size="10">m</text>
+            <line x1="90" y1="40" x2="150" y2="110" stroke="#000"/>
+            <line x1="150" y1="110" x2="110" y2="180" stroke="#000"/>
+            <text x="95" y="56" font-size="10">38°</text>
+            <text x="158" y="107" font-size="11">x</text>
+            <text x="112" y="172" font-size="10">52°</text>
+          </svg>
+        </div>
+      </li>
+      <li>(2) 下の図で、ℓ//mのとき、∠xの大きさを求めなさい。
+        <div class="figwrap">
+          <svg viewBox="0 0 260 220" width="220" height="186">
+            <line x1="10" y1="40" x2="250" y2="40" stroke="#000"/><text x="2" y="35" font-size="10">ℓ</text>
+            <line x1="10" y1="180" x2="250" y2="180" stroke="#000"/><text x="2" y="195" font-size="10">m</text>
+            <line x1="170" y1="40" x2="110" y2="110" stroke="#000"/>
+            <line x1="110" y1="110" x2="150" y2="180" stroke="#000"/>
+            <text x="138" y="56" font-size="10">48°</text>
+            <text x="78" y="107" font-size="11">x</text>
+            <text x="155" y="172" font-size="10">37°</text>
+          </svg>
+        </div>
+      </li>
+      <li>(3) 下の図で、ℓ//mのとき、∠xの大きさを求めなさい。
+        <div class="figwrap">
+          <svg viewBox="0 0 260 220" width="220" height="186">
+            <line x1="10" y1="40" x2="250" y2="40" stroke="#000"/><text x="2" y="35" font-size="10">ℓ</text>
+            <line x1="10" y1="180" x2="250" y2="180" stroke="#000"/><text x="2" y="195" font-size="10">m</text>
+            <line x1="60" y1="40" x2="140" y2="110" stroke="#000"/>
+            <line x1="140" y1="110" x2="190" y2="180" stroke="#000"/>
+            <text x="63" y="56" font-size="10">65°</text>
+            <text x="148" y="107" font-size="11">x</text>
+            <text x="190" y="172" font-size="10">20°</text>
+          </svg>
+        </div>
+      </li>
+      <li>(4) 下の図で、∠xの大きさを求めなさい。
+        <div class="figwrap">
+          <svg viewBox="0 0 260 200" width="220" height="169">
+            <polygon points="130,20 40,150 130,110 220,150" fill="none" stroke="#000" stroke-width="1.3"/>
+            <text x="123" y="36" font-size="10">65°</text>
+            <text x="38" y="145" font-size="10">35°</text>
+            <text x="196" y="145" font-size="10">25°</text>
+            <text x="120" y="105" font-size="11">x</text>
+          </svg>
+        </div>
+      </li>
+      <li>(5) 下の図は星形の図形である。印のついた5つの角の大きさの和を求めなさい。
+        <div class="figwrap">
+          <svg viewBox="0 0 260 200" width="220" height="169">
+            <polygon points="130,15 74,187 220,81 40,81 186,187" fill="none" stroke="#000" stroke-width="1.3"/>
+            <circle cx="130" cy="15" r="2.5" fill="#000"/>
+            <circle cx="74" cy="187" r="2.5" fill="#000"/>
+            <circle cx="220" cy="81" r="2.5" fill="#000"/>
+            <circle cx="40" cy="81" r="2.5" fill="#000"/>
+            <circle cx="186" cy="187" r="2.5" fill="#000"/>
+          </svg>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <!-- 7 -->
+  <div class="q pb">
+    <div class="qh"><span class="num">7</span><span class="inst">次の問いに答えなさい。<span class="pts">［知識・技能（3点×4）］</span></span></div>
+    <ol class="items">
+      <li>(1) △ABCと△DEFが合同であることをいうためには、次の条件に何を加えればよいか。<span class="blank" style="min-width:70px;"></span>にあてはまる辺や角を答え、そのときに使う合同条件も答えなさい。<br>
+        AB=DE、BC=EF、<span class="blank"></span>=<span class="blank"></span></li>
+      <li>(2) 同じく、条件に何を加えればよいか答え、合同条件も答えなさい。<br>
+        AB=DE、CA=FD、<span class="blank"></span>=<span class="blank"></span></li>
+      <li>(3) 同じく、条件に何を加えればよいか答え、合同条件も答えなさい。<br>
+        ∠B=∠E、∠C=∠F、<span class="blank"></span>=<span class="blank"></span></li>
+      <li>(4) 下の図のように、線分ABとDCが点Eで交わっており、AE=DE、BE=CEである。合同な三角形を記号≡を使って表しなさい。また、そのときに使った合同条件を答えなさい。
+        <div class="figwrap">
+          <svg viewBox="0 0 260 180" width="220" height="152">
+            <line x1="40" y1="30" x2="220" y2="150" stroke="#000"/>
+            <line x1="220" y1="30" x2="40" y2="150" stroke="#000"/>
+            <text x="24" y="26" font-size="11">A</text>
+            <text x="224" y="26" font-size="11">D</text>
+            <text x="18" y="162" font-size="11">B</text>
+            <text x="224" y="162" font-size="11">C</text>
+            <text x="135" y="100" font-size="11">E</text>
+            <line x1="78" y1="53" x2="90" y2="65" stroke="#000"/>
+            <line x1="182" y1="53" x2="170" y2="65" stroke="#000"/>
+            <line x1="78" y1="118" x2="90" y2="122" stroke="#000"/>
+            <line x1="76" y1="125" x2="88" y2="129" stroke="#000"/>
+            <line x1="182" y1="118" x2="170" y2="122" stroke="#000"/>
+            <line x1="184" y1="125" x2="172" y2="129" stroke="#000"/>
+          </svg>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <!-- 8 -->
+  <div class="q pb">
+    <div class="qh"><span class="num">8</span><span class="inst">次の問いに証明しなさい。仮定・結論を明らかにしてから書くこと。<span class="pts">［思・判・表（8点＋9点）］</span></span></div>
+    <ol class="items">
+      <li>(1) 下の図のように、点Oは線分ACとBDの交点である。AO=CO、BO=DOならば、AB=CDであることを証明しなさい。
+        <div class="figwrap">
+          <svg viewBox="0 0 260 200" width="220" height="169">
+            <line x1="50" y1="40" x2="210" y2="160" stroke="#000"/>
+            <line x1="40" y1="160" x2="220" y2="40" stroke="#000"/>
+            <text x="34" y="36" font-size="11">A</text>
+            <text x="216" y="176" font-size="11">C</text>
+            <text x="18" y="176" font-size="11">B</text>
+            <text x="224" y="36" font-size="11">D</text>
+            <text x="135" y="105" font-size="11">O</text>
+          </svg>
+        </div>
+      </li>
+      <li>(2) 下の図のように、四角形ABCDにおいて、AB=AD、CB=CDならば、∠ABC=∠ADCであることを証明しなさい。
+        <div class="figwrap">
+          <svg viewBox="0 0 220 220" width="190" height="190">
+            <polygon points="110,20 190,110 110,200 30,110" fill="none" stroke="#000" stroke-width="1.3"/>
+            <line x1="110" y1="20" x2="110" y2="200" stroke="#000" stroke-dasharray="4,3"/>
+            <text x="100" y="14" font-size="11">A</text>
+            <text x="196" y="115" font-size="11">B</text>
+            <text x="100" y="217" font-size="11">C</text>
+            <text x="8" y="115" font-size="11">D</text>
+          </svg>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+</div>
+
+<!-- ================= 解答・解説 ================= -->
+<div class="sheet ans pb">
+  <h1>解答・解説</h1>
+  <div class="sub">配点：1 10点／2 12点／3 12点／4 14点／5 8点／6 15点／7 12点／8 17点　＝ 100点</div>
+
+  <div class="memo">
+    <b>■ 出題範囲メモ（作問時の判断）</b>
+    ・範囲は第3章「8 1次関数とグラフ」〜「12 直線と図形」と、第4章「13 多角形の角，平行線と角」〜「15 合同な図形」。<br>
+    ・1次関数は基礎（傾き・切片・変域・式を求める）を大問1に少しだけ入れ、中心は大問2〜4の「利用」（ダイヤグラム・2直線の交点・直線と図形）にしました。<br>
+    ・平行と合同は角度計算（多角形の角・平行線と角・三角形の内角外角の利用）を厚めに、証明は2問（合同条件のみで完結する基本パターン）にしています。
+  </div>
+
+  <h2>1（2点×5）</h2>
+  <div class="a">(1) 傾き <span class="k">-3</span>、切片 <span class="k">5</span>　(2) 傾き <span class="k">2/3</span>、切片 <span class="k">-4</span>　(3) <span class="k">-5≦y≦5</span>　(4) <span class="k">y=-2x+5</span>　(5) <span class="k">y=3x+1</span></div>
+  <div class="ex">(3) x=-2のときy=-5、x=3のときy=5（傾きが正なので対応順そのまま）。(4) y=-2x+bに(1,3)を代入してb=5。(5) 傾き=(10-4)/(3-1)=3、y=3x+bに(1,4)を代入してb=1。</div>
+
+  <h2>2（3点×4）</h2>
+  <div class="a">(1) <span class="k">毎分100m</span>　(3) <span class="k">9時12分</span>　(4) <span class="k">9時18分</span></div>
+  <div class="figwrap">
+    <svg viewBox="0 0 380 300" width="320" height="252">
+      <line x1="50" y1="260" x2="365" y2="260" stroke="#000" stroke-width="1.2"/>
+      <polygon points="365,260 357,256 357,264" fill="#000"/>
+      <line x1="50" y1="260" x2="50" y2="15" stroke="#000" stroke-width="1.2"/>
+      <polygon points="50,15 46,23 54,23" fill="#000"/>
+      <line x1="110" y1="256" x2="110" y2="264" stroke="#000"/><text x="110" y="276" font-size="9" text-anchor="middle">6</text>
+      <line x1="170" y1="256" x2="170" y2="264" stroke="#000"/><text x="170" y="276" font-size="9" text-anchor="middle">12</text>
+      <line x1="230" y1="256" x2="230" y2="264" stroke="#000"/><text x="230" y="276" font-size="9" text-anchor="middle">18</text>
+      <line x1="290" y1="256" x2="290" y2="264" stroke="#000"/><text x="290" y="276" font-size="9" text-anchor="middle">24</text>
+      <line x1="350" y1="256" x2="350" y2="264" stroke="#000"/><text x="350" y="276" font-size="9" text-anchor="middle">30</text>
+      <text x="330" y="292" font-size="9">（分）</text>
+      <line x1="46" y1="200" x2="54" y2="200" stroke="#000"/><text x="40" y="203" font-size="9" text-anchor="end">600</text>
+      <line x1="46" y1="140" x2="54" y2="140" stroke="#000"/><text x="40" y="143" font-size="9" text-anchor="end">1200</text>
+      <line x1="46" y1="80" x2="54" y2="80" stroke="#000"/><text x="40" y="83" font-size="9" text-anchor="end">1800</text>
+      <line x1="46" y1="20" x2="54" y2="20" stroke="#000"/><text x="40" y="23" font-size="9" text-anchor="end">2400</text>
+      <text x="12" y="12" font-size="9">（m）</text>
+      <line x1="50" y1="20" x2="290" y2="20" stroke="#000" stroke-dasharray="3,3"/>
+      <text x="296" y="17" font-size="9">図書館</text>
+      <line x1="50" y1="260" x2="290" y2="20" stroke="#000" stroke-width="1.6"/>
+      <text x="212" y="108" font-size="10">弟</text>
+      <line x1="110" y1="260" x2="230" y2="20" stroke="#000" stroke-width="1.6" stroke-dasharray="7,3"/>
+      <text x="238" y="55" font-size="10">兄</text>
+      <circle cx="170" cy="140" r="3.5" fill="#000"/>
+      <text x="178" y="133" font-size="9">(12分,1200m)</text>
+    </svg>
+  </div>
+  <div class="ex">弟：y=100x（0≦x≦24）。兄：9時6分出発、毎分200mなので y=200(x-6)（6≦x≦18）。この2式を連立して100x=200(x-6)を解くとx=12、y=1200。したがって9時12分、家から1200m地点で追いつく。兄が図書館（2400m）に着くのは2400÷200=12分後なので9時6分+12分=9時18分。</div>
+
+  <h2>3（3点×4）</h2>
+  <div class="a">(1) 傾き <span class="k">-3/2</span>、切片 <span class="k">6</span>　(2) <span class="k">x=2, y=3</span>　(3) <span class="k">y=2x-6</span>　(4) <span class="k">(2, 4)</span></div>
+  <div class="ex">(1) 3x+2y=12をyについて解くとy=-3/2x+6。(2) 2x-1=-x+5より3x=6、x=2、y=3。(3) y=-x+9にx=5を代入してy=4なのでA(5,4)。ℓは2点(3,0),(5,4)を通るので傾き=(4-0)/(5-3)=2、y=2x+bに(3,0)を代入してb=-6。(4) 3x-2=-2x+8より5x=10、x=2、y=4。</div>
+
+  <h2>4（6点＋4点＋4点）</h2>
+  <div class="a">(1)① A<span class="k">(3, 4)</span>、B<span class="k">(0, 1)</span>、C<span class="k">(0, 10)</span>　② <span class="k">13.5cm²</span>　(2) <span class="k">72πcm³</span></div>
+  <div class="ex">(1) x+1=-2x+10より3x=9、x=3、y=4でA(3,4)。y=x+1のy切片がB(0,1)、y=-2x+10のy切片がC(0,10)。△ABCはBCを底辺とみると底辺=10-1=9、高さ=Aのx座標=3なので面積=1/2×9×3=13.5cm²。<br>
+  (2) y=-x+6はx軸と(6,0)、y軸と(0,6)で交わるのでA(6,0)、B(0,6)。△OABをx軸を軸として回転させると、底面の半径がOB=6、高さがOA=6の円すいができる。体積=1/3×π×6²×6=72π(cm³)。</div>
+
+  <h2>5（2点×4）</h2>
+  <div class="a">(1) <span class="k">140°</span>　(2) <span class="k">40°</span>　(3) <span class="k">十三角形</span>　(4) <span class="k">75°</span></div>
+  <div class="ex">(1)(2) 正九角形の内角の和は180×(9-2)=1260°なので1つの内角は1260÷9=140°、外角は360÷9=40°。(3) 180×(n-2)=1980よりn-2=11、n=13。(4) 四角形の内角の和は360°なので、x=360-95-110-80=75°。</div>
+
+  <h2>6（3点×5）</h2>
+  <div class="a">(1) <span class="k">90°</span>　(2) <span class="k">85°</span>　(3) <span class="k">85°</span>　(4) <span class="k">125°</span>　(5) <span class="k">180°</span></div>
+  <div class="ex">(1)〜(3) 頂点を通り、ℓ、mに平行な補助線をひくと、錯角がそれぞれの角に等しくなるので、∠x=2つの角の和になる。(1) 38°+52°=90°　(2) 48°+37°=85°　(3) 65°+20°=85°。<br>
+  (4) 図のような矢じり形では、へこんだ頂点の角は残り3つの角の和に等しくなる（三角形の外角の性質を2回使うことで示せる）ので、x=65°+35°+25°=125°。<br>
+  (5) 星形の5つの先端の角の和はつねに180°になる（三角形の外角の性質を繰り返し使うと示せる）。</div>
+
+  <h2>7（3点×4）</h2>
+  <div class="a">(1) <span class="k">∠B=∠E</span>（2組の辺とその間の角がそれぞれ等しい）<br>
+  (2) <span class="k">∠A=∠D</span>（2組の辺とその間の角がそれぞれ等しい）<br>
+  (3) <span class="k">BC=EF</span>（1組の辺とその両端の角がそれぞれ等しい）<br>
+  (4) <span class="k">△ABE≡△DCE</span>（2組の辺とその間の角がそれぞれ等しい）</div>
+  <div class="ex">(4) AE=DE、BE=CEに加え、∠AEBと∠DECは対頂角で等しいから、2組の辺とその間の角がそれぞれ等しいといえる。</div>
+
+  <h2>8（8点＋9点）</h2>
+  <div class="a">
+    (1)［証明］<br>
+    仮定：AO=CO、BO=DO　　結論：AB=CD<br>
+    △AOBと△CODにおいて、<br>
+    仮定から、　AO=CO　…①<br>
+    仮定から、　BO=DO　…②<br>
+    対頂角は等しいから、　∠AOB=∠COD　…③<br>
+    ①、②、③より、2組の辺とその間の角がそれぞれ等しいから、<br>
+    <span class="k">△AOB≡△COD</span><br>
+    合同な図形の対応する辺は等しいから、<span class="k">AB=CD</span>
+  </div>
+  <div class="a">
+    (2)［証明］<br>
+    仮定：AB=AD、CB=CD　　結論：∠ABC=∠ADC<br>
+    △ABCと△ADCにおいて、<br>
+    仮定から、　AB=AD　…①<br>
+    仮定から、　CB=CD　…②<br>
+    共通な辺だから、　AC=AC　…③<br>
+    ①、②、③より、3組の辺がそれぞれ等しいから、<br>
+    <span class="k">△ABC≡△ADC</span><br>
+    合同な図形の対応する角は等しいから、<span class="k">∠ABC=∠ADC</span>
+  </div>
+  <div class="ex">採点の目安：仮定・結論の整理（2点）、根拠（対頂角／共通な辺）の指摘（2〜3点）、合同条件を正しく選べているか（2〜3点）、結論まで書けているか（2点）。合同条件の名称を書き忘れている答案はその分だけ減点してください。</div>
+
+  <h2>この予想問題のねらい（生徒への指示）</h2>
+  <div class="ex">
+    ① 大問1・3・4で1次関数の基礎〜応用（変域、直線の式、2直線の交点、面積、回転体）を一通り復習できるようにしています。大問4②の面積は「y軸上の線分を底辺とみる」解き方（ポイント2の型）を必ず定着させてください。<br>
+    ② 大問2のようなダイヤグラム問題は、2つの式を連立方程式として解く練習を必ずセットでやらせてください（グラフだけで読み取ろうとすると時間がかかります）。<br>
+    ③ 大問6(4)(5)のような「矢じり形」「星形」の角は、三角形の外角の性質（外角＝離れた2つの内角の和）を繰り返し使うだけで解けることを、実際に自分で補助線を引かせて確認させてください。<br>
+    ④ 証明は大問8の2問（対頂角を使うSAS型、共通な辺を使うSSS型）が基本の2パターンです。まずはこの2つを自力で再現できるまで書く練習をさせ、慣れてきたら大問7(4)のような図から三角形を見つける練習につなげてください。
+  </div>
+</div>
+
+<script>
+function toggleEdit(){
+  document.body.classList.toggle('editing');
+  var editing = document.body.classList.contains('editing');
+  document.querySelectorAll('.sheet').forEach(function(s){ s.contentEditable = editing; });
+}
+</script>
+
+</body>
+</html>

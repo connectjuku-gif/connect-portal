@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小6算数 単元確認テスト⑧　立体の体積</title>
+<style>
+  @page { size: A4; margin: 14mm 12mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "UD Digi Kyokasho NP-R","BIZ UDPGothic","Hiragino Maru Gothic ProN","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    font-size: 12.5pt; line-height: 1.65; color: #111; background: #e9e9e9; margin: 0; padding: 20px 0;
+  }
+  .sheet { width: 210mm; min-height: 297mm; margin: 0 auto 24px; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.25); padding: 14mm 12mm; position: relative; }
+  .pb { page-break-before: always; }
+  h1 { text-align: center; font-size: 19pt; margin: 0 0 2mm; letter-spacing: .06em; }
+  .sub { text-align: center; font-size: 11pt; color: #333; margin-bottom: 2mm; }
+  .cheer { text-align: center; font-size: 10.5pt; color: #333; margin-bottom: 4mm; }
+  .namebox { display: flex; justify-content: flex-end; gap: 14px; font-size: 10pt; border-top: 1px solid #999; border-bottom: 1px solid #999; padding: 3px 0; margin-bottom: 5mm; }
+  .namebox span { white-space: nowrap; }
+  .namebox .line { display:inline-block; border-bottom:1px solid #333; width:60px; height:1em; }
+  .rules { font-size: 10pt; border: 1.5px solid #333; border-radius: 10px; padding: 6px 10px; margin-bottom: 5mm; line-height: 1.6; }
+  .q { margin-bottom: 6mm; border: 1.3px solid #555; border-radius: 12px; padding: 4mm 5mm; }
+  .qh { display: flex; align-items: center; gap: 8px; border-bottom: 1.5px dashed #888; padding-bottom: 3px; margin-bottom: 3mm; }
+  .num { display: inline-flex; align-items: center; justify-content: center; width: 1.9em; height: 1.9em; border-radius: 50%; border: 2px solid #111; font-weight: bold; font-size: 1.05em; flex-shrink: 0; }
+  .inst { font-size: 10.8pt; flex: 1; }
+  .pts { float: right; font-size: 9.5pt; color: #333; }
+  ol.items { margin: 0; padding-left: 1.5em; }
+  ol.items > li { margin-bottom: 3.2mm; }
+  .figwrap { display:flex; justify-content:center; margin: 3mm 0; gap: 14px; flex-wrap: wrap; }
+  .ansline { display:inline-block; border-bottom:1.3px solid #333; min-width: 70px; height: 1.3em; }
+  .blank { display:inline-block; min-width: 1.6em; border-bottom: 1.3px solid #333; text-align:center; }
+  .conf-row { display:flex; justify-content:flex-end; align-items:center; gap:7px; font-size:9.3pt; color:#333; margin-top:3mm; border-top: 1px dashed #ccc; padding-top: 2.5mm; }
+  .conf-row .label { margin-right:3px; color:#555; }
+  .conf-row .face { display:inline-flex; align-items:center; gap:2px; white-space:nowrap; }
+  .conf-row svg { display:block; }
+  table.dt { border-collapse: collapse; margin: 2mm auto; font-size: 10.8pt; }
+  table.dt th, table.dt td { border: 1px solid #333; padding: 4px 10px; text-align:center; }
+  table.dt th { background:#f0f0f0; }
+  .grid-box { border: 1.5px solid #333; border-radius: 10px; overflow: hidden; }
+  .choice-box { border: 1.3px solid #333; border-radius: 10px; padding: 5px 12px; display:inline-block; margin: 2mm auto; font-size: 10.8pt; }
+  .k { color:#000; font-weight:bold; text-decoration: underline; }
+  .memo { border: 1.3px dashed #333; border-radius: 10px; padding: 6px 10px; font-size: 9.6pt; margin-bottom: 5mm; background: #fafafa; }
+  .ex { font-size: 9.8pt; color:#222; margin: 1mm 0 0 0; line-height:1.55; }
+  .a { margin: 1mm 0; }
+  .reflect { border: 1.3px solid #333; border-radius: 12px; padding: 7px 12px; margin-top: 6mm; font-size: 10pt; line-height: 2; }
+  .reflect .line2 { border-bottom: 1px solid #999; display:block; height: 1.6em; }
+  .editbtn { position: fixed; top: 10px; right: 10px; z-index: 999; padding: 7px 14px; background:#333; color:#fff; border:none; border-radius:4px; font-size:12px; cursor:pointer; }
+  [contenteditable="true"] { outline: 1px dashed #4a90d9; }
+  @media print { body { background:#fff; padding:0; } .sheet { box-shadow:none; margin:0; width:auto; min-height:0; } .editbtn { display:none; } }
+</style>
+</head>
+<body>
+
+<button class="editbtn" onclick="toggleEdit()">編集モード</button>
+
+<div class="sheet">
+  <h1>小6算数　単元確認テスト⑧</h1>
+  <div class="sub">立体の体積</div>
+  <div class="cheer">★　さいごまで、じぶんのペースでがんばろう！　★</div>
+  <div class="namebox">
+    <span>6年　<span class="line"></span>組　<span class="line"></span>番</span>
+    <span>名前　<span class="line" style="width:110px;"></span></span>
+    <span>／100点</span>
+  </div>
+  <div class="rules">
+    ・円周率は3.14として計算しましょう。　・むずかしい問題はとばして、できる問題から先にやってもOKです。
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">1</span><span class="inst">右の図のような三角柱の体積を求めます。底面の三角形は底辺7cm、高さ6cm、柱の高さは10cmです。<span class="pts">（20点）</span></span></div>
+    <div class="figwrap">
+      <svg width="170" height="160" viewBox="0 0 170 160">
+        <polygon points="30,130 90,130 90,60" fill="none" stroke="#111" stroke-width="2"/>
+        <polygon points="30,50 90,50 90,-20" fill="none" stroke="#111" stroke-width="2" transform="translate(0,20)"/>
+        <line x1="30" y1="130" x2="30" y2="50" stroke="#111" stroke-width="2"/>
+        <line x1="90" y1="130" x2="90" y2="50" stroke="#111" stroke-width="2"/>
+        <line x1="90" y1="60" x2="90" y2="-20" stroke="#111" stroke-width="2" transform="translate(0,20)"/>
+        <line x1="30" y1="130" x2="90" y2="60" stroke="#111" stroke-width="1.3" stroke-dasharray="3,3"/>
+        <text x="55" y="148" font-size="12">7cm</text>
+        <text x="100" y="95" font-size="12">6cm</text>
+        <text x="5" y="90" font-size="12">10cm</text>
+      </svg>
+    </div>
+    <ol class="items">
+      <li>角柱の体積＝底面積×高さ、の公式にあてはめて、三角柱の体積を求めましょう。<br>
+        式（　<span class="ansline" style="min-width:200px;"></span>　）　答え（　<span class="ansline"></span>　）</li>
+    </ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">2</span><span class="inst">右の図のような円柱の体積を求めます。底面の半径は4cm、高さは9cmです。<span class="pts">（20点）</span></span></div>
+    <div class="figwrap">
+      <svg width="140" height="160" viewBox="0 0 140 160">
+        <ellipse cx="70" cy="30" rx="50" ry="16" fill="none" stroke="#111" stroke-width="2"/>
+        <line x1="20" y1="30" x2="20" y2="130" stroke="#111" stroke-width="2"/>
+        <line x1="120" y1="30" x2="120" y2="130" stroke="#111" stroke-width="2"/>
+        <path d="M20,130 A50,16 0 0,0 120,130" fill="none" stroke="#111" stroke-width="2"/>
+        <path d="M20,30 A50,16 0 0,0 120,30" fill="none" stroke="#111" stroke-width="1.3" stroke-dasharray="3,3"/>
+        <line x1="70" y1="30" x2="20" y2="30" stroke="#111" stroke-width="1.3"/>
+        <text x="40" y="24" font-size="12">4cm</text>
+        <text x="0" y="85" font-size="12">9cm</text>
+      </svg>
+    </div>
+    <ol class="items">
+      <li>円柱の体積＝底面積×高さ、の公式にあてはめて、円柱の体積を求めましょう。<br>
+        式（　<span class="ansline" style="min-width:220px;"></span>　）　答え（　<span class="ansline"></span>　）</li>
+    </ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q pb">
+    <div class="qh"><span class="num">3</span><span class="inst">次の立体の体積を求めましょう。<span class="pts">（20点）</span></span></div>
+    <table class="dt" style="width:100%;">
+      <tr><td style="text-align:left;">① 台形が底面の四角柱（上底4cm、下底8cm、高さ5cm、柱の高さ6cm）</td><td style="min-width:90px;">&nbsp;</td></tr>
+      <tr><td style="text-align:left;">② L字型の四角柱（10cm×6cmの長方形から4cm×3cmの角を切り欠き、柱の高さ5cm）</td><td>&nbsp;</td></tr>
+      <tr><td style="text-align:left;">③ 円柱（底面の半径5cm、柱の高さ12cm）</td><td>&nbsp;</td></tr>
+      <tr><td style="text-align:left;">④ 半円柱（底面の半径4cm、柱の長さ10cm）</td><td>&nbsp;</td></tr>
+    </table>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">4</span><span class="inst">1辺の長さが12cmの立方体の、1つの面から向かいあう面まで、半径3cmの円柱の形をした穴をまっすぐにあけました。<span class="pts">（20点）</span></span></div>
+    <div class="figwrap">
+      <svg width="170" height="170" viewBox="0 0 170 170">
+        <polygon points="30,30 140,30 140,140 30,140" fill="none" stroke="#111" stroke-width="2"/>
+        <polygon points="30,30 50,10 160,10 140,30" fill="none" stroke="#111" stroke-width="2"/>
+        <polygon points="140,30 160,10 160,120 140,140" fill="none" stroke="#111" stroke-width="2"/>
+        <ellipse cx="85" cy="20" rx="25" ry="8" fill="#fff" stroke="#111" stroke-width="1.5"/>
+        <text x="100" y="5" font-size="12">12cm</text>
+      </svg>
+    </div>
+    <ol class="items">
+      <li>この立体の体積を求めましょう。<br>
+        式（　<span class="ansline" style="min-width:260px;"></span>　）　答え（　<span class="ansline"></span>　）</li>
+    </ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">5</span><span class="inst">学んだ公式をふりかえりましょう。<span class="pts">（20点）</span></span></div>
+    <ol class="items">
+      <li>角柱・円柱の体積を求める公式を、ことばで書きましょう。　（　<span class="ansline" style="min-width:220px;"></span>　）</li>
+      <li>①の公式が、三角柱でも円柱でも使える理由を、自分のことばで説明しましょう。<br>
+        （　<span class="ansline" style="min-width:300px;"></span>　）</li>
+    </ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+</div>
+
+<div class="sheet ans pb">
+  <h1>解答・解説</h1>
+  <div class="sub">小6算数　単元確認テスト⑧　立体の体積（配点：各20点×5＝100点）</div>
+
+  <div class="memo">
+    ■ 出題範囲メモ：啓林館教科書6年「8.立体の体積」相当。角柱・円柱の体積公式、複合立体（台形柱・L字柱・半円柱）、穴のあいた立体の体積まで。円周率は3.14で統一。数値はすべてオリジナルです。
+  </div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px;">1　三角柱の体積</h2>
+  <div class="a">式　<span class="k">7×6÷2×10</span>　答え　<span class="k">210c㎥</span></div>
+  <div class="ex">底面積（三角形の面積＝底辺×高さ÷2）を先に求めてから、柱の高さをかける。</div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">2　円柱の体積</h2>
+  <div class="a">式　<span class="k">4×4×3.14×9</span>　答え　<span class="k">452.16c㎥</span></div>
+  <div class="ex">円柱の底面積は「半径×半径×円周率」。先に底面積（16×3.14＝50.24）を求めると計算しやすい。</div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">3　複合立体の体積</h2>
+  <div class="a">
+    ① <span class="k">180c㎥</span>（台形の面積(4+8)×5÷2＝30、30×6＝180）<br>
+    ② <span class="k">240c㎥</span>（底面積10×6－4×3＝48、48×5＝240）<br>
+    ③ <span class="k">942c㎥</span>（5×5×3.14＝78.5、78.5×12＝942）<br>
+    ④ <span class="k">251.2c㎥</span>（4×4×3.14÷2＝25.12、25.12×10＝251.2）
+  </div>
+  <div class="ex">どんな形の柱でも「底面積×高さ（長さ）」で体積が求められる。底面の形（台形、L字、半円）の面積をまず正しく求められるかがポイント。</div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">4　穴のあいた立体</h2>
+  <div class="a">式　<span class="k">12×12×12－3×3×3.14×12</span>　答え　<span class="k">1388.88c㎥</span></div>
+  <div class="ex">「立方体全体の体積」から「円柱の形にくり抜いた部分の体積」を引く。立方体12×12×12＝1728、くり抜く円柱3×3×3.14×12＝339.12。</div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">5　公式のふりかえり</h2>
+  <div class="a">
+    ① <span class="k">角柱・円柱の体積＝底面積×高さ</span><br>
+    ② 例：<span class="k">三角柱も円柱も、同じ形の底面を高さの分だけ積み重ねたものと考えられるから、底面積×高さで体積が求められる。</span>
+  </div>
+  <div class="ex">②は記述式。「底面の形が変わっても、積み重なっている考え方は同じ」という点にふれていれば正解とする。</div>
+
+  <div class="memo" style="margin-top:6mm;">
+    ■ この確認テストのねらい（講師メモ）：公式の暗記だけでなく、複合立体で「どこが底面でどこが高さか」を正しく見つけられるか、公式の意味を自分のことばで説明できるかまでを確認する構成。
+  </div>
+
+  <div class="reflect">
+    ★　この学習は楽しかったですか。（　はい　・　まあまあ　・　少し　・　いいえ　）<br>
+    ◆　この学習はよくわかりましたか。（　はい　・　まあまあ　・　少し　・　いいえ　）<br>
+    ●　感想を自由にかきましょう。<br>
+    <span class="line2"></span><span class="line2"></span>
+  </div>
+</div>
+
+<script>
+function toggleEdit(){
+  const sheets = document.querySelectorAll('.sheet');
+  const on = sheets[0].getAttribute('contenteditable') === 'true';
+  sheets.forEach(s => s.setAttribute('contenteditable', on ? 'false' : 'true'));
+  event.target.textContent = on ? '編集モード' : '編集モード：ON（もう一度押すと解除）';
+}
+</script>
+
+</body>
+</html>
