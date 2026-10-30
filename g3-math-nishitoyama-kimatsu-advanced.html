@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>西戸山中3年 2学期期末 数学 予想問題（応用）</title>
+<style>
+@page { size: A4; margin: 14mm 14mm 14mm 14mm; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: #e9e9e9;
+  font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+  font-size: 11.5pt; color: #111; line-height: 1.6;
+}
+.en { font-family: "Century Gothic", "Yu Gothic", "Noto Sans JP", sans-serif; }
+.controlbar {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; gap: 10px;
+  background: #222; color: #fff; padding: 10px 16px; font-size: 13px;
+}
+.controlbar .title { font-weight: 700; margin-right: auto; }
+.controlbar button {
+  font-family: inherit; font-size: 13px; padding: 7px 14px; border-radius: 6px;
+  border: 1px solid #555; background: #333; color: #fff; cursor: pointer;
+}
+.controlbar button.primary { background: #0a66c2; border-color: #0a66c2; }
+@media print { .controlbar { display: none !important; } body { background: #fff; } }
+
+.sheet {
+  width: 190mm; min-height: 277mm; margin: 16px auto; padding: 12mm 14mm;
+  background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+}
+@media print {
+  .sheet { box-shadow: none; margin: 0; width: auto; min-height: 0; }
+  .sheet.pb { page-break-before: always; }
+}
+.sheet.pb { page-break-before: always; }
+
+h1 { text-align: center; font-size: 16pt; margin: 0 0 6px; letter-spacing: 0.02em; }
+.sub { text-align: center; font-size: 11pt; margin: 0 0 10px; color: #222; }
+.namebox {
+  display: flex; justify-content: flex-end; gap: 14px; font-size: 10.5pt;
+  border-top: 1px solid #999; border-bottom: 1px solid #999; padding: 5px 2px; margin-bottom: 10px;
+}
+.rules {
+  border: 1px solid #333; border-radius: 4px; padding: 8px 12px; margin-bottom: 14px;
+  font-size: 10pt; background: #fafafa;
+}
+.rules .lead { font-weight: 700; }
+
+.q { margin-bottom: 16px; }
+.qh {
+  display: flex; align-items: baseline; gap: 8px; border-bottom: 1.5px solid #333;
+  padding-bottom: 3px; margin-bottom: 8px;
+}
+.qh .num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; border: 1.5px solid #333; border-radius: 3px;
+  font-weight: 700; font-size: 11pt; flex: none;
+}
+.qh .inst { flex: 1; font-size: 10.8pt; }
+.qh .pts { font-size: 9.5pt; color: #333; white-space: nowrap; }
+
+ol.items { margin: 0; padding-left: 1.6em; }
+ol.items > li { margin-bottom: 10px; }
+.jp { margin: 0 0 3px; }
+.blankline { border-bottom: 1px solid #333; display: inline-block; min-width: 5em; margin: 0 2px; }
+.ans-space { height: 20px; }
+
+.memo {
+  border: 1px solid #333; border-radius: 4px; padding: 8px 12px; margin-bottom: 14px;
+  font-size: 9.8pt; background: #f5f5f0;
+}
+.memo .lead { font-weight: 700; }
+h2 { font-size: 12pt; border-left: 5px solid #333; padding-left: 8px; margin: 18px 0 8px; }
+.a { margin: 4px 0 2px; font-size: 10.5pt; }
+.a .k { color: #000; font-weight: 700; text-decoration: underline; }
+.a .tag { color: #555; font-size: 9pt; margin-left: 6px; }
+.ex { margin: 0 0 10px; font-size: 9.8pt; color: #333; }
+.aim {
+  margin-top: 16px; padding-top: 10px; border-top: 1px dashed #999; font-size: 10pt;
+}
+.aim .lead { font-weight: 700; }
+
+[contenteditable="true"] { outline: 1px dashed #0a66c2; }
+
+
+svg.fig { display:block; height:auto; max-width:100%; font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN",sans-serif; }
+.wq { margin:0 0 8px 0.2em; font-size:10.8pt; }
+.wq.inl { display:flex; justify-content:space-between; align-items:flex-end; gap:4mm; }
+.wq.inl .abox { margin:0; flex:none; }
+.wq.inl .qt { flex:1; min-width:0; }
+.abox { text-align:right; font-size:10.5pt; margin-top:3px; }
+.abox .bl { display:inline-block; border-bottom:1px solid #333; min-width:24mm; margin-left:3px; }
+.abox .bl.w { min-width:42mm; }
+.side { display:flex; gap:6mm; align-items:flex-start; }
+.side > .txt { flex:1; min-width:0; }
+.q { break-inside:avoid; margin-bottom:11px; }
+.two { display:grid; grid-template-columns:1fr 1fr; gap:2mm 8mm; }
+.opts { display:flex; flex-wrap:wrap; gap:2px 22px; margin:2px 0 4px 1.2em; font-size:11pt; }
+table.vals { border-collapse:collapse; font-size:10.5pt; margin:4px 0 4px 1.2em; }
+table.vals td { border:1px solid #333; padding:2px 10px; text-align:center; }
+table.chk { width:100%; border-collapse:collapse; font-size:9.8pt; margin:6px 0 4px; }
+table.chk th, table.chk td { border:1px solid #333; padding:3px 6px; text-align:center; }
+table.chk td.l { text-align:left; }
+.ans .a { margin:3px 0 1px; }
+.ans .ex { margin:0 0 6px 1.2em; }
+.ansfig { display:flex; gap:8mm; align-items:flex-start; margin:2px 0 6px 1.2em; }
+@media print { .sheet { padding:0 !important; } }
+
+.figs2 { display:grid; grid-template-columns:1fr 1fr; gap:3mm 8mm; align-items:stretch; }
+.figs2 > div { display:flex; flex-direction:column; min-width:0; }
+.figs2 .cap { font-size:10.5pt; font-weight:700; }
+.figs2 svg.fig { margin:auto; }
+.figs2 .abox { margin-top:3px; }
+.wbox { border:1px solid #333; height:62mm; margin-top:4px; }
+
+.fr { display:inline-flex; flex-direction:column; vertical-align:middle; text-align:center; line-height:1.1; font-size:.9em; margin:0 2px; }
+.fr > span:first-child { border-bottom:1px solid #111; padding:0 2px; }
+.two3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:2mm 6mm; font-size:10.8pt; }
+.hint { font-size:9.5pt; color:#333; margin-top:3px; }
+.pg { text-align:right; font-size:10pt; margin-bottom:4px; }
+.abox2 { font-size:10pt; margin-top:4px; line-height:2; }
+.abox2 .bl { display:inline-block; border-bottom:1px solid #333; min-width:34mm; margin-left:3px; }
+.abox2 .bl.ww { min-width:52mm; }
+.side > div:not(.txt) { flex:none; }
+.ans .ex .fr { font-size:.85em; }
+.unit { break-inside:avoid; page-break-inside:avoid; }
+.aim { break-inside:avoid; page-break-inside:avoid; }
+
+.proof { border:1px solid #333; padding:6px 12px; line-height:2; margin:2px 0 4px 1.2em; font-size:10.5pt; }
+</style>
+</head>
+<body>
+<div class="controlbar">
+  <span class="title">📐 西戸山中3年 2学期期末 数学 予想問題（応用）｜学習塾CONNECT</span>
+  <button id="editBtn" onclick="toggleEdit()">編集モード</button>
+  <button onclick="saveHtml()">保存</button>
+  <button class="primary" onclick="window.print()">印刷</button>
+</div>
+<div class="sheet" id="s1">
+<h1>第3学年 数学　2学期期末考査 予想問題（応用）</h1>
+<div class="sub">西戸山中学校 対策／範囲：4章 関数 <i>y</i>＝<i>ax</i><sup>2</sup>（12 利用・13 いろいろな関数）・5章 相似な図形（全体）</div>
+<div class="namebox"><span>3年　　組　　番　　名前：＿＿＿＿＿＿＿＿＿＿＿＿</span><span>／100点</span></div>
+<div class="rules">・答えは解答らんに書きなさい。途中の式や計算は、問題のあいている所に書いてよい。<br>・答えが分数や根号をふくむときは、それ以上簡単にできない形にしなさい。図はおよその形で、正確とは限りません。</div>
+<div class="q"><div class="qh"><span class="num">1</span><span class="inst">ある坂で、ボールが転がり始めてから <i>x</i> 秒間に転がる距離を <i>y</i> m とすると、<i>y</i>＝<span class="fr"><span>1</span><span>2</span></span><i>x</i><sup>2</sup>（0≦<i>x</i>≦10）の関係がある。ボールが転がり始めるのと同時に、Aさんはボールのスタート地点から 6 m 下の地点を出発し、秒速 2 m で坂をおりた。</span><span class="pts">［思考・判断・表現（4点×3）］</span></div><div class="wq inl"><span class="qt">(1) A さんがボールに追いつかれるのは、出発してから何秒後か。</span><span class="abox"><span class="bl"></span></span></div><div style="height:14mm"></div><div class="wq inl"><span class="qt">(2) (1) のとき、ボールのスタート地点から何 m の地点か。</span><span class="abox"><span class="bl"></span></span></div><div style="height:6mm"></div><div class="wq inl"><span class="qt">(3) ボールが転がり始めて 2 秒後から <i>t</i> 秒後までの平均の速さが毎秒 6 m になった。<i>t</i> の値を求めなさい。</span><span class="abox"><span class="bl"></span></span></div><div style="height:10mm"></div></div>
+<div class="q"><div class="qh"><span class="num">2</span><span class="inst">あるタクシーの料金は、乗車距離 1.2 km までは 500 円で、それをこえると 0.3 km ごとに 100 円が加算される（0.3 km に満たない端数も 100 円とする）。</span><span class="pts">［思考・判断・表現（3点×2）］</span></div><div class="wq inl"><span class="qt">(1) 2.5 km 乗ったときの料金はいくらか。</span><span class="abox"><span class="bl"></span></span></div><div style="height:8mm"></div><div class="wq inl"><span class="qt">(2) 1300 円で乗ることができる最も長い距離は何 km か。</span><span class="abox"><span class="bl"></span></span></div><div style="height:4mm"></div></div>
+</div>
+<div class="sheet pb" id="s2">
+<div class="pg">（2／4）</div>
+<div class="q"><div class="qh"><span class="num">3</span><span class="inst">右の図のように、関数 <i>y</i>＝<i>a</i><i>x</i><sup>2</sup> のグラフ上に 2 点 A、B があり、A の座標は（−4, 8）、B の <i>x</i> 座標は 2 である。直線 AB と <i>y</i> 軸の交点を C とする。座標の 1 目もりを 1 cm とする。</span><span class="pts">［思考・判断・表現（3点×5）］</span></div><div class="side"><div class="txt"><div class="wq inl"><span class="qt">(1) <i>a</i> の値と、直線 AB の式を求めなさい。</span><span class="abox"><i>a</i>＝<span class="bl"></span>　式<span class="bl w"></span></span></div><div style="height:10mm"></div><div class="wq inl"><span class="qt">(2) △OAB の面積を求めなさい。</span><span class="abox"><span class="bl"></span></span></div><div style="height:10mm"></div><div class="wq inl"><span class="qt">(3) 点 B を通り直線 OA に平行な直線と、関数 <i>y</i>＝<i>a</i><i>x</i><sup>2</sup> のグラフとの交点のうち、B と異なる点 D の座標を求めなさい。</span><span class="abox"><span class="bl"></span></span></div><div style="height:12mm"></div><div class="wq inl"><span class="qt">(4) <i>x</i> 軸上の正の部分に点 E をとる。△EAB の面積が △OAB の面積と等しくなるとき、点 E の座標を求めなさい。</span><span class="abox"><span class="bl"></span></span></div><div style="height:6mm"></div></div><div><svg class="fig" viewBox="0 0 45.8 53.0" style="width:50.0mm"><line x1="4.92" y1="44.16" x2="41.28" y2="44.16" stroke="#111" stroke-width="0.45"/><line x1="23.28" y1="48.12" x2="23.28" y2="4.56" stroke="#111" stroke-width="0.45"/><polygon points="41.28,44.16 39.68,43.36 39.68,44.96" fill="#111" stroke="#111" stroke-width="0.30" stroke-linejoin="round"/><polygon points="23.28,4.56 22.48,6.16 24.08,6.16" fill="#111" stroke="#111" stroke-width="0.30" stroke-linejoin="round"/><text x="42.88" y="46.56" font-size="3.60" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke" font-style="italic">x</text><text x="25.68" y="5.36" font-size="3.60" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke" font-style="italic">y</text><text x="21.08" y="46.56" font-size="3.30" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">O</text><path d="M6.72,6.07 L7.13,7.95 L7.55,9.79 L7.96,11.57 L8.38,13.31 L8.79,15.00 L9.20,16.64 L9.62,18.24 L10.03,19.78 L10.45,21.28 L10.86,22.74 L11.27,24.14 L11.69,25.50 L12.10,26.81 L12.52,28.07 L12.93,29.28 L13.34,30.45 L13.76,31.57 L14.17,32.64 L14.59,33.66 L15.00,34.64 L15.41,35.57 L15.83,36.45 L16.24,37.28 L16.66,38.07 L17.07,38.80 L17.48,39.49 L17.90,40.14 L18.31,40.73 L18.73,41.28 L19.14,41.78 L19.55,42.23 L19.97,42.64 L20.38,42.99 L20.80,43.30 L21.21,43.56 L21.62,43.78 L22.04,43.95 L22.45,44.06 L22.87,44.14 L23.28,44.16 L23.69,44.14 L24.11,44.06 L24.52,43.95 L24.94,43.78 L25.35,43.56 L25.76,43.30 L26.18,42.99 L26.59,42.64 L27.01,42.23 L27.42,41.78 L27.83,41.28 L28.25,40.73 L28.66,40.14 L29.08,39.49 L29.49,38.80 L29.90,38.07 L30.32,37.28 L30.73,36.45 L31.15,35.57 L31.56,34.64 L31.97,33.66 L32.39,32.64 L32.80,31.57 L33.22,30.45 L33.63,29.28 L34.04,28.07 L34.46,26.81 L34.87,25.50 L35.29,24.14 L35.70,22.74 L36.11,21.28 L36.53,19.78 L36.94,18.24 L37.36,16.64 L37.77,15.00 L38.18,13.31 L38.60,11.57 L39.01,9.79 L39.43,7.95 L39.84,6.07" fill="none" stroke="#111" stroke-width="0.55"/><line x1="6.00" y1="12.48" x2="39.12" y2="45.60" stroke="#111" stroke-width="0.45"/><polygon points="23.28,44.16 8.88,15.36 30.48,36.96" fill="#e4e4e4" stroke="#111" stroke-width="0.45" stroke-linejoin="round"/><line x1="8.88" y1="15.36" x2="8.88" y2="44.16" stroke="#111" stroke-width="0.30" stroke-dasharray="1 .8"/><line x1="30.48" y1="36.96" x2="30.48" y2="44.16" stroke="#111" stroke-width="0.30" stroke-dasharray="1 .8"/><circle cx="8.88" cy="15.36" r="0.70" fill="#111"/><circle cx="30.48" cy="36.96" r="0.70" fill="#111"/><circle cx="23.28" cy="29.76" r="0.70" fill="#111"/><text x="11.28" y="13.96" font-size="3.80" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">A</text><text x="32.68" y="34.96" font-size="3.80" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">B</text><text x="25.68" y="28.16" font-size="3.60" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">C</text><text x="8.88" y="46.96" font-size="3.00" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">−4</text><text x="30.48" y="46.96" font-size="3.00" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">2</text><text x="35.24" y="8.88" font-size="3.10" text-anchor="end" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke"><tspan font-style="italic">y</tspan>＝<tspan font-style="italic">ax</tspan>²</text></svg></div></div></div>
+<div class="q"><div class="qh"><span class="num">4</span><span class="inst">下の図のように、AB＝4 cm、BC＝6 cm の長方形 ABCD と、∠R＝90°、PR＝QR＝8 cm の直角二等辺三角形 PQR が直線 ℓ 上にある。点 R が点 B の位置から C の位置にくるまで、△PQR を ℓ にそって矢印の方向に動かす。BR＝<i>x</i> cm のとき、2 つの図形が重なった部分の面積を <i>y</i> cm<sup>2</sup> とする。</span><span class="pts">［思考・判断・表現（4点×3）］</span></div><div class="side"><div class="txt"><div class="wq inl"><span class="qt">(1) 0≦<i>x</i>≦4 のとき、<i>y</i>を<i>x</i>の式で表しなさい。</span><span class="abox"><span class="bl w"></span></span></div><div style="height:12mm"></div><div class="wq inl"><span class="qt">(2) 4≦<i>x</i>≦6 のとき、<i>y</i>を<i>x</i>の式で表しなさい。</span><span class="abox"><span class="bl w"></span></span></div><div style="height:18mm"></div><div class="wq inl"><span class="qt">(3) 重なった部分の面積が 20 cm<sup>2</sup> になるときの <i>x</i> の値を求めなさい。</span><span class="abox"><span class="bl"></span></span></div><div style="height:4mm"></div></div><div><svg class="fig" viewBox="0 0 62.0 52.0" style="width:60.0mm"><line x1="1.00" y1="40.00" x2="60.00" y2="40.00" stroke="#111" stroke-width="0.45"/><text x="2.60" y="37.40" font-size="3.60" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke" font-style="italic">ℓ</text><polygon points="20.00,40.00 40.00,40.00 40.00,24.00 24.00,24.00 20.00,28.00" fill="#d6d6d6" stroke="#111" stroke-width="0.20" stroke-linejoin="round"/><polygon points="20.00,24.00 20.00,40.00 44.00,40.00 44.00,24.00" fill="none" stroke="#111" stroke-width="0.55" stroke-linejoin="round"/><polygon points="40.00,8.00 8.00,40.00 40.00,40.00" fill="none" stroke="#111" stroke-width="0.55" stroke-linejoin="round"/><polyline points="40.00,38.20 38.20,38.20 38.20,40.00" fill="none" stroke="#111" stroke-width="0.35" stroke-linejoin="round"/><text x="17.60" y="22.20" font-size="3.60" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">A</text><text x="46.40" y="22.20" font-size="3.60" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">D</text><text x="18.60" y="43.00" font-size="3.60" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">B</text><text x="45.80" y="43.00" font-size="3.60" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">C</text><text x="42.60" y="7.40" font-size="3.60" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">P</text><text x="6.40" y="43.00" font-size="3.60" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">Q</text><text x="38.80" y="43.00" font-size="3.60" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">R</text><text x="46.60" y="32.00" font-size="3.00" text-anchor="start" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">4cm</text><text x="32.00" y="21.60" font-size="3.00" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">6cm</text><text x="42.60" y="18.00" font-size="3.00" text-anchor="start" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">8cm</text><line x1="20.00" y1="46.00" x2="40.00" y2="46.00" stroke="#111" stroke-width="0.30"/><text x="30.00" y="48.60" font-size="3.20" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke"><tspan font-style="italic">x</tspan>cm</text><line x1="10.00" y1="28.00" x2="17.00" y2="28.00" stroke="#111" stroke-width="0.40"/><polygon points="18.00,28.00 16.40,27.20 16.40,28.80" fill="#111" stroke="#111" stroke-width="0.20" stroke-linejoin="round"/></svg></div></div></div>
+</div>
+<div class="sheet pb" id="s3">
+<div class="pg">（3／4）</div>
+<div class="q"><div class="qh"><span class="num">5</span><span class="inst">右の図の正三角形 ABC で、点 D は辺 BC 上の点、点 E は辺 CA 上の点で、∠ADE＝60° である。</span><span class="pts">［思考・判断・表現（(1) 8点、(2)(3) 4点×2）］</span></div><div class="side"><div class="txt"><div class="wq">(1) △ABD ∽ △DCE であることを証明しなさい。</div><div class="wbox" style="height:56mm"></div></div><div><svg class="fig" viewBox="0 0 50.0 49.0" style="width:50.0mm"><polygon points="24.70,8.15 4.00,44.00 45.40,44.00" fill="none" stroke="#111" stroke-width="0.55" stroke-linejoin="round"/><line x1="24.70" y1="8.15" x2="17.80" y2="44.00" stroke="#111" stroke-width="0.50"/><line x1="17.80" y1="44.00" x2="40.80" y2="36.03" stroke="#111" stroke-width="0.50"/><text x="24.70" y="5.55" font-size="3.80" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">A</text><text x="1.60" y="45.60" font-size="3.80" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">B</text><text x="47.80" y="45.60" font-size="3.80" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">C</text><text x="17.80" y="47.00" font-size="3.60" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">D</text><text x="43.60" y="35.63" font-size="3.60" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">E</text><path d="M18.37,41.05 A3.00,3.00 0 0,1 20.63,43.02" fill="none" stroke="#111" stroke-width="0.35"/><text x="21.73" y="39.46" font-size="2.80" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">60°</text></svg></div></div><div style="height:3mm"></div><div class="wq inl"><span class="qt">(2) AB＝9 cm、BD＝3 cm のとき、線分 CE の長さを求めなさい。</span><span class="abox"><span class="bl"></span></span></div><div style="height:8mm"></div><div class="wq inl"><span class="qt">(3) (2) のとき、△ABD と △DCE の面積の比を、もっとも簡単な整数の比で表しなさい。</span><span class="abox"><span class="bl w"></span></span></div><div style="height:3mm"></div></div>
+<div class="q"><div class="qh"><span class="num">6</span><span class="inst">次の問いに答えなさい。</span><span class="pts">［思考・判断・表現（4点×3）］</span></div><div class="side"><div class="txt"><div class="wq">(1) 右の図の △ABC で、点 D、E は辺 AB を 3 等分する点、点 F は辺 AC の中点である。線分 DF の延長と辺 BC の延長の交点を G とする。EC＝6 cm のとき、線分 DF、FG の長さをそれぞれ求めなさい。</div><div style="height:12mm"></div><div class="abox">DF＝<span class="bl"></span>　FG＝<span class="bl"></span></div></div><div><svg class="fig" viewBox="0 0 46.0 40.0" style="width:46.0mm"><polygon points="16.00,4.00 4.00,34.00 22.00,34.00" fill="none" stroke="#111" stroke-width="0.50" stroke-linejoin="round"/><line x1="8.00" y1="24.00" x2="22.00" y2="34.00" stroke="#111" stroke-width="0.45"/><line x1="12.00" y1="14.00" x2="40.00" y2="34.00" stroke="#111" stroke-width="0.45"/><line x1="22.00" y1="34.00" x2="40.00" y2="34.00" stroke="#111" stroke-width="0.45"/><text x="16.00" y="1.40" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">A</text><text x="1.60" y="35.80" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">B</text><text x="22.00" y="37.00" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">C</text><text x="9.20" y="14.00" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">D</text><text x="5.20" y="24.00" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">E</text><text x="21.00" y="17.00" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">F</text><text x="41.60" y="37.00" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">G</text><line x1="12.79" y1="8.52" x2="15.21" y2="9.48" stroke="#111" stroke-width="0.35"/><line x1="8.79" y1="18.52" x2="11.21" y2="19.48" stroke="#111" stroke-width="0.35"/><line x1="4.79" y1="28.52" x2="7.21" y2="29.48" stroke="#111" stroke-width="0.35"/><line x1="16.13" y1="11.26" x2="18.68" y2="10.75" stroke="#111" stroke-width="0.35"/><line x1="16.32" y1="12.25" x2="18.87" y2="11.74" stroke="#111" stroke-width="0.35"/><line x1="19.13" y1="26.26" x2="21.68" y2="25.75" stroke="#111" stroke-width="0.35"/><line x1="19.32" y1="27.25" x2="21.87" y2="26.74" stroke="#111" stroke-width="0.35"/></svg></div></div><div class="side" style="margin-top:3mm"><div class="txt"><div class="wq">(2) 右の図は AD // BC の台形 ABCD で、AD＝4 cm、BC＝10 cm である。辺 AB 上に AE：EB＝1：2 となる点 E をとり、E を通り BC に平行な直線と辺 DC の交点を F とする。線分 EF の長さを求めなさい。</div><div style="height:8mm"></div><div class="abox">EF＝<span class="bl"></span></div></div><div><svg class="fig" viewBox="0 0 42.0 32.0" style="width:42.0mm"><polygon points="14.40,6.00 6.00,23.64 34.00,23.64 25.60,6.00" fill="none" stroke="#111" stroke-width="0.50" stroke-linejoin="round"/><line x1="11.60" y1="11.88" x2="28.40" y2="11.88" stroke="#111" stroke-width="0.50"/><text x="12.80" y="3.60" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">A</text><text x="27.20" y="3.60" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">D</text><text x="4.40" y="26.04" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">B</text><text x="35.60" y="26.04" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">C</text><text x="9.00" y="11.88" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">E</text><text x="31.00" y="11.88" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">F</text><text x="20.00" y="3.80" font-size="3.00" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">4</text><text x="20.00" y="26.24" font-size="3.00" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">10</text></svg></div></div></div>
+</div>
+<div class="sheet pb" id="s4">
+<div class="pg">（4／4）</div>
+<div class="q"><div class="qh"><span class="num">7</span><span class="inst">右の図の △ABC で、DE // BC、AD：DB＝2：3 である。線分 DC と BE の交点を F とし、△ABC の面積を 50 cm<sup>2</sup> とする。</span><span class="pts">［思考・判断・表現（4点×3）］</span></div><div class="side"><div class="txt"><div class="wq inl"><span class="qt">(1) △ADE の面積を求めなさい。</span><span class="abox"><span class="bl"></span></span></div><div style="height:8mm"></div><div class="wq inl"><span class="qt">(2) 四角形 DBCE の面積を求めなさい。</span><span class="abox"><span class="bl"></span></span></div><div style="height:6mm"></div><div class="wq inl"><span class="qt">(3) △DFE と △CFB の面積の比を、もっとも簡単な整数の比で表しなさい。</span><span class="abox"><span class="bl w"></span></span></div><div style="height:2mm"></div></div><div><svg class="fig" viewBox="0 0 48.0 40.0" style="width:48.0mm"><polygon points="18.00,4.00 4.00,36.00 44.00,36.00" fill="none" stroke="#111" stroke-width="0.50" stroke-linejoin="round"/><line x1="12.40" y1="16.80" x2="28.40" y2="16.80" stroke="#111" stroke-width="0.50"/><line x1="12.40" y1="16.80" x2="44.00" y2="36.00" stroke="#111" stroke-width="0.45"/><line x1="4.00" y1="36.00" x2="28.40" y2="16.80" stroke="#111" stroke-width="0.45"/><text x="18.00" y="1.40" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">A</text><text x="1.60" y="37.60" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">B</text><text x="46.40" y="37.60" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">C</text><text x="9.60" y="16.80" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">D</text><text x="31.20" y="16.80" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">E</text><text x="21.43" y="25.29" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">F</text></svg></div></div></div>
+<div class="q"><div class="qh"><span class="num">8</span><span class="inst">右の図のように、円錐を、高さを 3 等分する点を通り底面に平行な 2 つの平面で切り、上から順に P、Q、R の 3 つの部分に分ける。</span><span class="pts">［思考・判断・表現（4点×2）］</span></div><div class="side"><div class="txt"><div class="wq inl"><span class="qt">(1) P、Q、R の体積の比を、もっとも簡単な整数の比で表しなさい。</span><span class="abox"><span class="bl w"></span></span></div><div style="height:14mm"></div><div class="wq inl"><span class="qt">(2) P の体積が 5 cm<sup>3</sup> のとき、Q の体積を求めなさい。</span><span class="abox"><span class="bl"></span></span></div><div style="height:4mm"></div></div><div><svg class="fig" viewBox="0 0 36.0 42.0" style="width:36.0mm"><line x1="18.00" y1="4.00" x2="4.00" y2="37.00" stroke="#111" stroke-width="0.50"/><line x1="18.00" y1="4.00" x2="32.00" y2="37.00" stroke="#111" stroke-width="0.50"/><path d="M4.0,37.0 A14.0,3 0 0,0 32.0,37.0" fill="none" stroke="#111" stroke-width="0.50"/><path d="M4.0,37.0 A14.0,3 0 0,1 32.0,37.0" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="1.2 .9"/><path d="M13.3,15.0 A4.7,1.0 0 0,0 22.7,15.0" fill="none" stroke="#111" stroke-width="0.45"/><path d="M13.3,15.0 A4.7,1.0 0 0,1 22.7,15.0" fill="none" stroke="#111" stroke-width="0.30" stroke-dasharray="1.2 .9"/><path d="M8.7,26.0 A9.3,2.0 0 0,0 27.3,26.0" fill="none" stroke="#111" stroke-width="0.45"/><path d="M8.7,26.0 A9.3,2.0 0 0,1 27.3,26.0" fill="none" stroke="#111" stroke-width="0.30" stroke-dasharray="1.2 .9"/><text x="18.00" y="11.00" font-size="3.20" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">P</text><text x="18.00" y="21.50" font-size="3.20" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">Q</text><text x="18.00" y="32.50" font-size="3.20" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">R</text></svg></div></div></div>
+<div class="q"><div class="qh"><span class="num">9</span><span class="inst">次の問いに答えなさい。</span><span class="pts">［(1) 知識・技能 3点、(2) 思考・判断・表現 4点］</span></div><div class="wq inl"><span class="qt">(1) ある長さを測定し、小数第 2 位を四捨五入して 12.6 cm を得た。真の値を <i>a</i> cm とするとき、<i>a</i> の範囲を不等号を使って表しなさい。</span><span class="abox"><span class="bl w"></span></span></div><div style="height:6mm"></div><div class="side"><div class="txt"><div class="wq">(2) 右の図の △ABC で、AB＝8 cm、BC＝7 cm、CA＝6 cm である。∠A の二等分線と辺 BC の交点を D、∠B の二等分線と辺 CA の交点を E、AD と BE の交点を F とする。AF：FD を、もっとも簡単な整数の比で表しなさい。</div><div style="height:12mm"></div><div class="abox"><span class="bl w"></span></div></div><div><svg class="fig" viewBox="0 0 46.0 44.0" style="width:46.0mm"><polygon points="30.30,11.28 5.00,38.00 37.20,38.00" fill="none" stroke="#111" stroke-width="0.50" stroke-linejoin="round"/><line x1="30.30" y1="11.28" x2="23.40" y2="38.00" stroke="#111" stroke-width="0.45"/><line x1="5.00" y1="38.00" x2="33.98" y2="25.53" stroke="#111" stroke-width="0.45"/><text x="31.28" y="8.44" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">A</text><text x="2.28" y="39.26" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">B</text><text x="39.68" y="39.69" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">C</text><text x="23.40" y="41.00" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">D</text><text x="36.78" y="26.53" font-size="3.40" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">E</text><text x="23.30" y="27.49" font-size="3.20" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">F</text><text x="15.91" y="22.99" font-size="3.00" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">8</text><text x="34.62" y="17.96" font-size="3.00" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">6</text><text x="13.05" y="40.80" font-size="3.00" text-anchor="middle" dominant-baseline="central" stroke="#fff" stroke-width="1.1" paint-order="stroke">7</text></svg></div></div></div>
+</div>
+<div class="sheet pb ans" id="s5">
+<h1>解答・解説</h1>
+<div class="sub">配点：1＝12点／2＝6点／3＝15点／4＝12点／5＝16点／6＝12点／7＝12点／8＝8点／9＝7点　合計100点</div>
+<div class="memo"><div class="lead">■ 出題範囲メモ（作問時の判断）</div>・範囲は標準版と同じ（4章 12 関数 <i>y</i>＝<i>a</i><i>x</i><sup>2</sup> の利用・13 いろいろな関数、5章 相似な図形 全体）。応用版は問題集の「まとめの問題B」レベルを目安にしています。<br>・問題集の問題の型（追いつきの問題、等積変形、図形の移動、正三角形の中の相似、中点連結定理の組み合わせ、円錐を平行な平面で切る体積比、角の二等分線）をもとに、数値・場面はすべて作り直しています。<br>・大問4(3) は二次方程式（解の公式・平方根）を使います（中3 1学期の既習内容）。<br>・図はおよその形で、正確な縮尺とは限りません。</div>
+<div class="unit"><h2>1（4点×3）</h2><div class="a">(1) <span class="k">6 秒後</span></div><div class="ex">A さんのスタート地点からの距離は <i>y</i>＝2<i>x</i>＋6。<span class="fr"><span>1</span><span>2</span></span><i>x</i><sup>2</sup>＝2<i>x</i>＋6 より <i>x</i><sup>2</sup>−4<i>x</i>−12＝0、（<i>x</i>−6）（<i>x</i>＋2）＝0。<i>x</i>＞0 なので <i>x</i>＝6</div><div class="a">(2) <span class="k">18 m</span></div><div class="ex"><span class="fr"><span>1</span><span>2</span></span>×36＝18（A さんも 2×6＋6＝18）</div><div class="a">(3) <span class="k"><i>t</i>＝10</span></div><div class="ex">平均の速さ＝（<span class="fr"><span>1</span><span>2</span></span><i>t</i><sup>2</sup>−<span class="fr"><span>1</span><span>2</span></span>×4）÷（<i>t</i>−2）＝<span class="fr"><span>1</span><span>2</span></span>（<i>t</i>＋2）。<span class="fr"><span>1</span><span>2</span></span>（<i>t</i>＋2）＝6 より <i>t</i>＝10（0≦<i>t</i>≦10 を満たす）</div></div><div class="unit"><h2>2（3点×2）</h2><div class="a">(1) <span class="k">1000 円</span></div><div class="ex">1.2 km をこえた 1.3 km は、0.3 km ごとに数えると 5 回分（0.3×4＝1.2 では足りない）。500＋100×5＝1000</div><div class="a">(2) <span class="k">3.6 km</span></div><div class="ex">1300−500＝800 で 8 回分。1.2＋0.3×8＝3.6（3.6 km ちょうどまでは 1300 円）</div></div><div class="unit"><h2>3（3点×5）</h2><div class="a">(1) <span class="k"><i>a</i>＝<span class="fr"><span>1</span><span>2</span></span>、<i>y</i>＝−<i>x</i>＋4</span></div><div class="ex">8＝16<i>a</i> より <i>a</i>＝<span class="fr"><span>1</span><span>2</span></span>。B（2, 2）。傾き＝（2−8）÷（2−(−4)）＝−1、切片は 2＝−2＋<i>b</i> より 4（2 つとも正解で 3 点の扱い、または各1.5点）</div><div class="a">(2) <span class="k">12 cm<sup>2</sup></span></div><div class="ex">C（0, 4）。△OAC＋△OBC＝<span class="fr"><span>1</span><span>2</span></span>×4×4＋<span class="fr"><span>1</span><span>2</span></span>×4×2＝8＋4＝12</div><div class="a">(3) <span class="k">D（−6, 18）</span></div><div class="ex">直線 OA の傾きは 8÷(−4)＝−2。B を通る直線は <i>y</i>＝−2<i>x</i>＋6。<span class="fr"><span>1</span><span>2</span></span><i>x</i><sup>2</sup>＝−2<i>x</i>＋6 より <i>x</i><sup>2</sup>＋4<i>x</i>−12＝0、（<i>x</i>＋6）（<i>x</i>−2）＝0。B と異なるので <i>x</i>＝−6、<i>y</i>＝18（このとき △OAD＝△OAB）</div><div class="a">(4) <span class="k">E（8, 0）</span></div><div class="ex">直線 AB と <i>x</i> 軸の交点 H（4, 0）。△EAB＝△EHA−△EHB＝<span class="fr"><span>1</span><span>2</span></span>×EH×（8−2）＝3EH。△OAB＝12 より EH＝4。E は H の右側（O 以外）なので E（8, 0）</div><div class="ex">(4) は E を H の左側にとると O（0, 0）になり、正の部分の条件に合わない。</div></div><div class="unit"><h2>4（4点×3）</h2><div class="a">(1) <span class="k"><i>y</i>＝4<i>x</i></span></div><div class="ex">BR＝<i>x</i> のとき、辺 PQ の B での高さは 8−<i>x</i>≧4 なので、重なった部分は縦 4 cm、横 <i>x</i> cm の長方形。</div><div class="a">(2) <span class="k"><i>y</i>＝−<span class="fr"><span>1</span><span>2</span></span><i>x</i><sup>2</sup>＋8<i>x</i>−8</span></div><div class="ex">長方形 4<i>x</i> から、左下の直角二等辺三角形（等しい辺が <i>x</i>−4）を除く。4<i>x</i>−<span class="fr"><span>1</span><span>2</span></span>（<i>x</i>−4）<sup>2</sup>＝−<span class="fr"><span>1</span><span>2</span></span><i>x</i><sup>2</sup>＋8<i>x</i>−8</div><div class="a">(3) <span class="k"><i>x</i>＝8−2√2</span></div><div class="ex">0≦<i>x</i>≦4 では 4<i>x</i>＝20 より <i>x</i>＝5 で範囲外。4≦<i>x</i>≦6 では −<span class="fr"><span>1</span><span>2</span></span><i>x</i><sup>2</sup>＋8<i>x</i>−8＝20 より <i>x</i><sup>2</sup>−16<i>x</i>＋56＝0、<i>x</i>＝8±2√2。4≦<i>x</i>≦6 なので <i>x</i>＝8−2√2（約 5.17）</div></div><div class="unit"><h2>5（(1) 8点、(2)(3) 4点×2）</h2><div class="proof">［証明］ △ABD と △DCE において<br>正三角形の角だから　∠ABD＝∠DCE＝60° …①<br>△ABD の外角より　∠ADC＝∠BAD＋∠ABD＝∠BAD＋60°<br>また　∠ADC＝∠ADE＋∠EDC＝60°＋∠EDC<br>よって　∠BAD＝∠CDE …②<br>①、②より、2組の角がそれぞれ等しいから　△ABD ∽ △DCE</div><div class="ex">②を示す部分（外角の性質で ∠ADC を 2 通りに表す）が中心。採点の目安：①（2点）、②の説明（4点）、相似条件と結論（2点）。</div><div class="a">(2) <span class="k">2 cm</span></div><div class="ex">DC＝9−3＝6。AB：DC＝BD：CE より 9：6＝3：CE、CE＝2</div><div class="a">(3) <span class="k">9：4</span></div><div class="ex">相似比 AB：DC＝9：6＝3：2 なので面積比は 9：4</div></div><div class="unit"><h2>6（4点×3）</h2><div class="a">(1) <span class="k">DF＝3 cm、FG＝9 cm</span></div><div class="ex">△AEC で D、F は AE、AC の中点なので DF // EC、DF＝<span class="fr"><span>1</span><span>2</span></span> EC＝3。△BDG で E は BD の中点、EC // DG なので C は BG の中点、EC＝<span class="fr"><span>1</span><span>2</span></span> DG より DG＝12。FG＝12−3＝9（DF・FG で各 2 点）</div><div class="a">(2) <span class="k">6 cm</span></div><div class="ex">対角線 AC をひき EF との交点を G とする。△ABC で EG：BC＝AE：AB＝1：3 より EG＝<span class="fr"><span>10</span><span>3</span></span>。△CDA で GF：AD＝CG：CA＝2：3 より GF＝<span class="fr"><span>8</span><span>3</span></span>。EF＝<span class="fr"><span>10</span><span>3</span></span>＋<span class="fr"><span>8</span><span>3</span></span>＝6</div></div><div class="unit"><h2>7（4点×3）</h2><div class="a">(1) <span class="k">8 cm<sup>2</sup></span></div><div class="ex">△ADE ∽ △ABC で相似比 2：5、面積比 4：25。50×<span class="fr"><span>4</span><span>25</span></span>＝8</div><div class="a">(2) <span class="k">42 cm<sup>2</sup></span></div><div class="ex">50−8＝42</div><div class="a">(3) <span class="k">4：25</span></div><div class="ex">DE // BC より △DFE ∽ △CFB。DE：BC＝2：5 なので面積比 4：25</div></div><div class="unit"><h2>8（4点×2）</h2><div class="a">(1) <span class="k">1：7：19</span></div><div class="ex">上から 1 つ、2 つ、3 つ目の円錐の相似比 1：2：3、体積比 1：8：27。P＝1、Q＝8−1＝7、R＝27−8＝19</div><div class="a">(2) <span class="k">35 cm<sup>3</sup></span></div><div class="ex">5×7＝35</div></div><div class="unit"><h2>9（(1) 3点、(2) 4点）</h2><div class="a">(1) <span class="k">12.55≦<i>a</i>＜12.65</span></div><div class="ex">12.65 は四捨五入すると 12.7 になるのでふくまない（＜）。</div><div class="a">(2) <span class="k">2：1</span></div><div class="ex">角の二等分線の性質より BD：DC＝AB：AC＝8：6＝4：3、BD＝7×<span class="fr"><span>4</span><span>7</span></span>＝4。△ABD で BF は ∠B の二等分線なので AF：FD＝BA：BD＝8：4＝2：1</div></div>
+<div class="aim"><div class="lead">■ この予想問題のねらい（生徒への指示）</div>・大問1・3 は「2 つの式を連立して交点を求める」が共通の考え方です。グラフをかいて、どこが答えになるかを確認しましょう。<br>・大問4 のような場合分けの問題は、出した答えが変域に入っているかを必ず確かめましょう。<br>・大問5 は、外角を使って角を 2 通りに表す証明の定番です。∠ADC に注目する流れを自分で再現できるようにしましょう。<br>・大問6〜9 は、どの三角形の相似・どの定理（三角形と比・中点連結定理・角の二等分線）を使うかを、図に印をつけて整理してから式を立てましょう。</div>
+</div>
+<script>
+var ids = ['s1','s2','s3','s4','s5'];
+function toggleEdit(){
+  var on = document.getElementById('s1').getAttribute('contenteditable') === 'true';
+  ids.forEach(function(id){ document.getElementById(id).setAttribute('contenteditable', on ? 'false' : 'true'); });
+  document.getElementById('editBtn').textContent = on ? '編集モード' : '編集モード：ON（もう一度押すと解除）';
+}
+function saveHtml(){
+  if (document.getElementById('s1').getAttribute('contenteditable') === 'true') toggleEdit();
+  var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  var blob = new Blob(['\ufeff' + html], {type:'text/html;charset=utf-8'});
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = (document.title || 'test') + '.html'; document.body.appendChild(a); a.click(); a.remove();
+}
+</script>
+</body>
+</html>
