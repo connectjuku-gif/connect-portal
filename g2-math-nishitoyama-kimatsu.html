@@ -55,7 +55,8 @@
   <div class="namebox"><span>2年　　組　　番</span><span>名前　　　　　　　　　　　　　　</span><span>／100点</span></div>
 
   <div class="rules">
-    ・大問8は証明問題です。仮定・結論を整理してから、根拠となることがら（仮定／対頂角／共通な辺　など）を必ず書くこと。<br>
+    ・大問8は三角形の合同の証明問題です。仮定・結論を整理してから、根拠となることがら（平行線の錯角／角の二等分線／垂線　など）を必ず書くこと。<br>
+    ・図はすべて見やすさを優先して描いているため、必ずしも正確な縮尺ではありません。<br>
     ・円周率は π を用いなさい。座標平面を使う問題は、ことわりがない限り座標の1目盛りを1cmとします。<br>
     ・答えだけでなく、途中の式も残しておくと見直しがしやすいです。
   </div>
@@ -135,14 +136,22 @@
       <li>(1) 正九角形の1つの内角の大きさを求めなさい。</li>
       <li>(2) 正九角形の1つの外角の大きさを求めなさい。</li>
       <li>(3) 内角の和が1980°になる多角形は何角形か求めなさい。</li>
-      <li>(4) 右の図で、∠xの大きさを求めなさい。
+      <li>(4) 下の図の四角形ABCDで、∠xの大きさを求めなさい。
         <div class="figwrap">
-          <svg viewBox="0 0 260 180" width="220" height="152">
-            <polygon points="40,140 90,40 190,30 220,130" fill="none" stroke="#000" stroke-width="1.3"/>
-            <text x="18" y="150" font-size="11">x</text>
-            <text x="95" y="35" font-size="11">95°</text>
-            <text x="195" y="22" font-size="11">110°</text>
-            <text x="218" y="148" font-size="11">80°</text>
+          <svg viewBox="0 0 300 220" width="260" height="191">
+            <polygon points="70,180 55,60 180,25 255,130" fill="none" stroke="#000" stroke-width="1.4"/>
+            <circle cx="70" cy="180" r="2.8" fill="#000"/>
+            <circle cx="55" cy="60" r="2.8" fill="#000"/>
+            <circle cx="180" cy="25" r="2.8" fill="#000"/>
+            <circle cx="255" cy="130" r="2.8" fill="#000"/>
+            <text x="48" y="202" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">A</text>
+            <text x="30" y="58" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">B</text>
+            <text x="178" y="14" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">C</text>
+            <text x="262" y="122" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">D</text>
+            <text x="96" y="162" font-size="13" font-weight="bold" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">x</text>
+            <text x="78" y="82" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">95°</text>
+            <text x="168" y="58" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">110°</text>
+            <text x="210" y="122" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">80°</text>
           </svg>
         </div>
       </li>
@@ -155,63 +164,81 @@
     <ol class="items">
       <li>(1) 下の図で、ℓ//mのとき、∠xの大きさを求めなさい。
         <div class="figwrap">
-          <svg viewBox="0 0 260 220" width="220" height="186">
-            <line x1="10" y1="40" x2="250" y2="40" stroke="#000"/><text x="2" y="35" font-size="10">ℓ</text>
-            <line x1="10" y1="180" x2="250" y2="180" stroke="#000"/><text x="2" y="195" font-size="10">m</text>
-            <line x1="90" y1="40" x2="150" y2="110" stroke="#000"/>
-            <line x1="150" y1="110" x2="110" y2="180" stroke="#000"/>
-            <text x="95" y="56" font-size="10">38°</text>
-            <text x="158" y="107" font-size="11">x</text>
-            <text x="112" y="172" font-size="10">52°</text>
+          <svg viewBox="0 0 280 260" width="240" height="223">
+            <line x1="10" y1="30" x2="270" y2="30" stroke="#000" stroke-width="1.3"/><text x="2" y="25" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">ℓ</text>
+            <line x1="10" y1="230" x2="270" y2="230" stroke="#000" stroke-width="1.3"/><text x="2" y="248" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">m</text>
+            <line x1="90" y1="30" x2="190" y2="130" stroke="#000" stroke-width="1.3"/>
+            <line x1="190" y1="130" x2="130" y2="230" stroke="#000" stroke-width="1.3"/>
+            <circle cx="90" cy="30" r="2.8" fill="#000"/>
+            <circle cx="190" cy="130" r="2.8" fill="#000"/>
+            <circle cx="130" cy="230" r="2.8" fill="#000"/>
+            <text x="100" y="58" font-size="13" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">38°</text>
+            <text x="198" y="128" font-size="14" font-weight="bold" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">x</text>
+            <text x="138" y="208" font-size="13" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">52°</text>
           </svg>
         </div>
       </li>
       <li>(2) 下の図で、ℓ//mのとき、∠xの大きさを求めなさい。
         <div class="figwrap">
-          <svg viewBox="0 0 260 220" width="220" height="186">
-            <line x1="10" y1="40" x2="250" y2="40" stroke="#000"/><text x="2" y="35" font-size="10">ℓ</text>
-            <line x1="10" y1="180" x2="250" y2="180" stroke="#000"/><text x="2" y="195" font-size="10">m</text>
-            <line x1="170" y1="40" x2="110" y2="110" stroke="#000"/>
-            <line x1="110" y1="110" x2="150" y2="180" stroke="#000"/>
-            <text x="138" y="56" font-size="10">48°</text>
-            <text x="78" y="107" font-size="11">x</text>
-            <text x="155" y="172" font-size="10">37°</text>
+          <svg viewBox="0 0 280 260" width="240" height="223">
+            <line x1="10" y1="30" x2="270" y2="30" stroke="#000" stroke-width="1.3"/><text x="2" y="25" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">ℓ</text>
+            <line x1="10" y1="230" x2="270" y2="230" stroke="#000" stroke-width="1.3"/><text x="2" y="248" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">m</text>
+            <line x1="190" y1="30" x2="100" y2="130" stroke="#000" stroke-width="1.3"/>
+            <line x1="100" y1="130" x2="160" y2="230" stroke="#000" stroke-width="1.3"/>
+            <circle cx="190" cy="30" r="2.8" fill="#000"/>
+            <circle cx="100" cy="130" r="2.8" fill="#000"/>
+            <circle cx="160" cy="230" r="2.8" fill="#000"/>
+            <text x="150" y="58" font-size="13" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">48°</text>
+            <text x="58" y="128" font-size="14" font-weight="bold" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">x</text>
+            <text x="166" y="208" font-size="13" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">37°</text>
           </svg>
         </div>
       </li>
       <li>(3) 下の図で、ℓ//mのとき、∠xの大きさを求めなさい。
         <div class="figwrap">
-          <svg viewBox="0 0 260 220" width="220" height="186">
-            <line x1="10" y1="40" x2="250" y2="40" stroke="#000"/><text x="2" y="35" font-size="10">ℓ</text>
-            <line x1="10" y1="180" x2="250" y2="180" stroke="#000"/><text x="2" y="195" font-size="10">m</text>
-            <line x1="60" y1="40" x2="140" y2="110" stroke="#000"/>
-            <line x1="140" y1="110" x2="190" y2="180" stroke="#000"/>
-            <text x="63" y="56" font-size="10">65°</text>
-            <text x="148" y="107" font-size="11">x</text>
-            <text x="190" y="172" font-size="10">20°</text>
+          <svg viewBox="0 0 280 260" width="240" height="223">
+            <line x1="10" y1="30" x2="270" y2="30" stroke="#000" stroke-width="1.3"/><text x="2" y="25" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">ℓ</text>
+            <line x1="10" y1="230" x2="270" y2="230" stroke="#000" stroke-width="1.3"/><text x="2" y="248" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">m</text>
+            <line x1="70" y1="30" x2="170" y2="130" stroke="#000" stroke-width="1.3"/>
+            <line x1="170" y1="130" x2="220" y2="230" stroke="#000" stroke-width="1.3"/>
+            <circle cx="70" cy="30" r="2.8" fill="#000"/>
+            <circle cx="170" cy="130" r="2.8" fill="#000"/>
+            <circle cx="220" cy="230" r="2.8" fill="#000"/>
+            <text x="80" y="58" font-size="13" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">65°</text>
+            <text x="178" y="128" font-size="14" font-weight="bold" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">x</text>
+            <text x="222" y="208" font-size="13" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">20°</text>
           </svg>
         </div>
       </li>
       <li>(4) 下の図で、∠xの大きさを求めなさい。
         <div class="figwrap">
-          <svg viewBox="0 0 260 200" width="220" height="169">
-            <polygon points="130,20 40,150 130,110 220,150" fill="none" stroke="#000" stroke-width="1.3"/>
-            <text x="123" y="36" font-size="10">65°</text>
-            <text x="38" y="145" font-size="10">35°</text>
-            <text x="196" y="145" font-size="10">25°</text>
-            <text x="120" y="105" font-size="11">x</text>
+          <svg viewBox="0 0 280 220" width="240" height="189">
+            <polygon points="150,25 45,170 150,125 255,170" fill="none" stroke="#000" stroke-width="1.4"/>
+            <circle cx="150" cy="25" r="2.8" fill="#000"/>
+            <circle cx="45" cy="170" r="2.8" fill="#000"/>
+            <circle cx="150" cy="125" r="2.8" fill="#000"/>
+            <circle cx="255" cy="170" r="2.8" fill="#000"/>
+            <text x="156" y="42" font-size="13" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">65°</text>
+            <text x="35" y="190" font-size="13" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">35°</text>
+            <text x="222" y="190" font-size="13" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">25°</text>
+            <text x="156" y="120" font-size="14" font-weight="bold" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">x</text>
           </svg>
         </div>
       </li>
       <li>(5) 下の図は星形の図形である。印のついた5つの角の大きさの和を求めなさい。
         <div class="figwrap">
-          <svg viewBox="0 0 260 200" width="220" height="169">
-            <polygon points="130,15 74,187 220,81 40,81 186,187" fill="none" stroke="#000" stroke-width="1.3"/>
-            <circle cx="130" cy="15" r="2.5" fill="#000"/>
-            <circle cx="74" cy="187" r="2.5" fill="#000"/>
-            <circle cx="220" cy="81" r="2.5" fill="#000"/>
-            <circle cx="40" cy="81" r="2.5" fill="#000"/>
-            <circle cx="186" cy="187" r="2.5" fill="#000"/>
+          <svg viewBox="0 0 280 220" width="240" height="189">
+            <polygon points="140,15 80,200 236,89 44,89 200,200" fill="none" stroke="#000" stroke-width="1.4"/>
+            <circle cx="140" cy="15" r="3" fill="#000"/>
+            <circle cx="80" cy="200" r="3" fill="#000"/>
+            <circle cx="236" cy="89" r="3" fill="#000"/>
+            <circle cx="44" cy="89" r="3" fill="#000"/>
+            <circle cx="200" cy="200" r="3" fill="#000"/>
+            <text x="144" y="10" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">A</text>
+            <text x="70" y="216" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">B</text>
+            <text x="240" y="84" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">C</text>
+            <text x="18" y="84" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">D</text>
+            <text x="204" y="216" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">E</text>
           </svg>
         </div>
       </li>
@@ -252,30 +279,54 @@
 
   <!-- 8 -->
   <div class="q pb">
-    <div class="qh"><span class="num">8</span><span class="inst">次の問いに証明しなさい。仮定・結論を明らかにしてから書くこと。<span class="pts">［思・判・表（8点＋9点）］</span></span></div>
+    <div class="qh"><span class="num">8</span><span class="inst">次の2つの三角形の合同を証明しなさい。仮定・結論を明らかにしてから書くこと。<span class="pts">［思・判・表（8点＋9点）］</span></span></div>
     <ol class="items">
-      <li>(1) 下の図のように、点Oは線分ACとBDの交点である。AO=CO、BO=DOならば、AB=CDであることを証明しなさい。
+      <li>(1) 下の図のように、四角形ABCDで、AB∥DC、AB=DCである。対角線ACとBDの交点をEとするとき、△ABE≡△CDEであることを証明しなさい。
         <div class="figwrap">
-          <svg viewBox="0 0 260 200" width="220" height="169">
-            <line x1="50" y1="40" x2="210" y2="160" stroke="#000"/>
-            <line x1="40" y1="160" x2="220" y2="40" stroke="#000"/>
-            <text x="34" y="36" font-size="11">A</text>
-            <text x="216" y="176" font-size="11">C</text>
-            <text x="18" y="176" font-size="11">B</text>
-            <text x="224" y="36" font-size="11">D</text>
-            <text x="135" y="105" font-size="11">O</text>
+          <svg viewBox="0 0 280 220" width="240" height="188">
+            <line x1="50" y1="35" x2="230" y2="35" stroke="#000" stroke-width="1.3"/>
+            <line x1="230" y1="35" x2="190" y2="175" stroke="#000" stroke-width="1.3"/>
+            <line x1="190" y1="175" x2="90" y2="175" stroke="#000" stroke-width="1.3"/>
+            <line x1="90" y1="175" x2="50" y2="35" stroke="#000" stroke-width="1.3"/>
+            <line x1="50" y1="35" x2="190" y2="175" stroke="#000" stroke-width="1.1"/>
+            <line x1="230" y1="35" x2="90" y2="175" stroke="#000" stroke-width="1.1"/>
+            <circle cx="50" cy="35" r="2.8" fill="#000"/>
+            <circle cx="230" cy="35" r="2.8" fill="#000"/>
+            <circle cx="190" cy="175" r="2.8" fill="#000"/>
+            <circle cx="90" cy="175" r="2.8" fill="#000"/>
+            <circle cx="140" cy="125" r="2.8" fill="#000"/>
+            <text x="34" y="26" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">A</text>
+            <text x="234" y="26" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">B</text>
+            <text x="194" y="193" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">C</text>
+            <text x="66" y="193" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">D</text>
+            <text x="148" y="118" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">E</text>
+            <text x="128" y="28" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">▷</text>
+            <text x="128" y="190" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">▷</text>
           </svg>
         </div>
       </li>
-      <li>(2) 下の図のように、四角形ABCDにおいて、AB=AD、CB=CDならば、∠ABC=∠ADCであることを証明しなさい。
+      <li>(2) 下の図のように、∠AOBの二等分線上に点Pがあり、点Pから半直線OA、半直線OBにそれぞれ垂線PC、PDを下ろした。このとき、△OCP≡△ODPであることを証明しなさい。
         <div class="figwrap">
-          <svg viewBox="0 0 220 220" width="190" height="190">
-            <polygon points="110,20 190,110 110,200 30,110" fill="none" stroke="#000" stroke-width="1.3"/>
-            <line x1="110" y1="20" x2="110" y2="200" stroke="#000" stroke-dasharray="4,3"/>
-            <text x="100" y="14" font-size="11">A</text>
-            <text x="196" y="115" font-size="11">B</text>
-            <text x="100" y="217" font-size="11">C</text>
-            <text x="8" y="115" font-size="11">D</text>
+          <svg viewBox="0 0 300 220" width="260" height="191">
+            <line x1="50" y1="190" x2="270" y2="190" stroke="#000" stroke-width="1.3"/>
+            <line x1="50" y1="190" x2="125" y2="60" stroke="#000" stroke-width="1.3"/>
+            <line x1="50" y1="190" x2="171" y2="120" stroke="#000" stroke-width="1.2" stroke-dasharray="4,3"/>
+            <line x1="171" y1="120" x2="171" y2="190" stroke="#000" stroke-width="1.1"/>
+            <line x1="171" y1="120" x2="111" y2="85" stroke="#000" stroke-width="1.1"/>
+            <polyline points="163,190 163,182 171,182" fill="none" stroke="#000" stroke-width="1"/>
+            <polyline points="107,91.9 113.9,95.9 117.9,89" fill="none" stroke="#000" stroke-width="1"/>
+            <line x1="81.5" y1="190" x2="68.15" y2="179.5" stroke="#000" stroke-width="1.1"/>
+            <line x1="68.15" y1="179.5" x2="61.25" y2="170.5" stroke="#000" stroke-width="1.1"/>
+            <circle cx="50" cy="190" r="2.8" fill="#000"/>
+            <circle cx="171" cy="120" r="2.8" fill="#000"/>
+            <circle cx="171" cy="190" r="2.8" fill="#000"/>
+            <circle cx="111" cy="85" r="2.8" fill="#000"/>
+            <text x="34" y="203" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">O</text>
+            <text x="272" y="196" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">A</text>
+            <text x="115" y="52" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">B</text>
+            <text x="176" y="110" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">P</text>
+            <text x="176" y="200" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">C</text>
+            <text x="88" y="80" font-size="12" fill="#000" stroke="#fff" stroke-width="4" paint-order="stroke">D</text>
           </svg>
         </div>
       </li>
@@ -293,7 +344,7 @@
     <b>■ 出題範囲メモ（作問時の判断）</b>
     ・範囲は第3章「8 1次関数とグラフ」〜「12 直線と図形」と、第4章「13 多角形の角，平行線と角」〜「15 合同な図形」。<br>
     ・1次関数は基礎（傾き・切片・変域・式を求める）を大問1に少しだけ入れ、中心は大問2〜4の「利用」（ダイヤグラム・2直線の交点・直線と図形）にしました。<br>
-    ・平行と合同は角度計算（多角形の角・平行線と角・三角形の内角外角の利用）を厚めに、証明は2問（合同条件のみで完結する基本パターン）にしています。
+    ・平行と合同は角度計算（多角形の角・平行線と角・三角形の内角外角の利用）を厚めに、証明は三角形の合同の証明2問（平行線の錯角を使うASA型、角の二等分線＋垂線を使う直角三角形の合同型）にしています。
   </div>
 
   <h2>1（2点×5）</h2>
@@ -360,34 +411,33 @@
   <h2>8（8点＋9点）</h2>
   <div class="a">
     (1)［証明］<br>
-    仮定：AO=CO、BO=DO　　結論：AB=CD<br>
-    △AOBと△CODにおいて、<br>
-    仮定から、　AO=CO　…①<br>
-    仮定から、　BO=DO　…②<br>
-    対頂角は等しいから、　∠AOB=∠COD　…③<br>
-    ①、②、③より、2組の辺とその間の角がそれぞれ等しいから、<br>
-    <span class="k">△AOB≡△COD</span><br>
-    合同な図形の対応する辺は等しいから、<span class="k">AB=CD</span>
+    仮定：AB∥DC、AB=DC　　結論：△ABE≡△CDE<br>
+    △ABEと△CDEにおいて、<br>
+    仮定から、　AB=DC　…①<br>
+    AB∥DCより、平行線の錯角は等しいから、　∠ABE=∠CDE　…②<br>
+    AB∥DCより、平行線の錯角は等しいから、　∠BAE=∠DCE　…③<br>
+    ①、②、③より、1組の辺とその両端の角がそれぞれ等しいから、<br>
+    <span class="k">△ABE≡△CDE</span>
   </div>
   <div class="a">
     (2)［証明］<br>
-    仮定：AB=AD、CB=CD　　結論：∠ABC=∠ADC<br>
-    △ABCと△ADCにおいて、<br>
-    仮定から、　AB=AD　…①<br>
-    仮定から、　CB=CD　…②<br>
-    共通な辺だから、　AC=AC　…③<br>
-    ①、②、③より、3組の辺がそれぞれ等しいから、<br>
-    <span class="k">△ABC≡△ADC</span><br>
-    合同な図形の対応する角は等しいから、<span class="k">∠ABC=∠ADC</span>
+    仮定：OPは∠AOBの二等分線、PC⊥OA、PD⊥OB　　結論：△OCP≡△ODP<br>
+    △OCPと△ODPにおいて、<br>
+    共通な辺だから、　OP=OP　…①<br>
+    仮定（OPが∠AOBの二等分線）から、　∠COP=∠DOP　…②<br>
+    仮定（垂線）から、　∠OCP=∠ODP=90°　…③<br>
+    ③より、△OCP、△ODPはどちらも直角三角形であり、①、②から、直角三角形の斜辺と1つの鋭角がそれぞれ等しいから、<br>
+    <span class="k">△OCP≡△ODP</span>
   </div>
-  <div class="ex">採点の目安：仮定・結論の整理（2点）、根拠（対頂角／共通な辺）の指摘（2〜3点）、合同条件を正しく選べているか（2〜3点）、結論まで書けているか（2点）。合同条件の名称を書き忘れている答案はその分だけ減点してください。</div>
+  <div class="ex">(2) ②・③から∠OPC=∠OPDも導けるので、「1組の辺とその両端の角がそれぞれ等しい」として説明してもよい（どちらでも正解）。<br>
+  採点の目安：仮定・結論の整理（2点）、根拠（平行線の錯角／二等分線・垂線）の指摘（2〜3点）、合同条件を正しく選べているか（2〜3点）、結論まで書けているか（2点）。合同条件の名称を書き忘れている答案はその分だけ減点してください。</div>
 
   <h2>この予想問題のねらい（生徒への指示）</h2>
   <div class="ex">
     ① 大問1・3・4で1次関数の基礎〜応用（変域、直線の式、2直線の交点、面積、回転体）を一通り復習できるようにしています。大問4②の面積は「y軸上の線分を底辺とみる」解き方（ポイント2の型）を必ず定着させてください。<br>
     ② 大問2のようなダイヤグラム問題は、2つの式を連立方程式として解く練習を必ずセットでやらせてください（グラフだけで読み取ろうとすると時間がかかります）。<br>
     ③ 大問6(4)(5)のような「矢じり形」「星形」の角は、三角形の外角の性質（外角＝離れた2つの内角の和）を繰り返し使うだけで解けることを、実際に自分で補助線を引かせて確認させてください。<br>
-    ④ 証明は大問8の2問（対頂角を使うSAS型、共通な辺を使うSSS型）が基本の2パターンです。まずはこの2つを自力で再現できるまで書く練習をさせ、慣れてきたら大問7(4)のような図から三角形を見つける練習につなげてください。
+    ④ 証明は大問8の2問（平行線の錯角を使うASA型、角の二等分線＋垂線を使う直角三角形の合同型）が基本の2パターンです。まずはこの2つを自力で再現できるまで書く練習をさせ、慣れてきたら大問7(4)のような図から三角形を見つける練習につなげてください。
   </div>
 </div>
 
