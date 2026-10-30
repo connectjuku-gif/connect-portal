@@ -1,0 +1,440 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小6算数 単元確認テスト①　対称な図形</title>
+<style>
+  @page { size: A4; margin: 14mm 12mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "UD Digi Kyokasho NP-R","BIZ UDPGothic","Hiragino Maru Gothic ProN","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    font-size: 12.5pt;
+    line-height: 1.65;
+    color: #111;
+    background: #e9e9e9;
+    margin: 0;
+    padding: 20px 0;
+  }
+  .sheet {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto 24px;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,.25);
+    padding: 14mm 12mm;
+    position: relative;
+  }
+  .pb { page-break-before: always; }
+  h1 {
+    text-align: center;
+    font-size: 19pt;
+    margin: 0 0 2mm;
+    letter-spacing: .06em;
+  }
+  .sub {
+    text-align: center;
+    font-size: 11pt;
+    color: #333;
+    margin-bottom: 2mm;
+  }
+  .cheer {
+    text-align: center;
+    font-size: 10.5pt;
+    color: #333;
+    margin-bottom: 4mm;
+  }
+  .namebox {
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+    font-size: 10pt;
+    border-top: 1px solid #999;
+    border-bottom: 1px solid #999;
+    padding: 3px 0;
+    margin-bottom: 5mm;
+  }
+  .namebox span { white-space: nowrap; }
+  .namebox .line { display:inline-block; border-bottom:1px solid #333; width:60px; height:1em; }
+  .rules {
+    font-size: 10pt;
+    border: 1.5px solid #333;
+    border-radius: 10px;
+    padding: 6px 10px;
+    margin-bottom: 5mm;
+    line-height: 1.6;
+  }
+  .q {
+    margin-bottom: 6mm;
+    border: 1.3px solid #555;
+    border-radius: 12px;
+    padding: 4mm 5mm;
+  }
+  .qh {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1.5px dashed #888;
+    padding-bottom: 3px;
+    margin-bottom: 3mm;
+  }
+  .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.9em; height: 1.9em;
+    border-radius: 50%;
+    border: 2px solid #111;
+    font-weight: bold;
+    font-size: 1.05em;
+    flex-shrink: 0;
+  }
+  .inst { font-size: 10.8pt; flex: 1; }
+  .pts { float: right; font-size: 9.5pt; color: #333; }
+  ol.items { margin: 0; padding-left: 1.5em; }
+  ol.items > li { margin-bottom: 3.2mm; }
+  .figwrap { display:flex; justify-content:center; margin: 3mm 0; }
+  .ansline { display:inline-block; border-bottom:1.3px solid #333; min-width: 70px; height: 1.3em; }
+  .blank { display:inline-block; min-width: 1.6em; border-bottom: 1.3px solid #333; text-align:center; }
+  .conf-row {
+    display:flex; justify-content:flex-end; align-items:center; gap:7px;
+    font-size:9.3pt; color:#333; margin-top:3mm;
+    border-top: 1px dashed #ccc; padding-top: 2.5mm;
+  }
+  .conf-row .label { margin-right:3px; color:#555; }
+  .conf-row .face { display:inline-flex; align-items:center; gap:2px; white-space:nowrap; }
+  .conf-row svg { display:block; }
+  table.dt { border-collapse: collapse; margin: 2mm auto; font-size: 10.8pt; }
+  table.dt th, table.dt td {
+    border: 1px solid #333; padding: 4px 10px; text-align:center;
+  }
+  table.dt th { background:#f0f0f0; }
+  .grid-box { border: 1.5px solid #333; border-radius: 10px; overflow: hidden; }
+  .choice-box {
+    border: 1.3px solid #333; border-radius: 10px; padding: 5px 12px; display:inline-block;
+    margin: 2mm auto; font-size: 10.8pt;
+  }
+  .k { color:#000; font-weight:bold; text-decoration: underline; }
+  .memo {
+    border: 1.3px dashed #333;
+    border-radius: 10px;
+    padding: 6px 10px;
+    font-size: 9.6pt;
+    margin-bottom: 5mm;
+    background: #fafafa;
+  }
+  .ex { font-size: 9.8pt; color:#222; margin: 1mm 0 0 0; line-height:1.55; }
+  .a { margin: 1mm 0; }
+  .reflect {
+    border: 1.3px solid #333;
+    border-radius: 12px;
+    padding: 7px 12px;
+    margin-top: 6mm;
+    font-size: 10pt;
+    line-height: 2;
+  }
+  .reflect .line2 { border-bottom: 1px solid #999; display:block; height: 1.6em; }
+  .editbtn {
+    position: fixed; top: 10px; right: 10px;
+    z-index: 999;
+    padding: 7px 14px;
+    background:#333; color:#fff; border:none; border-radius:4px;
+    font-size:12px; cursor:pointer;
+  }
+  [contenteditable="true"] { outline: 1px dashed #4a90d9; }
+  @media print {
+    body { background:#fff; padding:0; }
+    .sheet { box-shadow:none; margin:0; width:auto; min-height:0; }
+    .editbtn { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<button class="editbtn" onclick="toggleEdit()">編集モード</button>
+
+<!-- ============ 1枚目：問題用紙 ============ -->
+<div class="sheet">
+  <h1>小6算数　単元確認テスト①</h1>
+  <div class="sub"><ruby>対称<rt>たいしょう</rt></ruby>な図形</div>
+  <div class="cheer">★　さいごまで、じぶんのペースでがんばろう！　★</div>
+  <div class="namebox">
+    <span>6年　<span class="line"></span>組　<span class="line"></span>番</span>
+    <span>名前　<span class="line" style="width:110px;"></span></span>
+    <span>／100点</span>
+  </div>
+  <div class="rules">
+    ・図をかくときは、ていねいにかきましょう。　・むずかしい問題はとばして、できる問題から先にやってもOKです。　・おわったら、見直しをしてみよう。
+  </div>
+
+  <!-- 大問1 -->
+  <div class="q">
+    <div class="qh">
+      <span class="num">1</span>
+      <span class="inst">下の図形は、線対称な図形です。あとの問いに答えましょう。<span class="pts">（20点）</span></span>
+    </div>
+    <div class="figwrap">
+      <svg width="260" height="300" viewBox="0 0 260 300">
+        <line x1="130" y1="0" x2="130" y2="300" stroke="#ccc" stroke-width="1" stroke-dasharray="3,3"/>
+        <polygon points="130,10 210,110 210,250 50,250 50,110"
+                 fill="none" stroke="#111" stroke-width="2.4"/>
+        <circle cx="130" cy="10" r="2.5" fill="#111"/>
+        <text x="130" y="2" text-anchor="middle" font-size="15">A</text>
+        <circle cx="210" cy="110" r="2.5" fill="#111"/>
+        <text x="222" y="113" font-size="15">B</text>
+        <circle cx="210" cy="250" r="2.5" fill="#111"/>
+        <text x="222" y="253" font-size="15">C</text>
+        <circle cx="50" cy="250" r="2.5" fill="#111"/>
+        <text x="30" y="253" font-size="15">D</text>
+        <circle cx="50" cy="110" r="2.5" fill="#111"/>
+        <text x="20" y="113" font-size="15">E</text>
+        <circle cx="170" cy="180" r="2.5" fill="#111"/>
+        <text x="178" y="178" font-size="15">J</text>
+      </svg>
+    </div>
+    <ol class="items">
+      <li>対称の<ruby>軸<rt>じく</rt></ruby>を図にかき入れましょう。</li>
+      <li>対応するものを答えましょう。
+        <table class="dt" style="margin-top:2mm;">
+          <tr><td>点B</td><td>（　<span class="ansline"></span>　）</td>
+              <td>辺CD</td><td>（　<span class="ansline"></span>　）</td>
+              <td>角E</td><td>（　<span class="ansline"></span>　）</td></tr>
+        </table>
+      </li>
+      <li>点Jに対応する点Kを図にかき入れましょう。</li>
+      <li>対応する2つの点を結ぶ直線は、対称の軸とどのように交わりますか。
+        （　<span class="ansline" style="min-width:160px;"></span>　）</li>
+      <li>対称の軸から、対応する2つの点までの長さはどうなりますか。
+        （　<span class="ansline" style="min-width:160px;"></span>　）</li>
+    </ol>
+    <div class="conf-row">
+      <span class="label">じぶんの自信は？</span>
+      <span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span>
+      <span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span>
+      <span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span>
+      <span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span>
+    </div>
+  </div>
+
+  <!-- 大問2 -->
+  <div class="q">
+    <div class="qh">
+      <span class="num">2</span>
+      <span class="inst">下の図形は、点対称な図形です。あとの問いに答えましょう。<span class="pts">（20点）</span></span>
+    </div>
+    <div class="figwrap">
+      <svg width="280" height="220" viewBox="0 0 280 220">
+        <polygon points="40,60 40,120 100,120 100,180 240,180 240,120 180,120 180,60"
+                 fill="none" stroke="#111" stroke-width="2.4"/>
+        <circle cx="40" cy="60" r="2.5" fill="#111"/><text x="18" y="58" font-size="15">A</text>
+        <circle cx="40" cy="120" r="2.5" fill="#111"/><text x="18" y="130" font-size="15">B</text>
+        <circle cx="100" cy="120" r="2.5" fill="#111"/><text x="100" y="138" font-size="15">C</text>
+        <circle cx="100" cy="180" r="2.5" fill="#111"/><text x="100" y="200" font-size="15">D</text>
+        <circle cx="240" cy="180" r="2.5" fill="#111"/><text x="246" y="200" font-size="15">E</text>
+        <circle cx="240" cy="120" r="2.5" fill="#111"/><text x="246" y="112" font-size="15">F</text>
+        <circle cx="180" cy="120" r="2.5" fill="#111"/><text x="180" y="105" font-size="15">G</text>
+        <circle cx="180" cy="60" r="2.5" fill="#111"/><text x="186" y="50" font-size="15">H</text>
+        <circle cx="60" cy="80" r="2.5" fill="#111"/><text x="36" y="80" font-size="15">J</text>
+      </svg>
+    </div>
+    <ol class="items">
+      <li>対称の<ruby>中心<rt>ちゅうしん</rt></ruby>Oを図にかき入れましょう。</li>
+      <li>対応するものを答えましょう。
+        <table class="dt" style="margin-top:2mm;">
+          <tr><td>点A</td><td>（　<span class="ansline"></span>　）</td>
+              <td>辺BC</td><td>（　<span class="ansline"></span>　）</td>
+              <td>角D</td><td>（　<span class="ansline"></span>　）</td></tr>
+        </table>
+      </li>
+      <li>点Jに対応する点Kを図にかき入れましょう。</li>
+      <li>対応する2つの点を結ぶ直線は、どこを通りますか。
+        （　<span class="ansline" style="min-width:160px;"></span>　）</li>
+      <li>対称の中心から、対応する2つの点までの長さはどうなりますか。
+        （　<span class="ansline" style="min-width:160px;"></span>　）</li>
+    </ol>
+    <div class="conf-row">
+      <span class="label">じぶんの自信は？</span>
+      <span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span>
+      <span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span>
+      <span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span>
+      <span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span>
+    </div>
+  </div>
+
+  <div class="q pb">
+    <div class="qh">
+      <span class="num">3</span>
+      <span class="inst">次のような図形をかきましょう。<span class="pts">（20点）</span></span>
+    </div>
+    <ol class="items">
+      <li>直線ABが対称の軸となるような線対称な図形
+        <div class="figwrap">
+          <svg width="260" height="190" viewBox="0 0 260 190" class="grid-box">
+            <defs><pattern id="g1" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M20 0H0V20" fill="none" stroke="#ddd" stroke-width="1"/></pattern></defs>
+            <rect width="260" height="190" fill="url(#g1)"/>
+            <line x1="130" y1="10" x2="130" y2="180" stroke="#111" stroke-width="1.5"/>
+            <text x="134" y="18" font-size="12">A</text>
+            <text x="134" y="188" font-size="12">B</text>
+            <polyline points="130,40 90,40 90,70 60,70 60,110" fill="none" stroke="#111" stroke-width="2.4"/>
+          </svg>
+        </div>
+      </li>
+      <li>点Oが対称の中心となるような点対称な図形
+        <div class="figwrap">
+          <svg width="260" height="190" viewBox="0 0 260 190" class="grid-box">
+            <rect width="260" height="190" fill="url(#g1)"/>
+            <circle cx="130" cy="95" r="3" fill="#111"/>
+            <text x="136" y="92" font-size="12">O</text>
+            <polyline points="130,95 170,95 170,60 200,60 200,40" fill="none" stroke="#111" stroke-width="2.4"/>
+          </svg>
+        </div>
+      </li>
+    </ol>
+    <div class="conf-row">
+      <span class="label">じぶんの自信は？</span>
+      <span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span>
+      <span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span>
+      <span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span>
+      <span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span>
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="qh">
+      <span class="num">4</span>
+      <span class="inst">次の㋐〜㋕の図形について、あとの問いに答えましょう。<span class="pts">（20点）</span></span>
+    </div>
+    <div class="choice-box">
+      ㋐長方形　㋑正三角形　㋒正方形　㋓正五角形　㋔正六角形　㋕正八角形
+    </div>
+    <ol class="items">
+      <li>線対称でも点対称でもある図形はどれですか。すべて選びましょう。
+        （　<span class="ansline" style="min-width:200px;"></span>　）</li>
+      <li>線対称ではあるが点対称ではない図形はどれですか。すべて選びましょう。
+        （　<span class="ansline" style="min-width:200px;"></span>　）</li>
+      <li>対称の軸がもっとも多い図形はどれですか。また、それは何本ですか。
+        （　<span class="ansline" style="min-width:90px;"></span>　／　<span class="ansline" style="min-width:60px;"></span>本）</li>
+    </ol>
+    <div class="conf-row">
+      <span class="label">じぶんの自信は？</span>
+      <span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span>
+      <span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span>
+      <span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span>
+      <span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span>
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="qh">
+      <span class="num">5</span>
+      <span class="inst">右の図のような長方形ABCDがあります。対角線AC、BDの交わる点をOとします。<span class="pts">（20点）</span></span>
+    </div>
+    <div class="figwrap">
+      <svg width="220" height="150" viewBox="0 0 220 150">
+        <rect x="30" y="20" width="160" height="100" fill="none" stroke="#111" stroke-width="2.4"/>
+        <line x1="30" y1="20" x2="190" y2="120" stroke="#111" stroke-width="1"/>
+        <line x1="190" y1="20" x2="30" y2="120" stroke="#111" stroke-width="1"/>
+        <text x="20" y="18" font-size="15">A</text>
+        <text x="194" y="18" font-size="15">B</text>
+        <text x="194" y="135" font-size="15">C</text>
+        <text x="18" y="135" font-size="15">D</text>
+        <text x="104" y="65" font-size="15">O</text>
+      </svg>
+    </div>
+    <ol class="items">
+      <li>長方形は点対称な図形です。長方形ABCDの対称の中心はどこですか。</li>
+      <li>OA、OB、OC、ODの長さの関係を、対称の性質を使って説明しましょう。</li>
+    </ol>
+    <div class="conf-row">
+      <span class="label">じぶんの自信は？</span>
+      <span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span>
+      <span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span>
+      <span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span>
+      <span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 2枚目：解答・解説 ============ -->
+<div class="sheet ans pb">
+  <h1>解答・解説</h1>
+  <div class="sub">小6算数　単元確認テスト①　対称な図形（配点：各20点×5＝100点）</div>
+
+  <div class="memo">
+    ■ 出題範囲メモ：啓林館教科書6年「1.対称な図形」相当。線対称・点対称の対応点／対応する辺・角、対称の軸・中心との位置関係（垂直に交わる／長さが等しい）、作図、正多角形の対称性、長方形の対角線の性質まで。図形・文字はすべてオリジナルです。
+  </div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px;">1　線対称な図形</h2>
+  <div class="a">
+    ① 点A（上の頂点）と、辺CDの中点を通る、たて方向の直線。<br>
+    ② 点B→<span class="k">点E</span>　／　辺CD→<span class="k">辺ED</span>　／　角E→<span class="k">角B</span><br>
+    ③ Jと対称の軸について反対側の、同じきょりの位置に点Kをかく。<br>
+    ④ <span class="k">垂直に交わる</span><br>
+    ⑤ <span class="k">等しい</span>
+  </div>
+  <div class="ex">
+    線対称な図形では、対応する2点を結ぶ直線は対称の軸と垂直に交わり、軸からそれぞれの点までの長さは等しくなる。これは線対称の定義そのものなので、丸暗記ではなく「軸で折るとぴったり重なる」イメージとセットで覚えさせるとよい。
+  </div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">2　点対称な図形</h2>
+  <div class="a">
+    ① 図形の中心（AとE、BとF、CとG、DとHをそれぞれ結んだ直線が交わる点）。<br>
+    ② 点A→<span class="k">点E</span>　／　辺BC→<span class="k">辺FG</span>　／　角D→<span class="k">角H</span><br>
+    ③ Oを中心に180°回転させた位置に点Kをかく。<br>
+    ④ <span class="k">対称の中心O</span><br>
+    ⑤ <span class="k">等しい</span>
+  </div>
+  <div class="ex">
+    点対称は「180°回転させるとぴったり重なる」図形。対応する2点と中心Oは一直線上に並び、Oから両端までの長さが等しい点が線対称との違い。本問の図形はZ字型で、中心Oが図形の外側の切れこみ部分にくる点に注意（点対称の中心は図形の内部とは限らない）。
+  </div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">3　作図</h2>
+  <div class="a">
+    ① 直線ABを対称の軸として、左側の折れ線と対称の位置に右側の折れ線をかく（各頂点から軸に垂線をおろし、同じ長さだけ反対側にとる）。<br>
+    ② 点Oを対称の中心として、180°回転させた位置に同じ形をかく。
+  </div>
+  <div class="ex">採点は、頂点の対応と辺の長さが合っているかを中心に見る。多少の線のゆがみは可。</div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">4　正多角形と対称性</h2>
+  <div class="a">
+    ① <span class="k">長方形、正方形、正六角形、正八角形</span><br>
+    ② <span class="k">正三角形、正五角形</span><br>
+    ③ <span class="k">正八角形</span>（8本）
+  </div>
+  <div class="ex">
+    正n角形は対称の軸をn本もち、線対称である。点対称になるのはnが偶数のときだけ（頂点どうしが向かい合うため）。長方形は正多角形ではないが、対角線の交点を中心とする点対称な図形でもあり、線対称（2本の軸）でもある。
+  </div>
+
+  <h2 style="font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin-top:5mm;">5　長方形と対称性（文章題）</h2>
+  <div class="a">
+    ① <span class="k">点O（対角線の交点）</span><br>
+    ② <span class="k">OA＝OC、OB＝ODで、4つとも等しい</span>（説明例：長方形は点Oを対称の中心とする点対称な図形だから、対応する点AとC、BとDはそれぞれOから等しいきょりにある。さらに対角線の長さが等しいことから、OA＝OB＝OC＝ODとなる。）
+  </div>
+  <div class="ex">
+    長方形の対角線が「それぞれの中点で交わり、長さが等しい」性質を、点対称の考え方で説明させる狙いの問題。中学の図形の証明につながる思考の下地づくりとして出題。
+  </div>
+
+  <div class="memo" style="margin-top:6mm;">
+    ■ この確認テストのねらい（講師メモ）：授業中は解けても単元が進むと忘れがちな「対応する点・辺・角」「軸／中心との位置関係」を、丸暗記でなく図形の性質として定着しているか確認する。4・5は正多角形の知識の整理と、中学へつながる論理的な説明の練習を兼ねている。
+  </div>
+
+  <div class="reflect">
+    ★　この学習は楽しかったですか。（　はい　・　まあまあ　・　少し　・　いいえ　）<br>
+    ◆　この学習はよくわかりましたか。（　はい　・　まあまあ　・　少し　・　いいえ　）<br>
+    ●　感想を自由にかきましょう。<br>
+    <span class="line2"></span><span class="line2"></span>
+  </div>
+</div>
+
+<script>
+function toggleEdit(){
+  const sheets = document.querySelectorAll('.sheet');
+  const on = sheets[0].getAttribute('contenteditable') === 'true';
+  sheets.forEach(s => s.setAttribute('contenteditable', on ? 'false' : 'true'));
+  event.target.textContent = on ? '編集モード' : '編集モード：ON（もう一度押すと解除）';
+}
+</script>
+
+</body>
+</html>
