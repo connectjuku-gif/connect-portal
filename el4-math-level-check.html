@@ -1,0 +1,412 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小4算数 レベルチェックテスト</title>
+<style>
+  @page { size: A4; margin: 14mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "BIZ UDPGothic", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+    color: #1a1a1a;
+    background: #e9e9e9;
+    margin: 0;
+    padding: 20px;
+    font-size: 14.5px;
+    line-height: 1.7;
+  }
+  .sheet {
+    background: #fff;
+    max-width: 860px;
+    margin: 0 auto 24px;
+    padding: 24px 32px 30px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.15);
+  }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .sheet { box-shadow: none; margin: 0; max-width: 100%; padding: 8mm 6mm; }
+    .pb { page-break-before: always; }
+    .no-print { display: none !important; }
+  }
+  .topbar { display: flex; justify-content: flex-end; margin-bottom: 4px; }
+  .editbtn {
+    background: #fff; border: 1px solid #999; color: #333;
+    padding: 4px 12px; font-size: 12px; cursor: pointer;
+  }
+  .editbtn.on { background: #333; color: #fff; }
+  h1 {
+    text-align: center; font-size: 22px; margin: 2px 0 14px;
+    border-bottom: 2px solid #1a1a1a; padding-bottom: 8px;
+  }
+  .infobar {
+    display: flex; justify-content: space-between; align-items: center;
+    border: 1px solid #999; padding: 8px 16px; margin-bottom: 16px; font-size: 13.5px;
+  }
+  .infobar .namebox span { margin-left: 18px; }
+  .infobar .namebox .line { display:inline-block; border-bottom: 1px solid #666; width: 100px; margin-left: 6px; }
+  .rules { border: 1px solid #ccc; padding: 8px 14px; font-size: 12.5px; margin-bottom: 18px; color: #444; }
+
+  .q { border-top: 1px solid #1a1a1a; padding: 12px 0 14px; }
+  .q:last-of-type { border-bottom: 1px solid #1a1a1a; }
+  .qh { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
+  .num {
+    flex-shrink: 0; width: 24px; height: 24px; border: 2px solid #1a1a1a;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: bold;
+  }
+  .inst { font-size: 14.5px; font-weight: bold; }
+  .pts { color: #555; font-weight: normal; font-size: 12.5px; margin-left: 6px; }
+  .sub { font-weight: bold; margin: 8px 0 2px; font-size: 13.5px; }
+  ol.items { margin: 4px 0 0 18px; padding: 0; }
+  ol.items li { margin-bottom: 9px; }
+  .calcgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px 20px; margin: 4px 0 8px 18px; }
+  .ansline { display: inline-block; border-bottom: 1px solid #666; min-width: 110px; margin: 0 4px; text-align: center; }
+  .box { background: #f4f4f4; padding: 8px 12px; margin: 6px 0; }
+  table.data { border-collapse: collapse; width: 100%; margin: 6px 0; font-size: 13px; }
+  table.data th, table.data td { border: 1px solid #999; padding: 5px 7px; text-align: center; }
+  table.data th { background: #eee; }
+  table.fill td, table.fill th { min-width: 44px; }
+  svg { display: block; margin: 6px auto; }
+
+  .k { color: #000; font-weight: bold; text-decoration: underline; }
+  .ex { background: #f4f4f4; padding: 6px 12px; margin-top: 4px; font-size: 12.5px; color: #333; }
+  .memo { border: 1px solid #ccc; padding: 8px 14px; font-size: 12.5px; margin-bottom: 18px; color: #444; }
+
+  .reflect { border-top: 1px solid #1a1a1a; padding-top: 12px; margin-top: 4px; font-size: 13px; }
+  .reflect .opts span { margin-right: 18px; }
+  .reflect .line2 { border-bottom: 1px solid #666; display: block; height: 20px; margin-top: 8px; }
+  [contenteditable="true"] { outline: 1px dashed #999; }
+</style>
+</head>
+<body>
+
+<!-- ============ 1枚目：問題用紙 ============ -->
+<div class="sheet" id="sheetBody">
+  <div class="topbar">
+    <button class="editbtn no-print" onclick="toggleEdit()">編集モード</button>
+  </div>
+  <h1>小4算数 レベルチェックテスト</h1>
+
+  <div class="infobar">
+    <span>時間の目安：40分</span>
+    <span class="namebox">名前<span class="line"></span>点数<span class="line"></span>／100点</span>
+  </div>
+
+  <div class="rules">
+    ・筆算は，あいているところに自由に書いてよい。<br>
+    ・わからない問題はとばして，さいごにもう一度ためそう。
+  </div>
+
+  <!-- 大問1 大きな数 -->
+  <div class="q">
+    <div class="qh"><span class="num">1</span><span class="inst">大きな数<span class="pts">（10点）</span></span></div>
+    <div class="sub">(1) 次の数を数字で書きましょう。</div>
+    <ol class="items">
+      <li>1億を126こ集めた数　→　<span class="ansline">&nbsp;</span></li>
+      <li>二百三十五億七千万　→　<span class="ansline">&nbsp;</span></li>
+      <li>3兆を5こ，1億を40こ合わせた数　→　<span class="ansline">&nbsp;</span></li>
+    </ol>
+    <div class="sub">(2) 次の数を書きましょう。</div>
+    <ol class="items">
+      <li>5兆60億を10倍した数　→　<span class="ansline">&nbsp;</span></li>
+      <li>900億を <span style="white-space:nowrap">1/10</span> にした数　→　<span class="ansline">&nbsp;</span></li>
+      <li>6兆8000億は，1億を何こ集めた数ですか。　→　<span class="ansline">&nbsp;</span></li>
+    </ol>
+  </div>
+
+  <!-- 大問2 折れ線グラフ -->
+  <div class="q">
+    <div class="qh"><span class="num">2</span><span class="inst">折れ線グラフ<span class="pts">（10点）</span></span></div>
+    <div>下の折れ線グラフは，ある日の気温の変わり方を表したものです。</div>
+    <svg viewBox="0 0 420 220" width="360" height="190">
+      <line x1="50" y1="10" x2="50" y2="180" stroke="#333" stroke-width="1"/>
+      <line x1="50" y1="180" x2="400" y2="180" stroke="#333" stroke-width="1"/>
+      <text x="10" y="40" font-size="11">30度</text>
+      <text x="10" y="110" font-size="11">20度</text>
+      <text x="10" y="180" font-size="11">0度</text>
+      <line x1="50" y1="40" x2="400" y2="40" stroke="#ddd" stroke-width="1"/>
+      <line x1="50" y1="110" x2="400" y2="110" stroke="#ddd" stroke-width="1"/>
+      <polyline points="60,122 110,101 160,80 210,59 260,73 310,87 360,101"
+                fill="none" stroke="#1a1a1a" stroke-width="2"/>
+      <g fill="#1a1a1a">
+        <circle cx="60" cy="122" r="3"/><circle cx="110" cy="101" r="3"/>
+        <circle cx="160" cy="80" r="3"/><circle cx="210" cy="59" r="3"/>
+        <circle cx="260" cy="73" r="3"/><circle cx="310" cy="87" r="3"/>
+        <circle cx="360" cy="101" r="3"/>
+      </g>
+      <text x="55" y="198" font-size="11">9</text>
+      <text x="105" y="198" font-size="11">10</text>
+      <text x="155" y="198" font-size="11">11</text>
+      <text x="205" y="198" font-size="11">12</text>
+      <text x="255" y="198" font-size="11">1</text>
+      <text x="305" y="198" font-size="11">2</text>
+      <text x="355" y="198" font-size="11">3</text>
+      <text x="200" y="212" font-size="11">（時こく：午前9時〜午後3時）</text>
+    </svg>
+    <ol class="items">
+      <li>横のじくは何を表していますか。　→　<span class="ansline">&nbsp;</span></li>
+      <li>午前10時の気温は何度ですか。　→　<span class="ansline">&nbsp;</span></li>
+      <li>気温がいちばん高いのは何時で，何度ですか。　→　<span class="ansline">&nbsp;</span>時，<span class="ansline">&nbsp;</span>度</li>
+      <li>気温が上がっているのは，何時から何時までですか。　→　<span class="ansline">&nbsp;</span>時から<span class="ansline">&nbsp;</span>時まで</li>
+      <li>気温の下がり方がいちばん大きかったのは，何時から何時までの間ですか。　→　<span class="ansline">&nbsp;</span></li>
+    </ol>
+  </div>
+
+  <!-- 大問3 整理のしかた -->
+  <div class="q">
+    <div class="qh"><span class="num">3</span><span class="inst">整理のしかた<span class="pts">（10点）</span></span></div>
+    <div>下の表1は，4年1組〜3組の12人に，好きなスポーツを聞いた記録です。</div>
+    <table class="data">
+      <tr><th>名前</th><th>組</th><th>スポーツ</th><th>名前</th><th>組</th><th>スポーツ</th></tr>
+      <tr><td>たかし</td><td>1</td><td>サッカー</td><td>さくら</td><td>1</td><td>野球</td></tr>
+      <tr><td>みさき</td><td>2</td><td>野球</td><td>りく</td><td>3</td><td>バスケ</td></tr>
+      <tr><td>ゆうた</td><td>1</td><td>バスケ</td><td>ひなた</td><td>2</td><td>バスケ</td></tr>
+      <tr><td>あかり</td><td>3</td><td>サッカー</td><td>そら</td><td>1</td><td>サッカー</td></tr>
+      <tr><td>けんと</td><td>2</td><td>サッカー</td><td>まな</td><td>3</td><td>野球</td></tr>
+      <tr><td>だいき</td><td>2</td><td>バスケ</td><td>ゆずき</td><td>3</td><td>サッカー</td></tr>
+    </table>
+    <div class="sub">(1) 表1を見て，下の表2のあいているところに人数を書きましょう。</div>
+    <table class="data fill">
+      <tr><th>組＼スポーツ</th><th>サッカー</th><th>野球</th><th>バスケ</th><th>合計</th></tr>
+      <tr><th>1組</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><th>2組</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><th>3組</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      <tr><th>合計</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+    </table>
+    <div class="sub">(2) 表2を見て答えましょう。</div>
+    <ol class="items">
+      <li>いちばん人気のあるスポーツは何ですか。　→　<span class="ansline">&nbsp;</span></li>
+      <li>2組でいちばん人気のあるスポーツは何ですか。　→　<span class="ansline">&nbsp;</span></li>
+      <li>調べた人数は全部で何人ですか。　→　<span class="ansline">&nbsp;</span></li>
+    </ol>
+  </div>
+
+  <!-- 大問4 1けたでわるわり算 -->
+  <div class="q">
+    <div class="qh"><span class="num">4</span><span class="inst">1けたでわるわり算<span class="pts">（16点）</span></span></div>
+    <div class="sub">(1) 次の計算をしましょう。</div>
+    <div class="calcgrid">
+      <div>① 90 ÷ 3</div><div>② 840 ÷ 6</div>
+      <div>③ 1500 ÷ 5</div><div>④ 504 ÷ 8</div>
+    </div>
+    <div class="sub">(2) 筆算で計算しましょう。あまりがあれば書きましょう。</div>
+    <div class="calcgrid">
+      <div>① 78 ÷ 5</div><div>② 683 ÷ 7</div>
+      <div>③ 97 ÷ 6</div><div>④ 432 ÷ 9</div>
+    </div>
+    <div class="sub">(3) 文章題</div>
+    <ol class="items">
+      <li>72まいの色紙を4人で同じ数ずつ分けると，1人分は何まいになりますか。<br>
+        （式）<span class="ansline" style="min-width:200px;">&nbsp;</span>　答え（<span class="ansline">&nbsp;</span>）
+      </li>
+      <li>125このボールを，8こずつ箱につめると，何箱できて，何こあまりますか。<br>
+        （式）<span class="ansline" style="min-width:200px;">&nbsp;</span>　答え（<span class="ansline">&nbsp;</span>箱できて，<span class="ansline">&nbsp;</span>こあまる）
+      </li>
+    </ol>
+  </div>
+
+  <!-- 大問5 角 -->
+  <div class="q">
+    <div class="qh"><span class="num">5</span><span class="inst">角<span class="pts">（10点）</span></span></div>
+    <ol class="items">
+      <li>直角は何度ですか。　→　<span class="ansline">&nbsp;</span></li>
+      <li>一直線の角度は何度ですか。　→　<span class="ansline">&nbsp;</span></li>
+    </ol>
+    <div class="sub">下の図を見て，あ・いの角度を求めましょう。</div>
+    <svg viewBox="0 0 220 140" width="190" height="120">
+      <line x1="20" y1="110" x2="200" y2="30" stroke="#1a1a1a" stroke-width="1.5"/>
+      <line x1="30" y1="20" x2="170" y2="120" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="118" y="60" font-size="13">40°</text>
+      <text x="80" y="100" font-size="13">あ</text>
+    </svg>
+    あ　→　<span class="ansline">&nbsp;</span>
+    <svg viewBox="0 0 220 110" width="190" height="95">
+      <line x1="10" y1="90" x2="210" y2="90" stroke="#1a1a1a" stroke-width="1.5"/>
+      <line x1="90" y1="90" x2="60" y2="15" stroke="#1a1a1a" stroke-width="1.5"/>
+      <text x="55" y="75" font-size="13">65°</text>
+      <text x="115" y="75" font-size="13">い</text>
+    </svg>
+    い　→　<span class="ansline">&nbsp;</span>
+  </div>
+
+  <!-- 大問6 小数 -->
+  <div class="q">
+    <div class="qh"><span class="num">6</span><span class="inst">小数<span class="pts">（16点）</span></span></div>
+    <div class="sub">(1) 次の計算をしましょう。</div>
+    <div class="calcgrid">
+      <div>① 2.56 + 3.78</div><div>② 6.3 − 2.45</div>
+      <div>③ 9 − 3.27</div><div>④ 0.3 − 0.12</div>
+    </div>
+    <div class="sub">(2) 次の問題に答えましょう。</div>
+    <ol class="items">
+      <li>0.1 を17こ，0.01 を4こ集めた数を書きましょう。　→　<span class="ansline">&nbsp;</span></li>
+      <li>5.208 という数について，8は何の位の数字ですか。　→　<span class="ansline">&nbsp;</span></li>
+      <li>次の数を小さい順に並べましょう。　3.45　3.4　3.054　3.5<br>
+        → <span class="ansline" style="min-width:260px;">&nbsp;</span>
+      </li>
+    </ol>
+  </div>
+
+  <!-- 大問7 2けたでわるわり算 -->
+  <div class="q">
+    <div class="qh"><span class="num">7</span><span class="inst">2けたでわるわり算<span class="pts">（16点）</span></span></div>
+    <div class="sub">(1) 次の計算をしましょう。</div>
+    <div class="calcgrid">
+      <div>① 80 ÷ 20</div><div>② 84 ÷ 21</div>
+      <div>③ 260 ÷ 40</div><div>④ 2700 ÷ 90</div>
+    </div>
+    <div class="sub">(2) 筆算で計算しましょう。あまりがあれば書きましょう。</div>
+    <div class="calcgrid">
+      <div>① 156 ÷ 23</div><div>② 391 ÷ 42</div>
+    </div>
+    <div class="sub">(3) 文章題</div>
+    <ol class="items">
+      <li>84このボールを，18人で同じ数ずつ分けると，1人分は何こになって，何こあまりますか。<br>
+        （式）<span class="ansline" style="min-width:200px;">&nbsp;</span>　答え（<span class="ansline">&nbsp;</span>こになって，<span class="ansline">&nbsp;</span>こあまる）
+      </li>
+      <li>ノートのねだんは45円，色えん筆のねだんは810円です。色えん筆のねだんは，ノートのねだんの何倍ですか。<br>
+        （式）<span class="ansline" style="min-width:200px;">&nbsp;</span>　答え（<span class="ansline">&nbsp;</span>）
+      </li>
+    </ol>
+  </div>
+
+  <!-- 大問8 がい数 -->
+  <div class="q">
+    <div class="qh"><span class="num">8</span><span class="inst">がい数<span class="pts">（10点）</span></span></div>
+    <ol class="items">
+      <li>53482 を四捨五入して，千の位までのがい数にしましょう。　→　<span class="ansline">&nbsp;</span></li>
+      <li>6730 を四捨五入して，上から1けたのがい数にしましょう。　→　<span class="ansline">&nbsp;</span></li>
+      <li>四捨五入して百の位までのがい数にすると，4600になる整数のはんいを，以上・未満を使って表しましょう。　→　<span class="ansline" style="min-width:200px;">&nbsp;</span></li>
+    </ol>
+    <div class="sub">文章題</div>
+    <ol class="items">
+      <li>1こ320円のケーキを4こ買います。代金をがい数で見積もると，およそ何円ですか。上から1けたのがい数にして計算しましょう。<br>
+        （式）<span class="ansline" style="min-width:200px;">&nbsp;</span>　答え（<span class="ansline">&nbsp;</span>）
+      </li>
+    </ol>
+  </div>
+
+  <!-- 大問9 式と計算 -->
+  <div class="q">
+    <div class="qh"><span class="num">9</span><span class="inst">式と計算<span class="pts">（6点）</span></span></div>
+    <div class="calcgrid">
+      <div>① 8 + 6 × 3</div><div>② （100 − 40）÷ 6</div>
+      <div>③ 7 × （9 − 4）</div>
+    </div>
+  </div>
+
+  <div class="reflect">
+    どの単元がいちばん難しかった？　<span class="ansline" style="min-width:220px;">&nbsp;</span><br>
+    感想・気づいたこと：<span class="line2"></span>
+  </div>
+</div>
+
+<!-- ============ 2枚目：解答・解説 ============ -->
+<div class="sheet pb">
+  <h1>解答・解説</h1>
+
+  <div class="memo">
+    ■ 出題範囲メモ：小4算数の基礎〜標準範囲（大きな数，折れ線グラフ，整理のしかた，1けたでわるわり算，角，小数，2けたでわるわり算，がい数，式と計算）の9単元を1枚で通しで確認するレベルチェックテストです。配点は大問ごとに付記（合計100点）。
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">1</span><span class="inst">大きな数（10点）</span></div>
+    <div class="box">
+      (1)① <span class="k">12,600,000,000（126億）</span>　② <span class="k">23,570,000,000（235億7000万）</span>　③ <span class="k">3,004,000,000,000（3兆40億）</span><br>
+      (2)① 5兆60億を10倍：<span class="k">50兆600億</span>　② 900億の1/10：<span class="k">90億</span>　③ 6兆8000億＝<span class="k">68000こ</span>
+    </div>
+    <div class="ex">10倍すると位が1つ上がり，1/10にすると位が1つ下がる。6兆8000億＝68000億＝1億×68000。</div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">2</span><span class="inst">折れ線グラフ（10点）</span></div>
+    <div class="box">
+      ① <span class="k">時こく</span>　② <span class="k">22度</span>　③ <span class="k">12時（正午）で27度</span>　④ <span class="k">9時から12時まで</span>　⑤ <span class="k">12時から1時までの間</span>
+    </div>
+    <div class="ex">折れ線が右上がりの区間が「上がっている」区間。下がり方がいちばん急な区間を探す。</div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">3</span><span class="inst">整理のしかた（10点）</span></div>
+    <table class="data fill">
+      <tr><th>組＼スポーツ</th><th>サッカー</th><th>野球</th><th>バスケ</th><th>合計</th></tr>
+      <tr><th>1組</th><td class="k">2</td><td class="k">1</td><td class="k">1</td><td class="k">4</td></tr>
+      <tr><th>2組</th><td class="k">1</td><td class="k">1</td><td class="k">2</td><td class="k">4</td></tr>
+      <tr><th>3組</th><td class="k">2</td><td class="k">1</td><td class="k">1</td><td class="k">4</td></tr>
+      <tr><th>合計</th><td class="k">5</td><td class="k">3</td><td class="k">4</td><td class="k">12</td></tr>
+    </table>
+    <div class="box">
+      (2)① いちばん人気：<span class="k">サッカー（5人）</span>　② 2組：<span class="k">バスケ</span>　③ <span class="k">12人</span>
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">4</span><span class="inst">1けたでわるわり算（16点）</span></div>
+    <div class="box">
+      (1)① 90÷3＝<span class="k">30</span>　② 840÷6＝<span class="k">140</span>　③ 1500÷5＝<span class="k">300</span>　④ 504÷8＝<span class="k">63</span><br>
+      (2)① 78÷5＝<span class="k">15あまり3</span>　② 683÷7＝<span class="k">97あまり4</span>　③ 97÷6＝<span class="k">16あまり1</span>　④ 432÷9＝<span class="k">48</span><br>
+      (3)① 式：72÷4＝18　答え：<span class="k">18まい</span>　② 式：125÷8＝15あまり5　答え：<span class="k">15箱できて，5こあまる</span>
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">5</span><span class="inst">角（10点）</span></div>
+    <div class="box">
+      直角：<span class="k">90°</span>　一直線：<span class="k">180°</span>　　あ：<span class="k">40°</span>　　い：<span class="k">115°</span>
+    </div>
+    <div class="ex">あ…向かい合う角（対頂角）は等しいので，あ＝40°。<br>い…一直線は180°なので，180°−65°＝115°。</div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">6</span><span class="inst">小数（16点）</span></div>
+    <div class="box">
+      (1)① 2.56＋3.78＝<span class="k">6.34</span>　② 6.3−2.45＝<span class="k">3.85</span>　③ 9−3.27＝<span class="k">5.73</span>　④ 0.3−0.12＝<span class="k">0.18</span><br>
+      (2)① 0.1×17＋0.01×4＝<span class="k">1.74</span>　② <span class="k">小数第三位（0.001の位）</span>　③ 小さい順：<span class="k">3.054 → 3.4 → 3.45 → 3.5</span>
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">7</span><span class="inst">2けたでわるわり算（16点）</span></div>
+    <div class="box">
+      (1)① 80÷20＝<span class="k">4</span>　② 84÷21＝<span class="k">4</span>　③ 260÷40＝<span class="k">6あまり20</span>　④ 2700÷90＝<span class="k">30</span><br>
+      (2)① 156÷23＝<span class="k">6あまり18</span>　② 391÷42＝<span class="k">9あまり13</span><br>
+      (3)① 式：84÷18＝4あまり12　答え：<span class="k">4こになって，12こあまる</span>　② 式：810÷45＝18　答え：<span class="k">18倍</span>
+    </div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">8</span><span class="inst">がい数（10点）</span></div>
+    <div class="box">
+      ① 53482 → <span class="k">53000</span>　② 6730 → <span class="k">7000</span>　③ <span class="k">4550以上，4650未満</span><br>
+      文章題：式：300×4＝1200　答え：<span class="k">およそ1200円</span>
+    </div>
+    <div class="ex">見積もりは上から1けた（320円→300円）にしてから計算する。</div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">9</span><span class="inst">式と計算（6点）</span></div>
+    <div class="box">
+      ① 8＋6×3＝8＋18＝<span class="k">26</span>　② （100−40）÷6＝60÷6＝<span class="k">10</span>　③ 7×（9−4）＝7×5＝<span class="k">35</span>
+    </div>
+    <div class="ex">かけ算・わり算は，たし算・ひき算より先に計算する。（　）の中はいちばん先。</div>
+  </div>
+
+  <div class="ex" style="margin-top:16px;">
+    ■ このテストのねらい：9つの単元を一度に見直すレベルチェックなので，どの単元が苦手だったかを本人と一緒に確認する材料として使う。
+  </div>
+</div>
+
+<script>
+function toggleEdit(){
+  var sheet = document.getElementById('sheetBody');
+  var btn = document.querySelector('.editbtn');
+  var editing = sheet.getAttribute('contenteditable') === 'true';
+  sheet.setAttribute('contenteditable', editing ? 'false' : 'true');
+  btn.classList.toggle('on');
+  btn.textContent = editing ? '編集モード' : '編集中（もう一度押すと解除）';
+}
+</script>
+
+</body>
+</html>
