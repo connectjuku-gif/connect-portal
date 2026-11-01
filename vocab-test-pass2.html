@@ -97,7 +97,9 @@
     border: 1px solid #bbb; padding: 3px 8px; vertical-align: middle;
   }
   table.wordtable td.wnum { width: 22px; text-align: center; color: #666; font-size: 9.5pt; }
-  table.wordtable td.wword { width: 32%; font-weight: bold; }
+  table.wordtable td.wword { width: 17%; font-weight: bold; }
+  table.wordtable td.wmeaning { height: 8.5mm; }
+  table.wordtable td.wword.en + td.wmeaning { width: 30%; }
   table.wordtable td.wmeaning { }
   .blankline { display: inline-block; min-width: 100%; border-bottom: 1px solid #333; height: 12px; }
 
@@ -223,8 +225,8 @@
     for (var i = 0; i < picked.length; i += 2) {
       var a = picked[i], b = picked[i+1];
       rowsHtml += '<tr>' +
-        '<td class="wnum">' + (i+1) + '</td><td class="wword en">' + esc(a.w) + '</td><td class="wmeaning"><span class="blankline"></span></td>' +
-        '<td class="wnum">' + (i+2) + '</td><td class="wword en">' + esc(b.w) + '</td><td class="wmeaning"><span class="blankline"></span></td>' +
+        '<td class="wnum">' + (i+1) + '</td><td class="wword en">' + esc(a.w) + '</td><td class="wmeaning"></td>' +
+        '<td class="wnum">' + (i+2) + '</td><td class="wword en">' + esc(b.w) + '</td><td class="wmeaning"></td>' +
         '</tr>';
       ansRowsHtml += '<tr>' +
         '<td class="wnum">' + (i+1) + '</td><td class="wword en">' + esc(a.w) + '</td><td class="wmeaning"><span class="k">' + esc(a.m) + '</span></td>' +

@@ -97,7 +97,10 @@
     border: 1px solid #bbb; padding: 3px 8px; vertical-align: middle;
   }
   table.wordtable td.wnum { width: 22px; text-align: center; color: #666; font-size: 9.5pt; }
-  table.wordtable td.wword { width: 32%; font-weight: bold; }
+  table.wordtable td.wword { width: 17%; font-weight: bold; }
+  table.wordtable td.wword.jpm { width: 22%; }
+  table.wordtable td.wmeaning { height: 8.5mm; }
+  table.wordtable td.wword.en + td.wmeaning { width: 31%; }
   table.wordtable td.wmeaning { }
   table.wordtable th.wdir { font-size: 9.5pt; font-weight: bold; background: #F3F1EC; padding: 3px 6px; text-align: center; letter-spacing: .05em; }
   table.wordtable td.jpm { font-weight: normal; font-size: 10.5pt; }
@@ -221,8 +224,8 @@
     for (var i = 0; i < half; i++) {
       var a = ej[i], b = je[i];
       rowsHtml += '<tr>' +
-        '<td class="wnum">' + (i+1) + '</td><td class="wword en">' + esc(a.w) + '</td><td class="wmeaning"><span class="blankline"></span></td>' +
-        '<td class="wnum">' + (half+i+1) + '</td><td class="wword jpm">' + esc(b.m) + '</td><td class="wmeaning"><span class="blankline"></span></td>' +
+        '<td class="wnum">' + (i+1) + '</td><td class="wword en">' + esc(a.w) + '</td><td class="wmeaning"></td>' +
+        '<td class="wnum">' + (half+i+1) + '</td><td class="wword jpm">' + esc(b.m) + '</td><td class="wmeaning"></td>' +
         '</tr>';
       ansRowsHtml += '<tr>' +
         '<td class="wnum">' + (i+1) + '</td><td class="wword en">' + esc(a.w) + '</td><td class="wmeaning"><span class="k">' + esc(a.m) + '</span></td>' +
