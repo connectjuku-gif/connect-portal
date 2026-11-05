@@ -1,0 +1,410 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>中3英語_総復習ランダムまちがい探し</title>
+<style>
+@page { size: A4; margin: 14mm 14mm; }
+* { box-sizing: border-box; }
+body { margin:0; font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif; color:#111; line-height:1.7; font-size:11.5pt; background:#e9e9e9; }
+.en { font-family: "Century Gothic", "Trebuchet MS", "Segoe UI", Verdana, sans-serif; }
+
+/* ===== 画面上のコントロールバー（印刷時は非表示） ===== */
+.controlbar { position: sticky; top: 0; z-index: 10; background: #1F3A5F; color: #fff; padding: 12px 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; font-size: 13px; }
+.controlbar .title { font-weight: bold; font-size: 15px; margin-right: 8px; }
+.controlbar select, .controlbar button { font-family: inherit; font-size: 13px; padding: 7px 14px; border-radius: 6px; border: none; cursor: pointer; }
+.controlbar select { background: #fff; color: #111; }
+.controlbar button.primary { background: #C9972B; color: #fff; font-weight: bold; }
+.controlbar button.secondary { background: #3A557A; color: #fff; }
+.controlbar button.secondary.active { background: #8A2E2E; }
+.controlbar button.mini { background: transparent; color:#D9E1EC; border:1px solid #5A7398; padding:3px 9px; font-size:12px; }
+.controlbar .spacer { flex: 1; }
+.controlbar .count { font-size: 12px; color: #D9E1EC; }
+.catbox { width:100%; display:flex; flex-wrap:wrap; gap:4px 14px; align-items:center; font-size:12.5px; background:#29466D; border-radius:6px; padding:7px 12px; }
+.catbox .grp { font-weight:bold; color:#F1D58E; margin-right:2px; }
+.catbox label { white-space:nowrap; cursor:pointer; }
+.catbox .sep { width:100%; height:0; }
+
+/* ===== 用紙 ===== */
+.sheet { background:#fff; max-width: 190mm; margin: 14px auto; padding: 12mm 13mm; box-shadow: 0 1px 6px rgba(0,0,0,.15); }
+h1 { text-align:center; font-size:15pt; margin:0 0 2px; letter-spacing:.05em; }
+.sub { text-align:center; font-size:10.5pt; color:#444; margin-bottom:6px; }
+.namebox { border:1px solid #333; padding:4px 10px; display:flex; gap:24px; justify-content:flex-end; margin: 4px 0 10px; font-size:10.5pt; }
+.rules { border:1px solid #333; padding:6px 12px; font-size:9.5pt; margin-bottom:10px; line-height:1.55; }
+.q { margin: 10px 0 6px; }
+.qh { display:flex; align-items:flex-start; gap:8px; }
+.num { display:inline-block; border:1.5px solid #222; min-width:24px; text-align:center; font-weight:bold; line-height:1.4; padding:1px 4px; flex-shrink:0; }
+.inst { flex:1; font-size:10.5pt; }
+.pts { float:right; font-size:10pt; color:#333; font-weight:normal; }
+.hint { color:#444; font-size:10pt; }
+ol.items { list-style:none; padding-left:0.2em; margin:6px 0; }
+ol.items li { margin:0 0 2px; break-inside:avoid; page-break-inside:avoid; }
+.jp { font-size:10.5pt; line-height:1.45; }
+.words { line-height:1.35; margin-left:1.6em; font-size:11.5pt; }
+.words u { text-decoration-thickness:1.5px; }
+.ansrow { margin:2px 0 5px 1.6em; font-size:10.5pt; display:flex; align-items:flex-end; gap:6px; }
+.enrow { display:flex; flex-wrap:wrap; align-items:flex-end; gap:4px 14px; margin-bottom:4px; }
+.enrow .words { flex:1 1 auto; }
+.enrow .ansrow { margin:0 0 0 auto; }
+.ansrow .box { display:inline-block; border-bottom:1px solid #222; width:9em; height:1.5em; }
+.ansrow .box.wide { width:15em; }
+.words u { text-underline-offset: 2px; }
+.line { border-bottom:1px solid #222; height:1.5em; margin:0 0 4px 1.6em; }
+
+/* ===== 解答 ===== */
+.ans h2 { font-size:12.5pt; border-left:5px solid #222; padding-left:8px; margin:14px 0 6px; }
+.memo { border:2px solid #222; padding:6px 12px; margin:6px 0 8px; font-size:9.5pt; line-height:1.5; }
+.memo > b:first-child { display:block; margin-bottom:2px; }
+.unit { break-inside:avoid; page-break-inside:avoid; border-bottom:1px dotted #999; padding:1px 0; line-height:1.38; }
+.unit .top { display:flex; gap:8px; align-items:baseline; }
+.unit .no { font-weight:bold; min-width:2.2em; }
+.unit .jp { flex:1; }
+.tag { font-size:8.5pt; color:#333; border:1px solid #777; padding:0 5px; white-space:nowrap; background:#f3f3f3; }
+.unit .a { margin-left:2.6em; font-size:11pt; }
+.k { color:#000; font-weight:bold; text-decoration:underline; text-underline-offset:2px; }
+.unit .ex { margin-left:2.6em; font-size:9pt; color:#333; line-height:1.4; }
+.ex .x { display:inline-block; border:1px solid #777; padding:0 4px; margin-right:4px; font-size:8.5pt; }
+.aim { border:1px solid #333; padding:6px 12px; margin-top:10px; font-size:9.5pt; line-height:1.5; break-inside:avoid; page-break-inside:avoid; }
+
+.empty { text-align:center; color:#666; padding:40px 0; }
+body.editmode [contenteditable="true"] { outline: 1px dashed #C9972B; }
+
+@media print {
+  body { background:#fff; }
+  .controlbar { display:none !important; }
+  .sheet { box-shadow:none; margin:0; padding:0; max-width:none; }
+  .pb { page-break-before: always; break-before: page; }
+  [contenteditable] { outline:none !important; }
+  body.print-q .sheet.ans { display:none !important; }
+  body.print-a .sheet.qs { display:none !important; }
+  body.print-a .sheet.ans.pb { page-break-before:auto; break-before:auto; }
+}
+.backhead { display:flex; justify-content:space-between; border-bottom:1px solid #333; padding-bottom:3px; margin-bottom:8px; font-size:10.5pt; }
+@media (max-width: 720px) { .sheet { padding: 8mm 5mm; } }
+</style>
+</head>
+<body>
+
+<div class="controlbar" id="controlbar">
+  <span class="title">🔍 中3英語 総復習ランダムまちがい探し｜学習塾CONNECT</span>
+  <select id="levelSel" aria-label="レベル">
+    <option value="basic">基礎（誤りの語に下線あり）</option>
+    <option value="standard">標準（誤りを自分で見つける）</option>
+  </select>
+  <select id="countSel" aria-label="問題数">
+    <option value="10" selected>10問（片面）</option>
+    <option value="16">16問（両面・表8問／裏8問）</option>
+    <option value="20">20問（両面・表10問／裏10問）</option>
+  </select>
+  <select id="printSel" aria-label="印刷する内容">
+    <option value="all">印刷：問題＋解答</option>
+    <option value="q">印刷：問題だけ</option>
+    <option value="a">印刷：解答だけ</option>
+  </select>
+  <button class="primary" id="makeBtn">この範囲で作成</button>
+  <button class="secondary" id="editBtn">編集モード</button>
+  <button class="secondary" id="saveBtn">保存</button>
+  <button class="secondary" id="printBtn">印刷</button>
+  <span class="spacer"></span>
+  <span class="count" id="countLabel"></span>
+  <div class="catbox" id="catbox"></div>
+</div>
+
+<div id="area"></div>
+
+<script>
+(function(){
+/* ===== 問題データ =====
+   [文法項目, 日本文, 英文（{誤>正} が誤り。正が空なら不要な語）, ポイント]
+*/
+var POOL = [
+['不定詞・動名詞','わたしは将来、医者になりたいです。','I want {being>to be} a doctor in the future.','want to＋動詞の原形。'],
+['不定詞・動名詞','彼は写真をとるために公園へ行きました。','He went to the park {taking>to take} pictures.','「〜するために」は to＋原形。'],
+['不定詞・動名詞','わたしは何か温かい飲み物がほしいです。','I want {hot something>something hot} to drink.','something＋形容詞の順。'],
+['不定詞・動名詞','英語を話すことは楽しいです。','{Speak>Speaking} English is fun.','主語の「〜すること」は〜ing。'],
+['不定詞・動名詞','わたしたちはサッカーをして楽しみました。','We enjoyed {to play>playing} soccer.','enjoy のあとは〜ing だけ。'],
+['不定詞・動名詞','彼女は宿題をし終えました。','She finished {to do>doing} her homework.','finish のあとは〜ing だけ。'],
+['不定詞・動名詞','わたしはその知らせを聞いて驚きました。','I was surprised {hearing>to hear} the news.','感情＋to＋原形。'],
+['不定詞・動名詞','わたしはどこへ行けばよいかわかりません。','I don\'t know where {going>to go}.','疑問詞＋to＋原形。'],
+['不定詞・動名詞','ギターのひき方を教えてください。','Please tell me how {playing>to play} the guitar.','how to＋原形。'],
+['不定詞・動名詞','手伝ってくれてありがとう。','Thank you for {help>helping} me.','前置詞のあとは〜ing。'],
+['助動詞・未来','明日は雨が降るでしょう。','It will {rains>rain} tomorrow.','will のあとは原形。'],
+['助動詞・未来','わたしは今週末、祖母を訪ねるつもりです。','I am going to {visiting>visit} my grandmother this weekend.','going to のあとは原形。'],
+['助動詞・未来','ここでは靴をぬがなければなりません。','You must {took>take} off your shoes here.','must のあとは原形。'],
+['助動詞・未来','彼は今日、学校へ行く必要はありません。','He doesn\'t {has>have} to go to school today.','doesn\'t のあとは have。'],
+['助動詞・未来','窓を開けましょうか。','{Do>Shall} I open the window?','「〜しましょうか」は Shall I 〜?'],
+['助動詞・未来','あなたはもっと早く寝るべきです。','You should {goes>go} to bed earlier.','should のあとは原形。'],
+['助動詞・未来','わたしはじょうずに泳げるようになるでしょう。','I will {can>be able to} swim well.','will と can は並べられない。be able to を使う。'],
+['助動詞・未来','彼は昨日、家にいなければなりませんでした。','He {musted>had to} stay home yesterday.','must の過去は had to。'],
+['助動詞・未来','ここで写真をとってもいいですか。','{Do>May} I take pictures here?','「〜してもいいですか」は May I 〜?（Can I も正解）'],
+['助動詞・未来','彼女は来月15歳になります。','She will {is>be} fifteen next month.','will のあとの be動詞は be。'],
+['比較','この川は日本でいちばん長いです。','This river is the longest {of>in} Japan.','場所・集団の前は in。'],
+['比較','ケンはクラスのほかのどの生徒よりも速く走ります。','Ken runs faster than any other {students>student} in his class.','any other のあとは単数名詞。'],
+['比較','この本はあの本ほどおもしろくありません。','This book is not as {more interesting>interesting} as that one.','as 〜 as の間はもとの形。'],
+['比較','わたしは犬よりねこが好きです。','I like cats better {as>than} dogs.','better のあとは than。'],
+['比較','彼女は家族の中でいちばん早く起きます。','She gets up the {earlier>earliest} in her family.','「いちばん」は最上級。'],
+['比較','この問題はあの問題より難しいです。','This question is {difficulter>more difficult} than that one.','長い語は more＋形容詞。'],
+['比較','富士山は日本でいちばん高い山です。','Mt. Fuji is {higher>the highest} mountain in Japan.','「いちばん」は the＋最上級。'],
+['比較','あなたはどの教科がいちばん好きですか。','Which subject do you like {better>the best}?','「いちばん好き」は the best。'],
+['比較','わたしの父は母と同じ年齢です。','My father is as {older>old} as my mother.','as 〜 as の間はもとの形。'],
+['比較','これはわたしが今までに見た中でいちばん美しい花です。','This is the {beautifulest>most beautiful} flower I have ever seen.','beautiful の最上級は most beautiful。'],
+['接続詞','わたしが家に帰ったとき、弟は眠っていました。','My brother was sleeping when I {come>came} home.','過去の話なので came。'],
+['接続詞','もし明日晴れたら、海へ行きましょう。','If it {will be>is} sunny tomorrow, let\'s go to the sea.','if のあとは未来でも現在形。'],
+['接続詞','彼は疲れていたので、早く寝ました。','He went to bed early {so>because} he was tired.','理由の前は because。'],
+['接続詞','彼は疲れていたので、早く寝ました。','He was tired, {because>so} he went to bed early.','結果を続けるときは so。'],
+['接続詞','わたしはとても忙しかったので、昼食を食べられませんでした。','I was {too>so} busy that I couldn\'t eat lunch.','so 〜 that …。too は that と使わない。'],
+['接続詞','彼が来るまでここで待ちましょう。','Let\'s wait here until he {will come>comes}.','until のあとも現在形。'],
+['接続詞','わたしは宿題を終えたあとでテレビを見ました。','I watched TV after I {finish>finished} my homework.','過去の話なので finished。'],
+['接続詞','明日は雨が降ると思います。','I think that it {rains>will rain} tomorrow.','明日のことなので will rain。'],
+['接続詞','もし疲れているなら、休んでください。','{Because>If} you are tired, please take a rest.','「もし〜なら」は If。'],
+['接続詞','わたしは彼が日本出身だと知っています。','I know {what>that} he is from Japan.','「〜ということ」は that。'],
+['受け身','この本は多くの人に読まれています。','This book is {reading>read} by many people.','受け身は be動詞＋過去分詞。'],
+['受け身','英語は多くの国で話されています。','English is {speaked>spoken} in many countries.','speak の過去分詞は spoken。'],
+['受け身','この寺は100年前に建てられました。','This temple {is>was} built 100 years ago.','100 years ago があるので was。'],
+['受け身','その窓はケンによって割られました。','The window was {broke>broken} by Ken.','break の過去分詞は broken。'],
+['受け身','この部屋は毎日そうじされますか。','{Does>Is} this room cleaned every day?','受け身の疑問文は be動詞を文頭に。'],
+['受け身','その手紙は英語で書かれていませんでした。','The letter {didn\'t>wasn\'t} written in English.','受け身の否定は be動詞＋not。'],
+['受け身','その歌は若い人たちに愛されています。','The song is loved {from>by} young people.','「〜によって」は by。'],
+['受け身','その公園は多くの人々に訪れられています。','The park {visited>is visited} by many people.','受け身には be動詞が必要。'],
+['受け身','その祭りはいつ開かれますか。','When {does>is} the festival held?','受け身の疑問文は be動詞。'],
+['受け身','その山は雪におおわれていました。','The mountain was covered {by>with} snow.','be covered with 〜。'],
+['現在完了','わたしは3年間ここに住んでいます。','I have {live>lived} here for three years.','have のあとは過去分詞。'],
+['現在完了','彼女はもう宿題を終えました。','She has already {finish>finished} her homework.','has のあとは過去分詞。'],
+['現在完了','あなたは今までに京都を訪れたことがありますか。','{Did>Have} you ever visited Kyoto?','経験の疑問文は Have＋主語＋ever＋過去分詞?'],
+['現在完了','わたしは一度もすしを食べたことがありません。','I have never {ate>eaten} sushi.','eat の過去分詞は eaten。'],
+['現在完了','彼はまだ駅に着いていません。','He hasn\'t arrived at the station {already>yet}.','否定文の「まだ」は yet。'],
+['現在完了','あなたはどのくらいの間、英語を勉強していますか。','How long {did>have} you studied English?','期間は How long have 〜?'],
+['現在完了','わたしたちは子どものころからずっと友だちです。','We have been friends {for>since} we were children.','「〜から」（起点）は since。'],
+['現在完了','わたしは10年間ここに住んでいます。','I have lived here {since>for} ten years.','「〜の間」（期間）は for。'],
+['現在完了','彼女は2時間ずっとテニスをしています。','She has been {play>playing} tennis for two hours.','現在完了進行形は has been＋〜ing。'],
+['現在完了','わたしは去年、京都を訪れました。','I {have visited>visited} Kyoto last year.','last year など過去を表す語があるときは現在完了にしない。'],
+['It・want 人 to','英語を勉強することは大切です。','It is important {study>to study} English.','It is 〜 to …。to が必要。'],
+['It・want 人 to','わたしにとってこの問題を解くのは難しいです。','It is difficult {of>for} me to solve this question.','It is 〜 for 人 to …。'],
+['It・want 人 to','母はわたしに部屋をそうじしてほしいと思っています。','My mother wants {I>me} to clean my room.','want 人 to。人は「〜を」の形。'],
+['It・want 人 to','先生はわたしたちに静かにするように言いました。','Our teacher told us {be>to be} quiet.','tell 人 to＋原形。'],
+['It・want 人 to','わたしは彼に手伝ってくれるように頼みました。','I asked {he>him} to help me.','ask 人 to。he → him。'],
+['It・want 人 to','あなたにとって早起きは簡単ですか。','{Does>Is} it easy for you to get up early?','It is 〜 の疑問文は Is it 〜?'],
+['It・want 人 to','わたしはあなたにこの本を読んでほしいです。','I want you {reading>to read} this book.','want 人 to＋原形。'],
+['It・want 人 to','彼女はわたしにもっとゆっくり話すように頼みました。','She asked me {speak>to speak} more slowly.','ask 人 to＋原形。'],
+['It・want 人 to','子どもにとって泳ぎ方を学ぶことは大切です。','{This>It} is important for children to learn how to swim.','It is 〜 for 人 to … の It。'],
+['It・want 人 to','父はわたしに医者になってほしいと思っています。','My father wants me {become>to become} a doctor.','want 人 to＋原形。'],
+['分詞の後置修飾','ベンチにすわっている男の子はケンです。','The boy {sat>sitting} on the bench is Ken.','「〜している」は〜ing。'],
+['分詞の後置修飾','これは英語で書かれた手紙です。','This is a letter {writing>written} in English.','「〜された」は過去分詞。'],
+['分詞の後置修飾','あそこで走っている犬を見て。','Look at the dog {runs>running} over there.','名詞のあとの「〜している」は〜ing。'],
+['分詞の後置修飾','わたしは中国で作られた車を持っています。','I have a car {making>made} in China.','「作られた」は made。'],
+['分詞の後置修飾','ピアノをひいている女の子はわたしの姉です。','The girl {plays>playing} the piano is my sister.','文の動詞は is。girl のあとは〜ing。'],
+['分詞の後置修飾','彼は多くの人に愛されている歌手です。','He is a singer {loving>loved} by many people.','「愛されている」は loved。'],
+['分詞の後置修飾','公園で写真をとっている男の人はだれですか。','Who is the man {takes>taking} pictures in the park?','名詞のあとは〜ing。'],
+['分詞の後置修飾','これは100年前に建てられた家です。','This is a house {building>built} 100 years ago.','「建てられた」は built。'],
+['分詞の後置修飾','わたしは弟がこわした時計を直しました。','I fixed the watch {breaking>broken} by my brother.','「こわされた」は broken。'],
+['分詞の後置修飾','テレビを見ている生徒たちは楽しそうです。','The students watching TV {looks>look} happy.','主語は The students（複数）なので look。'],
+['関係代名詞','わたしには英語を話せる友だちがいます。','I have a friend {which>who} can speak English.','人を説明するのは who。'],
+['関係代名詞','これは父がくれた本です。','This is the book {who>which} my father gave me.','ものを説明するのは which。'],
+['関係代名詞','わたしが昨日会った女の子はエマです。','The girl I met yesterday {are>is} Emma.','主語は The girl（単数）。'],
+['関係代名詞','京都は多くの寺がある都市です。','Kyoto is a city {who>which} has many temples.','ものなので which。'],
+['関係代名詞','わたしは青い目をしたねこを飼っています。','I have a cat which {have>has} blue eyes.','a cat が主語なので has。'],
+['関係代名詞','となりに住んでいる男の人は先生です。','The man who {live>lives} next door is a teacher.','The man が主語なので lives。'],
+['関係代名詞','これはわたしが今までに見た中でいちばんおもしろい映画です。','This is the most interesting movie {who>that} I have ever seen.','ものを説明するので that（which）。'],
+['関係代名詞','彼女が作ったケーキはとてもおいしかったです。','The cake she made {were>was} very good.','The cake（単数）なので was。'],
+['関係代名詞','テニスをしている男の子はわたしの兄です。','The boy who is playing tennis {are>is} my brother.','The boy が主語なので is。'],
+['関係代名詞','これはわたしが昨日買ったかばんです。','This is the bag {who>that} I bought yesterday.','ものなので that（which も正解）。'],
+['間接疑問','わたしは彼がどこに住んでいるか知りません。','I don\'t know where {does he live>he lives}.','文の中では「疑問詞＋主語＋動詞」。'],
+['間接疑問','あなたはこれが何か知っていますか。','Do you know what {is this>this is}?','what this is の順。'],
+['間接疑問','彼女が何歳か教えてください。','Please tell me how old {is she>she is}.','how old she is の順。'],
+['間接疑問','わたしは彼がなぜ昨日遅れたのかわかりません。','I don\'t know why he {is>was} late yesterday.','yesterday なので was。'],
+['間接疑問','あなたは駅がどこにあるか知っていますか。','Do you know where {is the station>the station is}?','where the station is の順。'],
+['間接疑問','わたしはだれがこの絵をかいたのか知りたいです。','I want to know who {paint>painted} this picture.','過去のことなので painted。'],
+['間接疑問','彼が何時に来るか教えてくれますか。','Can you tell me what time {will he>he will} come?','what time he will come の順。'],
+['間接疑問','わたしは彼女が何を買ったのか知りません。','I don\'t know what {did she buy>she bought}.','did は使わず過去形 bought。'],
+['間接疑問','あなたは彼がいつ日本に来たか知っていますか。','Do you know when {did he come>he came} to Japan?','when he came の順。'],
+['間接疑問','これがだれのかばんかわかりますか。','Do you know whose bag {is this>this is}?','whose bag this is の順。'],
+['仮定法','もしわたしが鳥なら、空を飛べるのに。','If I {am>were} a bird, I could fly.','仮定法の be動詞は were。'],
+['仮定法','もっとお金を持っていればいいのに。','I wish I {have>had} more money.','I wish のあとは過去形。'],
+['仮定法','もし時間があれば、あなたを手伝うのに。','If I had time, I {will>would} help you.','仮定法では would＋原形。'],
+['仮定法','ピアノがひけたらいいのに。','I wish I {can>could} play the piano.','I wish のあとは could。'],
+['仮定法','もしわたしがあなたなら、そんなことはしないでしょう。','If I were you, I {won\'t>wouldn\'t} do that.','仮定法では wouldn\'t。'],
+['仮定法','彼がここにいればいいのに。','I wish he {is>were} here.','仮定法の be動詞は were。'],
+['仮定法','もし車を持っていたら、そこへ行けるのに。','If I {have>had} a car, I could go there.','If のあとは過去形。'],
+['仮定法','英語をじょうずに話せたらいいのに。','I wish I could {spoke>speak} English well.','could のあとは原形。'],
+['仮定法','もし雨が降っていなければ、外で遊べるのに。','If it weren\'t raining, we {can>could} play outside.','仮定法では could。'],
+['仮定法','兄がいればいいのに。','I {hope>wish} I had a brother.','実現しない願いは wish。'],
+['make・let・help','その映画はわたしを悲しくさせました。','The movie made {I>me} sad.','make＋人＋形容詞。I → me。'],
+['make・let・help','母はわたしを買い物に行かせました。','My mother made me {to go>go} shopping.','make＋人＋原形。to はつけない。'],
+['make・let・help','あなたのノートを見せてください。','Let me {to see>see} your notebook.','let＋人＋原形。'],
+['make・let・help','わたしは父が車を洗うのを手伝いました。','I helped my father {washing>wash} the car.','help＋人＋原形。'],
+['make・let・help','自己紹介をさせてください。','Let me {introducing>introduce} myself.','Let me＋原形。'],
+['make・let・help','その知らせは彼を幸せにしました。','The news made him {happily>happy}.','make＋人＋形容詞（happily は副詞）。'],
+['make・let・help','わたしたちは彼をケンと呼びます。','We call {he>him} Ken.','call＋人＋名前。he → him。'],
+['make・let・help','先生はわたしたちを早く帰らせてくれました。','Our teacher let us {went>go} home early.','let＋人＋原形。'],
+['make・let・help','彼女はわたしが宿題をするのを手伝ってくれました。','She helped me {doing>do} my homework.','help＋人＋原形。'],
+['make・let・help','彼らはその犬をポチと名づけました。','They named {Pochi the dog>the dog Pochi}.','name＋もの＋名前の順。']
+];
+
+var GROUPS = [
+  ['中2の復習', ['不定詞・動名詞','助動詞・未来','比較','接続詞']],
+  ['中3', ['受け身','現在完了','It・want 人 to','分詞の後置修飾','関係代名詞','間接疑問','仮定法','make・let・help']]
+];
+
+var area = document.getElementById('area');
+var catbox = document.getElementById('catbox');
+var levelSel = document.getElementById('levelSel');
+var countSel = document.getElementById('countSel');
+var countLabel = document.getElementById('countLabel');
+
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function shuffle(a){ a = a.slice(); for (var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+
+// 項目チェックボックス
+GROUPS.forEach(function(g, gi){
+  var s = '<span class="grp">' + g[0] + '</span>';
+  g[1].forEach(function(c){
+    var n = POOL.filter(function(p){ return p[0]===c; }).length;
+    s += '<label><input type="checkbox" class="cat" value="' + esc(c) + '" checked> ' + esc(c) + '<span style="opacity:.6">(' + n + ')</span></label>';
+  });
+  s += '<button class="mini" data-g="' + gi + '" type="button">' + g[0] + 'だけ</button>';
+  catbox.insertAdjacentHTML('beforeend', s + (gi===0 ? '<span class="sep"></span>' : ''));
+});
+catbox.insertAdjacentHTML('beforeend', '<button class="mini" data-g="all" type="button">全部</button>');
+catbox.addEventListener('click', function(e){
+  var b = e.target.closest('button.mini'); if (!b) return;
+  var g = b.getAttribute('data-g');
+  var on = g==='all' ? null : GROUPS[+g][1];
+  document.querySelectorAll('.cat').forEach(function(cb){ cb.checked = on===null || on.indexOf(cb.value)>=0; });
+  updateLabel();
+});
+catbox.addEventListener('change', updateLabel);
+function selectedCats(){ return Array.prototype.map.call(document.querySelectorAll('.cat:checked'), function(cb){ return cb.value; }); }
+function updateLabel(){
+  var cats = selectedCats();
+  var n = POOL.filter(function(p){ return cats.indexOf(p[0])>=0; }).length;
+  countLabel.textContent = '選択中：' + cats.length + '項目・' + n + '問から出題';
+}
+
+// 項目がかたよらないように、項目ごとに順番に1問ずつ取る
+function pick(cats, n){
+  var buckets = cats.map(function(c){ return shuffle(POOL.filter(function(p){ return p[0]===c; })); });
+  buckets = shuffle(buckets);
+  var out = [];
+  while (out.length < n) {
+    var added = false;
+    for (var i=0;i<buckets.length && out.length<n;i++){
+      if (buckets[i].length){ out.push(buckets[i].shift()); added = true; }
+    }
+    if (!added) break;
+  }
+  return shuffle(out);
+}
+
+function parse(p){
+  var m = p[2].match(/^(.*)\{([^>]*)>([^}]*)\}(.*)$/);
+  var pre = m[1], w = m[2], r = m[3], post = m[4];
+  var wt = w.replace(/\s+$/,''), rt = r.replace(/\s+$/,'');
+  return {
+    wrongHtml: esc(pre) + '\u0001' + esc(wt) + '\u0002' + esc(w.slice(wt.length)) + esc(post),
+    right: pre + r + post,
+    rightHtml: esc(pre) + (rt ? '<span class="k">' + esc(rt) + '</span>' + esc(r.slice(rt.length)) : '') + esc(post),
+    w: wt, r: rt
+  };
+}
+
+function build(){
+  var cats = selectedCats();
+  if (!cats.length){ area.innerHTML = '<div class="sheet"><p class="empty">文法項目を1つ以上選んでください。</p></div>'; return; }
+  var std = levelSel.value === 'standard';
+  var n = +countSel.value;
+  var items = pick(cats, n);
+  n = items.length;
+  var built = items.map(parse);
+  var lvName = std ? '標準' : '基礎';
+  var today = new Date();
+  var dstr = today.getFullYear() + '年' + (today.getMonth()+1) + '月' + today.getDate() + '日';
+  var allCats = GROUPS[0][1].concat(GROUPS[1][1]);
+  var rangeText = cats.length === allCats.length ? '中3の全範囲（中2の復習を含む）' : cats.join('・');
+  var TITLE = '中学3年生 まちがい探し特訓（中3総復習）';
+
+  var inst = std
+    ? '次の英文には、日本文に合わない<b>誤りが1か所</b>あります。誤りの部分を書きぬき、正しく直しなさい。'
+    : '次の英文の<u>下線部</u>には誤りがあります。日本文に合うように、下線部を正しく直しなさい。';
+
+  function qrow(b){
+    var en = std ? b.wrongHtml.replace('\u0001','').replace('\u0002','') : b.wrongHtml.replace('\u0001','<u>').replace('\u0002','</u>');
+    var box = std
+      ? '<div class="ansrow">誤：<span class="box"></span>→ 正：<span class="box"></span></div>'
+      : '<div class="ansrow">正しい形：<span class="box wide"></span></div>';
+    return '<div class="enrow"><div class="words en">' + en + '</div>' + box + '</div>';
+  }
+
+  var h = '<div class="sheet qs"><h1>' + TITLE + '</h1>';
+  h += '<div class="sub">［' + lvName + '］' + n + '問' + (n > 10 ? '（表' + Math.ceil(n/2) + '問・裏' + Math.floor(n/2) + '問）' : '') + '・各1点／出題範囲：' + esc(rangeText) + '</div>';
+  h += '<div class="namebox"><span style="margin-right:auto">' + dstr + '</span><span>3年　組　番</span><span>名前：＿＿＿＿＿＿＿＿＿＿</span><span>／' + n + '点</span></div>';
+  h += '<div class="rules">・誤りは、語の形（spoken／eaten／were など）、使う語（who／which／for など）、語の位置のどれかです。' + (std ? '2語以上のまとまりで書きぬいてもかまいません。' : '') + '<br>・その語が<b>いらない</b>ときは、' + (std ? '「正」の欄' : '答えの欄') + 'に「×」と書きましょう。迷ったら、まず主語と動詞を確かめよう。</div>';
+  h += '<div class="q"><div class="qh"><span class="num">1</span><span class="inst">' + inst + '<span class="pts">［1点×' + n + '］</span></span></div><ol class="items">';
+  var front = n > 10 ? Math.ceil(n / 2) : n;
+  built.forEach(function(b, i){
+    if (i === front) {
+      h += '</ol></div></div>';
+      h += '<div class="sheet qs pb"><div class="backhead"><span>' + TITLE + '［' + lvName + '］　裏面</span><span>名前：＿＿＿＿＿＿＿＿</span></div>';
+      h += '<div class="q"><ol class="items">';
+    }
+    h += '<li><div class="jp">(' + (i+1) + ') ' + esc(items[i][1]) + '</div>' + qrow(b) + '</li>';
+  });
+  h += '</ol></div></div>';
+
+  // 解答・解説
+  var counts = {};
+  items.forEach(function(p){ counts[p[0]] = (counts[p[0]]||0) + 1; });
+  var countStr = allCats.filter(function(c){ return counts[c]; }).map(function(c){ return c + ' ' + counts[c]; }).join('／');
+  h += '<div class="sheet ans pb"><h1>解答・解説</h1><div class="sub">' + TITLE + '［' + lvName + '］' + n + '問・各1点</div>';
+  h += '<div class="memo"><b>■ 出題範囲メモ</b>・範囲：' + esc(rangeText) + '（項目がかたよらないようランダム出題）<br>・今回の内訳：' + esc(countStr) + '<br>・採点：' + (std ? '誤りの場所と直し方の両方が正しくて1点。' : '下線部を正しく直せて1点。') + '短縮形と開いた形（don\'t / do not）はどちらも正解。右の枠は復習する文法項目。<br>・<b>ねらい</b>：英文を読むときは「主語は何か（単数・複数）」「時はいつか（今・過去）」「be動詞の文か一般動詞の文か」に加えて、過去分詞・語順（疑問詞＋主語＋動詞）・仮定法の時制を確かめるくせをつけましょう。間違えた問題は、正しい英文を声に出して読み、もう一度書いてみましょう。</div>';
+  built.forEach(function(b, i){
+    var p = items[i];
+    h += '<div class="unit"><div class="top"><span class="no">(' + (i+1) + ')</span><span class="jp">' + esc(p[1]) + '</span><span class="tag">' + esc(p[0]) + '</span></div>';
+    h += '<div class="a en">' + b.rightHtml + '</div>';
+    h += '<div class="ex"><span class="x">誤</span>' + esc(b.w) + '　<span class="x">正</span>' + (b.r ? esc(b.r) : '×（不要）') + '　' + esc(p[3]) + '</div></div>';
+  });
+  h += '</div>';
+
+  area.innerHTML = h;
+  if (document.body.classList.contains('editmode')) setEditable(true);
+}
+
+// 編集モード
+var editBtn = document.getElementById('editBtn');
+function setEditable(on){
+  document.querySelectorAll('#area .sheet').forEach(function(s){ s.setAttribute('contenteditable', on ? 'true' : 'false'); });
+}
+editBtn.addEventListener('click', function(){
+  var on = !document.body.classList.contains('editmode');
+  document.body.classList.toggle('editmode', on);
+  editBtn.classList.toggle('active', on);
+  editBtn.textContent = on ? '編集モード終了' : '編集モード';
+  setEditable(on);
+});
+
+// 保存（今表示しているプリントをそのままHTMLで保存）
+document.getElementById('saveBtn').addEventListener('click', function(){
+  var css = document.querySelector('style').outerHTML;
+  var body = area.innerHTML.replace(/ contenteditable="(true|false)"/g, '');
+  var html = '<!DOCTYPE html>\n<html lang="ja">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>中3英語_まちがい探し特訓</title>\n' + css + '\n</head>\n<body>\n' + body + '\n</body>\n</html>';
+  var blob = new Blob(['﻿' + html], {type:'text/html;charset=utf-8'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '中3英語_まちがい探し特訓_' + (levelSel.value==='standard'?'標準':'基礎') + '.html';
+  document.body.appendChild(a); a.click(); a.remove();
+});
+var printSel = document.getElementById('printSel');
+function applyPrint(){
+  document.body.classList.remove('print-q','print-a');
+  if (printSel.value !== 'all') document.body.classList.add('print-' + printSel.value);
+}
+printSel.addEventListener('change', applyPrint);
+document.getElementById('printBtn').addEventListener('click', function(){ applyPrint(); window.print(); });
+document.getElementById('makeBtn').addEventListener('click', build);
+
+updateLabel();
+build();
+})();
+</script>
+</body>
+</html>
