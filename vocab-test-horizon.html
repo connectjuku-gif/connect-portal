@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -239,11 +239,10 @@
     color:var(--navy);
     font-size:15px;
   }
-  td.ja-blank .line{
-    display:block;
-    border-bottom:1px solid #999;
-    height:20px;
-  }
+  table.qtable{ border:1px solid #999; }
+  table.qtable td, table.qtable th{ border:1px solid #bbb; }
+  table.qtable td.en{ width:32%; }
+  td.ja-blank{ height:9mm; }
   table.answer-table td.ja{
     color:#000;
     font-weight:600;
@@ -498,7 +497,7 @@ document.getElementById('createBtn').addEventListener('click', function(){
     return '<tr>' +
       '<td class="num">' + (i+1) + '</td>' +
       '<td class="en">' + escapeHtml(row[1]) + '</td>' +
-      '<td class="ja-blank"><span class="line"></span></td>' +
+      '<td class="ja-blank"></td>' +
       '</tr>';
   }).join('');
 
