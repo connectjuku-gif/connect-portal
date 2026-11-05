@@ -1,0 +1,388 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ランダム英単語テスト（英検2級パス単）｜学習塾CONNECT</title>
+<style>
+  @page { size: A4; margin: 10mm 12mm; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+    font-size: 11.5pt;
+    color: #111;
+    background: #e9e9e9;
+  }
+  .en { font-family: "Century Gothic", "Yu Gothic", sans-serif; }
+
+  /* ===== 画面上のコントロールバー（印刷時は非表示） ===== */
+  .controlbar {
+    position: sticky; top: 0; z-index: 10;
+    background: #1F3A5F; color: #fff;
+    padding: 14px 20px;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+    font-size: 13px;
+  }
+  .controlbar .title { font-weight: bold; font-size: 15px; margin-right: 8px; }
+  .controlbar .rangelabel { font-size: 12px; color: #D9E1EC; }
+  .controlbar select, .controlbar button {
+    font-family: inherit; font-size: 13px; padding: 7px 14px;
+    border-radius: 6px; border: none; cursor: pointer;
+  }
+  .controlbar select { background: #fff; color: #111; }
+  .controlbar button.primary { background: #C9972B; color: #fff; font-weight: bold; }
+  .controlbar button.secondary { background: #3A557A; color: #fff; }
+  .controlbar button.secondary.active { background: #8A2E2E; }
+  .controlbar .spacer { flex: 1; }
+  .controlbar .count { font-size: 12px; color: #D9E1EC; }
+
+  @media print {
+    .controlbar { display: none !important; }
+    body { background: #fff; }
+  }
+
+  /* ===== 用紙 ===== */
+  .sheet {
+    position: relative;
+    width: 210mm;
+    min-height: 297mm;
+    margin: 16px auto;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+    padding: 10mm 12mm;
+  }
+  @media print {
+    .sheet { box-shadow: none; margin: 0; width: auto; min-height: 0; }
+    .sheet.pb { page-break-before: always; }
+  }
+
+  /* 点数記入欄（右上） */
+  .scorebox {
+    position: absolute; top: 10mm; right: 12mm;
+    width: 24mm; border: 2px solid #111; text-align: center; font-size: 9pt;
+  }
+  .scorebox .sb-label { background: #111; color: #fff; padding: 1.5px 0; font-weight: bold; letter-spacing: 0.1em; }
+  .scorebox .sb-box { height: 13mm; display: flex; align-items: center; justify-content: center; font-size: 13pt; }
+  .scorebox .sb-max { font-size: 8pt; color: #555; border-top: 1px solid #111; padding: 1px 0; }
+
+  h1 { font-size: 16pt; text-align: center; margin: 0 0 2.5mm; letter-spacing: 0.03em; }
+  .sub { text-align: center; font-size: 10pt; color: #333; margin-bottom: 3.5mm; }
+
+  .namebox {
+    display: flex; justify-content: flex-end; gap: 18px; font-size: 10pt;
+    border-bottom: 1px solid #999; padding-bottom: 2.5mm; margin-bottom: 3.5mm;
+    padding-right: 30mm;
+  }
+
+  .memo {
+    border: 1px solid #999; border-radius: 4px; padding: 6px 10px;
+    font-size: 9.5pt; color: #333; margin-bottom: 4mm; line-height: 1.5;
+  }
+  .memo .t { font-weight: bold; margin-bottom: 2px; }
+
+  .q { margin-bottom: 5mm; }
+  .qh { display: flex; align-items: baseline; gap: 10px; margin-bottom: 2.5mm; border-bottom: 2px solid #111; padding-bottom: 1.5mm; }
+  .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border: 2px solid #111; border-radius: 3px;
+    font-weight: bold; font-size: 11pt; flex-shrink: 0;
+  }
+  .inst { flex: 1; font-weight: bold; }
+  .pts { font-weight: normal; font-size: 9.5pt; color: #333; white-space: nowrap; }
+
+  /* 大問1: 単語テーブル */
+  table.wordtable { width: 100%; border-collapse: collapse; font-size: 11pt; }
+  table.wordtable td {
+    border: 1px solid #bbb; padding: 3px 8px; vertical-align: middle;
+  }
+  table.wordtable td.wnum { width: 22px; text-align: center; color: #666; font-size: 9.5pt; }
+  table.wordtable td.wword { width: 20%; font-weight: bold; }
+  table.wordtable td.wmeaning { height: 8.5mm; }
+  table.wordtable td.wword + td.wmeaning { width: 25%; }
+  table.wordtable td.wmeaning { }
+  .blankline { display: inline-block; min-width: 100%; border-bottom: 1px solid #333; height: 12px; }
+
+  /* 大問2: 文章完成 */
+  ol.sentlist { list-style: none; margin: 0; padding: 0; counter-reset: sitem; }
+  ol.sentlist > li {
+    counter-increment: sitem;
+    margin-bottom: 3mm; padding-left: 26px; position: relative;
+  }
+  ol.sentlist > li::before {
+    content: "(" counter(sitem) ")";
+    position: absolute; left: 0; font-weight: bold;
+  }
+  .sline { margin: 1.5px 0; }
+  .sline.en { font-family: "Century Gothic", "Yu Gothic", sans-serif; }
+  .blank-ul { border-bottom: 1px solid #333; padding: 0 2px; display: inline-block; min-width: 110px; text-align: center; }
+
+  /* 解答ページ */
+  .a .k { color: #000; font-weight: bold; text-decoration: underline; }
+  .ans h2 { font-size: 13pt; margin: 6mm 0 3mm; border-left: 5px solid #1F3A5F; padding-left: 8px; }
+  .ans table.wordtable td.wmeaning .k { font-weight: bold; text-decoration: underline; }
+  .ans .sline.jp .k, .ans .sline.en .k { font-weight: bold; text-decoration: underline; }
+
+  .footer-note { text-align: center; font-size: 9pt; color: #999; margin-top: 10mm; }
+
+  /* 編集モード */
+  body.editmode [contenteditable="true"] { outline: 1px dashed #C9972B; }
+  @media print { [contenteditable] { outline: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="controlbar">
+  <span class="title">📘 ランダム英単語テスト（英検2級パス単）｜学習塾CONNECT</span>
+  <span class="rangelabel">から</span>
+  <select id="levelFrom"></select>
+  <span class="rangelabel">まで</span>
+  <select id="levelTo"></select>
+  <button class="primary" id="genBtn">この範囲で20問作成</button>
+  <button class="secondary" id="editBtn">編集モード</button>
+  <button class="secondary" id="printBtn">印刷</button>
+  <span class="spacer"></span>
+  <span class="count" id="rangeInfo"></span>
+</div>
+
+<div id="output"></div>
+
+<script type="application/json" id="vocabData">{"levels": ["section1", "section2", "section3", "section4", "section5", "section6", "section7", "section8", "section9", "section10", "section11", "section12", "section13", "section14", "section15", "section16", "section17"], "words": {"section1": [{"w": "let", "m": "Oに～させる"}, {"w": "create", "m": "(を)つくり出す"}, {"w": "cause", "m": "を引き起こす"}, {"w": "increase", "m": "増加する"}, {"w": "leave", "m": "OをCのままにしておく"}, {"w": "develop", "m": "を開発する"}, {"w": "reduce", "m": "を減らす"}, {"w": "improve", "m": "を進歩[向上]させる"}, {"w": "produce", "m": "(製品・農作物など)を作る"}, {"w": "agree", "m": "意見が一致する"}, {"w": "tell", "m": "がわかる"}, {"w": "allow", "m": "を許す"}, {"w": "prepare", "m": "(を)準備する"}, {"w": "own", "m": "を所有している"}, {"w": "check", "m": "(を)検査[点検]する"}, {"w": "suggest", "m": "を提案する"}, {"w": "cost", "m": "(費用)がかかる"}, {"w": "meet", "m": "(要求・条件など)を満たす"}, {"w": "provide", "m": "を提供[供給]する"}, {"w": "waste", "m": "を浪費する"}, {"w": "protect", "m": "を保護する"}, {"w": "offer", "m": "を申し出る"}, {"w": "describe", "m": "(の特徴)を述べる"}, {"w": "damage", "m": "に損傷[損害]を与える"}, {"w": "disagree", "m": "意見が食い違う"}, {"w": "recommend", "m": "を推薦する"}, {"w": "repair", "m": "を修理する"}, {"w": "share", "m": "を共有する"}, {"w": "follow", "m": "に続く"}, {"w": "lead", "m": "つながる"}, {"w": "attract", "m": "(注意・興味など)を引く"}, {"w": "encourage", "m": "を促す"}, {"w": "support", "m": "を支持[支援]する"}, {"w": "raise", "m": "(子ども)を育てる"}, {"w": "hire", "m": "を雇う"}, {"w": "charge", "m": "(税金など)を課す"}, {"w": "care", "m": "気にかける"}, {"w": "book", "m": "を予約する"}, {"w": "store", "m": "を蓄える"}, {"w": "train", "m": "を訓練する"}, {"w": "last", "m": "続く"}, {"w": "park", "m": "を駐車する"}, {"w": "run", "m": "を経営[運営]する"}, {"w": "pay", "m": "給料"}, {"w": "brain", "m": "頭脳"}, {"w": "customer", "m": "顧客"}, {"w": "order", "m": "順番"}, {"w": "research", "m": "調査"}, {"w": "environment", "m": "環境"}, {"w": "result", "m": "結果"}, {"w": "amount", "m": "量"}, {"w": "situation", "m": "状況"}, {"w": "garbage", "m": "ゴミ"}, {"w": "device", "m": "装置"}, {"w": "exercise", "m": "運動"}, {"w": "skill", "m": "技能"}, {"w": "metal", "m": "金属"}, {"w": "electricity", "m": "電気"}, {"w": "traffic", "m": "交通(量)"}, {"w": "stress", "m": "(心身への)ストレス"}, {"w": "employee", "m": "従業員"}, {"w": "education", "m": "教育"}, {"w": "presentation", "m": "発表"}, {"w": "design", "m": "デザイン"}, {"w": "experience", "m": "経験"}, {"w": "expert", "m": "専門家"}, {"w": "fact", "m": "事実"}, {"w": "staff", "m": "スタッフ"}, {"w": "fuel", "m": "燃料"}, {"w": "tour", "m": "見学"}, {"w": "taste", "m": "好み"}, {"w": "benefit", "m": "利益"}, {"w": "practice", "m": "実践"}, {"w": "activity", "m": "活動"}, {"w": "subject", "m": "話題"}, {"w": "professor", "m": "教授"}, {"w": "memory", "m": "記憶(力)"}, {"w": "effect", "m": "影響"}, {"w": "patient", "m": "患者"}, {"w": "project", "m": "(組織的)計画"}, {"w": "article", "m": "記事"}, {"w": "material", "m": "材料"}, {"w": "bill", "m": "請求書"}, {"w": "technology", "m": "科学技術"}, {"w": "security", "m": "安全"}, {"w": "discount", "m": "割引"}, {"w": "review", "m": "批評"}, {"w": "flight", "m": "定期航空便"}, {"w": "smartphone", "m": "スマートフォン"}, {"w": "supplement", "m": "サプリメント"}, {"w": "chemical", "m": "化学の"}, {"w": "ancient", "m": "古代の"}, {"w": "common", "m": "共通の"}, {"w": "likely", "m": "〜しそうで"}, {"w": "recently", "m": "最近"}, {"w": "probably", "m": "たぶん"}, {"w": "actually", "m": "実は"}, {"w": "though", "m": "…だけれども"}, {"w": "while", "m": "…している間に"}, {"w": "whether", "m": "…かどうか"}], "section2": [{"w": "form", "m": "を組織する"}, {"w": "cancel", "m": "を取り消す"}, {"w": "relax", "m": "くつろぐ"}, {"w": "add", "m": "を加える"}, {"w": "contact", "m": "と連絡を取る"}, {"w": "purchase", "m": "(高価な物・大量の物)を購入する"}, {"w": "expect", "m": "を予期する"}, {"w": "continue", "m": "を続ける"}, {"w": "require", "m": "を要求する"}, {"w": "replace", "m": "を取り替える"}, {"w": "suffer", "m": "苦しむ"}, {"w": "fix", "m": "を修理する"}, {"w": "serve", "m": "(に)食事を出す"}, {"w": "include", "m": "を含む"}, {"w": "attend", "m": "に出席する"}, {"w": "quit", "m": "をやめる"}, {"w": "prefer", "m": "の方を好む"}, {"w": "recycle", "m": "(を)再生利用する"}, {"w": "face", "m": "に直面する"}, {"w": "invent", "m": "を発明する"}, {"w": "prevent", "m": "を防ぐ"}, {"w": "decrease", "m": "を減らす"}, {"w": "attach", "m": "を添付する"}, {"w": "shape", "m": "を形作る"}, {"w": "fill", "m": "を満たす"}, {"w": "exchange", "m": "を交換し合う"}, {"w": "realize", "m": "に気づく"}, {"w": "lower", "m": "を下げる"}, {"w": "guess", "m": "だと思う"}, {"w": "gain", "m": "を得る"}, {"w": "suit", "m": "に似合う"}, {"w": "land", "m": "着陸する"}, {"w": "award", "m": "AにB(賞など)を与える"}, {"w": "statement", "m": "陳述"}, {"w": "insect", "m": "虫"}, {"w": "department", "m": "部門"}, {"w": "membership", "m": "会員資格"}, {"w": "fat", "m": "脂肪"}, {"w": "sentence", "m": "文"}, {"w": "community", "m": "地域社会"}, {"w": "instrument", "m": "機器"}, {"w": "focus", "m": "焦点"}, {"w": "client", "m": "顧客"}, {"w": "bacteria", "m": "細菌"}, {"w": "retirement", "m": "(定年による)退職"}, {"w": "nature", "m": "性質"}, {"w": "earth", "m": "地球"}, {"w": "grocery", "m": "食料雑貨店"}, {"w": "trash", "m": "ゴミ"}, {"w": "method", "m": "(研究・調査などの)方法"}, {"w": "site", "m": "場所"}, {"w": "tablet", "m": "タブレット"}, {"w": "organization", "m": "組織"}, {"w": "treatment", "m": "治療"}, {"w": "farming", "m": "農業"}, {"w": "case", "m": "場合"}, {"w": "announcement", "m": "アナウンス"}, {"w": "author", "m": "著者"}, {"w": "biology", "m": "生物学"}, {"w": "advertisement", "m": "広告"}, {"w": "account", "m": "口座"}, {"w": "data", "m": "データ"}, {"w": "solution", "m": "解決(策)"}, {"w": "harm", "m": "害"}, {"w": "competition", "m": "競技(会)"}, {"w": "industry", "m": "産業"}, {"w": "participant", "m": "参加者"}, {"w": "charity", "m": "慈善(事業)"}, {"w": "medicine", "m": "薬"}, {"w": "opinion", "m": "意見"}, {"w": "payment", "m": "支払い"}, {"w": "population", "m": "人口"}, {"w": "access", "m": "入手方法"}, {"w": "generation", "m": "(同)世代"}, {"w": "resident", "m": "居住者"}, {"w": "quality", "m": "質"}, {"w": "distance", "m": "距離"}, {"w": "variety", "m": "種類"}, {"w": "career", "m": "職業"}, {"w": "item", "m": "品目"}, {"w": "view", "m": "見解"}, {"w": "present", "m": "現在の"}, {"w": "recent", "m": "最近の"}, {"w": "available", "m": "手に入る"}, {"w": "extra", "m": "余分の"}, {"w": "successful", "m": "成功した"}, {"w": "nearby", "m": "すぐ近くの"}, {"w": "certain", "m": "一定の"}, {"w": "similar", "m": "類似した"}, {"w": "various", "m": "さまざまな"}, {"w": "effective", "m": "効果的な"}, {"w": "huge", "m": "ばく大な"}, {"w": "serious", "m": "深刻な"}, {"w": "social", "m": "社会の"}, {"w": "nowadays", "m": "近ごろは"}, {"w": "somewhere", "m": "どこかに"}, {"w": "moreover", "m": "その上"}, {"w": "sincerely", "m": "心から"}, {"w": "rather", "m": "かなり"}, {"w": "originally", "m": "本来(は)"}], "section3": [{"w": "avoid", "m": "を避ける"}, {"w": "contain", "m": "を含む"}, {"w": "manage", "m": "を管理[経営]する"}, {"w": "consider", "m": "をみなす"}, {"w": "remove", "m": "を取り除く"}, {"w": "organize", "m": "を計画[準備]する"}, {"w": "examine", "m": "を検査する"}, {"w": "publish", "m": "を発表する"}, {"w": "affect", "m": "に影響を及ぼす"}, {"w": "treat", "m": "を扱う"}, {"w": "participate", "m": "参加する"}, {"w": "appear", "m": "のように見える"}, {"w": "rent", "m": "を賃借りする"}, {"w": "graduate", "m": "卒業する"}, {"w": "communicate", "m": "意思疎通する"}, {"w": "afford", "m": "を持つ[する]余裕がある"}, {"w": "donate", "m": "を寄付する"}, {"w": "promise", "m": "(に)約束する"}, {"w": "remain", "m": "のままである"}, {"w": "locate", "m": "に位置する"}, {"w": "match", "m": "(と)調和する"}, {"w": "kill", "m": "(時間・計画)をつぶす"}, {"w": "occur", "m": "思い浮かぶ"}, {"w": "employ", "m": "を雇う"}, {"w": "involve", "m": "を巻き込む"}, {"w": "perform", "m": "(を)演じる"}, {"w": "spread", "m": "広まる"}, {"w": "depend", "m": "当てにする"}, {"w": "argue", "m": "と主張する"}, {"w": "accept", "m": "に応じる"}, {"w": "disappoint", "m": "を失望させる"}, {"w": "edit", "m": "(原稿など)を編集する"}, {"w": "complete", "m": "を完成させる"}, {"w": "control", "m": "を抑制する"}, {"w": "rise", "m": "上昇する"}, {"w": "feed", "m": "に食べ物[エサ]を与える"}, {"w": "point", "m": "指し示す"}, {"w": "condition", "m": "状態"}, {"w": "sense", "m": "感覚"}, {"w": "decision", "m": "決定"}, {"w": "goods", "m": "品物"}, {"w": "cell", "m": "細胞"}, {"w": "fee", "m": "料金"}, {"w": "head", "m": "責任者"}, {"w": "success", "m": "成功"}, {"w": "opportunity", "m": "機会"}, {"w": "movement", "m": "(政治・社会的)運動"}, {"w": "clothing", "m": "衣類"}, {"w": "instance", "m": "例"}, {"w": "concern", "m": "関心事"}, {"w": "economy", "m": "経済"}, {"w": "guest", "m": "訪問客"}, {"w": "rest", "m": "残り"}, {"w": "income", "m": "収入"}, {"w": "transportation", "m": "輸送[交通](機関)"}, {"w": "communication", "m": "意思の疎通"}, {"w": "coast", "m": "海岸"}, {"w": "advantage", "m": "利点"}, {"w": "effort", "m": "努力"}, {"w": "period", "m": "期間"}, {"w": "license", "m": "免許証"}, {"w": "invention", "m": "発明"}, {"w": "laptop", "m": "ノートパソコン"}, {"w": "agency", "m": "代理店"}, {"w": "evidence", "m": "証拠"}, {"w": "neighborhood", "m": "近所"}, {"w": "appointment", "m": "(会う)約束"}, {"w": "measure", "m": "措置"}, {"w": "temperature", "m": "温度"}, {"w": "salary", "m": "給料"}, {"w": "creature", "m": "生き物"}, {"w": "direction", "m": "(行き方などの)指示"}, {"w": "crime", "m": "犯罪"}, {"w": "deadline", "m": "締切"}, {"w": "role", "m": "役割"}, {"w": "image", "m": "画像"}, {"w": "society", "m": "社会"}, {"w": "climate", "m": "(ある地域の平均的な)気候"}, {"w": "survey", "m": "調査"}, {"w": "experiment", "m": "実験"}, {"w": "vitamin", "m": "ビタミン"}, {"w": "particular", "m": "特定の"}, {"w": "harmful", "m": "有害な"}, {"w": "convenient", "m": "都合のいい"}, {"w": "public", "m": "公の"}, {"w": "medical", "m": "医学の"}, {"w": "original", "m": "最初の"}, {"w": "economic", "m": "経済の"}, {"w": "nervous", "m": "心配して"}, {"w": "empty", "m": "空の"}, {"w": "global", "m": "地球全体の"}, {"w": "frequent", "m": "頻繁な"}, {"w": "surprising", "m": "驚くべき"}, {"w": "regularly", "m": "定期的に"}, {"w": "lately", "m": "近ごろ"}, {"w": "immediately", "m": "直ちに"}, {"w": "furthermore", "m": "その上"}, {"w": "unfortunately", "m": "不運にも"}, {"w": "downtown", "m": "町の中心部へ[で]"}, {"w": "despite", "m": "〜にもかかわらず"}], "section4": [{"w": "complain", "m": "不平を言う"}, {"w": "decorate", "m": "を飾る"}, {"w": "preserve", "m": "を保存する"}, {"w": "inform", "m": "に通知する"}, {"w": "discuss", "m": "について議論する"}, {"w": "upset", "m": "を動揺させる"}, {"w": "destroy", "m": "を破壊する"}, {"w": "promote", "m": "を促進する"}, {"w": "concentrate", "m": "集中する"}, {"w": "estimate", "m": "を見積もる"}, {"w": "suppose", "m": "〜することになっている"}, {"w": "request", "m": "に頼む"}, {"w": "advertise", "m": "を宣伝[広告]する"}, {"w": "marry", "m": "と結婚する"}, {"w": "separate", "m": "を離す"}, {"w": "search", "m": "(を)探す"}, {"w": "click", "m": "をクリックする"}, {"w": "release", "m": "を放つ"}, {"w": "apply", "m": "申し込む"}, {"w": "pack", "m": "を詰める"}, {"w": "fit", "m": "に適合する"}, {"w": "recognize", "m": "を見分ける"}, {"w": "delay", "m": "を遅らせる"}, {"w": "transport", "m": "を輸送する"}, {"w": "respect", "m": "を尊敬する"}, {"w": "celebrate", "m": "(を)祝う"}, {"w": "connect", "m": "をつなぐ"}, {"w": "gather", "m": "を集める"}, {"w": "hand", "m": "(物)を手渡す"}, {"w": "compare", "m": "を比較する"}, {"w": "appreciate", "m": "を感謝する"}, {"w": "stick", "m": "くっつく"}, {"w": "adopt", "m": "を採用する"}, {"w": "source", "m": "源"}, {"w": "trend", "m": "傾向"}, {"w": "reservation", "m": "(座席・部屋などの)予約"}, {"w": "detail", "m": "詳細"}, {"w": "clerk", "m": "店員"}, {"w": "issue", "m": "問題(点)"}, {"w": "approach", "m": "取り組み方"}, {"w": "majority", "m": "大多数"}, {"w": "location", "m": "場所"}, {"w": "relationship", "m": "関係"}, {"w": "equipment", "m": "用具"}, {"w": "battery", "m": "電池"}, {"w": "object", "m": "物"}, {"w": "software", "m": "ソフトウェア"}, {"w": "air conditioner", "m": "冷暖房装置"}, {"w": "engine", "m": "エンジン"}, {"w": "officer", "m": "警察官"}, {"w": "conversation", "m": "会話"}, {"w": "blanket", "m": "毛布"}, {"w": "global warming", "m": "地球温暖化"}, {"w": "law", "m": "法律"}, {"w": "disease", "m": "病気"}, {"w": "knowledge", "m": "知識"}, {"w": "discovery", "m": "発見"}, {"w": "challenge", "m": "難題"}, {"w": "muscle", "m": "筋肉"}, {"w": "ingredient", "m": "材料"}, {"w": "agent", "m": "仲介者"}, {"w": "fear", "m": "恐れ"}, {"w": "fashion", "m": "流行"}, {"w": "balance", "m": "つり合い"}, {"w": "instructor", "m": "教官"}, {"w": "development", "m": "発達"}, {"w": "technique", "m": "(専門的)技術"}, {"w": "director", "m": "映画監督"}, {"w": "exhibition", "m": "展覧(会)"}, {"w": "region", "m": "地域"}, {"w": "facility", "m": "施設"}, {"w": "aim", "m": "狙い"}, {"w": "assignment", "m": "課題"}, {"w": "trail", "m": "(山中の)小道"}, {"w": "scene", "m": "現場"}, {"w": "pressure", "m": "圧力"}, {"w": "response", "m": "応答"}, {"w": "vehicle", "m": "乗り物"}, {"w": "skin", "m": "肌"}, {"w": "fossil", "m": "化石"}, {"w": "electric", "m": "電気の"}, {"w": "current", "m": "現在の"}, {"w": "environmental", "m": "環境の"}, {"w": "rare", "m": "珍しい"}, {"w": "efficient", "m": "能率的な"}, {"w": "personal", "m": "個人の"}, {"w": "confident", "m": "確信して"}, {"w": "past", "m": "過去の"}, {"w": "solar", "m": "太陽の"}, {"w": "official", "m": "公式の"}, {"w": "valuable", "m": "高価な"}, {"w": "casual", "m": "(衣服が)カジュアルな"}, {"w": "negative", "m": "好ましくない"}, {"w": "major", "m": "主要な"}, {"w": "classic", "m": "(文学・芸術などが)最高水準の"}, {"w": "especially", "m": "特に"}, {"w": "directly", "m": "直接に"}, {"w": "frequently", "m": "頻繁に"}, {"w": "environmentally", "m": "環境(保護)の点で"}, {"w": "eventually", "m": "結局(は)"}], "section5": [{"w": "consume", "m": "を消費する"}, {"w": "count", "m": "(を)数える"}, {"w": "remind", "m": "に思い出させる"}, {"w": "warn", "m": "(に)警告する"}, {"w": "rely", "m": "頼る"}, {"w": "respond", "m": "答える"}, {"w": "refer", "m": "参照する"}, {"w": "behave", "m": "振る舞う"}, {"w": "scare", "m": "をおびえさせる"}, {"w": "disturb", "m": "の邪魔をする"}, {"w": "cover", "m": "(話題など)を扱う"}, {"w": "reserve", "m": "(座席・部屋など)を予約する"}, {"w": "deliver", "m": "を配達する"}, {"w": "trust", "m": "を信頼する"}, {"w": "upgrade", "m": "(の)質を高める"}, {"w": "roll", "m": "を巻く"}, {"w": "surf", "m": "(ウェブサイトなど)を見て回る"}, {"w": "beat", "m": "鼓動する"}, {"w": "lay", "m": "(卵)を産む"}, {"w": "register", "m": "(を)登録する"}, {"w": "expand", "m": "(を)拡大[拡張]する"}, {"w": "cure", "m": "(患者・病気)を治す"}, {"w": "rush", "m": "急いで行く"}, {"w": "scan", "m": "をスキャンする"}, {"w": "promotion", "m": "昇級"}, {"w": "improvement", "m": "改善"}, {"w": "degree", "m": "学位"}, {"w": "instruction", "m": "指示"}, {"w": "countryside", "m": "田舎"}, {"w": "brand", "m": "ブランド"}, {"w": "privacy", "m": "プライバシー"}, {"w": "healthcare", "m": "医療"}, {"w": "term", "m": "期間"}, {"w": "clinic", "m": "診療所"}, {"w": "safety", "m": "安全(性)"}, {"w": "blood", "m": "血"}, {"w": "tourism", "m": "観光事業"}, {"w": "construction", "m": "建設(工事)"}, {"w": "temple", "m": "寺院"}, {"w": "demand", "m": "需要"}, {"w": "crop", "m": "作物"}, {"w": "campaign", "m": "(社会的・政治的・商業的な)組織的活動[運動]"}, {"w": "conference", "m": "(公式の)会議"}, {"w": "poison", "m": "毒"}, {"w": "chemistry", "m": "化学"}, {"w": "delivery", "m": "配達"}, {"w": "slum", "m": "スラム街"}, {"w": "panel", "m": "パネル"}, {"w": "flavor", "m": "香味料"}, {"w": "surface", "m": "表面"}, {"w": "death", "m": "死"}, {"w": "carbon dioxide", "m": "二酸化炭素"}, {"w": "bone", "m": "骨"}, {"w": "average", "m": "平均"}, {"w": "gallery", "m": "美術館"}, {"w": "credit card", "m": "クレジットカード"}, {"w": "board", "m": "委員会"}, {"w": "valley", "m": "谷"}, {"w": "decade", "m": "10年間"}, {"w": "recommendation", "m": "推薦"}, {"w": "organ", "m": "臓器"}, {"w": "policy", "m": "政策"}, {"w": "sample", "m": "見本"}, {"w": "custom", "m": "慣習"}, {"w": "contract", "m": "契約(書)"}, {"w": "standard", "m": "基準"}, {"w": "relative", "m": "親類"}, {"w": "active", "m": "活動的な"}, {"w": "stressful", "m": "ストレスの多い"}, {"w": "positive", "m": "肯定的な"}, {"w": "aware", "m": "知って"}, {"w": "either", "m": "どちらでも"}, {"w": "regular", "m": "規則正しい"}, {"w": "private", "m": "個人の"}, {"w": "worth", "m": "値する"}, {"w": "flexible", "m": "融通の利く"}, {"w": "individual", "m": "個々の"}, {"w": "electronic", "m": "電子の"}, {"w": "violent", "m": "暴力的な"}, {"w": "educational", "m": "教育的な"}, {"w": "wealthy", "m": "裕福な"}, {"w": "ordinary", "m": "普通の"}, {"w": "physical", "m": "身体の"}, {"w": "attractive", "m": "魅力的な"}, {"w": "portable", "m": "持ち運びできる"}, {"w": "unlikely", "m": "ありそうにもない"}, {"w": "real-estate", "m": "不動産の"}, {"w": "traditionally", "m": "伝統的に"}, {"w": "further", "m": "さらに"}, {"w": "rapidly", "m": "急速に"}, {"w": "properly", "m": "適切に"}, {"w": "indeed", "m": "事実として"}, {"w": "differently", "m": "異なって"}, {"w": "mostly", "m": "ほとんど"}, {"w": "completely", "m": "完全に"}, {"w": "gradually", "m": "徐々に"}, {"w": "dramatically", "m": "劇的に"}, {"w": "overtime", "m": "時間外に"}, {"w": "freely", "m": "自由に"}, {"w": "neither", "m": "どちらも〜ない"}], "section6": [{"w": "select", "m": "を選ぶ"}, {"w": "arrange", "m": "(会合の日時など)を取り決める"}, {"w": "observe", "m": "を観察する"}, {"w": "switch", "m": "を交換する"}, {"w": "bend", "m": "を曲げる"}, {"w": "prove", "m": "わかる"}, {"w": "achieve", "m": "を達成する"}, {"w": "transfer", "m": "を移す"}, {"w": "impress", "m": "を感心させる"}, {"w": "fold", "m": "を折る"}, {"w": "correct", "m": "を訂正する"}, {"w": "reply", "m": "返事をする"}, {"w": "emphasize", "m": "を強調する"}, {"w": "spill", "m": "をこぼす"}, {"w": "confuse", "m": "を当惑させる"}, {"w": "breathe", "m": "呼吸する"}, {"w": "lie", "m": "横になる"}, {"w": "lock", "m": "にカギをかける"}, {"w": "spin", "m": "回る"}, {"w": "process", "m": "(食品・原料など)を加工処理する"}, {"w": "trap", "m": "を閉じ込める"}, {"w": "rob", "m": "から奪う"}, {"w": "analyze", "m": "を分析する"}, {"w": "choice", "m": "選択"}, {"w": "profit", "m": "利益"}, {"w": "influence", "m": "影響"}, {"w": "tradition", "m": "伝統"}, {"w": "purpose", "m": "目的"}, {"w": "consumer", "m": "消費者"}, {"w": "production", "m": "生産"}, {"w": "audience", "m": "観衆"}, {"w": "cash", "m": "現金"}, {"w": "emotion", "m": "感情"}, {"w": "growth", "m": "成長"}, {"w": "range", "m": "範囲"}, {"w": "impact", "m": "影響"}, {"w": "tournament", "m": "トーナメント"}, {"w": "emergency", "m": "緊急"}, {"w": "roommate", "m": "ルームメイト"}, {"w": "guard", "m": "守衛"}, {"w": "rate", "m": "速度"}, {"w": "lack", "m": "不足"}, {"w": "expense", "m": "費用"}, {"w": "step", "m": "1段階"}, {"w": "pattern", "m": "パターン"}, {"w": "shelf", "m": "棚"}, {"w": "jewelry", "m": "宝石類"}, {"w": "childhood", "m": "子供のころ"}, {"w": "pamphlet", "m": "パンフレット"}, {"w": "assistant", "m": "助手"}, {"w": "section", "m": "区間"}, {"w": "politician", "m": "政治家"}, {"w": "shark", "m": "サメ"}, {"w": "conclusion", "m": "結論"}, {"w": "document", "m": "文書"}, {"w": "loss", "m": "損失"}, {"w": "application", "m": "申し込み"}, {"w": "shortage", "m": "不足"}, {"w": "password", "m": "パスワード"}, {"w": "co-worker", "m": "同僚"}, {"w": "screen", "m": "画面"}, {"w": "code", "m": "暗号"}, {"w": "pain", "m": "痛み"}, {"w": "reality", "m": "現実"}, {"w": "exhibit", "m": "展示品"}, {"w": "programmer", "m": "プログラマー"}, {"w": "signal", "m": "信号"}, {"w": "instinct", "m": "本能"}, {"w": "army", "m": "陸軍"}, {"w": "route", "m": "(一定の規則的な)道"}, {"w": "bubble", "m": "泡"}, {"w": "banking", "m": "銀行業"}, {"w": "label", "m": "ラベル"}, {"w": "dinosaur", "m": "恐竜"}, {"w": "terrible", "m": "ひどい"}, {"w": "boring", "m": "退屈な"}, {"w": "due", "m": "期限が来て"}, {"w": "exact", "m": "正確な"}, {"w": "high-quality", "m": "高品質の"}, {"w": "tiny", "m": "わずかな"}, {"w": "senior", "m": "上位の"}, {"w": "unusual", "m": "普通でない"}, {"w": "mysterious", "m": "神秘的な"}, {"w": "unhealthy", "m": "不健康な"}, {"w": "specific", "m": "特定の"}, {"w": "accurate", "m": "正確な"}, {"w": "poisonous", "m": "有毒な"}, {"w": "mental", "m": "精神の"}, {"w": "exactly", "m": "まさに"}, {"w": "naturally", "m": "自然に"}, {"w": "normally", "m": "通常は"}, {"w": "generally", "m": "一般に"}, {"w": "nevertheless", "m": "それにもかかわらず"}, {"w": "entirely", "m": "完全に"}, {"w": "efficiently", "m": "能率的に"}, {"w": "meanwhile", "m": "その間(に)"}, {"w": "accidentally", "m": "誤って"}, {"w": "locally", "m": "地元で"}, {"w": "unlike", "m": "〜とは違って"}, {"w": "within", "m": "〜以内に"}], "section7": [{"w": "note", "m": "に注意する"}, {"w": "bury", "m": "を埋める"}, {"w": "bother", "m": "を悩ます"}, {"w": "weigh", "m": "の重さがある"}, {"w": "sort", "m": "を分類する"}, {"w": "freeze", "m": "凍る"}, {"w": "update", "m": "をアップデートする"}, {"w": "stretch", "m": "を伸ばす"}, {"w": "display", "m": "を展示する"}, {"w": "pour", "m": "を注ぐ"}, {"w": "judge", "m": "(を)審査する"}, {"w": "roast", "m": "を炒る"}, {"w": "supply", "m": "を供給する"}, {"w": "survive", "m": "存在し続ける"}, {"w": "lift", "m": "を持ち上げる"}, {"w": "apologize", "m": "謝る"}, {"w": "obtain", "m": "を得る"}, {"w": "associate", "m": "を結び付けて考える"}, {"w": "advance", "m": "を促進する"}, {"w": "progress", "m": "進歩する"}, {"w": "doubt", "m": "を疑う"}, {"w": "invest", "m": "(を)投資する"}, {"w": "evolve", "m": "進化する"}, {"w": "represent", "m": "を代表する"}, {"w": "adapt", "m": "を適応させる"}, {"w": "shock", "m": "に衝撃を与える"}, {"w": "strengthen", "m": "を強くする"}, {"w": "consist", "m": "成り立っている"}, {"w": "react", "m": "反応する"}, {"w": "insert", "m": "を挿入する"}, {"w": "favor", "m": "親切な行為"}, {"w": "inconvenience", "m": "不便(さ)"}, {"w": "poverty", "m": "貧困"}, {"w": "fund", "m": "資金"}, {"w": "aspect", "m": "局面"}, {"w": "means", "m": "手段"}, {"w": "theory", "m": "仮説"}, {"w": "strength", "m": "力"}, {"w": "collection", "m": "収蔵品"}, {"w": "position", "m": "職"}, {"w": "factor", "m": "要因"}, {"w": "structure", "m": "構造"}, {"w": "destination", "m": "目的地"}, {"w": "combination", "m": "組み合わせ"}, {"w": "connection", "m": "接続"}, {"w": "link", "m": "つながり"}, {"w": "council", "m": "会議"}, {"w": "vegetarian", "m": "ベジタリアン"}, {"w": "laboratory", "m": "研究室"}, {"w": "navy", "m": "海軍"}, {"w": "publisher", "m": "出版社"}, {"w": "lamp", "m": "ランプ"}, {"w": "championship", "m": "選手権"}, {"w": "tutor", "m": "家庭教師"}, {"w": "insurance", "m": "保険"}, {"w": "court", "m": "(テニスなどの)コート"}, {"w": "counter", "m": "カウンター"}, {"w": "orchestra", "m": "オーケストラ"}, {"w": "handwriting", "m": "手書き"}, {"w": "sight", "m": "視力"}, {"w": "title", "m": "題名"}, {"w": "avenue", "m": "大通り"}, {"w": "billion", "m": "10億"}, {"w": "habit", "m": "(個人的な)習慣"}, {"w": "cycle", "m": "サイクル"}, {"w": "container", "m": "容器"}, {"w": "breath", "m": "息"}, {"w": "entry", "m": "入る権利"}, {"w": "jam", "m": "混雑"}, {"w": "drug", "m": "薬"}, {"w": "youth", "m": "青年時代"}, {"w": "mineral", "m": "鉱物"}, {"w": "requirement", "m": "必要条件"}, {"w": "league", "m": "リーグ"}, {"w": "content", "m": "中身"}, {"w": "anxiety", "m": "不安"}, {"w": "false", "m": "間違った"}, {"w": "artificial", "m": "人工の"}, {"w": "unique", "m": "唯一の"}, {"w": "thin", "m": "薄い"}, {"w": "long-term", "m": "長期の"}, {"w": "historic", "m": "歴史上有名な"}, {"w": "tough", "m": "困難な"}, {"w": "actual", "m": "実際の"}, {"w": "cultural", "m": "文化の"}, {"w": "latest", "m": "最新の"}, {"w": "constant", "m": "絶えず続く"}, {"w": "nearly", "m": "ほとんど"}, {"w": "poorly", "m": "下手に"}, {"w": "simply", "m": "単に"}, {"w": "mainly", "m": "主に"}, {"w": "rarely", "m": "めったに〜ない"}, {"w": "correctly", "m": "正しく"}, {"w": "shortly", "m": "まもなく"}, {"w": "afterwards", "m": "その後"}, {"w": "currently", "m": "現在"}, {"w": "extremely", "m": "極めて"}, {"w": "healthily", "m": "健康的に"}, {"w": "besides", "m": "その上"}, {"w": "except", "m": "〜を除いては"}], "section8": [{"w": "matter", "m": "重大である"}, {"w": "recover", "m": "回復する"}, {"w": "surround", "m": "を囲む"}, {"w": "succeed", "m": "成功する"}, {"w": "repeat", "m": "を繰り返す"}, {"w": "adjust", "m": "を調節する"}, {"w": "migrate", "m": "(鳥、魚が)渡る"}, {"w": "digest", "m": "を消化する"}, {"w": "reset", "m": "を再設定する"}, {"w": "renew", "m": "を更新する"}, {"w": "maintain", "m": "を維持する"}, {"w": "memorize", "m": "を記憶する"}, {"w": "debate", "m": "討論する"}, {"w": "flow", "m": "(液体や個体が)流れる"}, {"w": "determine", "m": "を決定する"}, {"w": "struggle", "m": "奮闘する"}, {"w": "refund", "m": "を払い戻す"}, {"w": "qualify", "m": "に資格を与える"}, {"w": "motivate", "m": "にやる気を起こさせる"}, {"w": "convert", "m": "を変える"}, {"w": "satisfy", "m": "(条件)を満たす"}, {"w": "flood", "m": "を水浸しにする"}, {"w": "calculate", "m": "を計算する"}, {"w": "chase", "m": "を追いかける"}, {"w": "stare", "m": "(を)じっと見る"}, {"w": "sail", "m": "出航する"}, {"w": "expectation", "m": "予想"}, {"w": "layer", "m": "層"}, {"w": "powder", "m": "粉"}, {"w": "traveler", "m": "旅行者"}, {"w": "steel", "m": "鋼鉄"}, {"w": "journey", "m": "旅"}, {"w": "nation", "m": "国家"}, {"w": "essay", "m": "小論文"}, {"w": "diet", "m": "ダイエット"}, {"w": "task", "m": "(課せられた)仕事"}, {"w": "enemy", "m": "敵"}, {"w": "receipt", "m": "領収書"}, {"w": "surgery", "m": "手術"}, {"w": "childcare", "m": "育児"}, {"w": "threat", "m": "脅威"}, {"w": "error", "m": "誤り"}, {"w": "flexibility", "m": "柔軟性"}, {"w": "lifetime", "m": "一生"}, {"w": "mess", "m": "取り散らかしたもの"}, {"w": "function", "m": "機能"}, {"w": "gender", "m": "性別"}, {"w": "household", "m": "家族"}, {"w": "vaccine", "m": "ワクチン"}, {"w": "calculation", "m": "計算"}, {"w": "user", "m": "利用者"}, {"w": "liquid", "m": "液体"}, {"w": "manufacturer", "m": "製造業者"}, {"w": "satellite", "m": "衛星"}, {"w": "civilization", "m": "文明"}, {"w": "feeling", "m": "感情"}, {"w": "risk", "m": "リスク"}, {"w": "workplace", "m": "職場"}, {"w": "behavior", "m": "行動"}, {"w": "graph", "m": "グラフ"}, {"w": "luxury", "m": "贅沢(品)"}, {"w": "newsletter", "m": "会報"}, {"w": "ray", "m": "光線"}, {"w": "anniversary", "m": "記念日"}, {"w": "partnership", "m": "提携"}, {"w": "aisle", "m": "通路"}, {"w": "session", "m": "活動のための集まり"}, {"w": "cruise", "m": "遊覧航海"}, {"w": "microscope", "m": "顕微鏡"}, {"w": "ecotourism", "m": "エコツーリズム"}, {"w": "rude", "m": "失礼な"}, {"w": "urban", "m": "都会の"}, {"w": "frozen", "m": "(食料品が)冷凍した"}, {"w": "religious", "m": "宗教の"}, {"w": "disabled", "m": "身体障がいの"}, {"w": "talented", "m": "才能がある"}, {"w": "anxious", "m": "心配して"}, {"w": "best-selling", "m": "ベストセラーの"}, {"w": "incorrect", "m": "間違った"}, {"w": "stylish", "m": "おしゃれな"}, {"w": "financial", "m": "財政(上)の"}, {"w": "enormous", "m": "莫大な"}, {"w": "temporary", "m": "一時的な"}, {"w": "organic", "m": "有機の"}, {"w": "blind", "m": "目の不自由な"}, {"w": "dizzy", "m": "めまいがする"}, {"w": "low-income", "m": "低収入の"}, {"w": "perhaps", "m": "もしかすると"}, {"w": "increasingly", "m": "ますます"}, {"w": "particularly", "m": "特に"}, {"w": "worldwide", "m": "世界中に"}, {"w": "additionally", "m": "またさらに"}, {"w": "commonly", "m": "一般に"}, {"w": "closely", "m": "綿密に"}, {"w": "thus", "m": "従って"}, {"w": "overnight", "m": "一晩中"}, {"w": "fairly", "m": "公正に"}, {"w": "relatively", "m": "比較的"}, {"w": "wherever", "m": "どこで〜しようとも"}, {"w": "whenever", "m": "〜するときはいつも"}], "section9": [{"w": "identify", "m": "を特定する"}, {"w": "specialize", "m": "専門とする"}, {"w": "sink", "m": "沈む"}, {"w": "commit", "m": "(罪など)を犯す"}, {"w": "threaten", "m": "を脅す"}, {"w": "monitor", "m": "を監視する"}, {"w": "unpack", "m": "(包みなど)を開けて中身を出す"}, {"w": "enlarge", "m": "を大きくする"}, {"w": "stir", "m": "(を)かき混ぜる"}, {"w": "postpone", "m": "を延期する"}, {"w": "witness", "m": "を目撃する"}, {"w": "restore", "m": "を修復する"}, {"w": "express", "m": "(考えなど)を表現する"}, {"w": "hide", "m": "隠れる"}, {"w": "announce", "m": "を公表する"}, {"w": "compete", "m": "競争する"}, {"w": "retire", "m": "定年退職する"}, {"w": "wipe", "m": "を拭く"}, {"w": "broadcast", "m": "(を)放送する"}, {"w": "puzzle", "m": "を当惑させる"}, {"w": "earn", "m": "(賃金など)を稼ぐ"}, {"w": "combine", "m": "を結びつける"}, {"w": "bet", "m": "絶対〜だと確信する"}, {"w": "crash", "m": "衝突する"}, {"w": "wave", "m": "(手・旗など)(を)振る"}, {"w": "dive", "m": "(頭から)飛び込む"}, {"w": "overcome", "m": "(困難など)に打ち勝つ"}, {"w": "indicate", "m": "を指し示す"}, {"w": "exist", "m": "存在する"}, {"w": "bear", "m": "に耐える"}, {"w": "identity", "m": "身元"}, {"w": "atmosphere", "m": "大気"}, {"w": "contrast", "m": "対照"}, {"w": "sunset", "m": "日没"}, {"w": "chess", "m": "チェス"}, {"w": "kindergarten", "m": "幼稚園"}, {"w": "length", "m": "長さ"}, {"w": "contribution", "m": "貢献"}, {"w": "economics", "m": "経済学"}, {"w": "gap", "m": "隙間"}, {"w": "wool", "m": "羊毛"}, {"w": "tail", "m": "しっぽ"}, {"w": "fiber", "m": "繊維"}, {"w": "humidity", "m": "湿度"}, {"w": "perfume", "m": "香り"}, {"w": "feather", "m": "羽"}, {"w": "playground", "m": "遊び場"}, {"w": "amusement", "m": "楽しみ"}, {"w": "semester", "m": "(2学期制の)学期"}, {"w": "symbol", "m": "象徴"}, {"w": "operation", "m": "手術"}, {"w": "tongue", "m": "舌"}, {"w": "occasion", "m": "(特定の)時"}, {"w": "envelope", "m": "封筒"}, {"w": "rhythm", "m": "リズム"}, {"w": "souvenir", "m": "土産"}, {"w": "authority", "m": "当局"}, {"w": "cancer", "m": "がん"}, {"w": "tribe", "m": "部族"}, {"w": "birth", "m": "出産"}, {"w": "loan", "m": "借金"}, {"w": "historian", "m": "歴史学者"}, {"w": "soil", "m": "土"}, {"w": "background", "m": "経歴"}, {"w": "volcano", "m": "火山"}, {"w": "ancestor", "m": "祖先"}, {"w": "engineering", "m": "工学"}, {"w": "prescription", "m": "処方箋"}, {"w": "secretary", "m": "秘書"}, {"w": "attraction", "m": "人を引き付けるもの"}, {"w": "reward", "m": "報酬"}, {"w": "checkup", "m": "健康診断"}, {"w": "database", "m": "データベース"}, {"w": "bomb", "m": "爆弾"}, {"w": "coal", "m": "石炭"}, {"w": "nonfiction", "m": "ノンフィクション"}, {"w": "wire", "m": "電信線"}, {"w": "blog", "m": "ブログ"}, {"w": "lung", "m": "肺"}, {"w": "pump", "m": "ポンプ"}, {"w": "fingerprint", "m": "指紋"}, {"w": "poetry", "m": "(文学の一形式としての)詩"}, {"w": "scar", "m": "傷跡"}, {"w": "stain", "m": "しみ"}, {"w": "aluminum", "m": "アルミニウム"}, {"w": "freeway", "m": "高速道路"}, {"w": "influenza", "m": "インフルエンザ"}, {"w": "suburb", "m": "郊外"}, {"w": "affection", "m": "愛情"}, {"w": "artwork", "m": "芸術作品"}, {"w": "massage", "m": "マッサージ"}, {"w": "tip", "m": "秘訣"}, {"w": "newborn", "m": "生まれたばかりの"}, {"w": "unexpected", "m": "意外な"}, {"w": "virtual", "m": "仮想の"}, {"w": "generous", "m": "気前の良い"}, {"w": "commercial", "m": "商業の"}, {"w": "academic", "m": "学問の"}, {"w": "extreme", "m": "極度の"}, {"w": "permanently", "m": "永久に"}], "section10": [{"w": "import", "m": "を輸入する"}, {"w": "vary", "m": "変わる、異なる、を変える"}, {"w": "deserve", "m": "値する"}, {"w": "heal", "m": "(傷などが)治る、(傷・病人)を治す"}, {"w": "appeal", "m": "訴える、懇願する"}, {"w": "insist", "m": "強く主張する"}, {"w": "accomplish", "m": "を成し遂げる"}, {"w": "dislike", "m": "を嫌う"}, {"w": "bloom", "m": "(花が)咲く"}, {"w": "refresh", "m": "(気分)をさわやかにする、を元気づける"}, {"w": "tremble", "m": "震える"}, {"w": "float", "m": "浮かぶ、漂う"}, {"w": "vote", "m": "投票する"}, {"w": "decline", "m": "衰退する、(を)丁重に断る"}, {"w": "refuse", "m": "拒否する"}, {"w": "establish", "m": "を設立する、を確立する"}, {"w": "oppose", "m": "に反対する、を対抗させる"}, {"w": "ban", "m": "を禁止する"}, {"w": "alter", "m": "を変える、を改める、変わる"}, {"w": "mention", "m": "に言及する"}, {"w": "confirm", "m": "を確かめる、を確証する"}, {"w": "defeat", "m": "を負かす"}, {"w": "detect", "m": "を検出する、を感知する"}, {"w": "absorb", "m": "夢中になる"}, {"w": "install", "m": "(装置など)を設置する、(ソフトなど)をインストールする"}, {"w": "educate", "m": "を教育する"}, {"w": "stock", "m": "(商品)を店に置いている、に補充する"}, {"w": "foundation", "m": "基礎、団体、設立、根拠"}, {"w": "suggestion", "m": "提案"}, {"w": "resource", "m": "資源、資金、(いざというときの)手段"}, {"w": "graduation", "m": "卒業"}, {"w": "permission", "m": "許可"}, {"w": "lecture", "m": "講演、講義、説教"}, {"w": "budget", "m": "予算、経費"}, {"w": "management", "m": "経営、管理"}, {"w": "citizen", "m": "国民、市民"}, {"w": "candidate", "m": "候補者、志願者"}, {"w": "geography", "m": "地理学、地理"}, {"w": "option", "m": "選択権、選択の自由、選択肢"}, {"w": "summary", "m": "要約"}, {"w": "possibility", "m": "可能性"}, {"w": "employment", "m": "雇用、勤務"}, {"w": "supporter", "m": "支持者、後援者"}, {"w": "consequence", "m": "結果、結論"}, {"w": "criminal", "m": "犯罪者、犯人"}, {"w": "warmth", "m": "暖かさ、温かさ、温情"}, {"w": "branch", "m": "支店、枝"}, {"w": "automobile", "m": "自動車"}, {"w": "edge", "m": "端、縁、(刃物の)刃"}, {"w": "thunderstorm", "m": "激しい雷雨"}, {"w": "documentary", "m": "ドキュメンタリー(番組・映画)、実録"}, {"w": "studio", "m": "スタジオ、アトリエ"}, {"w": "weapon", "m": "武器、兵器"}, {"w": "procedure", "m": "手順、手続き"}, {"w": "reputation", "m": "評判、名声"}, {"w": "species", "m": "種"}, {"w": "substance", "m": "物質、実質"}, {"w": "status", "m": "地位、身分"}, {"w": "desire", "m": "願望、欲望、欲求"}, {"w": "deal", "m": "量"}, {"w": "biofuel", "m": "バイオ燃料"}, {"w": "room", "m": "余地、場所、部屋"}, {"w": "internship", "m": "インターンシップ、実習訓練(期間)"}, {"w": "wheel", "m": "車輪"}, {"w": "principal", "m": "校長、長"}, {"w": "shot", "m": "(ワクチンなどの)注射、シュート、発泡"}, {"w": "laundry", "m": "洗濯(物)、クリーニング店"}, {"w": "press", "m": "新聞、報道機関"}, {"w": "fitness", "m": "健康、適合"}, {"w": "scenery", "m": "風景、景色"}, {"w": "figure", "m": "数字、体型、人物"}, {"w": "disagreement", "m": "意見の相違、不一致"}, {"w": "suitable", "m": "適した"}, {"w": "guilty", "m": "罪悪感のある、有罪の"}, {"w": "inexpensive", "m": "安価な"}, {"w": "curious", "m": "好奇心の強い、知りたがる、奇妙な"}, {"w": "ethnic", "m": "民族的な"}, {"w": "leftover", "m": "食べ残し"}, {"w": "potential", "m": "潜在的な"}, {"w": "general", "m": "一般的な、全体の"}, {"w": "complex", "m": "複雑な、複合の"}, {"w": "overall", "m": "全般(全体)的な"}, {"w": "alternative", "m": "代わりの、二者択一の"}, {"w": "additional", "m": "追加の"}, {"w": "cheerful", "m": "元気の良い、陽気な"}, {"w": "imperial", "m": "皇帝の、帝国の"}, {"w": "face-to-face", "m": "対面の"}, {"w": "informal", "m": "くだけた、非公式の"}, {"w": "eco-friendly", "m": "環境に優しい"}, {"w": "secondhand", "m": "中古の"}, {"w": "homeless", "m": "家のない"}, {"w": "sound", "m": "健全な、安定した、妥当な"}, {"w": "scary", "m": "怖い、恐ろしい"}, {"w": "classical", "m": "古典的な、古典主義の"}, {"w": "responsible", "m": "責任のある"}, {"w": "awake", "m": "目が覚めて"}, {"w": "slightly", "m": "わずかに"}, {"w": "specially", "m": "特別に、特に"}, {"w": "silently", "m": "黙って、静かに"}, {"w": "hopefully", "m": "うまくいけば、願わくば"}], "section11": [{"w": "settle", "m": "定住する、(問題・紛争など)を解決する"}, {"w": "inspire", "m": "を奮い立たせる"}, {"w": "launch", "m": "を発射する、を開始する、を売り出す"}, {"w": "define", "m": "を定義する、を明確にする"}, {"w": "insult", "m": "を侮辱する"}, {"w": "deny", "m": "を否定する"}, {"w": "compose", "m": "(音楽・芸術など)を創作する、構成される"}, {"w": "dump", "m": "(ゴミなど)を捨てる"}, {"w": "expire", "m": "(期限が)切れる"}, {"w": "ease", "m": "を和らげる"}, {"w": "rebuild", "m": "を改築する、を再建する"}, {"w": "shorten", "m": "を短くする"}, {"w": "split", "m": "を分ける"}, {"w": "bleed", "m": "出血する"}, {"w": "reuse", "m": "を再利用する"}, {"w": "rewrite", "m": "書き直す"}, {"w": "restart", "m": "を再開始する"}, {"w": "astonish", "m": "を驚かす"}, {"w": "beg", "m": "に懇願する"}, {"w": "introduction", "m": "序論、導入、紹介"}, {"w": "efficiency", "m": "効率、能率"}, {"w": "complaint", "m": "不平、苦情"}, {"w": "trial", "m": "裁判、試み"}, {"w": "apology", "m": "おわび、謝罪"}, {"w": "rival", "m": "競争相手、ライバル"}, {"w": "defence", "m": "防御(力)、守備(力)"}, {"w": "equality", "m": "平等"}, {"w": "quantity", "m": "量"}, {"w": "objection", "m": "反対、異議"}, {"w": "reduction", "m": "減少、短縮、削減"}, {"w": "applicant", "m": "志願者、応募者"}, {"w": "workshop", "m": "研修会、ワークショップ"}, {"w": "disadvantage", "m": "不利な立場、不利(な点)"}, {"w": "literature", "m": "文学、文献"}, {"w": "creator", "m": "創作者"}, {"w": "frame", "m": "額縁、枠、骨組み"}, {"w": "confidence", "m": "自信、信頼"}, {"w": "cooperation", "m": "協力、協調性"}, {"w": "pioneer", "m": "先駆者、開拓者"}, {"w": "specialist", "m": "専門家"}, {"w": "vocabulary", "m": "語彙"}, {"w": "wage", "m": "給料、賃金"}, {"w": "definition", "m": "定義"}, {"w": "greenhouse", "m": "温室"}, {"w": "accuracy", "m": "精度、正確さ"}, {"w": "depression", "m": "憂うつ、うつ病、不景気"}, {"w": "hurricane", "m": "ハリケーン"}, {"w": "inventor", "m": "発明者、考案者"}, {"w": "architect", "m": "建築家、設計者"}, {"w": "roof", "m": "屋根"}, {"w": "ceiling", "m": "天井"}, {"w": "calculator", "m": "計算機"}, {"w": "storage", "m": "保管、貯蔵"}, {"w": "dormitory", "m": "寮、(学校の)寄宿舎"}, {"w": "cave", "m": "洞窟、洞穴"}, {"w": "echo", "m": "反響、こだま"}, {"w": "representative", "m": "代表者、代理人"}, {"w": "former", "m": "前の、先の"}, {"w": "widespread", "m": "広く行き渡った、普及した"}, {"w": "beneficial", "m": "有益な、ためになる"}, {"w": "historical", "m": "歴史の、歴史に関する"}, {"w": "ideal", "m": "理想的な"}, {"w": "extinct", "m": "絶滅した、廃止された"}, {"w": "creative", "m": "創造的な、想像力のある"}, {"w": "relevant", "m": "関連した"}, {"w": "initial", "m": "最初の"}, {"w": "reasonable", "m": "(値段が)手ごろな、道理をわきまえた、筋の通った"}, {"w": "appropriate", "m": "適切な"}, {"w": "obvious", "m": "明らかな"}, {"w": "permanent", "m": "永続的な、永久不変の"}, {"w": "full-time", "m": "常勤の、正規の"}, {"w": "challenging", "m": "やりがいのある"}, {"w": "complicated", "m": "複雑な、ややこしい"}, {"w": "dramatic", "m": "劇的な、演劇の"}, {"w": "innocent", "m": "無罪の、無邪気な"}, {"w": "reliable", "m": "信頼できる"}, {"w": "stable", "m": "安定した"}, {"w": "unnecessary", "m": "不要な"}, {"w": "rapid", "m": "急速な"}, {"w": "regional", "m": "地方の、局地的な"}, {"w": "vital", "m": "極めて重要な、不可欠な"}, {"w": "adequate", "m": "十分な"}, {"w": "formal", "m": "正式の、(服装が)正装の"}, {"w": "smooth", "m": "円滑に動く、なめらかな"}, {"w": "opposite", "m": "逆の、反対の"}, {"w": "definitely", "m": "間違いなく"}, {"w": "totally", "m": "全く、すっかり"}, {"w": "separately", "m": "離れて、別々に"}, {"w": "steadily", "m": "着実に"}, {"w": "importantly", "m": "重要なことには"}, {"w": "terribly", "m": "ひどく、とても"}, {"w": "effectively", "m": "効果的に、有効に"}, {"w": "basically", "m": "基本的に"}, {"w": "constantly", "m": "いつでも、絶えず"}, {"w": "negatively", "m": "否定的に、消極的に"}, {"w": "independently", "m": "独立して、自主的に"}, {"w": "truly", "m": "本当に、実に"}, {"w": "economically", "m": "経済的に"}, {"w": "throughout", "m": "〜の間中ずっと、〜の至るところで"}, {"w": "plus", "m": "〜を加えて、〜に加えて"}], "section12": [{"w": "direct", "m": "を指揮する、を向ける"}, {"w": "admit", "m": "を認める"}, {"w": "regret", "m": "を後悔する"}, {"w": "predict", "m": "(を)予測する、(を)予言する"}, {"w": "cough", "m": "咳をする"}, {"w": "commute", "m": "通勤[通学]する"}, {"w": "resist", "m": "を我慢する、に抵抗する"}, {"w": "inherit", "m": "を継ぐ、を相続する"}, {"w": "sacrifice", "m": "を犠牲にする"}, {"w": "imply", "m": "をほのめかす、をあんに示す"}, {"w": "tolerate", "m": "を許容する、を我慢する、に耐える"}, {"w": "yell", "m": "どなる、叫ぶ"}, {"w": "impose", "m": "(義務や税)を課す"}, {"w": "guarantee", "m": "を保証する"}, {"w": "substitute", "m": "の代わりをする、を代わりに用いる"}, {"w": "collapse", "m": "崩壊する"}, {"w": "approve", "m": "を承認する、良いと認める"}, {"w": "interfere", "m": "邪魔する"}, {"w": "compensate", "m": "に埋め合わせをする"}, {"w": "feature", "m": "を主演させる、を特集する"}, {"w": "bite", "m": "(を)かむ、(を)刺す"}, {"w": "fault", "m": "責任、欠点"}, {"w": "foreigner", "m": "外国人"}, {"w": "eyesight", "m": "視力"}, {"w": "reminder", "m": "リマインダー、思い起こさせるもの"}, {"w": "forecast", "m": "(天気)予報、予測"}, {"w": "scholarship", "m": "奨学金、学識"}, {"w": "breeze", "m": "そよ風"}, {"w": "sculpture", "m": "彫刻(作品)"}, {"w": "exception", "m": "例外"}, {"w": "luggage", "m": "手荷物、旅行用スーツケース"}, {"w": "altitude", "m": "高度、海抜"}, {"w": "handout", "m": "配布資料"}, {"w": "lens", "m": "レンズ"}, {"w": "masterpiece", "m": "傑作、名作"}, {"w": "stranger", "m": "見知らぬ人、他人"}, {"w": "illustration", "m": "挿絵、説明書"}, {"w": "accomplishment", "m": "業績、成果"}, {"w": "chest", "m": "胸(部)"}, {"w": "heartbeat", "m": "心臓の鼓動"}, {"w": "mask", "m": "マスク、面"}, {"w": "script", "m": "台本"}, {"w": "brightness", "m": "明るさ、鮮やかさ"}, {"w": "encouragement", "m": "励ましとなるもの、奨励、促進"}, {"w": "profile", "m": "プロフィール、人物紹介、略歴"}, {"w": "joy", "m": "喜び、うれしさ"}, {"w": "trade", "m": "貿易、商売"}, {"w": "value", "m": "価値、値段"}, {"w": "version", "m": "(製品などの)型、(出版物などの)版"}, {"w": "comment", "m": "論評、意見、コメント"}, {"w": "rumor", "m": "うわさ"}, {"w": "fiction", "m": "(架空の)物語、フィクション"}, {"w": "faith", "m": "信頼、信用"}, {"w": "duty", "m": "職務、義務"}, {"w": "proposal", "m": "提案(書)、計画案"}, {"w": "debt", "m": "借金"}, {"w": "barrier", "m": "障壁、障害"}, {"w": "disaster", "m": "天災、災難"}, {"w": "cigarette", "m": "巻きたばこ"}, {"w": "absolute", "m": "完全な、絶対的な"}, {"w": "independent", "m": "独立した"}, {"w": "entire", "m": "全体の、完全な"}, {"w": "capable", "m": "有能な、できる"}, {"w": "previous", "m": "以前の、前の、先の"}, {"w": "unclear", "m": "不明確な"}, {"w": "unsure", "m": "確信がない、確かでない"}, {"w": "unbelievable", "m": "信じられない、驚くほど素晴らしい"}, {"w": "uncomfortable", "m": "心地の良くない"}, {"w": "spare", "m": "余分の、予備の"}, {"w": "exclusive", "m": "高級な、排他的な"}, {"w": "rough", "m": "大まかな、粗い、乱暴な"}, {"w": "farther", "m": "もっと遠い"}, {"w": "ridiculous", "m": "ばかげた"}, {"w": "royal", "m": "王室の、国王[女王]の"}, {"w": "pleasant", "m": "快い、気持ちの良い"}, {"w": "precious", "m": "貴重な、高価な"}, {"w": "nonprofit", "m": "非営利的な"}, {"w": "messy", "m": "散らかった、汚い"}, {"w": "romantic", "m": "恋愛の、ロマンチックな、空想的な"}, {"w": "rooftop", "m": "屋上[屋根]にある"}, {"w": "embarrassed", "m": "きまりの悪い、恥ずかしい"}, {"w": "ugly", "m": "醜い、見苦しい"}, {"w": "unwanted", "m": "不必要な、望まれていない"}, {"w": "carry-on", "m": "機内持ち込みの"}, {"w": "shiny", "m": "光る、光沢のある"}, {"w": "up-to-date", "m": "最新(式)の"}, {"w": "salty", "m": "塩気のある、塩分の多い"}, {"w": "possibly", "m": "もしかしたら、たぶん"}, {"w": "purely", "m": "全く、純粋に、混じり気なく"}, {"w": "otherwise", "m": "そうでなければ"}, {"w": "randomly", "m": "無作為に"}, {"w": "amazingly", "m": "驚くほど、驚くべきことに"}, {"w": "visually", "m": "視覚的に、外見は"}, {"w": "individually", "m": "個々に、個別に"}, {"w": "temporarily", "m": "一時的に"}, {"w": "exceptionally", "m": "並外れて、例外として"}, {"w": "halfway", "m": "中途で、半分だけ"}, {"w": "objectively", "m": "客観的に"}, {"w": "fluently", "m": "流ちょうに"}, {"w": "innocently", "m": "無邪気に、知らないふりをして"}], "section13": [{"w": "construct", "m": "を建設する、を組み立てる"}, {"w": "instruct", "m": "に指示する"}, {"w": "escape", "m": "逃げる"}, {"w": "divide", "m": "を分ける、を分割する"}, {"w": "arrest", "m": "を逮捕する"}, {"w": "reject", "m": "を拒絶する、を断る"}, {"w": "punish", "m": "を罰する"}, {"w": "pretend", "m": "(の)ふりをする"}, {"w": "ship", "m": "を送る、を輸送する"}, {"w": "stimulate", "m": "を刺激する"}, {"w": "differ", "m": "違う"}, {"w": "accompany", "m": "に同行する、に伴って起こる"}, {"w": "confess", "m": "告白する、を告白する"}, {"w": "injure", "m": "にけがをさせる"}, {"w": "explore", "m": "(を)探検する、(を)調査する"}, {"w": "hug", "m": "を抱きしめる"}, {"w": "translate", "m": "を翻訳する"}, {"w": "rescue", "m": "を救助する"}, {"w": "ignore", "m": "を無視する"}, {"w": "reverse", "m": "を逆にする"}, {"w": "wrap", "m": "を包む、を巻きつける"}, {"w": "admire", "m": "を称賛する"}, {"w": "force", "m": "に強いる"}, {"w": "seek", "m": "をさがす、努める、探求する"}, {"w": "conclude", "m": "と結論を下す、を締結する"}, {"w": "criticize", "m": "を非難する、を批評する"}, {"w": "protest", "m": "(に)抗議する"}, {"w": "encounter", "m": "に遭遇する、に直面する"}, {"w": "breed", "m": "を飼育する、を栽培する、を繁殖させる"}, {"w": "praise", "m": "を称賛する、を褒める"}, {"w": "trace", "m": "(の跡)をたどる、をなぞる"}, {"w": "seal", "m": "に封をする、を密封する"}, {"w": "resemble", "m": "に似ている"}, {"w": "delight", "m": "を喜ばせる"}, {"w": "pause", "m": "(一時的に)休止する"}, {"w": "demonstrate", "m": "を論証する、を実演する、デモをする"}, {"w": "propose", "m": "を提案する、結婚を申し込む"}, {"w": "reflect", "m": "を反射する、を反映する、熟考する"}, {"w": "blow", "m": "を吹き飛ばす、を吹く、(風が)吹く"}, {"w": "obey", "m": "(命令・規則など)に従う"}, {"w": "forbid", "m": "を禁止する"}, {"w": "fulfill", "m": "を実現する、を果たす"}, {"w": "burst", "m": "を破裂[爆発]させる、破裂[爆発]する"}, {"w": "ankle", "m": "足首"}, {"w": "jungle", "m": "ジャングル"}, {"w": "novelist", "m": "小説家"}, {"w": "emperor", "m": "皇帝、天皇"}, {"w": "critic", "m": "批評家"}, {"w": "repairperson", "m": "修理工"}, {"w": "Buddhist", "m": "仏教徒"}, {"w": "warning", "m": "警告、注意"}, {"w": "revolution", "m": "革命"}, {"w": "unit", "m": "単位"}, {"w": "housework", "m": "家事"}, {"w": "path", "m": "小道、進路"}, {"w": "makeup", "m": "化粧"}, {"w": "phrase", "m": "成句、句"}, {"w": "lane", "m": "車線、路地、小道"}, {"w": "electronics", "m": "エレクトロニクス(産業)、電子工学"}, {"w": "attitude", "m": "態度、考え方"}, {"w": "border", "m": "国境、境界線"}, {"w": "origin", "m": "起源"}, {"w": "manual", "m": "説明書、指導書"}, {"w": "lawyer", "m": "弁護士"}, {"w": "mission", "m": "使命、使節(団)"}, {"w": "oxygen", "m": "酸素"}, {"w": "peak", "m": "絶頂、頂点、山頂"}, {"w": "volume", "m": "分量、(本の)巻、音量"}, {"w": "explosion", "m": "爆発"}, {"w": "portion", "m": "分け前、一部分"}, {"w": "angle", "m": "角度、角"}, {"w": "media", "m": "マスメディア"}, {"w": "property", "m": "財産、不動産、特性"}, {"w": "corporation", "m": "大企業、株式会社"}, {"w": "argument", "m": "論争、議論、主張"}, {"w": "victim", "m": "犠牲者、被害者"}, {"w": "wealth", "m": "富、財産"}, {"w": "psychology", "m": "心理学"}, {"w": "arctic", "m": "北極地方"}, {"w": "fare", "m": "(乗り物の)運賃"}, {"w": "honor", "m": "光栄、名誉"}, {"w": "necessity", "m": "必需品、必要性"}, {"w": "essential", "m": "必要不可欠な、本質的な"}, {"w": "annual", "m": "1年間の、年1回の"}, {"w": "jealous", "m": "ねたんで、しっとして"}, {"w": "typical", "m": "典型的な"}, {"w": "sudden", "m": "突然の"}, {"w": "delicate", "m": "繊細な、微妙な"}, {"w": "nuclear", "m": "原子力利用の、核エネルギーの"}, {"w": "superior", "m": "優れた、上位の"}, {"w": "intelligent", "m": "知能の高い、頭の良い"}, {"w": "steady", "m": "安定した、一定した"}, {"w": "awful", "m": "ひどく悪い、恐ろしい"}, {"w": "raw", "m": "生の、未処理の"}, {"w": "equally", "m": "同程度に、等しく"}, {"w": "technically", "m": "技術的に、厳密に言えば、専門的に"}, {"w": "seldom", "m": "めったに〜ない、まれにしか〜ない"}, {"w": "frankly", "m": "率直に、率直に言って"}, {"w": "unless", "m": "･･･でない限り、･･･でなければ"}, {"w": "beside", "m": "〜のそばに"}], "section14": [{"w": "according to ~", "m": "〜によれば"}, {"w": "in order to do", "m": "〜するために"}, {"w": "a number of ~", "m": "いくらかの〜、たくさんの〜"}, {"w": "lead to ~", "m": "〜につながる、〜に(必然的に)発展する"}, {"w": "work on ~", "m": "〜に取り組む"}, {"w": "suffer from ~", "m": "〜に苦しむ、〜の病気になる"}, {"w": "find out ~", "m": "(調べて)〜を知る、〜がわかる"}, {"w": "ask (A) for B", "m": "(Aに)Bを求める"}, {"w": "be on A", "m": "Aのおごりである"}, {"w": "instead of ~", "m": "〜の代わりに、〜しないで"}, {"w": "set up ~", "m": "〜を設置する、〜を設定する、〜を設立する"}, {"w": "come up with ~", "m": "〜を思いつく"}, {"w": "in particular", "m": "特に"}, {"w": "pick A up", "m": "Aを(車で)迎えに行く[来る]"}, {"w": "so A that B", "m": "とてもAなのでB"}, {"w": "too A to do", "m": "あまりにAなので〜できない"}, {"w": "~ as well", "m": "〜もまた"}, {"w": "deal with ~", "m": "(問題)を処理する、(主題など)を扱う"}, {"w": "make A from B", "m": "B(原料・材料)からA(製品)を作る"}, {"w": "on time", "m": "時間通りに"}, {"w": "provide A with B", "m": "AにBを提供する"}, {"w": "at least", "m": "少なくとも"}, {"w": "come out", "m": "外に出る、発売される、(真実などが)明らかになる"}, {"w": "encourage A to do", "m": "Aに〜するよう促す[励ます]"}, {"w": "hand in ~", "m": "〜を提出する"}, {"w": "on the other hand", "m": "他方では、それに反して"}, {"w": "a variety of ~", "m": "さまざまな〜"}, {"w": "be based on ~", "m": "〜に基づいている"}, {"w": "fill out ~", "m": "(書類)に記入する"}, {"w": "take part in ~", "m": "〜に参加する"}, {"w": "up to ~", "m": "〜次第で、〜に(至る)"}, {"w": "A rather than B", "m": "BよりむしろA"}, {"w": "be similar to ~", "m": "〜と似ている"}, {"w": "bring back ~", "m": "〜を戻す、〜を持ち帰る"}, {"w": "figure out ~", "m": "〜を理解する、〜をわかる"}, {"w": "happen to do", "m": "偶然[たまたま]〜する"}, {"w": "much [still] more ~", "m": "まして〜はいっそうそうだ"}, {"w": "no longer ~", "m": "もはや〜でない"}, {"w": "prevent A from doing", "m": "Aが〜するのを防ぐ"}, {"w": "so far", "m": "これまでは"}, {"w": "A as well as B", "m": "BだけでなくAもまた"}, {"w": "as ~ as possible", "m": "できるだけ"}, {"w": "by mistake", "m": "誤って"}, {"w": "depend on [upon] ~", "m": "〜次第である、〜による"}, {"w": "get rid of ~", "m": "〜を取り除く、〜を処分する"}, {"w": "help (A) (to) do", "m": "(Aが)〜するのを手伝う、(Aが)〜するのに役立つ"}, {"w": "make sure that …", "m": "･･･であることを確実にする、必ず･･･するようにする"}, {"w": "so that A can B", "m": "AがBできるように"}, {"w": "A enough to do", "m": "〜するほど十分Aな"}, {"w": "along with ~", "m": "〜と一緒に"}, {"w": "be aware of ~", "m": "〜に気づいている、〜を知っている"}, {"w": "be concerned about ~", "m": "〜を心配している、〜を気遣っている"}, {"w": "be related to ~", "m": "〜に関連している"}, {"w": "carry out ~", "m": "〜を実行する"}, {"w": "get used to ~", "m": "〜に慣れる"}, {"w": "have [take] a look at ~", "m": "〜を見る"}, {"w": "in place", "m": "あるべき場所に、適切で"}, {"w": "live on ~", "m": "〜の額の収入として生活する、〜を収入源として生活する"}, {"w": "manage to do", "m": "何とかして〜する"}, {"w": "play an important role in ~", "m": "〜で重要な役割を果たす"}, {"w": "prefer A to B", "m": "BよりもAの方を好む"}, {"w": "result in ~", "m": "〜に終わる"}, {"w": "throw away ~", "m": "〜を捨てる"}, {"w": "turn A into B", "m": "AをBに変える"}, {"w": "turn on ~", "m": "(スイッチなど)をつける、(ガス・水)を出す"}, {"w": "a couple of ~", "m": "2、3の"}, {"w": "as [so] long as …", "m": "･･･する限りは"}, {"w": "be capable of doing", "m": "〜する能力がある、〜することができる"}, {"w": "be involved in ~", "m": "〜に参加している、〜に熱中している"}, {"w": "break down (~)", "m": "故障する、〜を壊す"}, {"w": "by the end of ~", "m": "〜の終わりまでに"}, {"w": "cut down (on) ~", "m": "〜を減らす"}, {"w": "end up doing", "m": "最後には〜することになる、結局〜に終わる"}, {"w": "find a way to do", "m": "〜する方法を見つける"}, {"w": "for a while", "m": "しばらくの間"}, {"w": "in the end", "m": "最後に(は)、結局"}, {"w": "look up ~", "m": "(単語など)を調べる"}, {"w": "look up to ~", "m": "〜を尊敬する"}, {"w": "not A but B", "m": "AではなくB"}, {"w": "refer to ~", "m": "〜に言及する、〜に関係する、〜を参照する"}, {"w": "sell out (~)", "m": "〜を売り切る、売り切れる"}, {"w": "stop by (~)", "m": "(〜に)ちょっと立ち寄る"}, {"w": "take notes", "m": "メモを取る"}, {"w": "take place", "m": "行われる、起こる"}, {"w": "after all", "m": "結局(は)"}, {"w": "all the way", "m": "ずっと、はるばる"}, {"w": "apply for ~", "m": "〜を申し込む、〜に出願する"}, {"w": "as if [though]", "m": "まるで･･･のように"}, {"w": "at a time", "m": "一度に"}, {"w": "be about to do", "m": "(今にも)〜しようとしている"}, {"w": "be made (out) of~", "m": "〜でできている、〜で作られている"}, {"w": "become accustomed to~", "m": "〜に慣れる"}, {"w": "before long", "m": "まもなく、すぐに"}, {"w": "bring in ~", "m": "〜を持ち込む"}, {"w": "by accident(chance)", "m": "偶然に"}, {"w": "by the time", "m": "〜するときまでには"}, {"w": "check in", "m": "搭乗手続きをする、宿泊の手続きをする"}, {"w": "come across~", "m": "〜を偶然見つける、〜に偶然出くわす"}, {"w": "consist of~", "m": "〜で構成されている、〜から成る"}, {"w": "due to~", "m": "〜のために、〜が原因で"}], "section15": [{"w": "except for~", "m": "〜を除いては"}, {"w": "exchange A for B", "m": "AをBと交換する"}, {"w": "in return (for~)", "m": "(〜の)お返しに"}, {"w": "feel like doing", "m": "〜したい気がする"}, {"w": "for fear of~", "m": "〜を恐れて"}, {"w": "for long", "m": "長い間"}, {"w": "give A a hand", "m": "Aを手助けする"}, {"w": "give in to~", "m": "〜に屈する"}, {"w": "go into ~", "m": "〜を詳しく説明する"}, {"w": "go with~", "m": "〜と合う、〜を調和する"}, {"w": "had better do", "m": "〜するほうが良い"}, {"w": "if A were to do", "m": "仮にAが〜するようなことがあれば"}, {"w": "in addition to~", "m": "〜に加えて"}, {"w": "in charge of~", "m": "〜を管理する"}, {"w": "in other words", "m": "言い換えれば、つまり"}, {"w": "in response to~", "m": "〜に応えて"}, {"w": "in trouble", "m": "困った状態で"}, {"w": "in turn", "m": "その結果"}, {"w": "make a mistake", "m": "間違いを犯す"}, {"w": "on (in) behalf of~", "m": "〜を代表して、〜のために"}, {"w": "out of stock", "m": "在庫切れの"}, {"w": "pay (give) attention to", "m": "〜に注意を払う"}, {"w": "persuade A to do", "m": "Aを〜するように説得する"}, {"w": "point out ~", "m": "〜を指摘する、〜を指し示す"}, {"w": "rely on A for B", "m": "Bを求めてAを頼る"}, {"w": "run out of~", "m": "〜を使い果たす"}, {"w": "sign up for~", "m": "〜に申し込む、〜に登録する"}, {"w": "stick to~", "m": "〜をやり通す、〜にくっつく"}, {"w": "take away ~", "m": "〜を持ち去る"}, {"w": "take ~ for granted", "m": "〜を当然のことと考える"}, {"w": "tend to do", "m": "〜しがちである"}, {"w": "turn in ~", "m": "〜を提出する"}, {"w": "would rather do", "m": "むしろ〜したい"}, {"w": "a bunch of~", "m": "たくさんの、一房の"}, {"w": "a wide range of~", "m": "広範囲に渡る〜、様々な〜"}, {"w": "ahead of~", "m": "〜より早く、〜に先立って"}, {"w": "allow A to do", "m": "Aが〜するのを許す、Aが〜できる"}, {"w": "~. and so on", "m": "(そして)〜など"}, {"w": "as follows", "m": "次の通り"}, {"w": "at the moment", "m": "今、現在、そのときに"}, {"w": "be concerned with~", "m": "〜に関心がある、〜と関わる"}, {"w": "be responsible for ~", "m": "〜の責任がある"}, {"w": "be said to be~", "m": "〜だと言われている"}, {"w": "be satisfied with ~", "m": "〜に満足している"}, {"w": "behind one’s back", "m": "〜のいないところで、影で"}, {"w": "by far", "m": "断然、ずば抜けて"}, {"w": "by way of ~", "m": "〜経由で、〜の手段として"}, {"w": "catch up with ~", "m": "〜に追いつく"}, {"w": "change one’s mind", "m": "気が変わる"}, {"w": "come to do", "m": "〜するようになる"}, {"w": "compare A with B", "m": "AをBと比べる"}, {"w": "concentrate on~", "m": "〜に集中する"}, {"w": "count on(upon)~", "m": "〜を当てにする、〜に頼る"}, {"w": "die out", "m": "死滅する、完全に消える"}, {"w": "do away with~", "m": "〜を廃止する、〜を取り除く"}, {"w": "drop in", "m": "立ち寄る、ひょっこり訪ねる"}, {"w": "even if (though)~", "m": "たとえ〜だとしても"}, {"w": "ever since", "m": "それ以来、その後"}, {"w": "find one’s way (to ~)", "m": "(～に)たどり着く"}, {"w": "for free", "m": "無料で"}, {"w": "for lack of~", "m": "〜の不足のために"}, {"w": "for sure", "m": "確かに、間違いなく"}, {"w": "from now on", "m": "今後は"}, {"w": "get along with~", "m": "〜とうまくやっていく"}, {"w": "get over ~", "m": "〜から立ち直る、〜を克服する"}, {"w": "in advance", "m": "前もって"}, {"w": "in danger of~", "m": "〜の危険にさらされて"}, {"w": "in demand", "m": "需要がある"}, {"w": "in fashion", "m": "流行して"}, {"w": "in general", "m": "一般に、たいてい"}, {"w": "in reality", "m": "実は、実際には"}, {"w": "in spite of~", "m": "〜にもかかわらず"}, {"w": "in terms of~", "m": "〜の観点から"}, {"w": "in time (for~)", "m": "(〜に)間に合うように、やがて"}, {"w": "in vain", "m": "無駄に、むなしく"}, {"w": "(just) in case~", "m": "〜するといけないから、〜に備えて"}, {"w": "keep one’s word (promise)", "m": "約束を守る"}, {"w": "keep up with ~", "m": "〜に遅れないでついていく"}, {"w": "leave ~ behind", "m": "〜を置き忘れる、〜をおいていく"}, {"w": "let A down", "m": "Aを失望させる"}, {"w": "look through~", "m": "〜にざっと目を通す"}, {"w": "make up for~", "m": "〜の埋め合わせをする"}, {"w": "meet one’s needs", "m": "〜の必要性を満たす"}, {"w": "no matter what~", "m": "何を〜しても"}, {"w": "not only A but (also) B", "m": "AだけでなくBも"}, {"w": "on board", "m": "(乗り物に)乗って"}, {"w": "on (off) duty", "m": "勤務中で(勤務時間外で)"}, {"w": "on purpose", "m": "わざと"}, {"w": "on schedule", "m": "予定通りに"}, {"w": "on (an) average", "m": "概して、平均して"}, {"w": "out of order", "m": "故障して、調子が悪くて、乱れて"}, {"w": "pay well", "m": "給料が良い"}, {"w": "plenty of~", "m": "多くの〜、十分な〜"}, {"w": "put together~", "m": "(考え)をまとめ上げる、~を組み立てる"}, {"w": "run into (across)~", "m": "〜に偶然出会う"}, {"w": "speak out", "m": "はっきりと意見を述べる、大声で話す"}, {"w": "stand for~", "m": "〜を我慢する、〜の意味を表す"}, {"w": "stare at~", "m": "〜をじっと見る"}, {"w": "turn out to be~", "m": "〜だとわかる"}, {"w": "work out", "m": "運動する"}], "section16": [{"w": "amount to ~", "m": "総計で〜に達する"}, {"w": "anything but ~", "m": "決して［少しも］〜でない"}, {"w": "as for [to] ~", "m": "〜に関しては、〜はどうかと言えば"}, {"w": "as time goes by", "m": "時間がたつにつれて"}, {"w": "be anxious about ~", "m": "〜を心配している"}, {"w": "be at a loss", "m": "困っている、途方に暮れている"}, {"w": "be engaged to A", "m": "Aと婚約している"}, {"w": "be equal to ~", "m": "〜と同等である、〜と等しい"}, {"w": "be guilty of ~", "m": "〜の罪を犯している"}, {"w": "be known to ~", "m": "〜に知られている"}, {"w": "be well off", "m": "裕福である"}, {"w": "be worthy of ~", "m": "〜に値する、〜にふさわしい"}, {"w": "beyond one’s reach", "m": "〜の届く範囲を超えて"}, {"w": "by degrees", "m": "徐々に"}, {"w": "by nature", "m": "生まれつき"}, {"w": "call in ~", "m": "(医師･専門家)を呼ぶ"}, {"w": "check out", "m": "勘定を済ませて出る、チェックアウトする"}, {"w": "come down", "m": "(価格などが)下がる、降りてくる"}, {"w": "decide on ~", "m": "〜を［に］決める"}, {"w": "for a change", "m": "気分転換に"}, {"w": "get away (from~)", "m": "(〜から)離れる、逃げる"}, {"w": "go after 〜", "m": "〜の後を追う"}, {"w": "go along with ~", "m": "〜を支持する、〜と一緒に行く"}, {"w": "go over ~", "m": "〜を詳しく調べる"}, {"w": "go through ~", "m": "〜を経験する"}, {"w": "hand down ~", "m": "〜を後世に残す、〜を伝える"}, {"w": "hand [give] out ~", "m": "〜を配る"}, {"w": "hold the line", "m": "電話を切らずに待つ"}, {"w": "in a row", "m": "連続して、一列に"}, {"w": "in a [one] sense", "m": "ある意味で"}, {"w": "in one’s favor", "m": "〜気に入られて"}, {"w": "in search of ~", "m": "〜をさがして、〜を求めて"}, {"w": "in the long run", "m": "長い目で見れば"}, {"w": "in the middle of~", "m": "〜の最中に［で］、〜の真ん中に［で］"}, {"w": "look over ~", "m": "〜に目を通す、〜を(ざっと)調べる"}, {"w": "lose one’s way", "m": "道に迷う"}, {"w": "make a difference", "m": "違いを生む"}, {"w": "make do with ~", "m": "(ありあわせのもの)で済ます"}, {"w": "name A（B）after C", "m": "CにちなんでAを(Bと)名付ける"}, {"w": "no more than ~", "m": "わずか〜、〜にすぎない"}, {"w": "now that …", "m": "今はもう･･･だから"}, {"w": "of one’s own", "m": "自分自身の"}, {"w": "on account of ~", "m": "〜のために、〜によって"}, {"w": "on demand", "m": "要求［請求］があり次第"}, {"w": "on the move", "m": "発展して"}, {"w": "on the spot", "m": "即座に、その場で"}, {"w": "on top of ~", "m": "〜に加えて、〜の上に"}, {"w": "out of date", "m": "時代遅れで［の］"}, {"w": "pass on A to B", "m": "AをBに伝える"}, {"w": "pick out ~", "m": "〜を選び出す"}, {"w": "put out ~", "m": "〜を外に出す"}, {"w": "refrain from doing", "m": "〜するのを慎む"}, {"w": "rule out ~", "m": "〜を除外する"}, {"w": "run away （from ~）", "m": "(〜から)走り去る、逃げる"}, {"w": "send out ~", "m": "〜を多数発送［配布］する、〜を派遣する"}, {"w": "sit back", "m": "くつろぐ、深く座る"}, {"w": "take after ~", "m": "(親など)に似ている"}, {"w": "take up ~", "m": "(趣味･仕事として)〜を始める"}, {"w": "the last thing（that）…", "m": "最も･･･しそうにないこと"}, {"w": "to one’s joy", "m": "うれしいことに"}, {"w": "to one’s surprise", "m": "驚いたことに"}, {"w": "turn over ~", "m": "〜を裏返す"}, {"w": "watch out for ~", "m": "〜に気をつける、〜を油断なく見張る"}, {"w": "what is called", "m": "いわゆる"}, {"w": "above all", "m": "何よりも"}, {"w": "account for ~", "m": "〜の所在がわかっている、〜(の理由)を説明する"}, {"w": "accuse A of B", "m": "AをBのことで非難［告訴］する"}, {"w": "as a（general）rule", "m": "通例、概して"}, {"w": "as a matter of fact", "m": "実のところは、実際は"}, {"w": "at any cost", "m": "どんな犠牲を払っても、どんなに費用をかけても"}, {"w": "at random", "m": "無作為に、手当たり次第に"}, {"w": "at（the）most", "m": "最高［最大］でも、せいぜい"}, {"w": "at times", "m": "時々"}, {"w": "back and forth", "m": "行ったり来たり、前後(左右)に"}, {"w": "be acquainted with ~", "m": "〜と顔見知りである"}, {"w": "be engaged in ~", "m": "〜に従事している"}, {"w": "be familiar with ~", "m": "〜に精通している"}, {"w": "be free from [of] ~", "m": "〜がない"}, {"w": "be independent of ~", "m": "〜から独立している"}, {"w": "be likely to do", "m": "〜しそうである"}, {"w": "be made up of ~", "m": "〜で構成されている"}, {"w": "be obliged to do", "m": "〜するよう義務づけられている"}, {"w": "be reluctant to do", "m": "〜することに気が進まない"}, {"w": "be sick of ~", "m": "〜にうんざりしている"}, {"w": "be subject to ~", "m": "〜になりやすい、〜を受けやすい"}, {"w": "be sure of ~", "m": "〜を確信している"}, {"w": "be true of ~", "m": "〜に当てはまる"}, {"w": "be typical of ~", "m": "〜に典型的な、〜に特有の"}, {"w": "be willing to do", "m": "進んで〜する"}, {"w": "break into ~", "m": "〜へ(不法に)押し入る、急に〜し始める"}, {"w": "break out", "m": "(災害･戦争などが)発生する、勃発する"}, {"w": "bring about ~", "m": "(結果など)を招く、〜を引き起こす"}, {"w": "bring down ~", "m": "〜を下げる、〜を落ち込ませる"}, {"w": "bring up ~", "m": "〜を育てる"}, {"w": "by means of ~", "m": "〜によって"}, {"w": "by no means", "m": "決して〜でない"}, {"w": "call off ~", "m": "〜を中止する"}, {"w": "call on A", "m": "Aを訪ねる"}, {"w": "care for ~", "m": "〜の世話をする、〜を好む"}, {"w": "carry on ~", "m": "〜を続ける"}], "section17": [{"w": "（close[near]）at hand", "m": "手元に、近くに"}, {"w": "come about", "m": "(予想外のことが)起こる、生じる"}, {"w": "come to light", "m": "(秘密などが)明るみに出る"}, {"w": "cope with ~", "m": "(難局･問題など)をうまく処理する"}, {"w": "drop out", "m": "(競争から)脱落する、(活動･集団から)身を引く"}, {"w": "enable A to do", "m": "Aが〜するのを可能にする、(主語によって)Aは〜できる"}, {"w": "far from ~", "m": "決して〜でない、〜どころではない"}, {"w": "for certain", "m": "確かに(は)"}, {"w": "for good（and all）", "m": "永久に"}, {"w": "for the time being", "m": "当分の間"}, {"w": "get by", "m": "なんとかやっていく、通り抜ける"}, {"w": "go off", "m": "(警報などが)鳴る"}, {"w": "hang up", "m": "(電話)を切る"}, {"w": "have ~ in common", "m": "共通して〜を持つ"}, {"w": "have second thoughts", "m": "考え直す"}, {"w": "head for ~", "m": "〜に向かう"}, {"w": "hold up ~", "m": "(交通･生産など)を遅らせる、〜を持ち上げる"}, {"w": "in comparison with [to]~", "m": "〜と比べると"}, {"w": "in contrast（to ~）", "m": "(〜とは)対照的に"}, {"w": "in detail", "m": "詳細に"}, {"w": "in effect", "m": "事実上"}, {"w": "in exchange for ~", "m": "〜と引き換えに"}, {"w": "in favor of ~", "m": "〜に賛成して、〜のために"}, {"w": "in order", "m": "順序正しく整理されて"}, {"w": "in person", "m": "(電話･手紙などではなく)直接、じかに"}, {"w": "in place of ~", "m": "〜の代わりに"}, {"w": "in private", "m": "内緒で、誰もいないところで"}, {"w": "in progress", "m": "進行中で［の］"}, {"w": "in public", "m": "人前で、公然と"}, {"w": "in relation to ~", "m": "〜に関して"}, {"w": "in shape", "m": "体調が良くて"}, {"w": "in short", "m": "手短に言えば、要するに"}, {"w": "in the face of ~", "m": "〜に直面して、〜にもかかわらず"}, {"w": "in the first place", "m": "そもそも、まず初めに"}, {"w": "in the meantime", "m": "その間に"}, {"w": "in use", "m": "使われて"}, {"w": "（It is）no wonder（that）…", "m": "･･･は全く不思議ではない"}, {"w": "keep [bear] ~in mind", "m": "〜を心に留める"}, {"w": "keep in touch [contact] with ~", "m": "〜と連絡［接触］を保つ"}, {"w": "keep off ~", "m": "〜に近寄らない、〜を避ける"}, {"w": "keep track of ~", "m": "〜を見失わないようにする、(人の動向など)に注意している"}, {"w": "lay off ~", "m": "〜を一時的に解雇する"}, {"w": "leave A alone", "m": "Aを放っておく"}, {"w": "live up to ~", "m": "(期待など)に応える、〜に従って生きる［行動する］"}, {"w": "long for ~", "m": "〜に思い焦がれる、〜を熱望する"}, {"w": "look down on [upon] ~", "m": "〜を見下す"}, {"w": "look into ~", "m": "〜を調べる、〜をのぞき込む"}, {"w": "major in ~", "m": "〜を専攻する"}, {"w": "make an appointment", "m": "(人と会う)約束をする"}, {"w": "make fun of ~", "m": "〜をからかう"}, {"w": "make one’s way", "m": "前進する、成功する"}, {"w": "make sense", "m": "道理にかなう、意味が通じる"}, {"w": "make up one’s mind", "m": "決心する、判断を下す"}, {"w": "make use of ~", "m": "〜を利用［活用］する"}, {"w": "none of one’s business", "m": "〜には関係ない"}, {"w": "not to mention ~", "m": "〜は言うまでもなく"}, {"w": "on one’s own", "m": "独力で、一人で"}, {"w": "on the condition that …", "m": "･･･という条件で、もし･･･なら"}, {"w": "on the contrary", "m": "それどころか、それと逆に"}, {"w": "on the whole", "m": "全体的に見て、概して"}, {"w": "one （~）after another", "m": "(〜を)次々と、一つずつ"}, {"w": "one by one", "m": "一つずつ、順番に"}, {"w": "out of control", "m": "制御しきれなくなって"}, {"w": "owing to ~", "m": "〜のために、〜の理由で"}, {"w": "pass away", "m": "(人が)亡くなる、過ぎ去る"}, {"w": "prohibit A from doing", "m": "Aが〜するのを禁止する"}, {"w": "provided that …", "m": "もし･･･なら、･･･という条件で"}, {"w": "pull off ~", "m": "〜をやってのける、〜を引っ張って取る"}, {"w": "put an end to ~", "m": "〜を終わらせる"}, {"w": "put aside ~", "m": "〜を脇においておく、(問題など)を考えないことにする"}, {"w": "put away ~", "m": "〜を片付ける"}, {"w": "put ~ into [in] practice", "m": "〜を実行する"}, {"w": "put off ~", "m": "〜を延期する"}, {"w": "put up with ~", "m": "〜を我慢する"}, {"w": "remind A of B", "m": "AにBを思い起こさせる"}, {"w": "run through ~", "m": "〜をざっとおさらいする"}, {"w": "settle down", "m": "身を固める、落ち着く"}, {"w": "shake hands", "m": "握手する"}, {"w": "show off ~", "m": "〜を見せびらかす"}, {"w": "show up（~）", "m": "姿を見せる、現れる、〜を目立たせる"}, {"w": "sit up", "m": "(寝ないで)起きている"}, {"w": "sooner or later", "m": "遅かれ早かれ"}, {"w": "speak up", "m": "もっと大きな声で話す、はっきりと意見を述べる"}, {"w": "stand by（~）", "m": "待機する、〜を支援する"}, {"w": "stand out", "m": "目立つ"}, {"w": "sum up ~", "m": "〜を要約する、〜を合計する"}, {"w": "take advantage of ~", "m": "(機会･状況など)を利用する、〜につけ込む"}, {"w": "take one’s place", "m": "〜の代理を務める"}, {"w": "take over ~", "m": "(職･責任など)を引き継ぐ、〜を支配する"}, {"w": "tell [distinguish] A from B", "m": "AをBと見分ける"}, {"w": "There is no doing", "m": "〜することはできない"}, {"w": "think over ~", "m": "〜をじっくり考える"}, {"w": "to some [a certain] extent", "m": "ある程度まで"}, {"w": "to the point", "m": "的を射た"}, {"w": "try out ~", "m": "〜を試験する、〜の効果を試す"}, {"w": "turn away ~", "m": "(顔･目など)をそらす"}, {"w": "turn up（~）", "m": "姿を現す、(音量など)を大きくする"}, {"w": "upside down", "m": "逆さま、ひっくり返して"}, {"w": "use up ~", "m": "〜を使い果たす"}, {"w": "wear out （~）", "m": "すり減る、(〜を)すり減らす"}]}}</script>
+
+<script>
+(function(){
+  var DATA = JSON.parse(document.getElementById('vocabData').textContent);
+  var levelFrom = document.getElementById('levelFrom');
+  var levelTo = document.getElementById('levelTo');
+  var output = document.getElementById('output');
+  var rangeInfo = document.getElementById('rangeInfo');
+  var genBtn = document.getElementById('genBtn');
+  var editBtn = document.getElementById('editBtn');
+  var printBtn = document.getElementById('printBtn');
+
+  function levelLabel(lv){
+    var m = /^section(\d+)$/.exec(lv);
+    return m ? ('Section ' + m[1]) : lv;
+  }
+
+  DATA.levels.forEach(function(lv){
+    [levelFrom, levelTo].forEach(function(sel){
+      var opt = document.createElement('option');
+      opt.value = lv;
+      opt.textContent = levelLabel(lv);
+      sel.appendChild(opt);
+    });
+  });
+
+  // 「から」「まで」の級名から、DATA.levels上のインデックス範囲（昇順）を返す
+  function getSelectedLevels(){
+    var i1 = DATA.levels.indexOf(levelFrom.value);
+    var i2 = DATA.levels.indexOf(levelTo.value);
+    if (i1 < 0) i1 = 0;
+    if (i2 < 0) i2 = 0;
+    var lo = Math.min(i1, i2), hi = Math.max(i1, i2);
+    return DATA.levels.slice(lo, hi + 1);
+  }
+
+  function poolAcross(dict, levels){
+    var out = [];
+    levels.forEach(function(lv){
+      out = out.concat(dict[lv] || []);
+    });
+    return out;
+  }
+
+  function rangeLabel(levels){
+    if (levels.length === 1) return levelLabel(levels[0]);
+    return levelLabel(levels[0]) + '〜' + levelLabel(levels[levels.length - 1]);
+  }
+
+  function shuffle(arr){
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function pick(arr, n){
+    return shuffle(arr).slice(0, Math.min(n, arr.length));
+  }
+
+  function esc(s){
+    return String(s == null ? '' : s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function buildWordSection(levels, num){
+    var pool = poolAcross(DATA.words, levels);
+    var picked = pick(pool, num);
+    // pad to even number for 2-column layout
+    if (picked.length % 2 === 1) picked = picked.slice(0, picked.length - 1);
+    var rowsHtml = '';
+    var ansRowsHtml = '';
+    for (var i = 0; i < picked.length; i += 2) {
+      var a = picked[i], b = picked[i+1];
+      rowsHtml += '<tr>' +
+        '<td class="wnum">' + (i+1) + '</td><td class="wword en">' + esc(a.w) + '</td><td class="wmeaning"></td>' +
+        '<td class="wnum">' + (i+2) + '</td><td class="wword en">' + esc(b.w) + '</td><td class="wmeaning"></td>' +
+        '</tr>';
+      ansRowsHtml += '<tr>' +
+        '<td class="wnum">' + (i+1) + '</td><td class="wword en">' + esc(a.w) + '</td><td class="wmeaning"><span class="k">' + esc(a.m) + '</span></td>' +
+        '<td class="wnum">' + (i+2) + '</td><td class="wword en">' + esc(b.w) + '</td><td class="wmeaning"><span class="k">' + esc(b.m) + '</span></td>' +
+        '</tr>';
+    }
+    return {
+      count: picked.length,
+      q: '<table class="wordtable"><tbody>' + rowsHtml + '</tbody></table>',
+      a: '<table class="wordtable"><tbody>' + ansRowsHtml + '</tbody></table>'
+    };
+  }
+
+  // 問題文側の空欄 "(                    )" は、HTML上では連続スペースが1つに
+  // つぶれて見えてしまうため、書き込み用の下線（blank-ul）に置き換えて表示する。
+  function formatBlankLine(str){
+    var m = /\(\s+\)/.exec(str);
+    if (!m) return esc(str);
+    var prefix = str.slice(0, m.index);
+    var suffix = str.slice(m.index + m[0].length);
+    return esc(prefix) + '(<span class="blank-ul">&nbsp;</span>)' + esc(suffix);
+  }
+
+  // blankStr: "...(                    )..." / fullStr: 完成文。
+  // 空欄に入る語（句）だけを (　) で囲み、太字下線にして返す。
+  function buildAnswerLine(blankStr, fullStr){
+    var m = /\(\s+\)/.exec(blankStr);
+    if (!m) return esc(fullStr); // 念のためのフォールバック
+    var prefix = blankStr.slice(0, m.index);
+    var suffix = blankStr.slice(m.index + m[0].length);
+    if (fullStr.indexOf(prefix) !== 0 || fullStr.slice(fullStr.length - suffix.length) !== suffix) {
+      return esc(fullStr); // 前後が一致しない場合もフォールバック
+    }
+    var answer = fullStr.slice(prefix.length, fullStr.length - suffix.length);
+    return esc(prefix) + '(<span class="k">' + esc(answer) + '</span>)' + esc(suffix);
+  }
+
+  function buildSentenceSection(levels, num){
+    var ejPool = poolAcross(DATA.engjp, levels);
+    var jePool = poolAcross(DATA.jpeng, levels);
+    var halfA = Math.ceil(num / 2), halfB = num - halfA;
+    var ejItems = pick(ejPool, halfA).map(function(it){ return {type:'ej', it: it}; });
+    var jeItems = pick(jePool, halfB).map(function(it){ return {type:'je', it: it}; });
+    var items = shuffle(ejItems.concat(jeItems));
+
+    var qHtml = '', aHtml = '';
+    items.forEach(function(entry, idx){
+      if (entry.type === 'ej') {
+        var it = entry.it;
+        qHtml += '<li>' +
+          '<div class="sline en">' + esc(it.en) + '</div>' +
+          '<div class="sline jp">' + formatBlankLine(it.jpBlank) + '</div>' +
+          '</li>';
+        aHtml += '<li>' +
+          '<div class="sline en">' + esc(it.en) + '</div>' +
+          '<div class="sline jp">' + buildAnswerLine(it.jpBlank, it.jpFull) + '</div>' +
+          '</li>';
+      } else {
+        var it2 = entry.it;
+        qHtml += '<li>' +
+          '<div class="sline jp">' + esc(it2.jp) + '</div>' +
+          '<div class="sline en">' + formatBlankLine(it2.enBlank) + '</div>' +
+          '</li>';
+        aHtml += '<li>' +
+          '<div class="sline jp">' + esc(it2.jp) + '</div>' +
+          '<div class="sline en">' + buildAnswerLine(it2.enBlank, it2.enFull) + '</div>' +
+          '</li>';
+      }
+    });
+    return {
+      count: items.length,
+      q: '<ol class="sentlist">' + qHtml + '</ol>',
+      a: '<ol class="sentlist">' + aHtml + '</ol>'
+    };
+  }
+
+  function todayStr(){
+    var d = new Date();
+    return d.getFullYear() + '年' + (d.getMonth()+1) + '月' + d.getDate() + '日';
+  }
+
+  function render(){
+    var levels = getSelectedLevels();
+    var label = rangeLabel(levels);
+    var wordSec = buildWordSection(levels, 20);
+    var total = wordSec.count;
+
+    rangeInfo.textContent = '出題範囲：' + label + '（単語' + wordSec.count + '問）';
+
+    var html = '';
+
+    // ===== 問題用紙 =====
+    html += '<div class="sheet" id="sheetQ">';
+    html += '<div class="scorebox"><div class="sb-label">得点</div><div class="sb-box">&nbsp;</div><div class="sb-max">／' + total + '点</div></div>';
+    html += '<h1>ランダム英単語テスト　' + esc(label) + '</h1>';
+    html += '<div class="sub">学習塾CONNECT／英検2級パス単／満点' + total + '点（各1点）</div>';
+    html += '<div class="namebox"><span>組　　番</span><span>名前　　　　　　　　　　　</span><span>' + todayStr() + '</span></div>';
+
+    html += '<div class="q">';
+    html += '<div class="qh"><span class="num">1</span><span class="inst">次の英単語・熟語の意味を書きなさい。<span class="pts">（各1点×' + wordSec.count + '）</span></span></div>';
+    html += wordSec.q;
+    html += '</div>';
+
+    html += '</div>'; // sheetQ
+
+    // ===== 解答ページ =====
+    html += '<div class="sheet pb ans">';
+    html += '<h1>解答・解説</h1>';
+    html += '<div class="sub">ランダム英単語テスト　' + esc(label) + '／英検2級パス単／配点：' + total + '点</div>';
+
+    html += '<div class="memo"><div class="t">■ 出題範囲メモ</div>';
+    html += '「英検2級パス単」の単語・熟語リスト（' + esc(label) + '）からランダム抽出して作成。単語→意味の一問一答形式。</div>';
+
+    html += '<h2>大問1　単語・熟語の意味</h2>';
+    html += wordSec.a;
+
+    html += '</div>'; // ans
+
+    output.innerHTML = html;
+  }
+
+  genBtn.addEventListener('click', render);
+  levelFrom.addEventListener('change', function(){
+    // from が to を追い越したら to も合わせる
+    if (DATA.levels.indexOf(levelFrom.value) > DATA.levels.indexOf(levelTo.value)) {
+      levelTo.value = levelFrom.value;
+    }
+    render();
+  });
+  levelTo.addEventListener('change', function(){
+    if (DATA.levels.indexOf(levelTo.value) < DATA.levels.indexOf(levelFrom.value)) {
+      levelFrom.value = levelTo.value;
+    }
+    render();
+  });
+
+  printBtn.addEventListener('click', function(){ window.print(); });
+
+  var editing = false;
+  editBtn.addEventListener('click', function(){
+    editing = !editing;
+    document.body.classList.toggle('editmode', editing);
+    editBtn.classList.toggle('active', editing);
+    editBtn.textContent = editing ? '編集モード：ON' : '編集モード';
+    var targets = output.querySelectorAll('.sheet, h1, .sub, .memo, td, li, .sline, .qh .inst');
+    targets.forEach(function(el){
+      el.setAttribute('contenteditable', editing ? 'true' : 'false');
+    });
+  });
+
+  // 初期表示
+  levelFrom.value = DATA.levels[0];
+  levelTo.value = DATA.levels[0];
+  render();
+})();
+</script>
+
+</body>
+</html>
