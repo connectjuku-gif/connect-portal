@@ -1,0 +1,385 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>中1英語_総復習ランダム並べかえ</title>
+<style>
+@page { size: A4; margin: 14mm 14mm; }
+* { box-sizing: border-box; }
+body { margin:0; font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif; color:#111; line-height:1.7; font-size:11.5pt; background:#e9e9e9; }
+.en { font-family: "Century Gothic", "Trebuchet MS", "Segoe UI", Verdana, sans-serif; }
+
+/* ===== 画面上のコントロールバー（印刷時は非表示） ===== */
+.controlbar { position: sticky; top: 0; z-index: 10; background: #1F3A5F; color: #fff; padding: 12px 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; font-size: 13px; }
+.controlbar .title { font-weight: bold; font-size: 15px; margin-right: 8px; }
+.controlbar select, .controlbar button { font-family: inherit; font-size: 13px; padding: 7px 14px; border-radius: 6px; border: none; cursor: pointer; }
+.controlbar select { background: #fff; color: #111; }
+.controlbar button.primary { background: #C9972B; color: #fff; font-weight: bold; }
+.controlbar button.secondary { background: #3A557A; color: #fff; }
+.controlbar button.secondary.active { background: #8A2E2E; }
+.controlbar button.mini { background: transparent; color:#D9E1EC; border:1px solid #5A7398; padding:3px 9px; font-size:12px; }
+.controlbar .spacer { flex: 1; }
+.controlbar .count { font-size: 12px; color: #D9E1EC; }
+.catbox { width:100%; display:flex; flex-wrap:wrap; gap:4px 14px; align-items:center; font-size:12.5px; background:#29466D; border-radius:6px; padding:7px 12px; }
+.catbox .grp { font-weight:bold; color:#F1D58E; margin-right:2px; }
+.catbox label { white-space:nowrap; cursor:pointer; }
+.catbox .sep { width:100%; height:0; }
+
+/* ===== 用紙 ===== */
+.sheet { background:#fff; max-width: 190mm; margin: 14px auto; padding: 12mm 13mm; box-shadow: 0 1px 6px rgba(0,0,0,.15); }
+h1 { text-align:center; font-size:15pt; margin:0 0 2px; letter-spacing:.05em; }
+.sub { text-align:center; font-size:10.5pt; color:#444; margin-bottom:6px; }
+.namebox { border:1px solid #333; padding:4px 10px; display:flex; gap:24px; justify-content:flex-end; margin: 4px 0 10px; font-size:10.5pt; }
+.rules { border:1px solid #333; padding:6px 12px; font-size:9.5pt; margin-bottom:10px; line-height:1.55; }
+.q { margin: 10px 0 6px; }
+.qh { display:flex; align-items:flex-start; gap:8px; }
+.num { display:inline-block; border:1.5px solid #222; min-width:24px; text-align:center; font-weight:bold; line-height:1.4; padding:1px 4px; flex-shrink:0; }
+.inst { flex:1; font-size:10.5pt; }
+.pts { float:right; font-size:10pt; color:#333; font-weight:normal; }
+.hint { color:#444; font-size:10pt; }
+ol.items { list-style:none; padding-left:0.2em; margin:6px 0; }
+ol.items li { margin:0 0 2px; break-inside:avoid; page-break-inside:avoid; }
+.jp { font-size:10.5pt; line-height:1.45; }
+.words { line-height:1.4; margin-left:1.6em; }
+.words u { text-underline-offset: 2px; }
+.line { border-bottom:1px solid #222; height:1.5em; margin:0 0 4px 1.6em; }
+
+/* ===== 解答 ===== */
+.ans h2 { font-size:12.5pt; border-left:5px solid #222; padding-left:8px; margin:14px 0 6px; }
+.memo { border:2px solid #222; padding:6px 12px; margin:6px 0 8px; font-size:9.5pt; line-height:1.5; }
+.memo > b:first-child { display:block; margin-bottom:2px; }
+.unit { break-inside:avoid; page-break-inside:avoid; border-bottom:1px dotted #999; padding:1px 0; line-height:1.38; }
+.unit .top { display:flex; gap:8px; align-items:baseline; }
+.unit .no { font-weight:bold; min-width:2.2em; }
+.unit .jp { flex:1; }
+.tag { font-size:8.5pt; color:#333; border:1px solid #777; padding:0 5px; white-space:nowrap; background:#f3f3f3; }
+.unit .a { margin-left:2.6em; font-size:11pt; }
+.k { color:#000; font-weight:bold; text-decoration:underline; text-underline-offset:2px; }
+.unit .ex { margin-left:2.6em; font-size:9pt; color:#333; line-height:1.4; }
+.ex .x { display:inline-block; border:1px solid #777; padding:0 4px; margin-right:4px; font-size:8.5pt; }
+.aim { border:1px solid #333; padding:6px 12px; margin-top:10px; font-size:9.5pt; line-height:1.5; break-inside:avoid; page-break-inside:avoid; }
+
+.empty { text-align:center; color:#666; padding:40px 0; }
+body.editmode [contenteditable="true"] { outline: 1px dashed #C9972B; }
+
+@media print {
+  body { background:#fff; }
+  .controlbar { display:none !important; }
+  .sheet { box-shadow:none; margin:0; padding:0; max-width:none; }
+  .pb { page-break-before: always; break-before: page; }
+  [contenteditable] { outline:none !important; }
+}
+@media (max-width: 720px) { .sheet { padding: 8mm 5mm; } }
+</style>
+</head>
+<body>
+
+<div class="controlbar" id="controlbar">
+  <span class="title">🔀 中1英語 総復習ランダム並べかえ｜学習塾CONNECT</span>
+  <select id="levelSel" aria-label="レベル">
+    <option value="basic">基礎（語を並べるだけ）</option>
+    <option value="standard">標準（不要な語1つ＋語形変化）</option>
+  </select>
+  <select id="countSel" aria-label="問題数">
+    <option value="10" selected>10問</option>
+    <option value="15">15問</option>
+    <option value="20">20問</option>
+  </select>
+  <button class="primary" id="makeBtn">この範囲で作成</button>
+  <button class="secondary" id="editBtn">編集モード</button>
+  <button class="secondary" id="saveBtn">保存</button>
+  <button class="secondary" id="printBtn">印刷</button>
+  <span class="spacer"></span>
+  <span class="count" id="countLabel"></span>
+  <div class="catbox" id="catbox"></div>
+</div>
+
+<div id="area"></div>
+
+<script>
+(function(){
+/* ===== 問題データ =====
+   [文法項目, 日本文, 正解（/ でかたまりに区切る）, 不要な語（標準で混ぜる）, 語形変化（"正しい形>見せる形"・標準のみ）, ポイント]
+*/
+var POOL = [
+// be動詞
+['be動詞','わたしの父は医者です。','My father / is / a doctor / .','are','','主語＋be動詞＋名詞。「〜です」は be動詞で表す。'],
+['be動詞','これはあなたのかばんですか。','Is / this / your bag / ?','Does','','be動詞の疑問文は、be動詞を主語の前に出す。'],
+['be動詞','彼らは今、教室にいません。','They / are / not / in the classroom / now / .','don\'t','','be動詞の否定文は be動詞のすぐあとに not。「場所→時」の順。'],
+['be動詞','ケンとわたしは同じクラスです。','Ken and I / are / in the same class / .','am','','主語が「ケンとわたし」で2人（複数）なので are。'],
+['be動詞','この本はとてもおもしろいです。','This book / is / very interesting / .','does','','very は形容詞の前。This book でひとかたまりの主語。'],
+['be動詞','あなたは野球ファンですか。','Are / you / a baseball fan / ?','Do','','「〜ですか」は be動詞の疑問文。Do は使わない。'],
+['be動詞','彼はときどき学校に遅れます。','He / is / sometimes / late / for school / .','does','','be動詞の文では、sometimes（ときどき）は be動詞のあとに置く。'],
+// 代名詞・this/that
+['代名詞・this/that','あれはわたしたちの学校です。','That / is / our school / .','us','','「わたしたちの」は our。us は「わたしたちを」。'],
+['代名詞・this/that','こちらはわたしの友だちのエマです。','This / is / my friend / Emma / .','he','','人を紹介するときも This is 〜。my friend と Emma を並べる。'],
+['代名詞・this/that','わたしは彼女をよく知っています。','I / know / her / well / .','she','','動詞のあとは「〜を」の形。she ではなく her。well は文の最後。'],
+['代名詞・this/that','わたしは彼らといっしょにテニスをします。','I / play / tennis / with them / .','they','','with のあとも「〜を」の形（them）。'],
+['代名詞・this/that','これは彼の自転車です。','This / is / his bike / .','he','','「彼の」は his。'],
+['代名詞・this/that','このかばんはわたしのものです。','This bag / is / mine / .','my','','「わたしのもの」は mine 1語。my のあとには名詞が必要。'],
+['代名詞・this/that','あれはあなたのお兄さんの自転車ですか。','Is / that / your brother\'s bike / ?','Does','','「〜の」は \'s。be動詞の疑問文なので Is を文頭に。'],
+// 一般動詞
+['一般動詞','わたしは毎日、英語を勉強します。','I / study / English / every day / .','am','','主語＋動詞＋「〜を」＋時。時を表す語は文の最後。be動詞と一般動詞はいっしょに使わない。'],
+['一般動詞','あなたはピアノをひきますか。','Do / you / play / the piano / ?','Are','','一般動詞の疑問文は Do を文頭に置く。'],
+['一般動詞','わたしたちは日曜日には学校に行きません。','We / don\'t / go / to school / on Sundays / .','aren\'t','','一般動詞の否定文は don\'t＋動詞。「場所→時」の順。'],
+['一般動詞','わたしは放課後、友だちとサッカーをします。','I / play / soccer / with my friends / after school / .','am','','動詞＋「〜を」のあとに「だれと」→「いつ」の順で並べる。'],
+['一般動詞','わたしはねこを2匹飼っています。','I / have / two cats / .','am','','「飼っている」「持っている」は have。'],
+['一般動詞','わたしはふつう、7時に家を出ます。','I / usually / leave / home / at seven / .','am','','usually（ふつう）は一般動詞の前に置く。'],
+['一般動詞','わたしたちは英語の授業で歌を歌います。','We / sing / songs / in English class / .','are','','主語＋動詞＋「〜を」＋場所。'],
+// 三単現
+['三単現','彼は毎朝、犬を散歩させます。','He / walks / his dog / every morning / .','does','walks>walk','主語が He（3人称単数）なので walk に s をつける。'],
+['三単現','わたしの姉はテニスが好きではありません。','My sister / doesn\'t / like / tennis / .','isn\'t','','3人称単数の否定文は doesn\'t＋動詞の原形（likes にしない）。'],
+['三単現','ユキは数学を勉強しますか。','Does / Yuki / study / math / ?','Is','','主語が3人称単数の疑問文は Does を文頭に。動詞は原形。'],
+['三単現','母は毎日、夕食を作ります。','My mother / cooks / dinner / every day / .','is','cooks>cook','主語が My mother なので cook に s。'],
+['三単現','ケンは自転車で学校に来ます。','Ken / comes / to school / by bike / .','is','comes>come','主語が Ken なので comes。「〜で（手段）」は by。'],
+['三単現','彼女は兄弟が2人います。','She / has / two brothers / .','is','has>have','主語が3人称単数のとき have は has になる。'],
+['三単現','彼女はいつも6時に起きます。','She / always / gets up / at six / .','is','gets up>get up','always は一般動詞の前。主語が She なので gets。'],
+['三単現','あなたのお父さんは毎日、新聞を読みますか。','Does / your father / read / the newspaper / every day / ?','Is','','your father は3人称単数なので Does。read は原形のまま。'],
+['三単現','彼は何を持っていますか。','What / does / he / have / ?','has','','疑問詞＋does＋主語＋動詞の原形。has にしない。'],
+// can
+['can','わたしの弟は速く泳ぐことができます。','My brother / can / swim / fast / .','is','','can＋動詞の原形。主語が3人称単数でも swims にしない。'],
+['can','あなたは日本語を話すことができますか。','Can / you / speak / Japanese / ?','Do','','can の疑問文は Can を文頭に。'],
+['can','わたしはギターをひくことができません。','I / can\'t / play / the guitar / .','don\'t','','can の否定は can\'t（cannot）＋動詞の原形。'],
+['can','窓を開けてもいいですか。','Can / I / open / the window / ?','Do','','「〜してもいいですか」は Can I 〜?'],
+['can','わたしを手伝ってくれますか。','Can / you / help / me / ?','I','','「〜してくれますか」は Can you 〜?「わたしを」は me。'],
+['can','彼女は何を作ることができますか。','What / can / she / make / ?','makes','','疑問詞＋can＋主語＋動詞の原形。'],
+['can','あなたのお母さんは車を運転できますか。','Can / your mother / drive / a car / ?','Does','','Can＋主語＋動詞の原形 〜?'],
+// 命令文・Let's
+['命令文・Let\'s','ここで写真をとってはいけません。','Don\'t / take / pictures / here / .','Not','','「〜してはいけません」は Don\'t＋動詞の原形で文を始める。'],
+['命令文・Let\'s','図書館では静かにしなさい。','Be / quiet / in the library / .','Are','','quiet（静かな）は形容詞なので、命令文は Be で始める。'],
+['命令文・Let\'s','いっしょに昼食を食べましょう。','Let\'s / eat / lunch / together / .','We','','「〜しましょう」は Let\'s＋動詞の原形。'],
+['命令文・Let\'s','7時までに家に帰ってきなさい。','Come / home / by seven / .','to','','home は「家へ」の意味なので to は不要。「〜までに」は by。'],
+['命令文・Let\'s','放課後、テニスをしましょう。','Let\'s / play / tennis / after school / .','playing','','Let\'s のあとは動詞の原形。'],
+['命令文・Let\'s','窓を閉めてください。','Please / close / the window / .','closes','','命令文の前に Please をつけるとていねいになる。動詞は原形。'],
+// 疑問詞
+['疑問詞','あなたは何色が好きですか。','What color / do / you / like / ?','are','','「何色」は What color をひとかたまりで文頭に。そのあとは疑問文の語順。'],
+['疑問詞','あなたはどこに住んでいますか。','Where / do / you / live / ?','are','','Where＋do＋主語＋動詞 〜?'],
+['疑問詞','あなたの誕生日はいつですか。','When / is / your birthday / ?','does','','When＋be動詞＋主語 〜?'],
+['疑問詞','これはだれのノートですか。','Whose notebook / is / this / ?','Who','','「だれの〜」は Whose＋名詞をひとかたまりで文頭に。'],
+['疑問詞','あの女の人はだれですか。','Who / is / that woman / ?','Whose','','「だれ」は Who。'],
+['疑問詞','あなたは何時に寝ますか。','What time / do / you / go to bed / ?','are','','「何時に」は What time を文頭に。'],
+['疑問詞','あなたはペンを何本持っていますか。','How many pens / do / you / have / ?','much','','「いくつの〜」は How many＋複数形の名詞をまとめて文頭に。'],
+['疑問詞','このTシャツはいくらですか。','How much / is / this T-shirt / ?','many','','値段をたずねるときは How much。'],
+['疑問詞','あなたはどうやって学校に来ますか。','How / do / you / come / to school / ?','What','','「どうやって」は How。'],
+['疑問詞','どちらがあなたのかばんですか。','Which / is / your bag / ?','What','','「どちら」は Which。'],
+['疑問詞','彼は何語を話しますか。','What language / does / he / speak / ?','do','','主語が he なので does。What language でひとかたまり。'],
+['疑問詞','今日は何曜日ですか。','What day / is / it / today / ?','date','','曜日は What day。日付は What\'s the date。'],
+['疑問詞','今何時ですか。','What time / is / it / now / ?','day','','時刻・曜日・天気は it を主語にする。'],
+['疑問詞','あなたの好きな食べ物は何ですか。','What / is / your favorite food / ?','do','','What＋be動詞＋主語 〜?'],
+['疑問詞','天気はどうですか。','How / is / the weather / ?','What','','「どう」とようすをたずねるのは How。'],
+['疑問詞','あなたはどんなスポーツが好きですか。','What sport / do / you / like / ?','are','','「どんな〜」は What＋名詞を文頭に。'],
+['疑問詞','あなたの妹は何歳ですか。','How old / is / your sister / ?','many','','年齢は How old。'],
+['疑問詞','あなたはだれとテニスをしますか。','Who / do / you / play / tennis / with / ?','are','','「だれと」は Who 〜 with? with が文の最後に残る。'],
+// 現在進行形
+['現在進行形','わたしは今、テレビを見ています。','I / am / watching / TV / now / .','do','watching>watch','be動詞＋〜ing。「今〜している」は進行形。'],
+['現在進行形','彼らは公園で野球をしています。','They / are / playing / baseball / in the park / .','is','playing>play','They なので are＋playing。'],
+['現在進行形','あなたは何をしているのですか。','What / are / you / doing / ?','do','','疑問詞＋be動詞＋主語＋〜ing?'],
+['現在進行形','エマは今、音楽を聞いていません。','Emma / isn\'t / listening / to music / now / .','doesn\'t','','進行形の否定は be動詞＋not＋〜ing。listen to でセット。'],
+['現在進行形','あなたのお兄さんは部屋で勉強していますか。','Is / your brother / studying / in his room / ?','Does','','進行形の疑問文は be動詞を文頭に。'],
+['現在進行形','だれが歌っているのですか。','Who / is / singing / ?','does','','疑問詞が主語のときは、Who＋is＋〜ing? の順。'],
+['現在進行形','今、雨が降っています。','It / is / raining / now / .','does','raining>rain','天気は It が主語。It is raining.'],
+// 前置詞・語の位置
+['前置詞・語の位置','あなたのねこはテーブルの下にいます。','Your cat / is / under the table / .','does','','「〜の下に」は under。主語＋be動詞＋場所。'],
+['前置詞・語の位置','わたしは7時に朝食を食べます。','I / eat / breakfast / at seven / .','in','','時刻の前は at。'],
+['前置詞・語の位置','わたしは夏に海で泳ぎます。','I / swim / in the sea / in summer / .','at','','季節・月の前は in。「場所→時」の順。'],
+['前置詞・語の位置','彼は日曜日に図書館に行きます。','He / goes / to the library / on Sunday / .','in','goes>go','曜日の前は on。主語が He なので goes。'],
+['前置詞・語の位置','わたしの家は駅の近くにあります。','My house / is / near the station / .','does','','「〜の近くに」は near。'],
+// 一般動詞の過去
+['一般動詞の過去','わたしは昨日、おじを訪ねました。','I / visited / my uncle / yesterday / .','was','visited>visit','過去の文。visit に ed をつける。'],
+['一般動詞の過去','わたしたちは先週、京都に行きました。','We / went / to Kyoto / last week / .','were','went>go','go の過去形は went（不規則）。'],
+['一般動詞の過去','彼は昨夜、宿題をしませんでした。','He / didn\'t / do / his homework / last night / .','doesn\'t','','過去の否定は didn\'t＋動詞の原形。'],
+['一般動詞の過去','あなたは今朝、朝食を食べましたか。','Did / you / eat / breakfast / this morning / ?','ate','','Did＋主語＋動詞の原形 〜? ate（過去形）は使わない。'],
+['一般動詞の過去','あなたは昨日、どこへ行きましたか。','Where / did / you / go / yesterday / ?','went','','疑問詞＋did＋主語＋動詞の原形 〜?'],
+['一般動詞の過去','アヤはその本を読みましたか。','Did / Aya / read / the book / ?','Was','','一般動詞の過去の疑問文は Did を文頭に。'],
+['一般動詞の過去','わたしはこの写真を京都でとりました。','I / took / this picture / in Kyoto / .','was','took>take','take の過去形は took。'],
+['一般動詞の過去','あなたは昨夜、何時に寝ましたか。','What time / did / you / go to bed / last night / ?','went','','What time＋did＋主語＋動詞の原形 〜?'],
+['一般動詞の過去','彼女はパーティーで何を食べましたか。','What / did / she / eat / at the party / ?','ate','','did を使うので動詞は原形 eat。'],
+['一般動詞の過去','わたしはその映画を見ませんでした。','I / didn\'t / see / the movie / .','saw','','didn\'t のあとは原形 see。'],
+['一般動詞の過去','あなたはだれとそこへ行きましたか。','Who / did / you / go / there / with / ?','went','','「だれと」は Who 〜 with? with が最後に残る。'],
+['一般動詞の過去','彼は昨日、何時に家に帰りましたか。','What time / did / he / come home / yesterday / ?','came','','did のあとは原形 come。home の前に to は不要。'],
+['一般動詞の過去','わたしたちは公園でたくさん写真をとりました。','We / took / a lot of pictures / in the park / .','were','took>take','a lot of pictures でひとかたまり。'],
+// be動詞の過去
+['be動詞の過去','わたしは昨日、とても忙しかったです。','I / was / very busy / yesterday / .','were','','I の過去の be動詞は was。'],
+['be動詞の過去','彼らはそのとき、体育館にいました。','They / were / in the gym / then / .','was','','They の過去の be動詞は were。'],
+['be動詞の過去','その試合はおもしろくありませんでした。','The game / wasn\'t / interesting / .','didn\'t','','interesting は形容詞なので be動詞の否定 wasn\'t。'],
+['be動詞の過去','あなたは昨日の夜、家にいましたか。','Were / you / at home / last night / ?','Did','','be動詞の過去の疑問文は Were（Was）を文頭に。'],
+['be動詞の過去','昨日の天気はどうでしたか。','How / was / the weather / yesterday / ?','did','','How＋was＋主語 〜?'],
+['be動詞の過去','先週の日曜日は寒かったです。','It / was / cold / last Sunday / .','were','','寒暖・天気は It が主語。'],
+// 過去進行形
+['過去進行形','わたしはそのとき、宿題をしていました。','I / was / doing / my homework / then / .','did','doing>do','過去進行形は was / were＋〜ing。'],
+['過去進行形','あなたはそのとき、何をしていましたか。','What / were / you / doing / then / ?','did','','疑問詞＋were＋主語＋〜ing?'],
+['過去進行形','彼らは7時に夕食を食べていました。','They / were / eating / dinner / at seven / .','was','eating>eat','They なので were＋eating。'],
+['過去進行形','ケンはそのとき、眠っていませんでした。','Ken / wasn\'t / sleeping / then / .','didn\'t','','過去進行形の否定は wasn\'t / weren\'t＋〜ing。'],
+['過去進行形','あなたはそのとき、音楽を聞いていましたか。','Were / you / listening / to music / then / ?','Did','','過去進行形の疑問文は Were（Was）を文頭に。'],
+['過去進行形','彼女は駅で友だちを待っていました。','She / was / waiting / for her friend / at the station / .','were','waiting>wait','wait for 〜「〜を待つ」。She なので was。']
+];
+
+var GROUPS = [
+  ['現在', ['be動詞','代名詞・this/that','一般動詞','三単現','can','命令文・Let\'s','疑問詞','現在進行形','前置詞・語の位置']],
+  ['過去', ['一般動詞の過去','be動詞の過去','過去進行形']]
+];
+// 文頭でも小文字にしない語
+var KEEP = ['I','Ken','Emma','Yuki','Aya','Kyoto','Japanese','English'];
+
+var area = document.getElementById('area');
+var catbox = document.getElementById('catbox');
+var levelSel = document.getElementById('levelSel');
+var countSel = document.getElementById('countSel');
+var countLabel = document.getElementById('countLabel');
+
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function shuffle(a){ a = a.slice(); for (var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+
+// 項目チェックボックス
+GROUPS.forEach(function(g, gi){
+  var s = '<span class="grp">' + g[0] + '</span>';
+  g[1].forEach(function(c){
+    var n = POOL.filter(function(p){ return p[0]===c; }).length;
+    s += '<label><input type="checkbox" class="cat" value="' + esc(c) + '" checked> ' + esc(c) + '<span style="opacity:.6">(' + n + ')</span></label>';
+  });
+  s += '<button class="mini" data-g="' + gi + '" type="button">' + g[0] + 'だけ</button>';
+  catbox.insertAdjacentHTML('beforeend', s + (gi===0 ? '<span class="sep"></span>' : ''));
+});
+catbox.insertAdjacentHTML('beforeend', '<button class="mini" data-g="all" type="button">全部</button>');
+catbox.addEventListener('click', function(e){
+  var b = e.target.closest('button.mini'); if (!b) return;
+  var g = b.getAttribute('data-g');
+  var on = g==='all' ? null : GROUPS[+g][1];
+  document.querySelectorAll('.cat').forEach(function(cb){ cb.checked = on===null || on.indexOf(cb.value)>=0; });
+  updateLabel();
+});
+catbox.addEventListener('change', updateLabel);
+function selectedCats(){ return Array.prototype.map.call(document.querySelectorAll('.cat:checked'), function(cb){ return cb.value; }); }
+function updateLabel(){
+  var cats = selectedCats();
+  var n = POOL.filter(function(p){ return cats.indexOf(p[0])>=0; }).length;
+  countLabel.textContent = '選択中：' + cats.length + '項目・' + n + '問から出題';
+}
+
+// 項目がかたよらないように、項目ごとに順番に1問ずつ取る
+function pick(cats, n){
+  var buckets = cats.map(function(c){ return shuffle(POOL.filter(function(p){ return p[0]===c; })); });
+  buckets = shuffle(buckets);
+  var out = [];
+  while (out.length < n) {
+    var added = false;
+    for (var i=0;i<buckets.length && out.length<n;i++){
+      if (buckets[i].length){ out.push(buckets[i].shift()); added = true; }
+    }
+    if (!added) break;
+  }
+  return shuffle(out);
+}
+
+function lowerFirst(chunk){
+  var w = chunk.split(' ')[0];
+  if (KEEP.indexOf(w)>=0) return chunk;
+  return chunk.charAt(0).toLowerCase() + chunk.slice(1);
+}
+function sentence(chunks){
+  return chunks.join(' ').replace(/ ([.?])$/,'$1');
+}
+
+function buildItem(p, std){
+  var chunks = p[2].split(' / ');
+  var punct = chunks[chunks.length-1];
+  var body = chunks.slice(0, -1);
+  var fc = p[4] ? p[4].split('>') : null;
+  var shown = body.map(function(c, i){
+    var t = i===0 ? lowerFirst(c) : c;
+    var isFc = false;
+    if (std && fc && c===fc[0]) { t = fc[1]; isFc = true; }
+    return { t: t, fc: isFc };
+  });
+  if (std && p[3]) shown.push({ t: KEEP.indexOf(p[3])>=0 ? p[3] : p[3].charAt(0).toLowerCase() + p[3].slice(1), fc:false, extra:true });
+  // 正しい順のままにならないまで混ぜる
+  var mixed, tries = 0;
+  do { mixed = shuffle(shown); tries++; }
+  while (tries < 20 && mixed.map(function(x){return x.t;}).join('|') === shown.map(function(x){return x.t;}).join('|'));
+  var words = mixed.map(function(x){ return x.fc ? '<u>' + esc(x.t) + '</u>' : esc(x.t); }).join(' / ');
+  return { words: '( ' + words + ' / ' + punct + ' )', answer: sentence(chunks), fc: std ? fc : null, extra: std ? p[3] : '' };
+}
+
+function build(){
+  var cats = selectedCats();
+  if (!cats.length){ area.innerHTML = '<div class="sheet"><p class="empty">文法項目を1つ以上選んでください。</p></div>'; return; }
+  var std = levelSel.value === 'standard';
+  var n = +countSel.value;
+  var items = pick(cats, n);
+  n = items.length;
+  var built = items.map(function(p){ return buildItem(p, std); });
+  var lvName = std ? '標準' : '基礎';
+  var today = new Date();
+  var dstr = today.getFullYear() + '年' + (today.getMonth()+1) + '月' + today.getDate() + '日';
+  var allCats = GROUPS[0][1].concat(GROUPS[1][1]);
+  var rangeText = cats.length === allCats.length ? '中1全範囲（過去形・過去進行形を含む）' : cats.join('・');
+
+  var inst = std
+    ? '次の日本文に合う英文になるように、（　）内の語（句）を並べかえなさい。<span class="hint">ただし、<b>不要な語が1つ</b>含まれています。また、<u>下線</u>の語は必要があれば正しい形に直しなさい。</span>'
+    : '次の日本文に合う英文になるように、（　）内の語（句）を並べかえて、全文を書きなさい。';
+
+  var h = '<div class="sheet"><h1>中学1年生 並べかえ特訓（中1総復習）</h1>';
+  h += '<div class="sub">［' + lvName + '］' + n + '問・各1点／出題範囲：' + esc(rangeText) + '　' + dstr + '</div>';
+  h += '<div class="namebox"><span>1年　組　番</span><span>名前：＿＿＿＿＿＿＿＿＿＿</span><span>／' + n + '点</span></div>';
+  h += '<div class="rules">・文の最初にくる語も小文字で示してあります。答えるときは文の最初を大文字に。<br>・まず「だれが（主語）」「どうする／〜です（動詞）」を見つけてから、残りを並べましょう。' + (std ? '<br>・使わない語は、問題の中で×をつけて消してから並べましょう。' : '') + '</div>';
+  h += '<div class="q"><div class="qh"><span class="num">1</span><span class="inst">' + inst + '<span class="pts">［1点×' + n + '］</span></span></div><ol class="items">';
+  built.forEach(function(b, i){
+    h += '<li><div class="jp">(' + (i+1) + ') ' + esc(items[i][1]) + '</div><div class="words en">' + b.words + '</div><div class="line"></div></li>';
+  });
+  h += '</ol></div></div>';
+
+  // 解答・解説
+  var counts = {};
+  items.forEach(function(p){ counts[p[0]] = (counts[p[0]]||0) + 1; });
+  var countStr = allCats.filter(function(c){ return counts[c]; }).map(function(c){ return c + ' ' + counts[c]; }).join('／');
+  h += '<div class="sheet ans pb"><h1>解答・解説</h1><div class="sub">中学1年生 並べかえ特訓（中1総復習）［' + lvName + '］' + n + '問・各1点</div>';
+  h += '<div class="memo"><b>■ 出題範囲メモ</b>・範囲：' + esc(rangeText) + '（項目がかたよらないようランダム出題）<br>・今回の内訳：' + esc(countStr) + '<br>・採点：語順・文頭の大文字・ピリオド／？まで正しくて1点。短縮形と開いた形（don\'t / do not）はどちらも正解。右の枠は復習する文法項目。<br>・<b>ねらい</b>：英語は「だれが → どうする → 何を → どこで → いつ」の順が基本。疑問文は be動詞・Do / Does / Did・can を文の最初に出し、疑問詞はさらにその前に置きます。間違えた問題は右の枠の項目を復習し、もう一度全文を書きましょう。</div>';
+  built.forEach(function(b, i){
+    var p = items[i];
+    var notes = '';
+    if (b.extra) notes += '<span class="x">不要な語</span>' + esc(b.extra) + '　';
+    if (b.fc) notes += '<span class="x">形を変える</span>' + esc(b.fc[1]) + ' → ' + esc(b.fc[0]) + '　';
+    h += '<div class="unit"><div class="top"><span class="no">(' + (i+1) + ')</span><span class="jp">' + esc(p[1]) + '</span><span class="tag">' + esc(p[0]) + '</span></div>';
+    h += '<div class="a en"><span class="k">' + esc(b.answer) + '</span></div>';
+    h += '<div class="ex">' + notes + esc(p[5]) + '</div></div>';
+  });
+  h += '</div>';
+
+  area.innerHTML = h;
+  if (document.body.classList.contains('editmode')) setEditable(true);
+}
+
+// 編集モード
+var editBtn = document.getElementById('editBtn');
+function setEditable(on){
+  document.querySelectorAll('#area .sheet').forEach(function(s){ s.setAttribute('contenteditable', on ? 'true' : 'false'); });
+}
+editBtn.addEventListener('click', function(){
+  var on = !document.body.classList.contains('editmode');
+  document.body.classList.toggle('editmode', on);
+  editBtn.classList.toggle('active', on);
+  editBtn.textContent = on ? '編集モード終了' : '編集モード';
+  setEditable(on);
+});
+
+// 保存（今表示しているプリントをそのままHTMLで保存）
+document.getElementById('saveBtn').addEventListener('click', function(){
+  var css = document.querySelector('style').outerHTML;
+  var body = area.innerHTML.replace(/ contenteditable="(true|false)"/g, '');
+  var html = '<!DOCTYPE html>\n<html lang="ja">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>中1英語_並べかえ特訓</title>\n' + css + '\n</head>\n<body>\n' + body + '\n</body>\n</html>';
+  var blob = new Blob(['﻿' + html], {type:'text/html;charset=utf-8'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '中1英語_並べかえ特訓_' + (levelSel.value==='standard'?'標準':'基礎') + '.html';
+  document.body.appendChild(a); a.click(); a.remove();
+});
+document.getElementById('printBtn').addEventListener('click', function(){ window.print(); });
+document.getElementById('makeBtn').addEventListener('click', build);
+
+updateLabel();
+build();
+})();
+</script>
+</body>
+</html>
