@@ -69,7 +69,11 @@ body.editmode [contenteditable="true"] { outline: 1px dashed #C9972B; }
   .sheet { box-shadow:none; margin:0; padding:0; max-width:none; }
   .pb { page-break-before: always; break-before: page; }
   [contenteditable] { outline:none !important; }
+  body.print-q .sheet.ans { display:none !important; }
+  body.print-a .sheet.qs { display:none !important; }
+  body.print-a .sheet.ans.pb { page-break-before:auto; break-before:auto; }
 }
+.backhead { display:flex; justify-content:space-between; border-bottom:1px solid #333; padding-bottom:3px; margin-bottom:8px; font-size:10.5pt; }
 @media (max-width: 720px) { .sheet { padding: 8mm 5mm; } }
 </style>
 </head>
@@ -82,9 +86,14 @@ body.editmode [contenteditable="true"] { outline: 1px dashed #C9972B; }
     <option value="standard">標準（不要な語1つ＋語形変化）</option>
   </select>
   <select id="countSel" aria-label="問題数">
-    <option value="10" selected>10問</option>
-    <option value="15">15問</option>
-    <option value="20">20問</option>
+    <option value="10" selected>10問（片面）</option>
+    <option value="16">16問（両面・表8問／裏8問）</option>
+    <option value="20">20問（両面・表10問／裏10問）</option>
+  </select>
+  <select id="printSel" aria-label="印刷する内容">
+    <option value="all">印刷：問題＋解答</option>
+    <option value="q">印刷：問題だけ</option>
+    <option value="a">印刷：解答だけ</option>
   </select>
   <button class="primary" id="makeBtn">この範囲で作成</button>
   <button class="secondary" id="editBtn">編集モード</button>
@@ -313,18 +322,25 @@ function build(){
   var today = new Date();
   var dstr = today.getFullYear() + '年' + (today.getMonth()+1) + '月' + today.getDate() + '日';
   var allCats = GROUPS[0][1].concat(GROUPS[1][1]);
-  var rangeText = cats.length === allCats.length ? '中1全範囲（過去形・過去進行形を含む）' : cats.join('・');
+  var rangeText = cats.length === allCats.length ? '中1全範囲（過去形・過去進行形まで）' : cats.join('・');
 
   var inst = std
     ? '次の日本文に合う英文になるように、（　）内の語（句）を並べかえなさい。<span class="hint">ただし、<b>不要な語が1つ</b>含まれています。また、<u>下線</u>の語は必要があれば正しい形に直しなさい。</span>'
     : '次の日本文に合う英文になるように、（　）内の語（句）を並べかえて、全文を書きなさい。';
 
-  var h = '<div class="sheet"><h1>中学1年生 並べかえ特訓（中1総復習）</h1>';
-  h += '<div class="sub">［' + lvName + '］' + n + '問・各1点／出題範囲：' + esc(rangeText) + '　' + dstr + '</div>';
-  h += '<div class="namebox"><span>1年　組　番</span><span>名前：＿＿＿＿＿＿＿＿＿＿</span><span>／' + n + '点</span></div>';
-  h += '<div class="rules">・文の最初にくる語も小文字で示してあります。答えるときは文の最初を大文字に。<br>・まず「だれが（主語）」「どうする／〜です（動詞）」を見つけてから、残りを並べましょう。' + (std ? '<br>・使わない語は、問題の中で×をつけて消してから並べましょう。' : '') + '</div>';
+  var h = '<div class="sheet qs"><h1>中学1年生 並べかえ特訓（中1総復習）</h1>';
+  h += '<div class="sub">［' + lvName + '］' + n + '問' + (n > 10 ? '（表' + Math.ceil(n/2) + '問・裏' + Math.floor(n/2) + '問）' : '') + '・各1点／出題範囲：' + esc(rangeText) + '</div>';
+  h += '<div class="namebox"><span style="margin-right:auto">' + dstr + '</span><span>1年　組　番</span><span>名前：＿＿＿＿＿＿＿＿＿＿</span><span>／' + n + '点</span></div>';
+  h += '<div class="rules">・文の最初にくる語も小文字で示してあります。答えるときは文の最初を大文字に。' + (std ? '使わない語は×で消してから並べましょう。' : '') + '<br>・まず「だれが（主語）」「どうする／〜です（動詞）」を見つけてから、残りを並べましょう。</div>';
   h += '<div class="q"><div class="qh"><span class="num">1</span><span class="inst">' + inst + '<span class="pts">［1点×' + n + '］</span></span></div><ol class="items">';
+  // 両面のときは表と裏に半分ずつ
+  var front = n > 10 ? Math.ceil(n / 2) : n;
   built.forEach(function(b, i){
+    if (i === front) {
+      h += '</ol></div></div>';
+      h += '<div class="sheet qs pb"><div class="backhead"><span>中学1年生 並べかえ特訓（中1総復習）［' + lvName + '］　裏面</span><span>名前：＿＿＿＿＿＿＿＿</span></div>';
+      h += '<div class="q"><ol class="items">';
+    }
     h += '<li><div class="jp">(' + (i+1) + ') ' + esc(items[i][1]) + '</div><div class="words en">' + b.words + '</div><div class="line"></div></li>';
   });
   h += '</ol></div></div>';
@@ -374,7 +390,13 @@ document.getElementById('saveBtn').addEventListener('click', function(){
   a.download = '中1英語_並べかえ特訓_' + (levelSel.value==='standard'?'標準':'基礎') + '.html';
   document.body.appendChild(a); a.click(); a.remove();
 });
-document.getElementById('printBtn').addEventListener('click', function(){ window.print(); });
+var printSel = document.getElementById('printSel');
+function applyPrint(){
+  document.body.classList.remove('print-q','print-a');
+  if (printSel.value !== 'all') document.body.classList.add('print-' + printSel.value);
+}
+printSel.addEventListener('change', applyPrint);
+document.getElementById('printBtn').addEventListener('click', function(){ applyPrint(); window.print(); });
 document.getElementById('makeBtn').addEventListener('click', build);
 
 updateLabel();
