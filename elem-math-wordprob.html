@@ -1,0 +1,337 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小学算数_文章題ランダム（どの計算？）</title>
+<style>
+@page { size: A4; margin: 13mm 13mm; }
+* { box-sizing: border-box; }
+body { margin:0; font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif; color:#111; line-height:1.7; font-size:12pt; background:#e9e9e9; }
+.controlbar { position: sticky; top: 0; z-index: 10; background: #1F3A5F; color: #fff; padding: 12px 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; font-size: 13px; }
+.controlbar .title { font-weight: bold; font-size: 15px; margin-right: 8px; }
+.controlbar select, .controlbar button { font-family: inherit; font-size: 13px; padding: 7px 14px; border-radius: 6px; border: none; cursor: pointer; }
+.controlbar select { background: #fff; color: #111; }
+.controlbar button.primary { background: #C9972B; color: #fff; font-weight: bold; }
+.controlbar button.secondary { background: #3A557A; color: #fff; }
+.controlbar button.secondary.active { background: #8A2E2E; }
+.controlbar button.mini { background: transparent; color:#D9E1EC; border:1px solid #5A7398; padding:3px 9px; font-size:12px; }
+.controlbar .spacer { flex: 1; }
+.controlbar .count { font-size: 12px; color: #D9E1EC; }
+.controlbar label.ck { display:inline-flex; align-items:center; gap:4px; cursor:pointer; }
+.catbox { width:100%; display:flex; flex-wrap:wrap; gap:4px 14px; align-items:center; font-size:12.5px; background:#29466D; border-radius:6px; padding:7px 12px; }
+.catbox label { white-space:nowrap; cursor:pointer; }
+.sheet { background:#fff; max-width: 190mm; margin: 14px auto; padding: 12mm 13mm; box-shadow: 0 1px 6px rgba(0,0,0,.15); }
+h1 { text-align:center; font-size:16pt; margin:0 0 2px; letter-spacing:.05em; }
+.sub { text-align:center; font-size:10.5pt; color:#444; margin-bottom:6px; }
+.namebox { border:1px solid #333; padding:4px 10px; display:flex; gap:24px; justify-content:flex-end; margin: 4px 0 8px; font-size:11pt; }
+.rules { border:1px solid #333; padding:6px 12px; font-size:10pt; margin-bottom:8px; line-height:1.6; }
+.rules b { font-weight:bold; }
+.prob { border-bottom:1px dotted #999; padding:4px 0 5px; break-inside:avoid; page-break-inside:avoid; }
+.prob .top { display:flex; gap:8px; }
+.prob .no { display:inline-block; border:1.5px solid #222; min-width:24px; height:22px; text-align:center; font-weight:bold; line-height:20px; font-size:11pt; flex-shrink:0; }
+.prob .t { flex:1; }
+.prob .ops { margin:2px 0 0 32px; font-size:11pt; display:flex; gap:6px; align-items:center; }
+.prob .ops span.o { display:inline-block; width:24px; height:22px; line-height:22px; text-align:center; font-size:15pt; font-weight:bold; }
+.prob { display:grid; grid-template-columns:1fr 46mm; gap:0 4mm; font-size:11pt; line-height:1.6; }
+.prob .calc { border:1px dashed #aaa; border-radius:3px; font-size:8.5pt; color:#999; padding:1px 4px; min-height:20mm; }
+.prob .pl { min-width:0; }
+.prob .wk { display:flex; gap:10px; margin:2px 0 0 32px; align-items:flex-end; font-size:11pt; }
+.prob .wk .ln { display:inline-block; border-bottom:1px solid #222; height:1.6em; }
+.prob .wk .ln.sk { flex:1; } .prob .wk .ln.an { width:50mm; }
+.fr { display:inline-flex; flex-direction:column; vertical-align:middle; text-align:center; line-height:1.15; font-size:.92em; margin:0 2px; }
+.fr > span:first-child { border-bottom:1px solid #111; padding:0 3px; }
+.ans h2 { font-size:12pt; border-left:5px solid #222; padding-left:8px; margin:12px 0 6px; }
+.memo { border:2px solid #222; padding:6px 12px; margin:6px 0 10px; font-size:10pt; line-height:1.6; }
+.unit { break-inside:avoid; page-break-inside:avoid; border-bottom:1px dotted #999; padding:3px 0 4px; font-size:10.5pt; line-height:1.55; }
+.unit .q { color:#333; font-size:9.5pt; }
+.k { color:#000; font-weight:bold; text-decoration:underline; text-underline-offset:2px; }
+.tag { font-size:8.5pt; color:#333; border:1px solid #777; padding:0 5px; white-space:nowrap; background:#f3f3f3; margin-left:6px; }
+.hint { font-size:9.5pt; color:#333; }
+.opk { display:inline-block; border:1.5px solid #111; border-radius:50%; width:22px; height:22px; line-height:19px; text-align:center; font-weight:bold; margin-right:2px; }
+.backhead { display:flex; justify-content:space-between; border-bottom:1px solid #333; padding-bottom:3px; margin-bottom:8px; font-size:10.5pt; }
+.keys { display:grid; grid-template-columns:1fr 1fr; gap:2px 14px; font-size:9.5pt; margin-top:4px; }
+body.editmode [contenteditable="true"] { outline: 1px dashed #C9972B; }
+@media print {
+  body { background:#fff; }
+  .controlbar { display:none !important; }
+  .sheet { box-shadow:none; margin:0; padding:0; max-width:none; }
+  .pb { page-break-before: always; break-before: page; }
+  [contenteditable] { outline:none !important; }
+  body.print-q .sheet.ans { display:none !important; }
+  body.print-a .sheet.qs { display:none !important; }
+  body.print-a .sheet.ans.pb { page-break-before:auto; break-before:auto; }
+}
+@media (max-width: 720px) { .sheet { padding: 8mm 5mm; } }
+</style>
+</head>
+<body>
+<div class="controlbar">
+  <span class="title">🧮 小学算数 文章題ランダム（どの計算？）｜学習塾CONNECT</span>
+  <select id="gradeSel" aria-label="学年">
+    <option value="4">4年</option>
+    <option value="5" selected>5年</option>
+    <option value="6">6年</option>
+  </select>
+  <select id="countSel" aria-label="問題数">
+    <option value="5" selected>5問（片面）</option>
+    <option value="10">10問（両面・表5問／裏5問）</option>
+  </select>
+  <label class="ck"><input type="checkbox" id="opsChk" checked> 「使う計算に○」の欄</label>
+  <select id="printSel" aria-label="印刷する内容">
+    <option value="all">印刷：問題＋解答</option>
+    <option value="q">印刷：問題だけ</option>
+    <option value="a">印刷：解答だけ</option>
+  </select>
+  <button class="primary" id="makeBtn">この範囲で作成</button>
+  <button class="secondary" id="editBtn">編集モード</button>
+  <button class="secondary" id="saveBtn">保存</button>
+  <button class="secondary" id="printBtn">印刷</button>
+  <span class="spacer"></span>
+  <span class="count" id="countLabel"></span>
+  <div class="catbox" id="catbox"></div>
+</div>
+<div id="area"></div>
+<script>
+(function(){
+// ---------- helpers ----------
+function ri(a,b){ return Math.floor(Math.random()*(b-a+1))+a; }
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function shuffle(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function gcd(a,b){ a=Math.abs(a); b=Math.abs(b); while(b){ var t=a%b; a=b; b=t; } return a||1; }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+// decimals: value stored as integer n with scale s (n / 10^s)
+function D(n,s){ return {n:n, s:s}; }
+function dstr(d){ var n=d.n, s=d.s; while(s>0 && n%10===0){ n/=10; s--; } var neg=n<0; n=Math.abs(n); var str=String(n); if(s>0){ while(str.length<=s) str='0'+str; str=str.slice(0,str.length-s)+'.'+str.slice(str.length-s); } return (neg?'-':'')+str; }
+function dadd(a,b,sg){ var s=Math.max(a.s,b.s); return D(a.n*Math.pow(10,s-a.s) + (sg||1)*b.n*Math.pow(10,s-b.s), s); }
+function dmul(a,b){ return D(a.n*b.n, a.s+b.s); }
+function rd(lo,hi,s){ return D(ri(lo,hi), s); } // random decimal
+// fractions
+function Q(n,d){ var g=gcd(n,d); if(d<0){n=-n;d=-d;} return [n/g,d/g]; }
+function qa(a,b,sg){ return Q(a[0]*b[1]+(sg||1)*b[0]*a[1], a[1]*b[1]); }
+function qm(a,b){ return Q(a[0]*b[0], a[1]*b[1]); }
+function qd(a,b){ return Q(a[0]*b[1], a[1]*b[0]); }
+function fr(n,d){ return '<span class="fr"><span>'+n+'</span><span>'+d+'</span></span>'; }
+function qs(q){ if(q[1]===1) return String(q[0]); return fr(q[0],q[1]); }
+function qsm(q){ // with mixed number when improper
+  if(q[1]===1) return String(q[0]);
+  if(q[0]>q[1]){ var w=Math.floor(q[0]/q[1]), r=q[0]%q[1]; return fr(q[0],q[1])+'（'+w+fr(r,q[1])+'）'; }
+  return fr(q[0],q[1]);
+}
+function rq(maxd){ var d=ri(2,maxd), n=ri(1,d-1); var q=Q(n,d); return q; }
+var NAMES = ['ゆうと','さくら','はると','あおい','そうた','ゆい','けんた','みお'];
+// each generator returns {t, ops:[...], sk, ans, key}
+var K = {
+  awase: '「あわせて」「全部で」→ たし算',
+  fueru: '「ふえると」「〜より多い（ほうを求める）」→ たし算',
+  nokori: '「のこりは」「使うと」→ ひき算',
+  chigai: '「ちがいは」「何多い・何少ない」→ ひき算',
+  sukunai: '「〜より少ない（ほうを求める）」→ ひき算',
+  ikutsubun: '「1つ分 × いくつ分 ＝ 全部」→ かけ算',
+  baisu: '「〜の□倍」→ かけ算（もとにする量 × 倍）',
+  touhun: '「同じ数ずつ分ける・1人分は」→ わり算（全部 ÷ 人数）',
+  houkatsu: '「□ずつ分けると、いくつに分けられる」→ わり算（全部 ÷ 1つ分）',
+  nanbai: '「□は○の何倍」→ わり算（くらべる量 ÷ もとにする量）',
+  motonisuru: '「もとにする量を求める」→ わり算（くらべる量 ÷ 割合）',
+  tanni: '「1あたり」を求める → わり算',
+  tanni2: '「1あたり × いくつ分」→ かけ算',
+  hayasa: '速さ ＝ 道のり ÷ 時間',
+  michinori: '道のり ＝ 速さ × 時間',
+  jikan: '時間 ＝ 道のり ÷ 速さ',
+  wariai: '割合 ＝ くらべる量 ÷ もとにする量',
+  kuraberu: 'くらべる量 ＝ もとにする量 × 割合',
+  heikin: '平均 ＝ 合計 ÷ 個数',
+  goukei: '合計 ＝ 平均 × 個数'
+};
+function P(t, ops, sk, ans, key){ return {t:t, ops:ops, sk:sk, ans:ans, key:key}; }
+
+// ===== 4年 =====
+var G4 = [
+ {id:'4div', name:'わり算（あまりなし・あまりあり）', gens:[
+  function(){ var p=ri(3,9), q=ri(12,45); return P('色紙が '+(p*q)+' まいあります。'+p+' 人で同じ数ずつ分けると、1人分は何まいになりますか。',['÷'],(p*q)+' ÷ '+p+' ＝ '+q, q+' まい', K.touhun); },
+  function(){ var p=ri(4,9), q=ri(11,30); return P('えんぴつが '+(p*q)+' 本あります。1人に '+p+' 本ずつ配ると、何人に配れますか。',['÷'],(p*q)+' ÷ '+p+' ＝ '+q, q+' 人', K.houkatsu); },
+  function(){ var p=ri(4,9), q=ri(6,15), r=ri(1,p-1); var n=p*q+r; return P('あめが '+n+' こあります。1ふくろに '+p+' こずつ入れると、何ふくろできて、何こあまりますか。',['÷'],n+' ÷ '+p+' ＝ '+q+' あまり '+r, q+' ふくろできて '+r+' こあまる', K.houkatsu+'。あまりは わる数より小さい'); },
+  function(){ var p=ri(4,8), q=ri(5,12), r=ri(1,p-1); var n=p*q+r; return P(n+' 人の子どもが、1台に '+p+' 人ずつ車に乗ります。全員が乗るには、車は何台いりますか。',['÷','+'],n+' ÷ '+p+' ＝ '+q+' あまり '+r+'　'+q+' ＋ 1 ＝ '+(q+1), (q+1)+' 台', K.houkatsu+'。あまりの '+r+' 人も乗るので 1 台たす'); },
+  function(){ var p=ri(6,12), q=ri(12,30); return P('1箱に '+p+' こ入ったチョコレートが '+q+' 箱あります。チョコレートは全部で何こありますか。',['×'],p+' × '+q+' ＝ '+(p*q), (p*q)+' こ', K.ikutsubun); },
+  function(){ var p=ri(12,28), q=ri(3,6); var n=p*q; return P('長さ '+n+' cm のテープを '+q+' 等分します。1本は何 cm になりますか。',['÷'],n+' ÷ '+q+' ＝ '+p, p+' cm', K.touhun); }
+ ]},
+ {id:'4mul', name:'大きな数のかけ算・わり算', gens:[
+  function(){ var p=ri(105,380), q=ri(12,36); return P('1こ '+p+' 円のパンを '+q+' こ買います。代金は何円ですか。',['×'],p+' × '+q+' ＝ '+(p*q), (p*q)+' 円', K.ikutsubun); },
+  function(){ var p=ri(15,45), q=ri(12,30); return P('1日に '+p+' ページずつ本を読みます。'+q+' 日間では何ページ読めますか。',['×'],p+' × '+q+' ＝ '+(p*q), (p*q)+' ページ', K.ikutsubun); },
+  function(){ var p=ri(12,25), q=ri(14,38); return P((p*q)+' 円で、1本 '+p+' 円のえんぴつは何本買えますか。',['÷'],(p*q)+' ÷ '+p+' ＝ '+q, q+' 本', K.houkatsu); },
+  function(){ var p=ri(12,24), q=ri(15,40); return P('子ども会で '+(p*q)+' 円の旅行費を '+p+' 人で同じ金額ずつ出します。1人何円になりますか。',['÷'],(p*q)+' ÷ '+p+' ＝ '+q, q+' 円', K.touhun); },
+  function(){ var a=ri(1200,4800), b=ri(800,2600); return P('ある町の小学生は '+a+' 人、中学生は '+b+' 人です。あわせて何人ですか。',['+'],a+' ＋ '+b+' ＝ '+(a+b), (a+b)+' 人', K.awase); }
+ ]},
+ {id:'4dec', name:'小数のたし算・ひき算', gens:[
+  function(){ var a=rd(105,395,2), b=rd(12,35,1); return P('赤いテープが '+dstr(a)+' m、青いテープが '+dstr(b)+' m あります。あわせて何 m ですか。',['+'],dstr(a)+' ＋ '+dstr(b)+' ＝ '+dstr(dadd(a,b)), dstr(dadd(a,b))+' m', K.awase); },
+  function(){ var a=rd(15,28,1), b=rd(25,95,2); if(b.n>=a.n*10) return null; return P('水が '+dstr(a)+' L あります。'+dstr(b)+' L 飲むと、のこりは何 L ですか。',['−'],dstr(a)+' − '+dstr(b)+' ＝ '+dstr(dadd(a,b,-1)), dstr(dadd(a,b,-1))+' L', K.nokori); },
+  function(){ var a=rd(21,45,1), b=rd(12,19,1); return P('かばんの重さは '+dstr(a)+' kg、ランドセルの重さは '+dstr(b)+' kg です。ちがいは何 kg ですか。',['−'],dstr(a)+' − '+dstr(b)+' ＝ '+dstr(dadd(a,b,-1)), dstr(dadd(a,b,-1))+' kg', K.chigai); },
+  function(){ var a=rd(125,348,2), b=rd(3,9,1); return P('ゆうとさんの家から駅までは '+dstr(a)+' km です。学校までは、駅までより '+dstr(b)+' km 長いそうです。家から学校までは何 km ですか。',['+'],dstr(a)+' ＋ '+dstr(b)+' ＝ '+dstr(dadd(a,b)), dstr(dadd(a,b))+' km', K.fueru); },
+  function(){ var a=rd(105,185,1), b=rd(12,38,1); return P('赤えんぴつの長さは '+dstr(a)+' cm です。青えんぴつは、赤えんぴつより '+dstr(b)+' cm 短いそうです。青えんぴつは何 cm ですか。',['−'],dstr(a)+' − '+dstr(b)+' ＝ '+dstr(dadd(a,b,-1)), dstr(dadd(a,b,-1))+' cm', K.sukunai); }
+ ]},
+ {id:'4decmd', name:'小数×整数・小数÷整数', gens:[
+  function(){ var a=rd(3,9,1), b=ri(4,9); return P('1本 '+dstr(a)+' L 入りのジュースが '+b+' 本あります。全部で何 L ですか。',['×'],dstr(a)+' × '+b+' ＝ '+dstr(dmul(a,D(b,0))), dstr(dmul(a,D(b,0)))+' L', K.ikutsubun); },
+  function(){ var b=ri(3,6), q=rd(3,9,1); var a=dmul(q,D(b,0)); return P('長さ '+dstr(a)+' m のリボンを '+b+' 人で同じ長さずつ分けます。1人分は何 m ですか。',['÷'],dstr(a)+' ÷ '+b+' ＝ '+dstr(q), dstr(q)+' m', K.touhun); },
+  function(){ var a=rd(12,38,1), b=ri(3,8); return P('1ふくろ '+dstr(a)+' kg の米が '+b+' ふくろあります。米は全部で何 kg ですか。',['×'],dstr(a)+' × '+b+' ＝ '+dstr(dmul(a,D(b,0))), dstr(dmul(a,D(b,0)))+' kg', K.ikutsubun); },
+  function(){ var b=ri(3,8), q=rd(12,28,1); var a=dmul(q,D(b,0)); return P(dstr(a)+' kg のすなを、'+b+' このバケツに同じ重さずつ入れます。1このバケツは何 kg になりますか。',['÷'],dstr(a)+' ÷ '+b+' ＝ '+dstr(q), dstr(q)+' kg', K.touhun); },
+  function(){ var a=rd(15,45,1), b=rd(5,14,1); return P('ペンキが '+dstr(a)+' L あります。'+dstr(b)+' L 使いました。のこりは何 L ですか。',['−'],dstr(a)+' − '+dstr(b)+' ＝ '+dstr(dadd(a,b,-1)), dstr(dadd(a,b,-1))+' L', K.nokori); }
+ ]},
+ {id:'4frac', name:'分数のたし算・ひき算（分母が同じ）', gens:[
+  function(){ var d=ri(5,9), a=ri(1,d-2), b=ri(1,d-1-a); return P('牛にゅうを、朝 '+fr(a,d)+' L、夜 '+fr(b,d)+' L 飲みました。あわせて何 L 飲みましたか。',['+'],fr(a,d)+' ＋ '+fr(b,d)+' ＝ '+qs(Q(a+b,d)), qs(Q(a+b,d))+' L', K.awase); },
+  function(){ var d=ri(5,9), a=ri(2,d-1), b=ri(1,a-1); return P('リボンが '+fr(a,d)+' m あります。'+fr(b,d)+' m 使うと、のこりは何 m ですか。',['−'],fr(a,d)+' − '+fr(b,d)+' ＝ '+qs(Q(a-b,d)), qs(Q(a-b,d))+' m', K.nokori); },
+  function(){ var d=ri(4,8), b=ri(1,d-1); return P('ジュースが 1 L あります。'+fr(b,d)+' L 飲むと、のこりは何 L ですか。',['−'],'1 − '+fr(b,d)+' ＝ '+fr(d,d)+' − '+fr(b,d)+' ＝ '+qs(Q(d-b,d)), qs(Q(d-b,d))+' L', K.nokori+'。1 を分数になおしてから計算'); },
+  function(){ var d=ri(5,9), a=ri(2,d-1), b=ri(1,a-1); return P('赤いテープは '+fr(a,d)+' m、白いテープは '+fr(b,d)+' m です。ちがいは何 m ですか。',['−'],fr(a,d)+' − '+fr(b,d)+' ＝ '+qs(Q(a-b,d)), qs(Q(a-b,d))+' m', K.chigai); }
+ ]},
+ {id:'4bai', name:'何倍（簡単な割合）', gens:[
+  function(){ var b=ri(4,9), k=ri(2,6); return P('赤い花が '+(b*k)+' 本、白い花が '+b+' 本さいています。赤い花の数は、白い花の数の何倍ですか。',['÷'],(b*k)+' ÷ '+b+' ＝ '+k, k+' 倍', K.nanbai); },
+  function(){ var b=ri(6,15), k=ri(2,5); return P('弟は '+b+' 円持っています。兄は弟の '+k+' 倍持っています。兄は何円持っていますか。',['×'],b+' × '+k+' ＝ '+(b*k), (b*k)+' 円', K.baisu); },
+  function(){ var b=ri(5,12), k=ri(3,6); return P('大きい箱の重さは '+(b*k)+' kg で、小さい箱の重さの '+k+' 倍です。小さい箱の重さは何 kg ですか。',['÷'],(b*k)+' ÷ '+k+' ＝ '+b, b+' kg', K.motonisuru.replace('割合','何倍')); }
+ ]},
+ {id:'4two', name:'2つの式をまとめる（式と計算）', gens:[
+  function(){ var a=ri(6,12)*10, n=ri(3,5), b=ri(9,15)*10; return P('1こ '+a+' 円のりんごを '+n+' こと、'+b+' 円のメロンパンを 1 こ買います。代金は全部で何円ですか。',['×','+'],a+' × '+n+' ＋ '+b+' ＝ '+(a*n+b), (a*n+b)+' 円', K.ikutsubun+' → そのあと '+K.awase); },
+  function(){ var a=ri(8,12)*10, n=ri(3,5), m=1000; return P(m+' 円を持って、1本 '+a+' 円のジュースを '+n+' 本買います。おつりは何円ですか。',['×','−'],m+' − '+a+' × '+n+' ＝ '+(m-a*n), (m-a*n)+' 円', '代金（'+K.ikutsubun+'）を出してから、'+K.nokori); },
+  function(){ var a=ri(3,6), b=ri(2,5), c=ri(4,8); return P('1人に、えんぴつを '+a+' 本と赤えんぴつを '+b+' 本ずつ配ります。'+c+' 人に配るには、全部で何本いりますか。',['+','×'],'（'+a+' ＋ '+b+'）× '+c+' ＝ '+((a+b)*c), ((a+b)*c)+' 本', '1人分をまとめてから（たし算）、'+K.ikutsubun); }
+ ]}
+];
+// ===== 5年 =====
+var G5 = [
+ {id:'5dmul', name:'小数のかけ算', gens:[
+  function(){ var a=rd(12,38,1), b=rd(12,25,1); return P('1 m の重さが '+dstr(a)+' kg の鉄のぼうがあります。このぼう '+dstr(b)+' m の重さは何 kg ですか。',['×'],dstr(a)+' × '+dstr(b)+' ＝ '+dstr(dmul(a,b)), dstr(dmul(a,b))+' kg', K.tanni2+'（1 m あたりの重さ × 長さ）'); },
+  function(){ var a=rd(22,48,1), b=rd(5,9,1); return P('1 dL で '+dstr(a)+' m<sup>2</sup> ぬれるペンキがあります。このペンキ '+dstr(b)+' dL では何 m<sup>2</sup> ぬれますか。',['×'],dstr(a)+' × '+dstr(b)+' ＝ '+dstr(dmul(a,b)), dstr(dmul(a,b))+' m<sup>2</sup>', K.tanni2+'（1 より小さい数をかけると、答えはもとの数より小さくなる）'); },
+  function(){ var a=ri(120,380), b=rd(15,35,1); return P('1 m '+a+' 円のぬのを '+dstr(b)+' m 買います。代金は何円ですか。',['×'],a+' × '+dstr(b)+' ＝ '+dstr(dmul(D(a,0),b)), dstr(dmul(D(a,0),b))+' 円', K.tanni2); }
+ ]},
+ {id:'5ddiv', name:'小数のわり算', gens:[
+  function(){ var b=rd(12,35,1), q=ri(120,360); var a=dmul(D(q,0),b); if(a.n%10!==0) return null; return P(dstr(b)+' m で '+dstr(a)+' 円のリボンがあります。このリボン 1 m のねだんは何円ですか。',['÷'],dstr(a)+' ÷ '+dstr(b)+' ＝ '+q, q+' 円', K.tanni+'（代金 ÷ 長さ）'); },
+  function(){ var b=rd(2,8,1), q=ri(4,12); var a=dmul(b,D(q,0)); return P('ジュースが '+dstr(a)+' L あります。'+dstr(b)+' L ずつびんに入れると、びんは何本できますか。',['÷'],dstr(a)+' ÷ '+dstr(b)+' ＝ '+q, q+' 本', K.houkatsu); },
+  function(){ var b=rd(12,25,1), q=rd(12,48,1); var a=dmul(b,q); return P('面積が '+dstr(a)+' m<sup>2</sup> の長方形の花だんがあります。たての長さは '+dstr(b)+' m です。横の長さは何 m ですか。',['÷'],dstr(a)+' ÷ '+dstr(b)+' ＝ '+dstr(q), dstr(q)+' m', '長方形の面積 ＝ たて × 横 なので、横 ＝ 面積 ÷ たて'); },
+  function(){ var a=rd(12,38,1), b=rd(12,25,1); return P('1 L の重さが '+dstr(a)+' kg の油があります。この油 '+dstr(b)+' L の重さは何 kg ですか。',['×'],dstr(a)+' × '+dstr(b)+' ＝ '+dstr(dmul(a,b)), dstr(dmul(a,b))+' kg', K.tanni2+'（わり算とまちがえやすい：「1 L あたり × L 数」）'); }
+ ]},
+ {id:'5frac', name:'分数のたし算・ひき算（分母がちがう）', gens:[
+  function(){ var a=rq(6), b=rq(6); if(a[1]===b[1]) return null; var s=qa(a,b); return P('はるとさんは、きのう '+qs(a)+' 時間、今日 '+qs(b)+' 時間勉強しました。あわせて何時間勉強しましたか。',['+'],qs(a)+' ＋ '+qs(b)+' ＝ '+qs(s), qsm(s)+' 時間', K.awase+'。通分してから計算'); },
+  function(){ var a=rq(6), b=rq(6); if(a[1]===b[1] || a[0]*b[1]<=b[0]*a[1]) return null; var s=qa(a,b,-1); return P('水が '+qs(a)+' L あります。'+qs(b)+' L 使うと、のこりは何 L ですか。',['−'],qs(a)+' − '+qs(b)+' ＝ '+qs(s), qs(s)+' L', K.nokori+'。通分してから計算'); },
+  function(){ var a=rq(8), b=rq(8); if(a[1]===b[1] || a[0]*b[1]<=b[0]*a[1]) return null; var s=qa(a,b,-1); return P('家から公園までは '+qs(a)+' km、家から駅までは '+qs(b)+' km です。どちらが何 km 遠いですか。',['−'],qs(a)+' − '+qs(b)+' ＝ '+qs(s), '公園のほうが '+qs(s)+' km 遠い', K.chigai); }
+ ]},
+ {id:'5tanni', name:'単位量あたりの大きさ', gens:[
+  function(){ var m=ri(4,9), k=ri(2,5); return P('面積が '+m+' m<sup>2</sup> の部屋に '+(m*k)+' 人います。1 m<sup>2</sup> あたり何人ですか。',['÷'],(m*k)+' ÷ '+m+' ＝ '+k, k+' 人', K.tanni+'（人数 ÷ 面積）'); },
+  function(){ var a=ri(12,18), b=ri(15,35); return P('ガソリン 1 L で '+a+' km 走る自動車があります。'+b+' L では何 km 走れますか。',['×'],a+' × '+b+' ＝ '+(a*b), (a*b)+' km', K.tanni2); },
+  function(){ var a=ri(12,18), q=ri(15,30); return P('ガソリン 1 L で '+a+' km 走る自動車で '+(a*q)+' km 走るには、ガソリンは何 L いりますか。',['÷'],(a*q)+' ÷ '+a+' ＝ '+q, q+' L', '「いくつ分」を求める → わり算（全部 ÷ 1あたり）'); },
+  function(){ var p=ri(6,9), q=ri(70,95); return P('ノートが '+p+' さつで '+(p*q)+' 円です。1さつあたり何円ですか。',['÷'],(p*q)+' ÷ '+p+' ＝ '+q, q+' 円', K.tanni); }
+ ]},
+ {id:'5speed', name:'速さ', gens:[
+  function(){ var v=ri(40,70), t=ri(2,5); return P('自動車が '+(v*t)+' km の道のりを '+t+' 時間で走りました。この自動車の時速を求めなさい。',['÷'],(v*t)+' ÷ '+t+' ＝ '+v, '時速 '+v+' km', K.hayasa); },
+  function(){ var v=ri(60,90), t=ri(12,25); return P('分速 '+v+' m で '+t+' 分間歩くと、何 m 進みますか。',['×'],v+' × '+t+' ＝ '+(v*t), (v*t)+' m', K.michinori); },
+  function(){ var v=ri(4,8)*10, t=ri(2,6); return P('時速 '+v+' km で走るバスで、'+(v*t)+' km はなれた町まで行きます。何時間かかりますか。',['÷'],(v*t)+' ÷ '+v+' ＝ '+t, t+' 時間', K.jikan); },
+  function(){ var v=ri(150,250), t=ri(3,8); return P('自転車で '+(v*t)+' m を '+t+' 分で走りました。分速何 m ですか。',['÷'],(v*t)+' ÷ '+t+' ＝ '+v, '分速 '+v+' m', K.hayasa); }
+ ]},
+ {id:'5ratio', name:'割合（百分率）', gens:[
+  function(){ var base=pick([20,25,40,50]), p=pick([10,20,30,40,60,80]); var c=base*p/100; if(c!==Math.round(c)) return null; return P('定員 '+base+' 人のバスに '+c+' 人乗っています。乗っている人数は、定員の何％ですか。',['÷'],c+' ÷ '+base+' ＝ '+(p/100)+'　→ '+p+'％', p+'％', K.wariai+'（割合 × 100 ＝ 百分率）'); },
+  function(){ var base=ri(4,12)*100, p=pick([10,20,30,40,25,15]); return P(base+' 円の品物の '+p+'％ は何円ですか。',['×'],base+' × '+(p/100)+' ＝ '+(base*p/100), (base*p/100)+' 円', K.kuraberu); },
+  function(){ var p=pick([20,25,40,50]), base=pick([40,60,80,120]); var c=base*p/100; return P('ある学年の児童のうち、'+c+' 人が自転車を持っていて、これは学年全体の '+p+'％ にあたります。この学年の児童は全部で何人ですか。',['÷'],c+' ÷ '+(p/100)+' ＝ '+base, base+' 人', K.motonisuru); },
+  function(){ var base=ri(8,20)*100, p=pick([10,20,30]); var c=base*p/100; return P(base+' 円の服が、'+p+'％ 引きで売られています。売りねは何円ですか。',['×','−'],base+' × '+(p/100)+' ＝ '+c+'　'+base+' − '+c+' ＝ '+(base-c), (base-c)+' 円', '値引きされる金額を出してひく（'+base+' ×（1 − '+(p/100)+'）でもよい）'); }
+ ]},
+ {id:'5avg', name:'平均', gens:[
+  function(){ var a=[ri(60,95),ri(60,95),ri(60,95),ri(60,95)]; var s=a.reduce(function(x,y){return x+y;},0); if(s%4) return null; return P('4回の計算テストの点数は、'+a.join('点、')+'点でした。平均は何点ですか。',['+','÷'],'（'+a.join(' ＋ ')+'）÷ 4 ＝ '+(s/4), (s/4)+' 点', K.heikin); },
+  function(){ var m=ri(12,25), n=ri(5,7); return P('1日に平均 '+m+' ページ本を読みます。'+n+' 日間では何ページ読むことになりますか。',['×'],m+' × '+n+' ＝ '+(m*n), (m*n)+' ページ', K.goukei); },
+  function(){ var a=[ri(8,15),ri(8,15),ri(8,15),ri(8,15),ri(8,15)]; var s=a.reduce(function(x,y){return x+y;},0); if(s%5) return null; return P('5人が持っているカードの枚数は、'+a.join('まい、')+'まいです。1人平均何まい持っていますか。',['+','÷'],'（'+a.join(' ＋ ')+'）÷ 5 ＝ '+(s/5), (s/5)+' まい', K.heikin); }
+ ]}
+];
+// ===== 6年 =====
+var G6 = [
+ {id:'6fint', name:'分数×整数・分数÷整数', gens:[
+  function(){ var a=rq(7), n=ri(2,5); var r=qm(a,[n,1]); return P('1 dL で '+qs(a)+' m<sup>2</sup> ぬれるペンキがあります。'+n+' dL では何 m<sup>2</sup> ぬれますか。',['×'],qs(a)+' × '+n+' ＝ '+qs(r), qsm(r)+' m<sup>2</sup>', K.tanni2); },
+  function(){ var a=rq(9), n=ri(2,5); var r=qd(a,[n,1]); return P(qs(a)+' L のジュースを '+n+' 人で同じ量ずつ分けます。1人分は何 L ですか。',['÷'],qs(a)+' ÷ '+n+' ＝ '+qs(r), qs(r)+' L', K.touhun); },
+  function(){ var a=rq(6), n=ri(3,6); var r=qm(a,[n,1]); return P('1 本の重さが '+qs(a)+' kg のびんが '+n+' 本あります。全部で何 kg ですか。',['×'],qs(a)+' × '+n+' ＝ '+qs(r), qsm(r)+' kg', K.ikutsubun); }
+ ]},
+ {id:'6fmul', name:'分数のかけ算', gens:[
+  function(){ var a=rq(7), b=rq(6); var r=qm(a,b); return P('1 m の重さが '+qs(a)+' kg のぼうがあります。このぼう '+qs(b)+' m の重さは何 kg ですか。',['×'],qs(a)+' × '+qs(b)+' ＝ '+qs(r), qs(r)+' kg', K.tanni2); },
+  function(){ var a=[ri(2,5),1], b=rq(6); var r=qm(a,b); return P('1 時間に '+a[0]+' km 歩く人が、'+qs(b)+' 時間歩くと何 km 進みますか。',['×'],a[0]+' × '+qs(b)+' ＝ '+qs(r), qsm(r)+' km', K.michinori); },
+  function(){ var a=ri(3,8)*100, b=rq(5); var r=qm([a,1],b); if(r[1]!==1) return null; return P('ゆいさんは '+a+' 円持っています。そのうちの '+qs(b)+' を使いました。使ったお金は何円ですか。',['×'],a+' × '+qs(b)+' ＝ '+r[0], r[0]+' 円', K.kuraberu.replace('割合','分数で表した割合')); }
+ ]},
+ {id:'6fdiv', name:'分数のわり算', gens:[
+  function(){ var a=rq(6), b=rq(7); var r=qd(b,a); return P(qs(a)+' m の重さが '+qs(b)+' kg のぼうがあります。このぼう 1 m の重さは何 kg ですか。',['÷'],qs(b)+' ÷ '+qs(a)+' ＝ '+qs(r), qsm(r)+' kg', K.tanni+'（重さ ÷ 長さ）'); },
+  function(){ var b=rq(6), k=ri(2,8); var whole=qm(b,[k,1]); return P(qs(whole)+' L の牛にゅうを、'+qs(b)+' L ずつコップに分けると、何ばいに分けられますか。',['÷'],qs(whole)+' ÷ '+qs(b)+' ＝ '+k, k+' はい', K.houkatsu); },
+  function(){ var a=rq(5), b=rq(8); var r=qd(b,a); return P(qs(a)+' 時間で '+qs(b)+' km 歩きました。1 時間あたり何 km 歩いたことになりますか。',['÷'],qs(b)+' ÷ '+qs(a)+' ＝ '+qs(r), qsm(r)+' km', K.hayasa); },
+  function(){ var a=rq(6), b=rq(6); var r=qm(a,b); return P('1 dL で '+qs(a)+' m<sup>2</sup> ぬれるペンキがあります。'+qs(b)+' dL では何 m<sup>2</sup> ぬれますか。',['×'],qs(a)+' × '+qs(b)+' ＝ '+qs(r), qs(r)+' m<sup>2</sup>', K.tanni2+'（わり算とまちがえやすい）'); }
+ ]},
+ {id:'6hi', name:'比', gens:[
+  function(){ var a=ri(2,5), b=ri(3,7); if(a===b||gcd(a,b)!==1) return null; var k=ri(2,6); return P('赤い玉と白い玉の数の比は '+a+'：'+b+' です。赤い玉が '+(a*k)+' こあるとき、白い玉は何こですか。',['÷','×'],(a*k)+' ÷ '+a+' ＝ '+k+'　'+b+' × '+k+' ＝ '+(b*k), (b*k)+' こ', '比の1つ分を出す（わり算）→ その何こ分か（かけ算）。'+a+'：'+b+' ＝ '+(a*k)+'：□ と考えてもよい'); },
+  function(){ var a=ri(2,4), b=ri(3,6); if(a===b||gcd(a,b)!==1) return null; var k=ri(3,8); var s=(a+b)*k; return P(s+' まいのカードを、兄と弟で '+a+'：'+b+' になるように分けます。兄は何まいになりますか。',['+','÷','×'],a+' ＋ '+b+' ＝ '+(a+b)+'　'+s+' ÷ '+(a+b)+' ＝ '+k+'　'+a+' × '+k+' ＝ '+(a*k), (a*k)+' まい', '全体は '+a+'＋'+b+' ＝ '+(a+b)+' こ分。1こ分（わり算）を出してから何こ分（かけ算）'); },
+  function(){ var a=ri(2,5), b=ri(2,5); if(gcd(a,b)!==1) return null; var k=ri(20,60); return P('たてと横の長さの比が '+a+'：'+b+' の長方形をかきます。たてを '+(a*k)+' cm にすると、横は何 cm ですか。',['÷','×'],(a*k)+' ÷ '+a+' ＝ '+k+'　'+b+' × '+k+' ＝ '+(b*k), (b*k)+' cm', '比の1つ分 ＝ '+(a*k)+' ÷ '+a); }
+ ]},
+ {id:'6speed', name:'速さ（復習）', gens: G5[4].gens},
+ {id:'6ratio', name:'割合（復習）', gens: G5[5].gens}
+];
+var GRADES = {4:G4, 5:G5, 6:G6};
+var OPS = ['＋','−','×','÷'], OPMAP = {'+':'＋','−':'−','×':'×','÷':'÷'};
+
+var area=document.getElementById('area'), catbox=document.getElementById('catbox'), gradeSel=document.getElementById('gradeSel'), countSel=document.getElementById('countSel'), opsChk=document.getElementById('opsChk');
+function renderCats(){
+  var g = GRADES[gradeSel.value];
+  catbox.innerHTML = g.map(function(u){ return '<label><input type="checkbox" class="cat" value="'+u.id+'" checked> '+esc(u.name)+'</label>'; }).join('') + '<button class="mini" type="button" id="allBtn">全部</button>';
+  document.getElementById('allBtn').onclick = function(){ document.querySelectorAll('.cat').forEach(function(c){ c.checked=true; }); upd(); };
+  catbox.onchange = upd; upd();
+}
+function sel(){ var ids = Array.prototype.map.call(document.querySelectorAll('.cat:checked'), function(c){ return c.value; }); return GRADES[gradeSel.value].filter(function(u){ return ids.indexOf(u.id)>=0; }); }
+function upd(){ var u=sel(); document.getElementById('countLabel').textContent = '選択中：'+u.length+'単元'; }
+function gen(f){ for(var i=0;i<300;i++){ var r=f(); if(r) return r; } return f(); }
+function pickProblems(units, n){
+  // 単元ごと・問題の型ごとにかたよらないように順番に取る
+  var slots=[]; units.forEach(function(u){ shuffle(u.gens).forEach(function(g,i){ slots.push({u:u, g:g, k:i}); }); });
+  slots.sort(function(a,b){ return a.k-b.k || Math.random()-0.5; });
+  var out=[], i=0, seen={};
+  while(out.length<n && slots.length){ var s=slots[i % slots.length]; var p=gen(s.g); if(!seen[p.t]){ seen[p.t]=1; p.unit=s.u.name; out.push(p); } i++; if(i>n*20) break; }
+  return shuffle(out);
+}
+function build(){
+  var units=sel(); if(!units.length){ area.innerHTML='<div class="sheet"><p style="text-align:center;color:#666;padding:40px 0">単元を1つ以上選んでください。</p></div>'; return; }
+  var n=+countSel.value, gr=gradeSel.value, ops=opsChk.checked;
+  var ps=pickProblems(units, n);
+  var today=new Date(), dstr2=today.getFullYear()+'年'+(today.getMonth()+1)+'月'+today.getDate()+'日';
+  var TITLE='小学'+gr+'年 算数 文章題（どの計算を使うかな？）';
+  var rng = units.length===GRADES[gr].length ? gr+'年の全単元' : units.map(function(u){return u.name;}).join('・');
+  function pr(p,i){
+    return '<div class="prob"><div class="pl"><div class="top"><span class="no">'+(i+1)+'</span><div class="t">'+p.t+'</div></div>'+
+      (ops ? '<div class="ops">使う計算に○：'+OPS.map(function(o){return '<span class="o">'+o+'</span>';}).join('')+'</div>' : '')+
+      '<div class="wk"><span>式</span><span class="ln sk"></span></div><div class="wk"><span>答え</span><span class="ln an"></span></div></div><div class="calc">計算</div></div>';
+  }
+  var h='<div class="sheet qs"><h1>'+TITLE+'</h1><div class="sub">'+n+'問（各20点）／範囲：'+esc(rng)+'</div>';
+  h+='<div class="namebox"><span style="margin-right:auto">'+dstr2+'</span><span>名前：＿＿＿＿＿＿＿＿＿＿</span><span>／'+(n*20)+'点</span></div>';
+  h+='<div class="rules">・式を書く前に、<b>「何をもとめるのか」</b>と<b>「どの計算を使うか」</b>を考えよう。問題文の大事なことば（あわせて・のこり・ずつ・何倍 など）に線を引くとわかりやすいよ。<br>・「使う計算に○」は、2つ以上のときもあるよ。式と答えの両方を書き、答えには単位をつけよう。</div>';
+  var front = n>5 ? 5 : n;
+  ps.forEach(function(p,i){
+    if(i===front){ h+='</div><div class="sheet qs pb"><div class="backhead"><span>'+TITLE+'　裏面</span><span>名前：＿＿＿＿＿＿＿＿</span></div>'; }
+    h+=pr(p,i);
+  });
+  h+='</div>';
+  h+='<div class="sheet ans pb"><h1>解答・解説</h1><div class="sub">'+TITLE+'　'+n+'問</div>';
+  h+='<div class="memo"><b>■ ポイント（計算の選び方）</b><div class="keys"><div>'+K.awase+'</div><div>'+K.nokori+'</div><div>'+K.chigai+'</div><div>'+K.ikutsubun+'</div><div>'+K.touhun+'</div><div>'+K.houkatsu+'</div>'+(gr>4?'<div>'+K.tanni+'</div><div>'+K.wariai+'</div>':'<div>'+K.nanbai+'</div><div>'+K.baisu+'</div>')+'</div>'+
+     '<div style="margin-top:4px">・採点：式・答え（単位まで）・使う計算がすべて正しくて20点。式が正しく答えだけ計算ミスなら10点、などのように使ってください。</div></div>';
+  ps.forEach(function(p,i){
+    h+='<div class="unit"><div><b>('+(i+1)+')</b> 使う計算：'+p.ops.map(function(o){return '<span class="opk">'+OPMAP[o]+'</span>';}).join('')+'<span class="tag">'+esc(p.unit)+'</span></div>'+
+       '<div>式　'+p.sk+'</div><div>答え　<span class="k">'+p.ans+'</span></div><div class="hint">考え方：'+p.key+'</div></div>';
+  });
+  h+='</div>';
+  area.innerHTML=h;
+  if(document.body.classList.contains('editmode')) setEd(true);
+}
+function setEd(on){ document.querySelectorAll('#area .sheet').forEach(function(s){ s.setAttribute('contenteditable', on?'true':'false'); }); }
+var editBtn=document.getElementById('editBtn');
+editBtn.onclick=function(){ var on=!document.body.classList.contains('editmode'); document.body.classList.toggle('editmode',on); editBtn.classList.toggle('active',on); editBtn.textContent=on?'編集モード終了':'編集モード'; setEd(on); };
+document.getElementById('saveBtn').onclick=function(){
+  var css=document.querySelector('style').outerHTML, body=area.innerHTML.replace(/ contenteditable="(true|false)"/g,'');
+  var html='<!DOCTYPE html>\n<html lang="ja">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>小学算数_文章題</title>\n'+css+'\n</head>\n<body>\n'+body+'\n</body>\n</html>';
+  var blob=new Blob(['﻿'+html],{type:'text/html;charset=utf-8'}); var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='小学'+gradeSel.value+'年_算数文章題.html'; document.body.appendChild(a); a.click(); a.remove();
+};
+var printSel=document.getElementById('printSel');
+function applyPrint(){ document.body.classList.remove('print-q','print-a'); if(printSel.value!=='all') document.body.classList.add('print-'+printSel.value); }
+printSel.onchange=applyPrint;
+document.getElementById('printBtn').onclick=function(){ applyPrint(); window.print(); };
+document.getElementById('makeBtn').onclick=build;
+gradeSel.onchange=function(){ renderCats(); build(); };
+try { var g=new URLSearchParams(location.search).get('g'); if(g && GRADES[g]) gradeSel.value=g; } catch(e){}
+renderCats(); build();
+window.__G = GRADES; window.__gen = gen;
+})();
+</script>
+</body>
+</html>
