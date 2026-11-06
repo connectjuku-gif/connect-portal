@@ -38,6 +38,30 @@ export default {
       return unauthorized();
     }
 
-    return env.ASSETS.fetch(request);
+    const res = await env.ASSETS.fetch(request);
+    return addHomeButton(request, res);
   },
 };
+
+// ---- すべての教材ページに「ポータルへ戻る」ボタンを付ける（ファイル自体は書きかえない） ----
+// 印刷時・ほかのページの中（iframe）・ダウンロードして開いたとき（file:）は表示しない。
+const HOME_BUTTON = `<a id="connect-home-btn" href="/" title="教材ポータルのトップへ戻る">← ポータル</a>
+<style>
+#connect-home-btn{position:fixed;left:12px;bottom:12px;z-index:2147483000;background:#1F3A5F;color:#fff;
+font:600 13px/1 "Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;padding:9px 14px;border-radius:999px;
+text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.25);opacity:.88}
+#connect-home-btn:hover{opacity:1}
+@media print{#connect-home-btn{display:none!important}}
+</style>
+<script>(function(){var b=document.getElementById('connect-home-btn');if(!b)return;
+try{if(window.self!==window.top||location.protocol==='file:')b.remove();}catch(e){b.remove();}})();</script>`;
+
+function addHomeButton(request, res) {
+  const type = res.headers.get("Content-Type") || "";
+  if (!type.includes("text/html")) return res;
+  const path = new URL(request.url).pathname;
+  if (path === "/" || path === "/index.html" || path === "/index") return res;
+  return new HTMLRewriter()
+    .on("body", { element(el) { el.append(HOME_BUTTON, { html: true }); } })
+    .transform(res);
+}
