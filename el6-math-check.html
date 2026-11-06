@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小6算数_単元確認テスト（単元を選ぶ）</title>
+<style>
+* { box-sizing: border-box; }
+body { margin:0; font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif; background:#e9e9e9; color:#111; }
+.bar { position: sticky; top: 0; z-index: 10; background: #1F3A5F; color: #fff; padding: 10px 16px; }
+.bar .row1 { display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; }
+.bar .title { font-weight: bold; font-size: 15px; margin-right: auto; }
+.bar button, .bar a.btn { font-family: inherit; font-size: 13px; padding: 7px 14px; border-radius: 6px; border: none; cursor: pointer; text-decoration:none; }
+.bar .primary { background: #C9972B; color: #fff; font-weight: bold; }
+.bar .secondary { background: #3A557A; color: #fff; }
+.units { display:grid; grid-template-columns: repeat(6, 1fr); gap:6px; margin-top:10px; }
+.units button { font-family: inherit; font-size: 13px; padding: 7px 6px; border-radius: 6px; border: 1px solid #5A7398; background: #29466D; color:#E6ECF4; cursor:pointer; text-align:left; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.units button.on { background:#FAF8F2; color:#1F3A5F; border-color:#FAF8F2; font-weight:bold; }
+.note { font-size:12px; color:#D9E1EC; margin-top:8px; }
+.frame { max-width: 230mm; margin: 14px auto 40px; }
+iframe { width:100%; border:0; background:#fff; display:block; min-height: 80vh; box-shadow:0 1px 6px rgba(0,0,0,.15); }
+@media (max-width: 800px) { .units { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 480px) { .units { grid-template-columns: repeat(2, 1fr); } }
+@media print { .bar { display:none; } body { background:#fff; } .frame { margin:0; max-width:none; } iframe { box-shadow:none; } }
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="row1">
+    <span class="title">📊 小6算数 単元確認テスト（啓林館6年 相当）｜学習塾CONNECT</span>
+    <button class="primary" id="printBtn">このテストを印刷</button>
+    <a class="btn secondary" id="openBtn" href="el6-math-check-01.html" target="_blank" rel="noopener">別のタブで開く</a>
+  </div>
+  <div class="units" id="units"></div>
+  <div class="note">単元をえらぶと、下にそのテスト（問題用紙と解答・解説）が表示されます。編集はテスト右上の「編集モード」ボタンで。</div>
+</div>
+<div class="frame"><iframe id="view" title="確認テスト" src="el6-math-check-01.html"></iframe></div>
+<script>
+(function(){
+  var U = ['対称な図形','文字と式','分数×÷整数','分数×分数','分数÷分数','場合の数','円の面積','立体の体積','データの調べ方','比','拡大図と縮図','比例と反比例'];
+  var MARK = '①②③④⑤⑥⑦⑧⑨⑩⑪⑫';
+  var box = document.getElementById('units'), view = document.getElementById('view'), openBtn = document.getElementById('openBtn');
+  function file(i){ return 'el6-math-check-' + (i < 9 ? '0' : '') + (i + 1) + '.html'; }
+  U.forEach(function(name, i){
+    var b = document.createElement('button'); b.type = 'button'; b.textContent = MARK[i] + ' ' + name; b.title = name;
+    b.onclick = function(){ show(i, true); }; box.appendChild(b);
+  });
+  function fit(){
+    try { var d = view.contentDocument; if (d && d.body) view.style.height = (d.documentElement.scrollHeight + 20) + 'px'; } catch (e) {}
+  }
+  view.addEventListener('load', function(){ fit(); setTimeout(fit, 300); });
+  window.addEventListener('resize', fit);
+  function show(i, push){
+    Array.prototype.forEach.call(box.children, function(b, k){ b.classList.toggle('on', k === i); });
+    var f = file(i); if (view.getAttribute('src') !== f) view.setAttribute('src', f);
+    openBtn.href = f;
+    if (push) { try { history.replaceState(null, '', '#u' + (i + 1)); } catch (e) {} }
+  }
+  document.getElementById('printBtn').onclick = function(){
+    try { view.contentWindow.focus(); view.contentWindow.print(); }
+    catch (e) { window.open(openBtn.href, '_blank'); }
+  };
+  var m = /#u(\d+)/.exec(location.hash), start = m ? Math.min(Math.max(+m[1], 1), 12) - 1 : 0;
+  show(start, false);
+})();
+</script>
+</body>
+</html>
