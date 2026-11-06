@@ -1,0 +1,366 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>西新宿中2年 2学期期末 英語予想問題（応用）</title>
+<style>
+@page { size: A4; margin: 16mm 14mm; }
+* { box-sizing: border-box; }
+body { font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif; color:#111; line-height:1.7; font-size:11.5pt; margin:0; background:#f2f2f2; }
+.sheet { background:#fff; max-width: 190mm; margin: 12px auto; padding: 14mm 12mm; box-shadow: 0 1px 6px rgba(0,0,0,.15); }
+@media print { body{background:#fff;} .sheet{ box-shadow:none; margin:0; padding:0; max-width:none; } .nop{display:none !important;} .pb{ page-break-before: always; } }
+h1 { text-align:center; font-size:16pt; margin:0 0 4px; letter-spacing:.05em; }
+.sub { text-align:center; font-size:10.5pt; color:#444; margin-bottom:10px; }
+.namebox { border:1px solid #333; padding:6px 10px; display:flex; gap:24px; justify-content:flex-end; margin: 6px 0 14px; font-size:11pt; }
+.rules { border:1px solid #333; padding:8px 12px; font-size:10pt; margin-bottom:14px; }
+.q { margin: 18px 0 10px; }
+.qh { display:flex; align-items:flex-start; gap:8px; }
+.num { display:inline-block; border:1.5px solid #222; min-width:24px; text-align:center; font-weight:bold; line-height:1.4; padding:1px 4px; flex-shrink:0; }
+.pts { float:right; font-size:10pt; color:#333; }
+.inst { flex:1; }
+ol.items { list-style:none; padding-left: 1.5em; margin:6px 0; }
+ol.items li { margin: 5px 0; }
+.en { font-family: "Century Gothic", "Trebuchet MS", "Segoe UI", Verdana, sans-serif; }
+.blank { display:inline-block; border-bottom:1px solid #222; min-width:64px; text-align:center; vertical-align:bottom; }
+.blank.w { min-width:110px; }
+.box { border:1px solid #222; padding:10px 14px; margin: 8px 0; }
+.box p { margin: 3px 0; }
+.note { font-size:9.5pt; color:#333; margin-top:6px; }
+.cond { border:1px solid #222; width: 78%; margin: 8px auto; padding:8px 14px; font-size:10.5pt; page-break-inside: avoid; break-inside: avoid; }
+.cond .t { text-align:center; font-weight:bold; }
+.sub2 { margin: 8px 0 2px; }
+.hint { color:#444; }
+.ans { background:#fbfbfb; }
+.ans h2 { font-size:13pt; border-left:5px solid #222; padding-left:8px; margin:20px 0 6px; }
+.ans .a { margin:4px 0 4px 1em; }
+.ans .k { color:#000; font-weight:bold; text-decoration: underline; }
+.ans .ex { font-size:10pt; color:#333; margin-left:1em; }
+table.sc { border-collapse:collapse; margin:8px 0; font-size:10pt; }
+table.sc th, table.sc td { border:1px solid #555; padding:3px 10px; text-align:center; }
+.memo { border:2px solid #222; padding:10px 14px; margin:10px 0 16px; font-size:10.5pt; }
+.memo b { display:block; margin-bottom:4px; }
+.u { text-decoration: underline; }
+.two { columns: 2; column-gap: 28px; }
+.choices { margin-left:1.5em; font-size:11pt; }
+.choices span { display:inline-block; min-width:9em; margin-right:6px; }
+.msgbox { border:1px solid #222; padding:8px 14px; margin:8px 0 8px 1.2em; width:88%; page-break-inside: avoid; break-inside: avoid; }
+.msgbox p { margin:2px 0; }
+.poster { border:2px solid #222; padding:10px 16px; margin:8px auto; width:76%; text-align:center; page-break-inside: avoid; break-inside: avoid; }
+.poster p { margin:3px 0; }
+.poster .ttl { font-weight:bold; font-size:13pt; }
+.crit { border-collapse:collapse; font-size:10pt; margin:6px 0 6px 1.2em; width:88%; page-break-inside: avoid; break-inside: avoid; }
+.crit th, .crit td { border:1px solid #555; padding:3px 8px; text-align:left; vertical-align:top; }
+.crit th { width:8em; text-align:center; }
+.wl { border:1px solid #222; min-height:120px; margin:6px 0 6px 1.2em; width:88%; }
+.mail { border:1px solid #222; padding:8px 14px; margin:8px 0 8px 1.2em; width:88%; page-break-inside: avoid; break-inside: avoid; }
+.mail p { margin:2px 0; }
+.jp { font-size:10.5pt; }
+.cm { border:1px solid #222; padding:8px 14px; margin:8px 0 8px 1.2em; width:88%; }
+.cm p { margin:3px 0; }
+.cmwrap { page-break-inside: avoid; break-inside: avoid; }
+/* 今回追加：選択肢の表・人物カード・紹介文 */
+table.opt { border-collapse:collapse; font-size:10.5pt; margin:6px 0 6px 1.2em; }
+table.opt th, table.opt td { border:1px solid #555; padding:3px 12px; text-align:center; }
+.cards { display:grid; grid-template-columns: repeat(3, 1fr); margin:8px 0 8px 1.2em; width:92%; border:1.5px solid #222; page-break-inside: avoid; break-inside: avoid; }
+.card { border:1px solid #777; padding:6px 8px; font-size:10pt; min-height:62px; line-height:1.5; }
+.card b { font-size:12.5pt; margin-right:6px; }
+.intro { border:1px solid #222; padding:6px 12px; margin:6px 0 6px 1.2em; width:92%; page-break-inside: avoid; break-inside: avoid; }
+.intro p { margin:2px 0; }
+.intro .who { font-weight:bold; }
+.keep { page-break-inside: avoid; break-inside: avoid; }
+.qh { break-after: avoid; page-break-after: avoid; }
+ol.items li { break-inside: avoid; page-break-inside: avoid; }
+.ans .ex, .ans table.sc { break-inside: avoid; page-break-inside: avoid; }
+.ans h2 { break-after: avoid; page-break-after: avoid; }
+.dl p { margin:4px 0; }
+.answ { display:inline-block; border-bottom:1px solid #222; min-width:400px; height:1.4em; vertical-align:bottom; }
+</style>
+<style>
+.ans .ex { break-inside:auto; }
+.wlines { margin:6px 0 6px 1.2em; width:92%; }
+.wlines div { border-bottom:1px solid #444; height:1.8em; }
+.ansl { display:inline-block; border-bottom:1px solid #222; min-width:150mm; height:1.5em; vertical-align:bottom; }
+.box p.sp { text-indent:0; }
+.box.en { line-height:1.55; font-size:11pt; }
+.box.en p { margin:2px 0; }
+.box.en.sm { font-size:10.5pt; line-height:1.5; }
+.jp.sm { font-size:10pt; line-height:1.55; }
+.box .who { display:inline-block; min-width:6.5em; font-weight:bold; }
+</style>
+</head>
+<body>
+<!-- ===================== 問題用紙 ===================== -->
+<div class="sheet">
+<h1>第２学年 英語　２学期期末考査 予想問題（応用）</h1>
+<div class="sub">西新宿中学校 対策／NEW HORIZON 2　Unit 4（have to・must・動名詞）、Unit 5（疑問詞＋to・人に〜の仕方を・be sure／glad that）＋ Let's Read 1（History of Clocks）</div>
+<div class="namebox"><span>２年　　組　　番</span><span>名前　　　　　　　　　　</span><span>／70点</span></div>
+<div class="rules">
+【注意】<br>
+１．本番はリスニング（約30点）から始まります。この予想問題は、西新宿中の本番と同じ並びの「筆記70点分」を、本番より難しめに作ってあります（目安45分）。<br>
+２．英語を書く問題は、大文字・ピリオド・スペルまで正確に書くこと。スペルミスは減点します。<br>
+３．大問４は<b>不要な語が１つ</b>含まれています。２番目・４番目の記号と、不要な語の記号を答えます。文の最初に来る語も小文字で示してあります。
+</div>
+
+<!-- 大問1 -->
+<div class="q">
+<div class="qh"><span class="num">1</span><span class="inst">次の英文の（　）に入る最も適切な語句をア〜エから１つずつ選び、記号で答えなさい。<span class="pts">［知識・技能（2点×4）］</span></span></div>
+<ol class="items en">
+<li>(1) A: Must I finish this homework today?<br>　B: No, you (　　). You can finish it tomorrow.
+<div class="choices"><span>ア mustn't</span><span>イ don't have to</span><span>ウ must</span><span>エ can't</span></div></li>
+<li>(2) (　　) pictures of birds is my hobby.
+<div class="choices"><span>ア Take</span><span>イ Takes</span><span>ウ Taking</span><span>エ Took</span></div></li>
+<li>(3) My sister will (　　) cook dinner tonight because my mother is busy.
+<div class="choices"><span>ア must</span><span>イ has to</span><span>ウ have to</span><span>エ had to</span></div></li>
+<li>(4) Ms. Brown taught (　　) how to make a cake last Sunday.
+<div class="choices"><span>ア we</span><span>イ our</span><span>ウ us</span><span>エ ours</span></div></li>
+</ol>
+</div>
+
+<!-- 大問2 -->
+<div class="q">
+<div class="qh"><span class="num">2</span><span class="inst">次の(1)〜(3)の対話が成り立つように、①・②に入る適切な英語を１語ずつ書きなさい。<span class="pts">［知識・技能（1点×6）］</span></span></div>
+<ol class="items en">
+<li>(1) 留学の相談で<br>　A: I'm going to stay with a host family in Australia. Do you have any advice?<br>　B: Sure. You are a <span class="blank">①</span> of the family, not a guest. So, you have to <span class="blank">②</span> the house rules. <span class="hint">（②従う）</span></li>
+<li>(2) 本について<br>　A: Did you <span class="blank">①</span> reading the book? <span class="hint">（読み終える）</span><br>　B: Yes. <span class="blank">②</span> it was a lot of fun. I want to read it again.</li>
+<li>(3) 駅の券売機の前で<br>　A: Excuse me. I don't know <span class="blank">①</span> to buy a ticket for Midori Station.<br>　B: Over there. I can <span class="blank">②</span> you how to use the machine. Come with me. <span class="hint">（②実際にやって見せる）</span></li>
+</ol>
+</div>
+
+<!-- 大問3 -->
+<div class="q">
+<div class="qh"><span class="num">3</span><span class="inst">次の各組の英文がほぼ同じ内容を表すように、（　）に適切な英語を１語ずつ書きなさい。<span class="pts">［知識・技能（2点×3）］</span></span></div>
+<ol class="items en">
+<li>(1) I can't swim.<br>　= I don't know (　　　　　) (　　　　　) swim.</li>
+<li>(2) She has to write a report.（文末に tomorrow を加えて）<br>　→ She (　　　　　) (　　　　　) to write a report tomorrow.</li>
+<li>(3) I'm happy because I can see you again.<br>　= I'm (　　　　　) (　　　　　) I can see you again.</li>
+</ol>
+</div>
+
+<!-- 大問4 -->
+<div class="q">
+<div class="qh"><span class="num">4</span><span class="inst">次の(1)〜(5)の日本語に合うように［　］内の語句を並べかえたとき、<b>２番目と４番目</b>にくる語句の記号を答えなさい。ただし、それぞれ<b>不要な語が１つ</b>含まれているので、その記号も答えなさい。<span class="pts">［知識・技能（2点×5）］</span></span></div>
+<ol class="items en">
+<li>(1) 私たちは明日、早起きしなくてもよい。<br>　We ［ア up　/　イ have　/　ウ don't　/　エ to　/　オ get　/　カ must］ early tomorrow.<br>　　２番目（　　）４番目（　　）不要（　　）</li>
+<li>(2) 私は夕食の後で皿を洗い終えました。<br>　I ［ア dishes　/　イ after　/　ウ to　/　エ finished　/　オ the　/　カ washing］ dinner.<br>　　２番目（　　）４番目（　　）不要（　　）</li>
+<li>(3) 彼女は私に駅への行き方を教えてくれました。<br>　She ［ア to　/　イ what　/　ウ me　/　エ get　/　オ told　/　カ how］ to the station.<br>　　２番目（　　）４番目（　　）不要（　　）</li>
+<li>(4) 英語を話すことは私にとって難しくありません。<br>　［ア is　/　イ speak　/　ウ difficult　/　エ English　/　オ not　/　カ speaking］ for me.<br>　　２番目（　　）４番目（　　）不要（　　）</li>
+<li>(5) あなたはパーティーに何を持っていけばよいか知っていますか。<br>　Do ［ア know　/　イ what　/　ウ you　/　エ bring　/　オ to　/　カ how］ to the party?<br>　　２番目（　　）４番目（　　）不要（　　）</li>
+</ol>
+</div>
+
+<!-- 大問5 -->
+<div class="q pb">
+<div class="qh"><span class="num">5</span><span class="inst">次の英文は、学校新聞の記者が、製品デザイナーの加藤さん（Ms. Kato）にインタビューした記事です。読んで、あとの問いに答えなさい。<span class="pts">［思考・判断・表現（2点×6）］</span></span></div>
+<div class="box en sm">
+<p><span class="who">Reporter:</span> Ms. Kato, what kind of products do you make?</p>
+<p><span class="who">Ms. Kato:</span> I make kitchen tools with a universal design. For example, I designed this spoon. It is a little heavy and has a thick handle. Thanks to its shape, people with weak hands can hold <u>①it</u> easily.</p>
+<p><span class="who">Reporter:</span> Why did you start making these products?</p>
+<p><span class="who">Ms. Kato:</span> When I was a junior high school student, my grandfather hurt his right hand. Eating with chopsticks became hard for him. He often said, "I'm sorry that I'm so slow." I was sad. I wanted to help him, but I didn't know what to do.</p>
+<p><span class="who">Reporter:</span> What did you do then?</p>
+<p><span class="who">Ms. Kato:</span> I went to the library and read a book about Ronald Mace. He wanted to make designs for all people, regardless of age, ability, or situation. <u>②His idea</u> changed my life. I decided to study design.</p>
+<p><span class="who">Reporter:</span> What is important when you make a product?</p>
+<p><span class="who">Ms. Kato:</span> Listening to users is very important. I must not make products only for myself. So I visit hospitals and homes for elderly people and ask a lot of questions. Sometimes I have to change my design ten times.</p>
+<p><span class="who">Reporter:</span> Do you have a message for students?</p>
+<p><span class="who">Ms. Kato:</span> Look around you. You will find many small problems. You don't have to be a designer to solve them. Just think about other people. I'm sure that you can make the world better.</p>
+<p class="note">（注）kitchen tool(s) 台所用品　thick 太い　handle 持ち手　thanks to 〜のおかげで　weak 弱い　hold 持つ　hurt けがをした　regardless of 〜に関係なく　user(s) 使う人　home(s) for elderly people 高齢者施設　solve 解決する</p>
+</div>
+<ol class="items">
+<li>(1) 下線部①の it が指すものを、本文中から英語２語で抜き出しなさい。　<span class="blank w" style="min-width:160px"></span></li>
+<li>(2) 加藤さんが中学生のときに悲しかったのはなぜですか。日本語で具体的に答えなさい。<br>　<span class="ansl"></span></li>
+<li>(3) 下線部②の His idea とはどんな考えですか。日本語で答えなさい。<br>　<span class="ansl"></span></li>
+<li>(4)(5) 本文の内容に合うものをア〜カから<b>２つ</b>選び、記号で答えなさい。（順不同・1つ2点）
+<div class="jp sm" style="margin-left:1.2em">
+ア　加藤さんのスプーンは、軽くて細い持ち手がついている。<br>
+イ　加藤さんは中学生のとき、祖父を助けるために何をすればよいかわからなかった。<br>
+ウ　加藤さんはロナルド・メイスに直接会って、デザインを学ぶことに決めた。<br>
+エ　加藤さんは製品を作るとき、使う人の話を聞くことを大切にしている。<br>
+オ　加藤さんは、一度決めたデザインを変えることはない。<br>
+カ　加藤さんは、問題を解決するためにはデザイナーにならなければならないと言っている。
+</div>　（　　　）（　　　）</li>
+<li class="en">(6) Where does Ms. Kato go to ask questions?<br>　<span class="ansl"></span></li>
+</ol>
+</div>
+
+<!-- 大問6 -->
+<div class="q pb">
+<div class="qh"><span class="num">6</span><span class="inst">次の英文は、教科書の "History of Clocks" を読んだケンタ（Kenta）と、ALTのスミス先生（Mr. Smith）の対話です。読んで、あとの問いに答えなさい。<span class="pts">［思考・判断・表現（2点×6）］</span></span></div>
+<div class="box en sm">
+<p><span class="who">Kenta:</span> Mr. Smith, I read "History of Clocks" in our textbook. It was very interesting.</p>
+<p><span class="who">Mr. Smith:</span> Oh, what did you learn?</p>
+<p><span class="who">Kenta:</span> About 6,000 years ago, Egyptians used the sun. They put sticks in the ground, and the shadows told them the time. But people couldn't use <u>①them</u> at night or on cloudy days.</p>
+<p><span class="who">Mr. Smith:</span> Right. So about 3,500 years ago, they started to measure time (　A　) the sun.</p>
+<p><span class="who">Kenta:</span> Yes. They used water clocks. They put water in pots with small holes. The water (　B　) little by little, and the lines in the pots told them the time.</p>
+<p><span class="who">Mr. Smith:</span> Great. What about mechanical clocks?</p>
+<p><span class="who">Kenta:</span> About 700 years ago, people started to make them. At first, they used weights to power the clocks, but <u>②people couldn't move the clocks easily</u>. Later, people used springs. The springs were small and light, so people began to carry watches.</p>
+<p><span class="who">Mr. Smith:</span> Wonderful. By the way, my grandfather has an old watch. It has a spring in it, so he has to wind it every morning.</p>
+<p><span class="who">Kenta:</span> Really? I want to see it. Can you show me (　C　) to wind it?</p>
+<p><span class="who">Mr. Smith:</span> Sure. I'll bring it next week. Ancient people used nature, water, fire, and their wisdom. Checking the time was not easy for them.</p>
+<p><span class="who">Kenta:</span> I think we should remember their wisdom.</p>
+<p class="note">（注）Egyptian(s) エジプト人　stick(s) 棒　shadow(s) 影　measure 測る　pot(s) つぼ　hole(s) 穴　little by little 少しずつ　mechanical 機械じかけの　weight(s) おもり　power 動かす　spring(s) ばね、ぜんまい　wind (ねじを)巻く　ancient 古代の　wisdom 知恵</p>
+</div>
+<ol class="items">
+<li>(1) 本文の流れに合うように、（ A ）に入る英語１語を書きなさい。　<span class="blank w"></span></li>
+<li>(2) 本文の流れに合うように、（ B ）に入る英語１語を書きなさい。（「減った」の意味）　<span class="blank w"></span></li>
+<li>(3) 本文の流れに合うように、（ C ）に入る英語１語を書きなさい。　<span class="blank w"></span></li>
+<li>(4) 下線部①の them が指すものを、本文の内容にそって日本語で答えなさい。<br>　<span class="ansl"></span></li>
+<li>(5) 下線部②のようになったのはなぜですか。その理由を日本語で答えなさい。<br>　<span class="ansl"></span></li>
+<li class="en">(6) What does Mr. Smith's grandfather have to do every morning?<br>　<span class="ansl"></span></li>
+</ol>
+</div>
+
+<!-- 大問7 -->
+<div class="q pb">
+<div class="qh"><span class="num">7</span><span class="inst">次の英文は、オーストラリアでホームステイをしたユウト（Yuto）が、授業で行ったスピーチです。読んで、あとの問いに答えなさい。<span class="pts">［思考・判断・表現（(1)〜(3) 2点×3、(4) 10点）］</span></span></div>
+<div class="box en">
+<p>　This summer, I stayed with a host family in Australia for two weeks. At first, I was nervous because I couldn't speak English well. However, my host family was very kind. My host sister, Lily, taught me how to play cricket. Playing it with her was a lot of fun.</p>
+<p>　One day, I made a mistake. I forgot to call my host family and came home late. My host mother said, "You must call us when you are late. We were really worried about you." I said, "I'm sorry." I learned that following the house rules is important.</p>
+<p>　Now I'm glad that I had this experience. I want to visit them again in the near future.</p>
+<p class="note">（注）nervous 緊張して　cricket クリケット（スポーツ）　make a mistake 失敗する　forgot to 〜 〜するのを忘れた　worried 心配して　follow 従う</p>
+</div>
+<ol class="items">
+<li class="en">(1) What did Lily teach Yuto?<br>　<span class="ansl"></span></li>
+<li>(2) ユウトのホストマザーが心配したのはなぜですか。日本語で答えなさい。<br>　<span class="ansl"></span></li>
+<li>(3) ユウトがこの失敗から学んだことは何ですか。日本語で答えなさい。<br>　<span class="ansl"></span></li>
+<li>(4) あなたの家に、海外から中学生のサム（Sam）がホームステイに来ます。日本での生活や家のルールについて、サムにアドバイスするメッセージを、次の＜条件＞に合うように英語で書きなさい。</li>
+</ol>
+<div class="cond"><div class="t">＜条件＞</div>
+①　<span class="en">Hi, Sam.</span> などの呼びかけを除いて、<b>６文以上</b>の英語で書くこと。<br>
+②　<span class="en">have to</span> または <span class="en">don't have to</span> を使った文を１つ以上入れること。<br>
+③　<span class="en">must not</span> を使った文を１つ以上入れること。<br>
+④　動名詞（〜ing「〜すること」）を使った文を１つ以上入れること。<br>
+⑤　最後の文は <span class="en">I'm sure that 〜.</span> で書くこと。
+</div>
+<div class="wlines"><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+</div>
+</div>
+
+<!-- ===================== 解答・解説 ===================== -->
+<div class="sheet ans pb">
+<h1>解答・解説</h1>
+<div class="sub">西新宿中２年 ２学期期末 英語予想問題（応用）　1：8点／2：6点／3：6点／4：10点／5：12点／6：12点／7：16点　合計70点</div>
+
+<div class="memo"><b>■ 出題範囲メモ</b>
+・範囲：NEW HORIZON 2　Unit 4（p.49〜58）、Unit 5（p.59〜66）。大問6のみ Let's Read 1「History of Clocks」(p.44〜47) の内容を使った。<b>Let's Read 1 が範囲外なら、大問6は「初見の対話文」として解けばよい</b>（本文にすべて答えがあるので、教科書を読んでいなくても解ける）。<br>
+・文法：have to／don't have to／had to／will have to、must／must not、Must I 〜? — No, you don't have to.、動名詞（主語・目的語）、疑問詞＋to、〈tell／show／teach＋人＋how to〉、be sure／glad／sorry that。<br>
+・標準との違い：①4択に「Must I 〜? への No の答え」「will have to」「teach の後の目的格」②並べかえを<b>不要語入り</b>に ③長文を初見に近い内容に ④英作文を6文以上・条件4つに。<br>
+・本文の再利用：大問2(1)は Unit 4 Part 1 の Homestay Advice、大問5は Unit 5 Read and Think 2（ロナルド・メイス：regardless of age, ability, or situation）、大問7は Unit 4 Read and Think 2（純のホームステイ体験：in the near future）と Real Life English（お礼の手紙）をもとに作った。<br>
+・<b>ワーク対応ページ（予想）</b>：Unit 4 Part 1・2 → p.56〜59／Read and Think 1・2 → p.60〜63／単元のまとめ → p.64〜65／長文を読もう（SNS投稿）→ p.66／自己表現 → p.67／Real Life English → p.68／文法整理4 助動詞 → p.70〜71／Unit 5 Part 1・2 → p.72〜75／Read and Think → p.76〜77／単元のまとめ → p.78〜79／長文を読もう・自己表現 → p.80〜81。
+</div>
+
+<h2>1　4択文法（2点×4）</h2>
+<div class="a">(1) <span class="k">イ</span>　(2) <span class="k">ウ</span>　(3) <span class="k">ウ</span>　(4) <span class="k">ウ</span></div>
+<div class="ex">(1) Must I 〜?「〜しなければなりませんか」に No で答えるときは <b>No, you don't have to.</b>「その必要はありません」。mustn't だと「してはいけない」になり、「明日終わらせればいい」と合わない。<br>
+(2) 文の主語になる「鳥の写真を撮ること」＝ Taking pictures of birds。動名詞の主語は三人称単数扱いなので is。<br>
+(3) will の後ろは動詞の原形。must は will と並べられないので <b>will have to</b>「〜しなければならないだろう」。<br>
+(4) teach ＋人＋how to 〜。「人」の位置は目的格（me／us／him／her／them）。</div>
+
+<h2>2　場面対話（1点×6）</h2>
+<div class="a">(1) ① <span class="k">member</span>　② <span class="k">follow</span><br>
+(2) ① <span class="k">finish</span>　② <span class="k">Reading</span><br>
+(3) ① <span class="k">where</span>　② <span class="k">show</span></div>
+<div class="ex">(1) 教科書 Unit 4 Part 1 "You are a member of the family. You are not a guest. You have to follow the house rules." そのまま。<br>
+(2) ②は文頭の動名詞の主語。大文字の R を忘れると減点。<br>
+(3) ① 答えが Over there.（あちらです）なので「どこで買えばよいか」＝ where to buy。② show は「実際にやって見せる」、tell は「言葉で教える」。</div>
+
+<h2>3　書きかえ（2点×3・両方正解で2点）</h2>
+<div class="a">(1) <span class="k">how to</span>　(2) <span class="k">will have</span>　(3) <span class="k">glad that</span></div>
+<div class="ex">(1) 「泳げない」＝「泳ぎ方を知らない」。<br>
+(2) 未来の「しなければならない」は will have to。has to のまま will を付けるのは×（will の後は原形）。<br>
+(3) be glad that 〜「〜してうれしい」。happy の言いかえで glad。that は省略されることもあるが、ここでは空所が2つなので書く。</div>
+
+<h2>4　不要語入り並べかえ（2点×5・3つとも正解で2点）</h2>
+<table class="sc en"><tr><th></th><th>完成文</th><th>2番目</th><th>4番目</th><th>不要</th></tr>
+<tr><td>(1)</td><td style="text-align:left">We <u>don't have to get up</u> early tomorrow.</td><td><span class="k">イ</span></td><td><span class="k">オ</span></td><td><span class="k">カ</span></td></tr>
+<tr><td>(2)</td><td style="text-align:left">I <u>finished washing the dishes after</u> dinner.</td><td><span class="k">カ</span></td><td><span class="k">ア</span></td><td><span class="k">ウ</span></td></tr>
+<tr><td>(3)</td><td style="text-align:left">She <u>told me how to get</u> to the station.</td><td><span class="k">ウ</span></td><td><span class="k">ア</span></td><td><span class="k">イ</span></td></tr>
+<tr><td>(4)</td><td style="text-align:left"><u>Speaking English is not difficult</u> for me.</td><td><span class="k">エ</span></td><td><span class="k">オ</span></td><td><span class="k">イ</span></td></tr>
+<tr><td>(5)</td><td style="text-align:left">Do <u>you know what to bring</u> to the party?</td><td><span class="k">ア</span></td><td><span class="k">オ</span></td><td><span class="k">カ</span></td></tr>
+</table>
+<div class="ex">(1) 「しなくてもよい」は don't have to。must は不要（must not なら「してはいけない」）。<br>
+(2) finish の後は〈〜ing〉なので to は不要（finish to wash は×）。<br>
+(3) 「行き方」なので how。what to get だと「何を手に入れるべきか」。<br>
+(4) 主語は動名詞 Speaking。動詞の原形 speak は主語になれない。<br>
+(5) 「何を」なので what。how to bring は「持っていき方」。</div>
+
+<h2>5　長文読解①　インタビュー記事（2点×6）</h2>
+<div class="a">(1) <span class="k">this spoon</span><br>
+(2) <span class="k">祖父が右手をけがして、はしで食べるのが難しくなり、「こんなに遅くてごめんね」とよく言っていたから。</span>（祖父が「遅くてごめん」と言っていたこと、またははしで食べるのが難しくなったことが書けていれば可）<br>
+(3) <span class="k">年齢や能力、状況に関係なく、すべての人のためのデザインを作るという考え。</span><br>
+(4)(5) <span class="k">イ・エ</span>（順不同）<br>
+(6) <span class="k en">She goes to (visits) hospitals and homes for elderly people.</span></div>
+<div class="ex">(1) it は直前の文の主語 It と同じく this spoon。<br>
+(2) I was sad. の直前の内容をまとめる。I'm sorry that 〜「〜してごめんなさい」は be sorry that の形（Unit 5）。<br>
+(3) 直前の He wanted to make designs for all people, regardless of age, ability, or situation. の内容。教科書 Read and Think 2 の表現そのまま。<br>
+(4)(5) ア：heavy（重い）・thick（太い）なので逆。ウ：会ったのではなく本を読んだ。オ：10回変えることもある。カ：You don't have to be a designer（デザイナーでなくてよい）と言っている。<br>
+(6) 主語が Ms. Kato なので goes／visits と三単現の s を付ける。</div>
+
+<h2>6　長文読解②　対話文（2点×6）</h2>
+<div class="a">(1) <span class="k">without</span>　(2) <span class="k">decreased</span>　(3) <span class="k">how</span><br>
+(4) <span class="k">地面に立てた棒の影で時刻を知る時計（太陽を使った時計＝日時計）。</span><br>
+(5) <span class="k">（時計を動かすための）おもりが大きくて重かったから。</span><br>
+(6) <span class="k en">He has to wind his (old) watch.</span></div>
+<div class="ex">(1) 夜やくもりの日は太陽が使えない →「太陽<b>なしで</b>」時間を測り始めた。教科書 "Egyptians started to measure time without it." <br>
+(2) 過去の話なので decrease → decreased。<br>
+(3) show me how to 〜「〜の仕方を見せる」。<br>
+(4) 「棒の影を使って時刻を知ったもの」と書ければ可。them は sticks（棒）だけでなく、その仕組み全体を指している。<br>
+(5) 理由は直接書かれていないので推測する問題。直後の「ばねは<b>小さくて軽かった</b>ので、時計を持ち運べるようになった」から、その前のおもりは<b>大きくて重かった</b>と読み取る（small and light ⇔ big and heavy）。教科書本文 "the weights were big and heavy, so these clocks were difficult to move." と同じ内容<br>
+(6) 主語が he なので has to。</div>
+
+<h2>7　スピーチ読解・条件英作文（(1)〜(3) 2点×3、(4) 10点）</h2>
+<div class="a">(1) <span class="k en">She taught him how to play cricket.</span><br>
+(2) <span class="k">ユウトが電話をするのを忘れて、遅く帰ってきたから。</span><br>
+(3) <span class="k">家のルールに従うことが大切だということ。</span></div>
+<div class="ex">(1) Lily は女性 → She、Yuto は男性 → him。taught は teach の過去形。<br>
+(3) I learned that 〜 の that 以下。following the house rules（家のルールに従うこと）が動名詞の主語。</div>
+<div class="a">(4) 模範解答</div>
+<div class="two en" style="font-size:10.5pt">
+<p><b>例1（家のルール）</b><br>Hi, Sam. Welcome to my house. You have to take off your shoes at the door. You must not take long baths because the next person uses the same hot water. You don't have to speak perfect Japanese. Talking with my family is very important. Please enjoy eating Japanese food, too. I'm sure that you will have a great time.</p>
+<p><b>例2（学校生活）</b><br>Hi, Sam. I'll tell you about school life in Japan. We have to clean our classroom after lunch. You must not use your smartphone at school. You don't have to bring lunch. We eat school lunch together. Eating with friends is a lot of fun. I'm sure that you will like our school.</p>
+<p><b>例3（町の生活）</b><br>Hi, Sam. Here is some advice. In Japan, you have to be quiet on the train. You must not talk on the phone there. Walking around our town is fun. I can show you how to use the trains, too. Don't worry. I'm sure that we will be good friends.</p>
+<p><b>書き方テンプレ</b><br>① Hi, Sam.（文数に入れない）<br>② You have to <u>すること</u>.<br>③ You must not <u>してはいけないこと</u>.<br>④ <u>理由</u>（because 〜 など）<br>⑤ <u>〜ing</u> is fun.／Please enjoy <u>〜ing</u>.<br>⑥ I'm sure that you will <u>〜</u>.</p>
+</div>
+<div class="ex">【採点基準（10点）】条件②③④⑤を満たしているか 各1.5点（計6点）／6文以上・アドバイスとして内容がまとまっているか 2点／文法・スペル 2点（ミス1つにつき−1、0点まで）。must not と don't have to を<b>意味をまちがえずに</b>使い分けているかを特に見る（「靴をぬがなくてはいけない」を must not で書くのは×）。</div>
+
+<h2>この予想問題のねらい（生徒への指示）</h2>
+<div class="ex" style="font-size:10.5pt">
+１．Must I 〜? の No の答えは <b>No, you don't have to.</b>。mustn't と答えると意味が「してはいけない」に変わる。<br>
+２．助動詞は２つ並べられない。will must ×／will have to ○。can must ×。<br>
+３．不要語入り並べかえは「どの語が文法的に入らないか」（finish to／speak を主語に など）を先に見つけると速い。<br>
+４．長文は、指示語（it／them）の答えを必ず直前の文から探し、日本語記述は「〜から。」「〜こと。」と文末をそろえる。<br>
+５．History of Clocks は「太陽 → 水 → 火 → おもり → ばね」の順番と、それぞれの弱点（夜は使えない／重くて動かせない）を説明できるようにしておくこと。
+</div>
+</div>
+
+<div class="nop" id="toolbar" style="position:fixed; top:10px; right:10px; z-index:99; display:flex; gap:6px; font-size:11pt;">
+  <button id="btnEdit" onclick="toggleEdit()" style="padding:6px 12px; border:1.5px solid #222; background:#fff; cursor:pointer;">編集モード：OFF</button>
+  <button onclick="saveHtml()" style="padding:6px 12px; border:1.5px solid #222; background:#fff; cursor:pointer;">保存（HTMLをダウンロード）</button>
+  <button onclick="window.print()" style="padding:6px 12px; border:1.5px solid #222; background:#fff; cursor:pointer;">印刷</button>
+</div>
+<div class="nop" id="editHint" style="display:none; position:fixed; bottom:10px; right:10px; z-index:99; background:#fff; border:1.5px solid #222; padding:6px 12px; font-size:10pt;">文字をクリックしてそのまま書き換えられます。終わったら「保存」で新しいHTMLをダウンロードしてください。</div>
+<style>
+.editing .sheet { outline:2px dashed #888; }
+.editing [contenteditable]:focus { outline:none; }
+</style>
+<script>
+var editing = false;
+function toggleEdit(){
+  editing = !editing;
+  document.querySelectorAll('.sheet').forEach(function(s){ s.contentEditable = editing ? 'true' : 'false'; });
+  document.body.classList.toggle('editing', editing);
+  document.getElementById('btnEdit').textContent = '編集モード：' + (editing ? 'ON' : 'OFF');
+  document.getElementById('editHint').style.display = editing ? 'block' : 'none';
+}
+function saveHtml(){
+  if (editing) toggleEdit();
+  var html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  var blob = new Blob(['\ufeff'+html], {type:'text/html'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = (document.title || 'test') + '.html';
+  document.body.appendChild(a); a.click(); a.remove();
+}
+</script>
+
+</body>
+</html>
