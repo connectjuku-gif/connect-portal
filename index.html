@@ -69,6 +69,17 @@
   }
   .gchip:hover { border-color: var(--primary); color: var(--primary); }
   .gchip.active { background: var(--primary); border-color: var(--primary); color: #FAF8F2; }
+  nav.schools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 14px 0 0; }
+  nav.schools .gl { font-size: 12px; color: #A9A294; margin-right: 2px; }
+  .schip {
+    border: 1px solid #D8D2C4; background: #FFFFFF; color: #595F6B;
+    border-radius: 999px; padding: 7px 16px; font-size: 13px; font-weight: 500;
+    font-family: inherit; cursor: pointer;
+  }
+  .schip .n { font-size: 11px; color: #A9A294; margin-left: 4px; }
+  .schip:hover { border-color: var(--primary); color: var(--primary); }
+  .schip.active { background: var(--primary); border-color: var(--primary); color: #FAF8F2; }
+  .schip.active .n { color: #D9E1EC; }
   nav.tags { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 14px 0 0; }
   nav.tags .gl { font-size: 12px; color: #A9A294; margin-right: 2px; }
   .tchip {
@@ -205,6 +216,14 @@
       <button type="button" class="gchip" data-grade="hs">高校生</button>
     </nav>
   </div>
+
+  <nav class="schools" aria-label="中学校で絞り込み">
+    <span class="gl">🏫 中学校</span>
+    <button type="button" class="schip active" data-school="all">すべて</button>
+    <button type="button" class="schip" data-school="中野東">中野東</button>
+    <button type="button" class="schip" data-school="西戸山">西戸山</button>
+    <button type="button" class="schip" data-school="西新宿">西新宿</button>
+  </nav>
 
   <nav class="tags" aria-label="単元で絞り込み">
     <span class="gl">🏷️ 単元</span>
@@ -663,7 +682,31 @@
 
 <script>
 (function(){
-  var state = { grade: 'all', tag: 'all', q: '' };
+  var state = { grade: 'all', tag: 'all', school: 'all', q: '' };
+
+  // 中学校で絞り込み：カードの data-school か、タイトルに学校名が入っていれば該当
+  function schoolOf(el){
+    var ds = el.getAttribute('data-school') || '';
+    var t = el.querySelector('.card-title');
+    return ds + ' ' + (t ? t.textContent : '');
+  }
+  var schips = document.querySelectorAll('.schip');
+  schips.forEach(function(chip){
+    var key = chip.getAttribute('data-school');
+    if (key !== 'all') {
+      var n = 0;
+      document.querySelectorAll('.material-item').forEach(function(el){ if (schoolOf(el).indexOf(key) !== -1) n++; });
+      var sp = document.createElement('span'); sp.className = 'n'; sp.textContent = n; chip.appendChild(sp);
+    }
+    chip.addEventListener('click', function(){
+      var again = chip.classList.contains('active') && key !== 'all';
+      schips.forEach(function(c){ c.classList.remove('active'); });
+      if (again) { document.querySelector('.schip[data-school="all"]').classList.add('active'); state.school = 'all'; }
+      else { chip.classList.add('active'); state.school = key; }
+      updateVisibility();
+    });
+  });
+  function itemMatchesSchool(el){ return state.school === 'all' || schoolOf(el).indexOf(state.school) !== -1; }
 
   var gchips = document.querySelectorAll('.gchip');
   gchips.forEach(function(chip){
@@ -727,7 +770,7 @@
     var items = document.querySelectorAll('.material-item');
     var anyItemVisibleAtAll = false;
     items.forEach(function(el){
-      var visible = itemMatchesGrade(el) && itemMatchesTag(el) && itemMatchesSearch(el);
+      var visible = itemMatchesGrade(el) && itemMatchesTag(el) && itemMatchesSchool(el) && itemMatchesSearch(el);
       el.classList.toggle('filter-hidden', !visible);
       if (visible) anyItemVisibleAtAll = true;
     });
