@@ -1,0 +1,266 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小5算数_入塾時 実力確認テスト（単元を選ぶ）</title>
+<style>
+@page { size: A4; margin: 12mm; }
+* { box-sizing: border-box; }
+body { margin:0; font-family: "BIZ UDPGothic", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif; background:#e9e9e9; color:#111; font-size:14px; line-height:1.65; }
+/* ---- 画面上の操作バー ---- */
+.bar { position: sticky; top: 0; z-index: 10; background: #1F3A5F; color: #fff; padding: 10px 16px; }
+.row1 { display:flex; flex-wrap:wrap; align-items:center; gap:8px 10px; }
+.title { font-weight: bold; font-size: 15px; margin-right: auto; }
+.bar button { font-family: inherit; font-size: 13px; padding: 7px 14px; border-radius: 6px; border: none; cursor: pointer; }
+.primary { background: #C9972B; color: #fff; font-weight: bold; }
+.secondary { background: #3A557A; color: #fff; }
+.secondary.on { background:#FAF8F2; color:#1F3A5F; font-weight:bold; }
+.units { display:grid; grid-template-columns: repeat(8, 1fr); gap:6px; margin-top:10px; }
+.units button { font-size: 13px; padding: 7px 6px; border: 1px solid #5A7398; background: #29466D; color:#E6ECF4; text-align:left; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.units button.on { background:#FAF8F2; color:#1F3A5F; border-color:#FAF8F2; font-weight:bold; }
+.units button.on::before { content:"✓ "; }
+.row3 { display:flex; flex-wrap:wrap; align-items:center; gap:6px 8px; margin-top:10px; font-size:12.5px; color:#D9E1EC; }
+.row3 button { font-size:12px; padding:5px 10px; background:transparent; color:#E6ECF4; border:1px solid #5A7398; border-radius:999px; }
+.row3 .info { margin-left:auto; color:#fff; font-weight:bold; }
+@media (max-width: 1000px) { .units { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 520px) { .units { grid-template-columns: repeat(2, 1fr); } }
+/* ---- 用紙 ---- */
+.sheet { background:#fff; max-width: 200mm; margin: 16px auto; padding: 12mm 12mm 14mm; box-shadow:0 1px 6px rgba(0,0,0,.15); }
+h1 { font-size: 19px; margin: 0 0 2px; border-bottom: 2px solid #111; padding-bottom: 4px; }
+.sub { font-size: 12px; color:#333; margin-bottom: 8px; }
+.namebox { display:flex; justify-content:flex-end; gap:18px; font-size:13px; margin: 4px 0 8px; }
+.namebox span { border-bottom:1px solid #111; padding: 0 4px 1px; min-width: 6em; }
+.namebox span.nm { min-width: 13em; }
+.rules { border:1px solid #111; padding: 6px 10px; font-size: 12px; margin-bottom: 10px; }
+.grid { display:grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; }
+.unit { border:1px solid #444; padding: 6px 9px 8px; break-inside: avoid; page-break-inside: avoid; }
+.unit.wide { grid-column: 1 / -1; }
+.uh { display:flex; align-items:center; gap:8px; border-bottom:1px dashed #888; padding-bottom:3px; margin-bottom:4px; }
+.uh .num { display:inline-block; border:1.5px solid #111; font-weight:bold; min-width: 2.6em; text-align:center; font-size:12px; padding: 0 3px; }
+.uh .nm { font-weight:bold; font-size:14px; }
+.uh .sc { margin-left:auto; font-size:12px; white-space:nowrap; }
+ol.qs { list-style:none; margin:0; padding:0; }
+ol.qs li { margin: 3px 0; }
+ol.qs li .sp { height: 2.6em; }
+ol.qs li .sp.m { height: 4.2em; }
+ol.qs li .sp.l { height: 6em; }
+.ab { display:inline-block; min-width: 6.5em; border-bottom:1px solid #111; margin-left: 4px; }
+.ansline { text-align:right; font-size:13px; }
+.fr { display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; line-height:1.05; margin: 0 2px; font-size: .95em; }
+.fr > span:first-child { border-bottom:1px solid currentColor; padding: 0 2px; }
+.mx { display:inline-flex; align-items:center; }
+svg text { font-family: inherit; }
+/* ---- 解答 ---- */
+.ans .grid { gap: 6px 14px; }
+.ans .unit { padding: 5px 9px; }
+.ans ol.qs li { margin: 1px 0; font-size: 13px; }
+.k { font-weight: bold; text-decoration: underline; }
+.ex { font-size: 11.5px; color:#333; }
+table.res { width:100%; border-collapse:collapse; font-size:12.5px; margin-top: 6px; }
+table.res th, table.res td { border:1px solid #444; padding: 3px 6px; }
+table.res th { background:#f2f2f2; }
+table.res td.c { text-align:center; width: 5.5em; }
+.memo { border:1px solid #111; padding: 6px 10px; font-size: 12px; margin: 8px 0; }
+.empty { text-align:center; color:#666; padding: 40px 0; }
+.editbtn { position: fixed; right: 14px; bottom: 14px; z-index: 20; background:#fff; border:1px solid #999; padding: 6px 12px; font-size:12px; cursor:pointer; border-radius: 6px; font-family: inherit; }
+.editbtn.on { background:#333; color:#fff; }
+body.editing .sheet { outline: 2px dashed #C9972B; }
+@media print {
+  body { background:#fff; font-size: 13px; }
+  .bar, .editbtn { display:none !important; }
+  .sheet { box-shadow:none; margin:0; max-width:none; padding: 0; }
+  .pb { page-break-before: always; break-before: page; }
+}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="row1">
+    <span class="title">📝 小5算数 入塾時 実力確認テスト｜学習塾CONNECT</span>
+    <button class="secondary" id="ansOnly">解答だけ表示</button>
+    <button class="primary" id="printBtn">印刷</button>
+  </div>
+  <div class="units" id="units"></div>
+  <div class="row3">
+    <span>まとめて選ぶ（目安）：</span>
+    <button data-p="1-5">1学期の途中まで（①〜⑤）</button>
+    <button data-p="1-8">夏休み明けまで（①〜⑧）</button>
+    <button data-p="1-12">2学期まで（①〜⑫）</button>
+    <button data-p="1-16">全部（①〜⑯）</button>
+    <button data-p="">全部はずす</button>
+    <span class="info" id="info"></span>
+  </div>
+</div>
+
+<div id="paper"></div>
+
+<button class="editbtn" id="editBtn" type="button">編集モード</button>
+
+<script>
+(function(){
+  function f(a,b){ return '<span class="fr"><span>'+a+'</span><span>'+b+'</span></span>'; }
+  function m(w,a,b){ return '<span class="mx">'+w+f(a,b)+'</span>'; }
+  var FIG6 = '<svg viewBox="0 0 330 120" width="300" height="110" style="display:block;margin:2px auto">'
+    + '<polygon points="20,100 140,100 55,25" fill="none" stroke="#111" stroke-width="1.6"/>'
+    + '<text x="50" y="18" font-size="13">A</text><text x="8" y="112" font-size="13">B</text><text x="142" y="112" font-size="13">C</text>'
+    + '<text x="72" y="116" font-size="11">6cm</text><text x="10" y="62" font-size="11">5cm</text>'
+    + '<path d="M38,100 A18,18 0 0 0 31,87" fill="none" stroke="#111"/><text x="40" y="92" font-size="11">50°</text>'
+    + '<polygon points="310,100 190,100 275,25" fill="none" stroke="#111" stroke-width="1.6"/>'
+    + '<text x="272" y="18" font-size="13">D</text><text x="313" y="112" font-size="13">E</text><text x="176" y="112" font-size="13">F</text>'
+    + '</svg>';
+  // 各単元4問。q＝問題、a＝答え、s＝計算スペース（''／'m'／'l'）
+  var U = [
+    {n:'整数と小数', q:[
+      {q:'3.82 を10倍した数を書きましょう。', a:'38.2'},
+      {q:'52.6 を '+f(1,100)+' にした数を書きましょう。', a:'0.526'},
+      {q:'0.47 × 1000 を計算しましょう。', a:'470'},
+      {q:'4.375 は、0.001 を何こ集めた数ですか。', a:'4375こ'}]},
+    {n:'体積', q:[
+      {q:'たて4cm、横6cm、高さ5cmの直方体の体積は何cm³ですか。', a:'120cm³', x:'4×6×5＝120'},
+      {q:'1辺が3cmの立方体の体積は何cm³ですか。', a:'27cm³', x:'3×3×3＝27'},
+      {q:'1m³ は何cm³ですか。', a:'1000000cm³', x:'100×100×100'},
+      {q:'内のりが、たて20cm、横25cm、深さ10cmの水そうには、水が何L入りますか。', a:'5L', x:'20×25×10＝5000cm³＝5L（1L＝1000cm³）', s:'m'}]},
+    {n:'比例', q:[
+      {q:'1本60円のえん筆を□本買うと、代金は○円です。□が3のとき、○はいくつですか。', a:'180'},
+      {q:'□と○の関係を式に表しましょう。', a:'60×□＝○'},
+      {q:'代金が600円のとき、えん筆は何本ですか。', a:'10本', x:'600÷60＝10'},
+      {q:'次のうち、ともなって変わる2つの量が比例しているのはどちらですか。記号で答えましょう。<br>ア　正方形の1辺の長さと、まわりの長さ　　イ　人の年れいと身長', a:'ア'}]},
+    {n:'小数のかけ算', q:[
+      {q:'3.6 × 2.4', a:'8.64', s:'m'},
+      {q:'0.25 × 0.8', a:'0.2', s:'m'},
+      {q:'1.5 × 4.06', a:'6.09', s:'m'},
+      {q:'1mの重さが2.4kgの鉄のぼうがあります。この鉄のぼう3.5mの重さは何kgですか。', a:'8.4kg', x:'2.4×3.5＝8.4', s:'m'}]},
+    {n:'小数のわり算', q:[
+      {q:'7.56 ÷ 1.8', a:'4.2', s:'m'},
+      {q:'4.5 ÷ 0.6', a:'7.5', s:'m'},
+      {q:'9.4 ÷ 2.7 の商を四捨五入して、上から2けたのがい数で求めましょう。', a:'3.5', x:'9.4÷2.7＝3.48…', s:'m'},
+      {q:'5.2mのリボンを0.8mずつ切ります。0.8mのリボンは何本できて、何mあまりますか。', a:'6本できて、0.4mあまる', x:'5.2÷0.8＝6 あまり 0.4', s:'m'}]},
+    {n:'合同な図形', fig:FIG6, q:[
+      {q:'上の2つの三角形は合同です。頂点Aに対応する頂点はどれですか。', a:'頂点D'},
+      {q:'辺EFの長さは何cmですか。', a:'6cm', x:'辺EF は辺BC に対応'},
+      {q:'角Eの大きさは何度ですか。', a:'50°', x:'角E は角B に対応'},
+      {q:'次のうち、それだけがわかれば合同な三角形がかけるのはどちらですか。<br>ア　3つの辺の長さ　　イ　3つの角の大きさ', a:'ア', x:'3つの角だけでは、大きさのちがう三角形もかけてしまう'}]},
+    {n:'図形の角', q:[
+      {q:'三角形の2つの角が45°と70°のとき、残りの角は何度ですか。', a:'65°', x:'180－（45＋70）＝65'},
+      {q:'四角形の3つの角が80°、95°、110°のとき、残りの角は何度ですか。', a:'75°', x:'360－（80＋95＋110）＝75'},
+      {q:'二等辺三角形で、等しい2つの辺の間の角が40°のとき、残りの1つの角は何度ですか。', a:'70°', x:'（180－40）÷2＝70'},
+      {q:'六角形の6つの角の大きさの和は何度ですか。', a:'720°', x:'三角形4つ分　180×4＝720'}]},
+    {n:'整数', q:[
+      {q:'次の中から奇数をすべて選びましょう。　14　27　50　63', a:'27、63'},
+      {q:'4と6の最小公倍数を求めましょう。', a:'12'},
+      {q:'18と24の最大公約数を求めましょう。', a:'6'},
+      {q:'駅からバスは12分おきに、電車は8分おきに出ます。午前9時に同時に出たあと、次に同時に出るのは何分後ですか。', a:'24分後', x:'12と8の最小公倍数'}]},
+    {n:'分数と小数、整数', q:[
+      {q:'3 ÷ 7 の商を分数で表しましょう。', a:f(3,7)},
+      {q:f(3,4)+' を小数で表しましょう。', a:'0.75'},
+      {q:'0.6 を分数で表しましょう。', a:f(3,5), x:f(6,10)+' でも○。約分すると '+f(3,5)},
+      {q:f(2,3)+' と 0.7 では、どちらが大きいですか。', a:'0.7', x:f(2,3)+'＝0.666…'}]},
+    {n:'分数のたし算とひき算', q:[
+      {q:f(1,3)+' ＋ '+f(1,4), a:f(7,12), s:'m'},
+      {q:f(5,6)+' － '+f(3,8), a:f(11,24), x:f(20,24)+'－'+f(9,24), s:'m'},
+      {q:f(3,10)+' ＋ '+f(7,15), a:f(23,30), x:f(9,30)+'＋'+f(14,30), s:'m'},
+      {q:m(2,1,4)+' － '+m(1,2,3), a:f(7,12), x:f(27,12)+'－'+f(20,12)+'（'+m(2,3,12)+'－'+m(1,8,12)+'＝'+m(1,15,12)+'－'+m(1,8,12)+' でもよい）', s:'m'}]},
+    {n:'平均・単位量あたり', q:[
+      {q:'6、8、7、9、5 の平均を求めましょう。', a:'7', x:'35÷5'},
+      {q:'3回のテストの平均が75点でした。4回目が87点のとき、4回の平均は何点ですか。', a:'78点', x:'（75×3＋87）÷4＝312÷4', s:'m'},
+      {q:'面積が20km²で、人口が36000人の市の人口密度を求めましょう。', a:'1km²あたり1800人', x:'36000÷20'},
+      {q:'8mで1200円の布と、5mで800円の布があります。1mあたりのねだんが安いのはどちらですか。', a:'8mで1200円の布', x:'1200÷8＝150円、800÷5＝160円', s:'m'}]},
+    {n:'速さ', q:[
+      {q:'240kmを3時間で走る自動車の速さは、時速何kmですか。', a:'時速80km'},
+      {q:'分速60mで15分歩くと、何m進みますか。', a:'900m'},
+      {q:'秒速5mで走る人が300m走るのに、何秒かかりますか。', a:'60秒', x:'300÷5'},
+      {q:'時速36kmは、分速何mですか。', a:'分速600m', x:'36km＝36000m、36000÷60＝600', s:'m'}]},
+    {n:'図形の面積', q:[
+      {q:'底辺8cm、高さ5cmの平行四辺形の面積は何cm²ですか。', a:'40cm²', x:'8×5'},
+      {q:'底辺6cm、高さ7cmの三角形の面積は何cm²ですか。', a:'21cm²', x:'6×7÷2'},
+      {q:'上底4cm、下底10cm、高さ6cmの台形の面積は何cm²ですか。', a:'42cm²', x:'（4＋10）×6÷2'},
+      {q:'2本の対角線の長さが8cmと6cmのひし形の面積は何cm²ですか。', a:'24cm²', x:'8×6÷2'}]},
+    {n:'割合と百分率', q:[
+      {q:'定員40人のクラブに、希望者が30人いました。定員をもとにした希望者の割合を小数で表しましょう。', a:'0.75', x:'30÷40'},
+      {q:'0.36 を百分率で表しましょう。', a:'36％'},
+      {q:'120％ を小数で表しましょう。', a:'1.2'},
+      {q:'2000円の品物が20％引きで売られています。代金は何円ですか。', a:'1600円', x:'2000×（1－0.2）＝1600', s:'m'}]},
+    {n:'正多角形と円', q:[
+      {q:'円の中心のまわりの角を6等分して正六角形をかきます。1つ分の角は何度ですか。', a:'60°', x:'360÷6'},
+      {q:'直径10cmの円の円周の長さは何cmですか。（円周率は3.14）', a:'31.4cm', x:'10×3.14'},
+      {q:'円周の長さが18.84cmの円の直径は何cmですか。', a:'6cm', x:'18.84÷3.14', s:'m'},
+      {q:'半径4cmの円を半分にした形（半円）のまわりの長さは何cmですか。', a:'20.56cm', x:'8×3.14÷2＋8＝12.56＋8', s:'m'}]},
+    {n:'角柱と円柱', q:[
+      {q:'三角柱の頂点の数はいくつですか。', a:'6'},
+      {q:'五角柱の辺の数はいくつですか。', a:'15', x:'5×3'},
+      {q:'円柱の展開図で、側面はどんな形になりますか。', a:'長方形'},
+      {q:'底面の直径が4cm、高さが5cmの円柱の展開図をかきます。側面の長方形の横の長さは何cmですか。', a:'12.56cm', x:'底面の円周と同じ　4×3.14', s:'m'}]}
+  ];
+  var MARK = '①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯';
+  var sel = [], ansOnly = false;
+  var box = document.getElementById('units'), paper = document.getElementById('paper'), info = document.getElementById('info');
+
+  U.forEach(function(u, i){
+    var b = document.createElement('button'); b.type = 'button'; b.textContent = MARK[i] + ' ' + u.n; b.title = u.n;
+    b.onclick = function(){ var k = sel.indexOf(i); if (k < 0) sel.push(i); else sel.splice(k, 1); sel.sort(function(a,b){return a-b;}); update(); };
+    box.appendChild(b);
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('.row3 button[data-p]'), function(b){
+    b.onclick = function(){ var p = b.getAttribute('data-p'); sel = []; if (p) { var r = p.split('-'); for (var i = +r[0]-1; i < +r[1]; i++) sel.push(i); } update(); };
+  });
+
+  function unitHead(i, right){
+    return '<div class="uh"><span class="num">第'+(i+1)+'章</span><span class="nm">'+U[i].n+'</span><span class="sc">'+right+'</span></div>';
+  }
+  function problems(){
+    var h = '<div class="sheet"><h1>小学5年 算数　実力確認テスト</h1>'
+      + '<div class="sub">学習塾CONNECT　／　出題した単元：'+sel.map(function(i){return MARK[i]+U[i].n;}).join('・')+'</div>'
+      + '<div class="namebox"><span>　　月　　日</span><span class="nm">名前</span><span>　　　／'+(sel.length*4)+'問</span></div>'
+      + '<div class="rules">・今の力を知るためのテストです。わからない問題は、空らんのままで大丈夫です。<br>・計算は、問題の下の空いているところにしましょう。答えは（　）や下線の上に書きます。</div>'
+      + '<div class="grid">';
+    sel.forEach(function(i){
+      var u = U[i];
+      h += '<div class="unit'+(u.fig ? ' wide' : '')+'">' + unitHead(i, '　　／4問') + (u.fig || '') + '<ol class="qs">';
+      u.q.forEach(function(q, j){
+        h += '<li>('+(j+1)+') '+q.q+(q.s ? '<div class="sp '+q.s+'"></div>' : '')+'<div class="ansline">答え<span class="ab"></span></div></li>';
+      });
+      h += '</ol></div>';
+    });
+    return h + '</div></div>';
+  }
+  function answers(){
+    var h = '<div class="sheet ans'+(ansOnly ? '' : ' pb')+'"><h1>解答・解説</h1>'
+      + '<div class="sub">小学5年 算数　実力確認テスト（'+sel.length+'単元・全'+(sel.length*4)+'問）</div><div class="grid">';
+    sel.forEach(function(i){
+      h += '<div class="unit">' + unitHead(i, '') + '<ol class="qs">';
+      U[i].q.forEach(function(q, j){ h += '<li>('+(j+1)+') <span class="k">'+q.a+'</span>'+(q.x ? '　<span class="ex">'+q.x+'</span>' : '')+'</li>'; });
+      h += '</ol></div>';
+    });
+    h += '</div><h2 style="font-size:15px;margin:12px 0 2px">単元別の結果（入塾面談・カリキュラム作り用）</h2>'
+      + '<table class="res"><tr><th>単元</th><th>正答数</th><th>判定</th><th>気づいたこと（計算ミス・式が書けない など）</th></tr>';
+    sel.forEach(function(i){ h += '<tr><td>'+MARK[i]+' '+U[i].n+'</td><td class="c">　／4</td><td class="c">◎ ○ △</td><td></td></tr>'; });
+    h += '<tr><th>合計</th><td class="c">　／'+(sel.length*4)+'</td><td></td><td></td></tr></table>'
+      + '<div class="memo"><b>■ 判定の目安</b>　◎ 4問正解：その単元はOK　／　○ 3問：計算ミスや一部の見直し　／　△ 2問以下：授業で復習する単元。<br>'
+      + '問題は教科書の基本レベル（各単元の確認テスト程度）です。△ がついた単元から、復習の順番を決めましょう。</div></div>';
+    return h;
+  }
+  function update(){
+    Array.prototype.forEach.call(box.children, function(b, k){ b.classList.toggle('on', sel.indexOf(k) !== -1); });
+    info.textContent = sel.length ? (sel.length + '単元・全' + (sel.length*4) + '問') : '単元をえらんでください';
+    paper.innerHTML = sel.length ? ((ansOnly ? '' : problems()) + answers())
+      : '<div class="sheet"><div class="empty">上のボタンで、その子が<b>もう学校で習った単元</b>をえらんでください（複数OK）。<br>えらんだ単元だけで、問題用紙と解答が作られます。</div></div>';
+    try { history.replaceState(null, '', sel.length ? '#u' + sel.map(function(i){return i+1;}).join('-') : location.pathname); } catch (e) {}
+  }
+  document.getElementById('ansOnly').onclick = function(){ ansOnly = !ansOnly; this.classList.toggle('on', ansOnly); update(); };
+  document.getElementById('printBtn').onclick = function(){ window.print(); };
+  document.getElementById('editBtn').onclick = function(){
+    var on = !document.body.classList.contains('editing');
+    document.body.classList.toggle('editing', on); this.classList.toggle('on', on);
+    this.textContent = on ? '編集を終える' : '編集モード';
+    Array.prototype.forEach.call(document.querySelectorAll('.sheet'), function(s){ s.contentEditable = on ? 'true' : 'false'; });
+  };
+  var mh = /#u([\d-]+)/.exec(location.hash);
+  if (mh) mh[1].split('-').forEach(function(x){ var n = +x - 1; if (n >= 0 && n < U.length && sel.indexOf(n) < 0) sel.push(n); });
+  else for (var i = 0; i < U.length; i++) sel.push(i);
+  sel.sort(function(a,b){return a-b;});
+  update();
+})();
+</script>
+</body>
+</html>
