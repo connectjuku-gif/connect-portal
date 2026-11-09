@@ -62,6 +62,8 @@ table.res th, table.res td { border:1px solid #444; padding: 3px 6px; }
 table.res th { background:#f2f2f2; }
 table.res td.c { text-align:center; width: 5.5em; }
 .memo { border:1px solid #111; padding: 6px 10px; font-size: 12px; margin: 8px 0; }
+.blankpage { display:none; }
+.measure { position:absolute !important; left:-9999px; top:0; width:186mm !important; max-width:none !important; padding:0 !important; margin:0 !important; font-size:13px; box-shadow:none !important; }
 .empty { text-align:center; color:#666; padding: 40px 0; }
 .editbtn { position: fixed; right: 14px; bottom: 14px; z-index: 20; background:#fff; border:1px solid #999; padding: 6px 12px; font-size:12px; cursor:pointer; border-radius: 6px; font-family: inherit; }
 .editbtn.on { background:#333; color:#fff; }
@@ -71,6 +73,7 @@ body.editing .sheet { outline: 2px dashed #C9972B; }
   .bar, .editbtn { display:none !important; }
   .sheet { box-shadow:none; margin:0; max-width:none; padding: 0; }
   .pb { page-break-before: always; break-before: page; }
+  .blankpage.need { display:block; height: 250mm; page-break-before: always; break-before: page; text-align:center; color:#aaa; font-size:10px; padding-top: 120mm; }
 }
 </style>
 </head>
@@ -243,10 +246,32 @@ body.editing .sheet { outline: 2px dashed #C9972B; }
   function update(){
     Array.prototype.forEach.call(box.children, function(b, k){ b.classList.toggle('on', sel.indexOf(k) !== -1); });
     info.textContent = sel.length ? (sel.length + '単元・全' + (sel.length*4) + '問') : '単元をえらんでください';
-    paper.innerHTML = sel.length ? ((ansOnly ? '' : problems()) + answers())
+    paper.innerHTML = sel.length ? ((ansOnly ? '' : problems() + '<div class="blankpage" id="blank">（両面印刷用の白紙ページ）</div>') + answers())
       : '<div class="sheet"><div class="empty">上のボタンで、その子が<b>もう学校で習った単元</b>をえらんでください（複数OK）。<br>えらんだ単元だけで、問題用紙と解答が作られます。</div></div>';
+    fixBlank();
     try { history.replaceState(null, '', sel.length ? '#u' + sel.map(function(i){return i+1;}).join('-') : location.pathname); } catch (e) {}
   }
+  // 問題用紙が3ページ以上の奇数ページになるときは白紙ページを1枚はさみ、解答が新しい紙の表から始まるようにする
+  function printPages(){
+    var sh = paper.querySelector('.sheet'); if (!sh) return 0;
+    var c = sh.cloneNode(true); c.classList.add('measure'); document.body.appendChild(c);
+    var mm = 96 / 25.4, pageH = 273 * mm, gap = 10;
+    var top0 = c.getBoundingClientRect().top, rows = {};
+    Array.prototype.forEach.call(c.querySelectorAll('.unit'), function(u){
+      var r = u.getBoundingClientRect(), t = Math.round(r.top - top0);
+      rows[t] = Math.max(rows[t] || 0, r.height);
+    });
+    var tops = Object.keys(rows).map(Number).sort(function(a,b){return a-b;});
+    var page = 1, used = tops.length ? tops[0] : 0;
+    tops.forEach(function(t){ var h = rows[t]; if (used + h > pageH) { page++; used = h + gap; } else used += h + gap; });
+    document.body.removeChild(c);
+    return page;
+  }
+  function fixBlank(){
+    var b = document.getElementById('blank'); if (!b) return;
+    var n = printPages(); b.classList.toggle('need', n > 1 && n % 2 === 1);
+  }
+  window.addEventListener('beforeprint', fixBlank);
   document.getElementById('ansOnly').onclick = function(){ ansOnly = !ansOnly; this.classList.toggle('on', ansOnly); update(); };
   document.getElementById('printBtn').onclick = function(){ window.print(); };
   document.getElementById('editBtn').onclick = function(){
