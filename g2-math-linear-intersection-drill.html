@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>中2数学_直線の交点ドリル（ランダム）</title>
+<style>
+@page { size: A4; margin: 14mm 14mm; }
+* { box-sizing: border-box; }
+body { font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif; color:#111; line-height:1.6; font-size:11.5pt; margin:0; background:#e9e9e9; }
+.sheet { background:#fff; max-width: 190mm; margin: 12px auto; padding: 12mm 12mm; box-shadow: 0 1px 6px rgba(0,0,0,.15); }
+@media print { body{background:#fff;} .sheet{ box-shadow:none; margin:0; padding:0; max-width:none; } .nop{display:none !important;} .pb{ page-break-before: always; break-before: page; } }
+/* ---- 操作バー ---- */
+.controlbar { position: sticky; top: 0; z-index: 10; background: #1F3A5F; color: #fff; padding: 12px 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; font-size: 13px; }
+.controlbar .title { font-weight: bold; font-size: 15px; margin-right: 8px; }
+.controlbar button { font-family: inherit; font-size: 13px; padding: 7px 14px; border-radius: 6px; border: none; cursor: pointer; }
+.controlbar button.primary { background: #C9972B; color: #fff; font-weight: bold; }
+.controlbar button.secondary { background: #3A557A; color: #fff; }
+.controlbar button.secondary.active { background: #8A2E2E; }
+.controlbar select, .controlbar input { font-family:inherit; font-size:13px; padding:5px 6px; border-radius:6px; border:none; }
+.controlbar input[type=number] { width: 3.4em; text-align:center; }
+.controlbar label { display:inline-flex; align-items:center; gap:5px; }
+.controlbar .types { display:flex; flex-wrap:wrap; gap:6px 12px; padding: 4px 10px; border:1px solid #5A7398; border-radius:8px; }
+.controlbar .spacer { flex: 1; }
+.controlbar .count { font-size: 12px; color: #D9E1EC; }
+.controlbar .warn { color:#FFD58A; font-weight:bold; }
+body.editmode [contenteditable="true"] { outline: 1px dashed #C9972B; }
+@media print { [contenteditable] { outline: none !important; } }
+/* ---- 問題用紙 ---- */
+.hh { border-bottom:2px solid #222; padding-bottom:3px; margin-bottom:6px; }
+.hh1 { font-size:10.5pt; color:#333; letter-spacing:.05em; display:flex; justify-content:space-between; }
+.hh2 { font-size:15pt; font-weight:bold; margin-top:1px; }
+.meta { display:flex; align-items:flex-end; justify-content:flex-end; gap:6px; font-size:10.5pt; margin:4px 0 6px; }
+.meta .ln { display:inline-block; border-bottom:1px solid #222; }
+.meta .w1 { min-width:42mm; } .meta .w3 { min-width:12mm; }
+.point { border:1px solid #222; padding:5px 10px; font-size:10pt; line-height:1.55; margin-bottom:2mm; }
+.item { display:flex; align-items:stretch; gap:8px; border-bottom:1px dotted #888; height: var(--h); padding: 2mm 0; break-inside:avoid; }
+.item .qt { flex:1; font-size:11.5pt; line-height:1.7; }
+.item .no { font-weight:bold; margin-right:4px; }
+.item .ab { width: 52mm; flex-shrink:0; display:flex; align-items:flex-end; }
+.item .ab span { display:block; width:100%; height: 11mm; border:1px solid #555; }
+.fr { display:inline-flex; flex-direction:column; text-align:center; vertical-align:middle; margin:0 2px; line-height:1.3; font-size:.92em; }
+.fr > span:first-child { border-bottom:1px solid #111; padding:0 3px; }
+.fr > span:last-child { padding:0 3px; }
+i { font-family: "Times New Roman", "Hiragino Mincho ProN", serif; font-size:1.1em; }
+.eq { white-space:nowrap; }
+.blankpage { text-align:center; color:#aaa; font-size:10px; padding-top:120mm; height:250mm; }
+/* ---- 解答 ---- */
+.ans h1 { text-align:center; font-size:16pt; margin:0 0 4px; }
+.ans .sub { text-align:center; font-size:10.5pt; color:#444; margin-bottom:6px; }
+.ans h2 { font-size:12pt; border-left:5px solid #222; padding-left:8px; margin:10px 0 4px; break-after:avoid; }
+.ans .two { columns:2; column-gap:10mm; }
+.ai { break-inside:avoid; font-size:10.5pt; margin:0 0 5px; line-height:1.65; padding-bottom:3px; border-bottom:1px dotted #bbb; }
+.ai .st { display:block; font-size:9.5pt; color:#333; margin-left:2.2em; }
+.ai .no { font-weight:bold; margin-right:4px; }
+.k { font-weight:bold; text-decoration: underline; }
+.memo { border:2px solid #222; padding:8px 12px; font-size:10pt; margin:8px 0; break-inside:avoid; }
+.memo b { display:block; margin-bottom:2px; }
+</style>
+</head>
+<body>
+<div class="controlbar nop">
+  <span class="title">📈 中2数学 直線の交点ドリル｜学習塾CONNECT</span>
+  <span class="types" id="types"></span>
+  <label>枚数 <select id="countSel"><option value="1">1枚</option><option value="2">2枚</option><option value="3">3枚</option><option value="4">4枚</option><option value="5">5枚</option><option value="6">6枚</option></select></label>
+  <label>解答 <select id="ansSel"><option value="ex">解説つき</option><option value="a">答えだけ</option></select></label>
+  <button class="primary" id="genBtn">問題を作り直す</button>
+  <button class="secondary" id="editBtn">編集モード</button>
+  <button class="secondary" id="printBtn">印刷</button>
+  <span class="spacer"></span>
+  <span class="count" id="info"></span>
+</div>
+<div id="output"></div>
+<script>
+(function(){
+  // ---------- 共通 ----------
+  function ri(min, max){ return Math.floor(Math.random()*(max-min+1))+min; }
+  function rnz(min, max){ var v; do { v = ri(min, max); } while (v === 0); return v; }
+  function sg(v){ return v < 0 ? '−' + Math.abs(v) : String(v); }          // 符号つきの数（マイナスは −）
+  function pr(v){ return v < 0 ? '(' + sg(v) + ')' : String(v); }         // 負の数はかっこ
+  function X(){ return '<i>x</i>'; } function Y(){ return '<i>y</i>'; }
+  function pt(x, y){ return '(' + sg(x) + ', ' + sg(y) + ')'; }
+  function ax(a){ return (a === 1 ? '' : a === -1 ? '−' : sg(a)) + X(); }   // ax の部分
+  function addb(b){ return b > 0 ? ' ＋ ' + b : b < 0 ? ' − ' + Math.abs(b) : ''; }
+  function lin(a, b){ return '<span class="eq">' + Y() + ' ＝ ' + ax(a) + addb(b) + '</span>'; }
+  function m(s){ return '<span class="eq">' + s + '</span>'; }
+  function G(f){ return function(){ for (var i = 0; i < 500; i++) { var r = f.apply(null, arguments); if (r) return r; } throw new Error('gen'); }; }
+  function coefA(c){ return c === 1 ? '' : c === -1 ? '−' : sg(c); }
+  var TYPES = [
+    { label: '2直線の交点', def: 6, gen: G(function(){
+        var px = ri(-6, 6), py = ri(-8, 8), a1 = rnz(-4, 4), a2 = rnz(-4, 4);
+        if (a1 === a2) return null;
+        var b1 = py - a1 * px, b2 = py - a2 * px;
+        if (Math.abs(b1) > 15 || Math.abs(b2) > 15) return null;
+        return { q: '次の2直線の交点の座標を求めなさい。<br>　① ' + lin(a1, b1) + '　　② ' + lin(a2, b2), a: pt(px, py),
+          st: ['①と②を連立方程式として解く。' + m(ax(a1) + addb(b1) + ' ＝ ' + ax(a2) + addb(b2)),
+               m(coefA(a1 - a2) + X() + ' ＝ ' + sg(b2 - b1)) + '　より　' + m(X() + ' ＝ ' + sg(px)),
+               m(X() + ' ＝ ' + sg(px)) + ' を①に代入すると、' + m(Y() + ' ＝ ' + sg(a1) + ' × ' + pr(px) + addb(b1) + ' ＝ ' + sg(py))] };
+      }) },
+    { label: 'x軸との交点', def: 3, gen: G(function(){
+        var a = rnz(-4, 4), px = rnz(-6, 6), b = -a * px;
+        if (Math.abs(b) > 15) return null;
+        return { q: '直線 ' + lin(a, b) + ' と ' + X() + ' 軸との交点の座標を求めなさい。', a: pt(px, 0),
+          st: [X() + ' 軸上の点は ' + m(Y() + ' ＝ 0') + ' なので、' + m(Y() + ' ＝ 0') + ' を代入する。',
+               m('0 ＝ ' + ax(a) + addb(b)) + '　→　' + m(coefA(a) + X() + ' ＝ ' + sg(-b)) + '　より　' + m(X() + ' ＝ ' + sg(px))] };
+      }) },
+    { label: 'y軸との交点', def: 3, gen: G(function(){
+        var a = rnz(-5, 5), b = rnz(-9, 9);
+        return { q: '直線 ' + lin(a, b) + ' と ' + Y() + ' 軸との交点の座標を求めなさい。', a: pt(0, b),
+          st: [Y() + ' 軸上の点は ' + m(X() + ' ＝ 0') + ' なので、' + m(X() + ' ＝ 0') + ' を代入すると ' + m(Y() + ' ＝ ' + sg(b)) + '。',
+               '（切片が、そのまま ' + Y() + ' 座標になる）'] };
+      }) }
+  ];
+
+  // ---------- 画面 ----------
+  var tbox = document.getElementById('types');
+  TYPES.forEach(function(t, i){
+    var l = document.createElement('label');
+    l.innerHTML = t.label + ' <input type="number" min="0" max="12" value="' + t.def + '" id="c' + i + '">';
+    tbox.appendChild(l);
+    l.querySelector('input').addEventListener('change', render);
+  });
+  var sets = [];
+  function counts(){ return TYPES.map(function(t, i){ var v = parseInt(document.getElementById('c' + i).value, 10); return isNaN(v) || v < 0 ? 0 : Math.min(v, 12); }); }
+  function sheetHtml(list, k, n){
+    var h = '<div class="sheet' + (k ? ' pb' : '') + '" style="--h:' + (list.length > 10 ? 18.5 : list.length > 8 ? 21.5 : 25) + 'mm">'
+      + '<div class="hh"><div class="hh1"><span>中学2年　数学　1次関数</span><span>' + (n > 1 ? (k + 1) + '／' + n + '枚目' : '') + '</span></div><div class="hh2">直線の交点ドリル</div></div>'
+      + '<div class="meta"><span>名前</span><span class="ln w1"></span><span>　月　日</span><span>　</span><span class="ln w3"></span><span>／' + list.length + '問</span></div>'
+      + '<div class="point">次の交点の座標を求めましょう。答えは（<i>x</i>, <i>y</i>）の形で書きます。</div>';
+    list.forEach(function(p, i){ h += '<div class="item"><div class="qt"><span class="no">(' + (i + 1) + ')</span>' + p.q + '</div><div class="ab"><span></span></div></div>'; });
+    return h + '</div>';
+  }
+  function answerHtml(withEx){
+    var h = '<div class="sheet ans pb"><h1>解答' + (withEx ? '・解説' : '') + '</h1><div class="sub">直線の交点ドリル（' + sets.length + '枚）</div>';
+    sets.forEach(function(list, k){
+      if (sets.length > 1) h += '<h2>' + (k + 1) + '枚目</h2>';
+      h += '<div class="two">';
+      list.forEach(function(p, i){
+        h += '<div class="ai"><span class="no">(' + (i + 1) + ')</span><span class="k">' + p.a + '</span>'
+          + (withEx ? p.st.map(function(s){ return '<span class="st">' + s + '</span>'; }).join('') : '') + '</div>';
+      });
+      h += '</div>';
+    });
+    return h + '<div class="memo"><b>■ 解き方のポイント</b>・2直線の交点は、2つの式を連立方程式として解く。<br>・<i>x</i> 軸との交点は <i>y</i> ＝ 0、<i>y</i> 軸との交点は <i>x</i> ＝ 0 を代入する。<i>y</i> 軸との交点は切片と同じ。</div></div>';
+  }
+  function render(){
+    var c = counts(), total = c.reduce(function(s, v){ return s + v; }, 0), n = +document.getElementById('countSel').value;
+    var info = document.getElementById('info');
+    if (total === 0) { info.innerHTML = '<span class="warn">問題数を1問以上にしてください</span>'; return; }
+    if (total > 12) { info.innerHTML = '<span class="warn">1枚12問までです（いま' + total + '問）</span>'; return; }
+    sets = [];
+    for (var k = 0; k < n; k++) {
+      var list = [], seen = {};
+      TYPES.forEach(function(t, i){
+        for (var j = 0; j < c[i]; j++) {
+          var p, tries = 0;
+          do { p = t.gen(j); tries++; } while (seen[p.q] && tries < 50);
+          seen[p.q] = 1; list.push(p);
+        }
+      });
+      sets.push(list);
+    }
+    var h = sets.map(function(l, k){ return sheetHtml(l, k, n); }).join('');
+    // 両面印刷用：問題が3枚以上の奇数枚なら白紙を1枚はさみ、解答を新しい紙の表から始める
+    if (n > 1 && n % 2 === 1) h += '<div class="sheet pb blankpage">（両面印刷用の白紙ページ）</div>';
+    document.getElementById('output').innerHTML = h + answerHtml(document.getElementById('ansSel').value === 'ex');
+    info.textContent = '1枚' + total + '問 × ' + n + '枚＋解答';
+    if (document.body.classList.contains('editmode')) setEdit(true);
+  }
+  function setEdit(on){
+    document.body.classList.toggle('editmode', on);
+    var b = document.getElementById('editBtn'); b.classList.toggle('active', on); b.textContent = on ? '編集モード：ON' : '編集モード';
+    Array.prototype.forEach.call(document.querySelectorAll('#output .sheet'), function(s){ s.contentEditable = on ? 'true' : 'false'; });
+  }
+  document.getElementById('genBtn').addEventListener('click', render);
+  document.getElementById('countSel').addEventListener('change', render);
+  document.getElementById('ansSel').addEventListener('change', function(){
+    if (!sets.length) return render();
+    var out = document.getElementById('output'), a = out.querySelector('.ans'); a.outerHTML = answerHtml(this.value === 'ex');
+    if (document.body.classList.contains('editmode')) setEdit(true);
+  });
+  document.getElementById('editBtn').addEventListener('click', function(){ setEdit(!document.body.classList.contains('editmode')); });
+  document.getElementById('printBtn').addEventListener('click', function(){ window.print(); });
+  render();
+})();
+</script>
+</body>
+</html>
