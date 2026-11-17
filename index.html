@@ -35,14 +35,10 @@
     color: #FAF8F2;
     padding: 48px 24px 56px;
   }
-  .header-inner { max-width: 1040px; margin: 0 auto; display: flex; align-items: center; gap: 32px; }
+  .header-inner { max-width: 1040px; margin: 0 auto; }
   .header-text { flex: 1; min-width: 0; }
-  .header-logo { flex-shrink: 0; align-self: flex-start; background: #FFFFFF; border-radius: 10px; padding: 6px 9px; opacity: .95; }
-  .header-logo img { display: block; width: 84px; height: auto; }
-  @media (max-width: 720px) {
-    .header-inner { flex-direction: column-reverse; align-items: flex-start; gap: 18px; }
-    .header-logo img { width: 64px; }
-  }
+  .eyebrow { display: flex; align-items: center; gap: 8px; }
+  .eb-logo { width: 24px; height: 24px; border-radius: 6px; background: #FFFFFF; padding: 2px; }
   .eyebrow { font-size: 13px; letter-spacing: 0.08em; color: #C9D3DE; margin-bottom: 10px; }
   h1 { margin: 0 0 10px; font-family: 'Shippori Mincho', serif; font-size: 34px; font-weight: 700; letter-spacing: 0.02em; }
   .tagline { margin: 0 0 28px; font-size: 15px; color: #DCE3EC; max-width: 560px; }
@@ -201,7 +197,7 @@
 <header>
   <div class="header-inner">
     <div class="header-text">
-    <div class="eyebrow">学習塾CONNECT ／ 講師用</div>
+    <div class="eyebrow"><img class="eb-logo" src="img/connect-mark-180.png" alt="" width="180" height="180">学習塾CONNECT ／ 講師用</div>
     <h1>CONNECT 教材ポータル</h1>
     <p class="tagline">これまで作成した授業プリント・解説・対策問題をひとまとめに。教科と単元からすぐに開けます。</p>
     <div class="search-box">
@@ -209,7 +205,6 @@
       <input type="text" id="searchInput" placeholder="教材名・単元名で検索">
     </div>
     </div>
-    <div class="header-logo"><img src="img/connect-logo.png" alt="学習塾CONNECT" width="596" height="600"></div>
   </div>
 </header>
 

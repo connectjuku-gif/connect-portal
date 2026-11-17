@@ -12,7 +12,7 @@
 | 公開先 | Cloudflare Workers（静的アセット配信）　本番URL：https://connect-portal.connect-juku.workers.dev |
 | デプロイ | `main` に push すると Cloudflare 側の Git 連携で自動デプロイ（手動アップロード・ビルド作業なし） |
 | 設定 | `wrangler.toml`：`main = "src/worker.js"`、`[assets] directory = "."`（リポジトリ直下をそのまま配信）、`run_worker_first = true` |
-| ロゴ・アイコン | `img/connect-logo.png`（ヘッダー右のロゴ）、`img/favicon-64.png`（タブのアイコン）、`img/connect-mark-180.png`（スマホのホーム画面用） |
+| ロゴ・アイコン | `img/connect-mark-180.png`（ヘッダーの「学習塾CONNECT」の左の小さなマーク・スマホのホーム画面用）、`img/connect-logo.png`（文字入りロゴ・今は未使用）、`img/favicon-64.png`（タブのアイコン） |
 | ログイン | `src/worker.js` で講師共通のBasic認証（ID・パスワードもこのファイルに書いてある。変えるときはここを書きかえて push） |
 | 配信しないもの | `.assetsignore` に書いたもの（`src/` `tools/` `README.md` `.git/` など） |
 
