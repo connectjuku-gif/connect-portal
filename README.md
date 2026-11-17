@@ -12,6 +12,7 @@
 | 公開先 | Cloudflare Workers（静的アセット配信）　本番URL：https://connect-portal.connect-juku.workers.dev |
 | デプロイ | `main` に push すると Cloudflare 側の Git 連携で自動デプロイ（手動アップロード・ビルド作業なし） |
 | 設定 | `wrangler.toml`：`main = "src/worker.js"`、`[assets] directory = "."`（リポジトリ直下をそのまま配信）、`run_worker_first = true` |
+| ロゴ・アイコン | `img/connect-logo.png`（ヘッダー右のロゴ）、`img/favicon-64.png`（タブのアイコン）、`img/connect-mark-180.png`（スマホのホーム画面用） |
 | ログイン | `src/worker.js` で講師共通のBasic認証（ID・パスワードもこのファイルに書いてある。変えるときはここを書きかえて push） |
 | 配信しないもの | `.assetsignore` に書いたもの（`src/` `tools/` `README.md` `.git/` など） |
 
@@ -76,6 +77,7 @@
 - `gbadge` のクラス：`gb-1` `gb-2` `gb-3` `gb-el`、複数学年は `gb-multi`。
 - `data-tags`：単元ボタン（`data-tag` と完全一致した語）と検索に使う。スペース区切り。
 - **中学校ボタン**：カードの `card-title` に学校名（中野東・西戸山・西新宿）が入っていれば、そのボタンに自動で出る。タイトルに入れられないときは `data-school="中野東"` 属性を付ける。新しい学校を足すときは `nav.schools` にボタンを1つ追加する（件数は自動で数える）。
+- **テストが終わった予想問題**：カードの開始タグに `data-ended="2026-11"`（終わった年月）を付けると、ふだんは一覧から隠れ、サムネイルが灰色・タイトルに「（テスト終了）」が付く。中学校ボタンの行にある「📦 終わったテストも表示」を押すか、検索したときだけ表示される。
 - ボタンの並べ方の種類：
   - `.pills`：ボタンを横に並べる（レベル違いなど）
   - `.prows > .prow > .plab`：行ごとにラベル＋ボタン（「単元名：やさしめ／標準」など）
