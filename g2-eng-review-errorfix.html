@@ -356,7 +356,7 @@ function build(){
   items.forEach(function(p){ counts[p[0]] = (counts[p[0]]||0) + 1; });
   var countStr = allCats.filter(function(c){ return counts[c]; }).map(function(c){ return c + ' ' + counts[c]; }).join('／');
   h += '<div class="sheet ans pb"><h1>解答・解説</h1><div class="sub">' + TITLE + '［' + lvName + '］' + n + '問・各1点</div>';
-  h += '<div class="memo"><b>■ 出題範囲メモ</b>・範囲：' + esc(rangeText) + '（項目がかたよらないようランダム出題）<br>・今回の内訳：' + esc(countStr) + '<br>・採点：' + (std ? '誤りの場所と直し方の両方が正しくて1点。' : '下線部を正しく直せて1点。') + '短縮形と開いた形（don\'t / do not）はどちらも正解。右の枠は復習する文法項目。<br>・<b>ねらい</b>：英文を読むときは「主語は何か（単数・複数）」「時はいつか（今・過去）」「be動詞の文か一般動詞の文か」に加えて、to や助動詞のあとは原形かどうかを確かめるくせをつけましょう。間違えた問題は、正しい英文を声に出して読み、もう一度書いてみましょう。</div>';
+  h += '<div class="memo"><b>■ 範囲と勉強のポイント</b>・範囲：' + esc(rangeText) + '（項目がかたよらないようランダム出題）<br>・今回の内訳：' + esc(countStr) + '<br>・採点：' + (std ? '誤りの場所と直し方の両方が正しくて1点。' : '下線部を正しく直せて1点。') + '短縮形と開いた形（don\'t / do not）はどちらも正解。右の枠は復習する文法項目。<br>・<b>ねらい</b>：英文を読むときは「主語は何か（単数・複数）」「時はいつか（今・過去）」「be動詞の文か一般動詞の文か」に加えて、to や助動詞のあとは原形かどうかを確かめるくせをつけましょう。間違えた問題は、正しい英文を声に出して読み、もう一度書いてみましょう。</div>';
   built.forEach(function(b, i){
     var p = items[i];
     h += '<div class="unit"><div class="top"><span class="no">(' + (i+1) + ')</span><span class="jp">' + esc(p[1]) + '</span><span class="tag">' + esc(p[0]) + '</span></div>';
