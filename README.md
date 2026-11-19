@@ -92,6 +92,7 @@
 
 | まとめページ | 中身 |
 |---|---|
+| `el5-math-check.html` | 小5算数 確認テスト（`el5-math-check-01〜20.html`） |
 | `el6-math-check.html` | 小6算数 確認テスト（`el6-math-check-01〜12.html`） |
 | `math-check-hub.html` | 数学 単元確認テスト 中1〜中3 |
 | `eng-check-hub.html` | 英語 文法確認テスト（学年・教科書 → 単元 → やさしめ／標準） |

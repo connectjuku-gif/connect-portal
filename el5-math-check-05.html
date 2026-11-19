@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小5算数 単元確認テスト⑤　小数のわり算</title>
+<style>
+  @page { size: A4; margin: 14mm 12mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "UD Digi Kyokasho NP-R","BIZ UDPGothic","Hiragino Maru Gothic ProN","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    font-size: 12.5pt; line-height: 1.65; color: #111; background: #e9e9e9; margin: 0; padding: 20px 0;
+  }
+  .sheet { width: 210mm; min-height: 297mm; margin: 0 auto 24px; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.25); padding: 14mm 12mm; position: relative; }
+  .pb { page-break-before: always; }
+  h1 { text-align: center; font-size: 19pt; margin: 0 0 2mm; letter-spacing: .06em; }
+  .sub { text-align: center; font-size: 11pt; color: #333; margin-bottom: 2mm; }
+  .cheer { text-align: center; font-size: 10.5pt; color: #333; margin-bottom: 4mm; }
+  .namebox { display: flex; justify-content: flex-end; gap: 14px; font-size: 10pt; border-top: 1px solid #999; border-bottom: 1px solid #999; padding: 3px 0; margin-bottom: 5mm; }
+  .namebox span { white-space: nowrap; }
+  .namebox .line { display:inline-block; border-bottom:1px solid #333; width:60px; height:1em; }
+  .rules { font-size: 10pt; border: 1.5px solid #333; border-radius: 10px; padding: 6px 10px; margin-bottom: 5mm; line-height: 1.6; }
+  .q { margin-bottom: 6mm; border: 1.3px solid #555; border-radius: 12px; padding: 4mm 5mm; }
+  .qh { display: flex; align-items: center; gap: 8px; border-bottom: 1.5px dashed #888; padding-bottom: 3px; margin-bottom: 3mm; }
+  .num { display: inline-flex; align-items: center; justify-content: center; width: 1.9em; height: 1.9em; border-radius: 50%; border: 2px solid #111; font-weight: bold; font-size: 1.05em; flex-shrink: 0; }
+  .inst { font-size: 10.8pt; flex: 1; }
+  .pts { float: right; font-size: 9.5pt; color: #333; }
+  ol.items { margin: 0; padding-left: 1.5em; }
+  ol.items > li { margin-bottom: 3.2mm; }
+  .figwrap { display:flex; justify-content:center; margin: 3mm 0; }
+  .ansline { display:inline-block; border-bottom:1.3px solid #333; min-width: 70px; height: 1.3em; }
+  .blank { display:inline-block; min-width: 1.6em; border-bottom: 1.3px solid #333; text-align:center; }
+  .conf-row { display:flex; justify-content:flex-end; align-items:center; gap:7px; font-size:9.3pt; color:#333; margin-top:3mm; border-top: 1px dashed #ccc; padding-top: 2.5mm; }
+  .conf-row .label { margin-right:3px; color:#555; }
+  .conf-row .face { display:inline-flex; align-items:center; gap:2px; white-space:nowrap; }
+  .conf-row svg { display:block; }
+  table.dt { border-collapse: collapse; margin: 2mm auto; font-size: 10.8pt; }
+  table.dt th, table.dt td { border: 1px solid #333; padding: 4px 10px; text-align:center; }
+  table.dt th { background:#f0f0f0; }
+  .frac { display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 2px; line-height:1.1; }
+  .frac .n, .frac .d { font-size:11pt; }
+  .frac .n { border-bottom:1.3px solid #111; padding:0 3px; }
+  .frac .d { padding:0 3px; }
+  .grid-box { border: 1.5px solid #333; border-radius: 10px; overflow: hidden; }
+  .choice-box { border: 1.3px solid #333; border-radius: 10px; padding: 5px 12px; display:inline-block; margin: 2mm auto; font-size: 10.8pt; }
+  .k { color:#000; font-weight:bold; text-decoration: underline; }
+  .memo { border: 1.3px dashed #333; border-radius: 10px; padding: 6px 10px; font-size: 9.6pt; margin-bottom: 5mm; background: #fafafa; }
+  .ex { font-size: 9.8pt; color:#222; margin: 1mm 0 0 0; line-height:1.55; }
+  .a { margin: 1mm 0; }
+  .reflect { border: 1.3px solid #333; border-radius: 12px; padding: 7px 12px; margin-top: 6mm; font-size: 10pt; line-height: 2; }
+  .reflect .line2 { border-bottom: 1px solid #999; display:block; height: 1.6em; }
+  .editbtn { position: fixed; top: 10px; right: 10px; z-index: 999; padding: 7px 14px; background:#333; color:#fff; border:none; border-radius:4px; font-size:12px; cursor:pointer; }
+  [contenteditable="true"] { outline: 1px dashed #4a90d9; }
+  @media print { body { background:#fff; padding:0; } .sheet { box-shadow:none; margin:0; width:auto; min-height:0; } .editbtn { display:none; } }
+  svg text { font-family: inherit; }
+  .two { display:flex; gap:6mm; align-items:flex-start; flex-wrap:wrap; justify-content:center; }
+  h2.ah { font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin:5mm 0 1mm; }
+  h2.ah:first-of-type { margin-top:0; }
+  body { font-size:12pt; line-height:1.6; }
+  .sheet { padding: 12mm 12mm; }
+  .q { margin-bottom:4mm; padding:3mm 4.5mm; }
+  ol.items > li { margin-bottom:2.4mm; }
+  .conf-row { margin-top:2mm; padding-top:1.8mm; }
+  .ans h2.ah { margin:3.2mm 0 0.5mm; font-size:12pt; }
+  .ans .a { line-height:1.75; }
+  .ans .memo { margin-bottom:3mm; }
+  .reflect { margin-top:4mm; line-height:1.8; }
+  @media print { .sheet { padding: 0 2mm; } }
+  .col3 { display:grid; grid-template-columns:repeat(3,1fr); gap:3mm; }
+  .col3 > div { display:flex; flex-direction:column; align-items:center; font-size:10.5pt; }
+</style>
+</head>
+<body>
+
+<button class="editbtn" onclick="toggleEdit()">編集モード</button>
+
+<div class="sheet">
+  <h1>小5算数　単元確認テスト⑤</h1>
+  <div class="sub">小数のわり算</div>
+  <div class="cheer">★　さいごまで、じぶんのペースでがんばろう！　★</div>
+  <div class="namebox">
+    <span>5年　<span class="line"></span>組　<span class="line"></span>番</span>
+    <span>名前　<span class="line" style="width:110px;"></span></span>
+    <span>／100点</span>
+  </div>
+  <div class="rules">
+    ・わる数を整数にしてから計算しましょう。　・むずかしい問題はとばして、できる問題から先にやってもOKです。　・おわったら、見直しをしてみよう。
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">1</span><span class="inst">計算のしかたを考えます。□にあてはまる数を書きましょう。<span class="pts">（20点）</span></span></div>
+    <ol class="items"><li>4.2÷0.6は、わられる数とわる数をどちらも（　<span class="ansline" style="min-width:40px;"></span>　）倍して、（　<span class="ansline" style="min-width:40px;"></span>　）÷（　<span class="ansline" style="min-width:30px;"></span>　）＝（　<span class="ansline" style="min-width:30px;"></span>　）と計算できます。</li><li>7.8÷1.3＝（　<span class="ansline" style="min-width:50px;"></span>　）</li></ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">2</span><span class="inst">次の計算をしましょう。わりきれるまで計算しましょう。<span class="pts">（20点）</span></span></div>
+    <table class="dt" style="width:100%;"><tr><td style="text-align:left;">① 9.6÷1.2</td><td style="min-width:80px;">&nbsp;</td><td style="text-align:left;">② 5.6÷0.8</td><td style="min-width:80px;">&nbsp;</td></tr><tr><td style="text-align:left;">③ 2.73÷2.1</td><td style="min-width:80px;">&nbsp;</td><td style="text-align:left;">④ 6÷1.5</td><td style="min-width:80px;">&nbsp;</td></tr><tr><td style="text-align:left;">⑤ 0.84÷0.12</td><td style="min-width:80px;">&nbsp;</td><td style="text-align:left;">⑥ 3.6÷0.45</td><td style="min-width:80px;">&nbsp;</td></tr></table>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q pb">
+    <div class="qh"><span class="num">3</span><span class="inst">商は一の位まで求めて、あまりも出しましょう。<span class="pts">（20点）</span></span></div>
+    <table class="dt" style="width:100%;"><tr><td style="text-align:left;">① 7.4÷1.6</td><td style="min-width:220px;">&nbsp;</td></tr><tr><td style="text-align:left;">② 15.3÷2.4</td><td style="min-width:220px;">&nbsp;</td></tr></table>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">4</span><span class="inst">商を四捨五入して、1/10の位までのがい数で求めましょう。<span class="pts">（20点）</span></span></div>
+    <table class="dt" style="width:100%;"><tr><td style="text-align:left;">① 5÷0.7</td><td style="min-width:220px;">&nbsp;</td></tr><tr><td style="text-align:left;">② 2.3÷1.3</td><td style="min-width:220px;">&nbsp;</td></tr></table>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">5</span><span class="inst">式と答えを書きましょう。<span class="pts">（20点）</span></span></div>
+    <ol class="items"><li>2.5mで450円のリボンがあります。このリボン1mのねだんは何円ですか。<br>式（　<span class="ansline" style="min-width:150px;"></span>　）　答え（　<span class="ansline" style="min-width:70px;"></span>　）</li><li>8.4Lの水を、0.6Lずつびんに分けます。びんは何本いりますか。<br>式（　<span class="ansline" style="min-width:150px;"></span>　）　答え（　<span class="ansline" style="min-width:70px;"></span>　）</li><li>4.5mのテープを0.8mずつ切ります。0.8mのテープは何本できて、何mあまりますか。<br>式（　<span class="ansline" style="min-width:150px;"></span>　）　答え（　<span class="ansline" style="min-width:120px;"></span>　）</li></ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+</div>
+
+<div class="sheet ans pb">
+  <h1>解答・解説</h1>
+  <div class="sub">小5算数　単元確認テスト⑤　小数のわり算（配点：各20点×5＝100点）</div>
+
+  <div class="memo">
+    ■ テスト範囲と勉強のポイント：5年「小数のわり算」の内容。わる数が小数のわり算のしかた、あまりのあるわり算、がい数で表す商、文章題まで。
+  </div>
+
+  <h2 class="ah">1　計算のしかた</h2>
+  <div class="a">① <span class="k">10</span>・<span class="k">42</span>÷<span class="k">6</span>＝<span class="k">7</span>　② <span class="k">6</span></div>
+  <div class="ex">わられる数とわる数に同じ数をかけても、商は変わらない。わる数が整数になるように10倍・100倍する。</div>
+
+  <h2 class="ah">2　小数のわり算</h2>
+  <div class="a">① <span class="k">8</span>　② <span class="k">7</span>　③ <span class="k">1.3</span>　④ <span class="k">4</span>　⑤ <span class="k">7</span>　⑥ <span class="k">8</span></div>
+  <div class="ex">⑥は3.6と0.45をどちらも100倍して360÷45。わる数のけたに合わせて、わられる数の小数点も動かす。</div>
+
+  <h2 class="ah">3　あまりのあるわり算</h2>
+  <div class="a">① <span class="k">4あまり1</span>　② <span class="k">6あまり0.9</span></div>
+  <div class="ex">あまりの小数点は、もとのわられる数の小数点の位置にそろえる。たしかめ：1.6×4＋1＝7.4、2.4×6＋0.9＝15.3。</div>
+
+  <h2 class="ah">4　がい数で求める</h2>
+  <div class="a">① <span class="k">7.1</span>（7.14…）　② <span class="k">1.8</span>（1.76…）</div>
+  <div class="ex">1/10の位までのがい数にするには、1/100の位まで計算して四捨五入する。</div>
+
+  <h2 class="ah">5　文章題</h2>
+  <div class="a">① 式 <span class="k">450÷2.5＝180</span>　答え <span class="k">180円</span><br>② 式 <span class="k">8.4÷0.6＝14</span>　答え <span class="k">14本</span><br>③ 式 <span class="k">4.5÷0.8＝5あまり0.5</span>　答え <span class="k">5本できて0.5mあまる</span></div>
+  <div class="ex">「1mあたり」は全体÷いくつ分。③は本数を聞いているので商は一の位まで。</div>
+
+  <div class="memo" style="margin-top:6mm;">
+    ■ このテストのねらい：わる数を整数にするしくみと、あまりの小数点の位置が分かっているか確かめよう。</div>
+
+  <div class="reflect">
+    ★　この学習は楽しかったですか。（　はい　・　まあまあ　・　少し　・　いいえ　）<br>
+    ◆　この学習はよくわかりましたか。（　はい　・　まあまあ　・　少し　・　いいえ　）<br>
+    ●　感想を自由にかきましょう。<br>
+    <span class="line2"></span><span class="line2"></span>
+  </div>
+</div>
+
+<script>
+function toggleEdit(){
+  const sheets = document.querySelectorAll('.sheet');
+  const on = sheets[0].getAttribute('contenteditable') === 'true';
+  sheets.forEach(s => s.setAttribute('contenteditable', on ? 'false' : 'true'));
+  event.target.textContent = on ? '編集モード' : '編集モード：ON（もう一度押すと解除）';
+}
+</script>
+
+</body>
+</html>

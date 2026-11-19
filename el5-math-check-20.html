@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小5算数 単元確認テスト⑳　変わり方</title>
+<style>
+  @page { size: A4; margin: 14mm 12mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "UD Digi Kyokasho NP-R","BIZ UDPGothic","Hiragino Maru Gothic ProN","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    font-size: 12.5pt; line-height: 1.65; color: #111; background: #e9e9e9; margin: 0; padding: 20px 0;
+  }
+  .sheet { width: 210mm; min-height: 297mm; margin: 0 auto 24px; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,.25); padding: 14mm 12mm; position: relative; }
+  .pb { page-break-before: always; }
+  h1 { text-align: center; font-size: 19pt; margin: 0 0 2mm; letter-spacing: .06em; }
+  .sub { text-align: center; font-size: 11pt; color: #333; margin-bottom: 2mm; }
+  .cheer { text-align: center; font-size: 10.5pt; color: #333; margin-bottom: 4mm; }
+  .namebox { display: flex; justify-content: flex-end; gap: 14px; font-size: 10pt; border-top: 1px solid #999; border-bottom: 1px solid #999; padding: 3px 0; margin-bottom: 5mm; }
+  .namebox span { white-space: nowrap; }
+  .namebox .line { display:inline-block; border-bottom:1px solid #333; width:60px; height:1em; }
+  .rules { font-size: 10pt; border: 1.5px solid #333; border-radius: 10px; padding: 6px 10px; margin-bottom: 5mm; line-height: 1.6; }
+  .q { margin-bottom: 6mm; border: 1.3px solid #555; border-radius: 12px; padding: 4mm 5mm; }
+  .qh { display: flex; align-items: center; gap: 8px; border-bottom: 1.5px dashed #888; padding-bottom: 3px; margin-bottom: 3mm; }
+  .num { display: inline-flex; align-items: center; justify-content: center; width: 1.9em; height: 1.9em; border-radius: 50%; border: 2px solid #111; font-weight: bold; font-size: 1.05em; flex-shrink: 0; }
+  .inst { font-size: 10.8pt; flex: 1; }
+  .pts { float: right; font-size: 9.5pt; color: #333; }
+  ol.items { margin: 0; padding-left: 1.5em; }
+  ol.items > li { margin-bottom: 3.2mm; }
+  .figwrap { display:flex; justify-content:center; margin: 3mm 0; }
+  .ansline { display:inline-block; border-bottom:1.3px solid #333; min-width: 70px; height: 1.3em; }
+  .blank { display:inline-block; min-width: 1.6em; border-bottom: 1.3px solid #333; text-align:center; }
+  .conf-row { display:flex; justify-content:flex-end; align-items:center; gap:7px; font-size:9.3pt; color:#333; margin-top:3mm; border-top: 1px dashed #ccc; padding-top: 2.5mm; }
+  .conf-row .label { margin-right:3px; color:#555; }
+  .conf-row .face { display:inline-flex; align-items:center; gap:2px; white-space:nowrap; }
+  .conf-row svg { display:block; }
+  table.dt { border-collapse: collapse; margin: 2mm auto; font-size: 10.8pt; }
+  table.dt th, table.dt td { border: 1px solid #333; padding: 4px 10px; text-align:center; }
+  table.dt th { background:#f0f0f0; }
+  .frac { display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; margin:0 2px; line-height:1.1; }
+  .frac .n, .frac .d { font-size:11pt; }
+  .frac .n { border-bottom:1.3px solid #111; padding:0 3px; }
+  .frac .d { padding:0 3px; }
+  .grid-box { border: 1.5px solid #333; border-radius: 10px; overflow: hidden; }
+  .choice-box { border: 1.3px solid #333; border-radius: 10px; padding: 5px 12px; display:inline-block; margin: 2mm auto; font-size: 10.8pt; }
+  .k { color:#000; font-weight:bold; text-decoration: underline; }
+  .memo { border: 1.3px dashed #333; border-radius: 10px; padding: 6px 10px; font-size: 9.6pt; margin-bottom: 5mm; background: #fafafa; }
+  .ex { font-size: 9.8pt; color:#222; margin: 1mm 0 0 0; line-height:1.55; }
+  .a { margin: 1mm 0; }
+  .reflect { border: 1.3px solid #333; border-radius: 12px; padding: 7px 12px; margin-top: 6mm; font-size: 10pt; line-height: 2; }
+  .reflect .line2 { border-bottom: 1px solid #999; display:block; height: 1.6em; }
+  .editbtn { position: fixed; top: 10px; right: 10px; z-index: 999; padding: 7px 14px; background:#333; color:#fff; border:none; border-radius:4px; font-size:12px; cursor:pointer; }
+  [contenteditable="true"] { outline: 1px dashed #4a90d9; }
+  @media print { body { background:#fff; padding:0; } .sheet { box-shadow:none; margin:0; width:auto; min-height:0; } .editbtn { display:none; } }
+  svg text { font-family: inherit; }
+  .two { display:flex; gap:6mm; align-items:flex-start; flex-wrap:wrap; justify-content:center; }
+  h2.ah { font-size:12.5pt; border-bottom:1.5px solid #111; padding-bottom:2px; margin:5mm 0 1mm; }
+  h2.ah:first-of-type { margin-top:0; }
+  body { font-size:12pt; line-height:1.6; }
+  .sheet { padding: 12mm 12mm; }
+  .q { margin-bottom:4mm; padding:3mm 4.5mm; }
+  ol.items > li { margin-bottom:2.4mm; }
+  .conf-row { margin-top:2mm; padding-top:1.8mm; }
+  .ans h2.ah { margin:3.2mm 0 0.5mm; font-size:12pt; }
+  .ans .a { line-height:1.75; }
+  .ans .memo { margin-bottom:3mm; }
+  .reflect { margin-top:4mm; line-height:1.8; }
+  @media print { .sheet { padding: 0 2mm; } }
+  .col3 { display:grid; grid-template-columns:repeat(3,1fr); gap:3mm; }
+  .col3 > div { display:flex; flex-direction:column; align-items:center; font-size:10.5pt; }
+</style>
+</head>
+<body>
+
+<button class="editbtn" onclick="toggleEdit()">編集モード</button>
+
+<div class="sheet">
+  <h1>小5算数　単元確認テスト⑳</h1>
+  <div class="sub">変わり方</div>
+  <div class="cheer">★　さいごまで、じぶんのペースでがんばろう！　★</div>
+  <div class="namebox">
+    <span>5年　<span class="line"></span>組　<span class="line"></span>番</span>
+    <span>名前　<span class="line" style="width:110px;"></span></span>
+    <span>／100点</span>
+  </div>
+  <div class="rules">
+    ・表をかいて、きまりを見つけてから考えましょう。　・むずかしい問題はとばして、できる問題から先にやってもOKです。　・おわったら、見直しをしてみよう。
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">1</span><span class="inst">同じ長さのぼうで、下のように正三角形を横にならべていきます。<span class="pts">（20点）</span></span></div>
+    <div class="figwrap"><svg width="330" height="60" viewBox="0 0 330 60"><polygon points="20.0,50.0 60.0,50.0 40.0,15.0" fill="none" stroke="#222" stroke-width="1.4"/><polygon points="60.0,50.0 100.0,50.0 80.0,15.0" fill="none" stroke="#222" stroke-width="1.4"/><polygon points="100.0,50.0 140.0,50.0 120.0,15.0" fill="none" stroke="#222" stroke-width="1.4"/><line x1="40.0" y1="15.0" x2="80.0" y2="15.0" stroke="#222" stroke-width="1.2"/><line x1="80.0" y1="15.0" x2="120.0" y2="15.0" stroke="#222" stroke-width="1.2"/><text x="200.0" y="40.0" font-size="16" text-anchor="start">…</text></svg></div><table class="dt" style="width:100%;"><tr><th>正三角形の数（こ）</th><th>1</th><th>2</th><th>3</th><th>4</th></tr><tr><th>ぼうの数（本）</th><td>3</td><td>5</td><td></td><td></td></tr></table><ol class="items"><li>表のあいているところをうめましょう。</li><li>正三角形の数を□こ、ぼうの数を○本として、□と○の関係を式に表しましょう。（　<span class="ansline" style="min-width:120px;"></span>　）</li><li>正三角形を10こつくるには、ぼうは何本いりますか。（　<span class="ansline" style="min-width:60px;"></span>　）</li></ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">2</span><span class="inst">1辺1cmの正方形を、階だんの形にならべていきます。1だんのときは1こ、2だんのときは3こ、3だんのときは6こです。<span class="pts">（20点）</span></span></div>
+    <ol class="items"><li>4だんのときは何こですか。（　<span class="ansline" style="min-width:50px;"></span>　）</li><li>5だんのときは何こですか。（　<span class="ansline" style="min-width:50px;"></span>　）</li><li>10だんのときは何こですか。（　<span class="ansline" style="min-width:50px;"></span>　）</li></ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q pb">
+    <div class="qh"><span class="num">3</span><span class="inst">1本80円のえんぴつを何本かと、120円のケースを1つ買います。<span class="pts">（20点）</span></span></div>
+    <ol class="items"><li>えんぴつの本数を□本、代金を○円として、□と○の関係を式に表しましょう。（　<span class="ansline" style="min-width:140px;"></span>　）</li><li>えんぴつを7本買ったときの代金は何円ですか。（　<span class="ansline" style="min-width:60px;"></span>　）</li><li>代金が1000円のとき、えんぴつは何本ですか。<br>式（　<span class="ansline" style="min-width:150px;"></span>　）　答え（　<span class="ansline" style="min-width:60px;"></span>　）</li></ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">4</span><span class="inst">まわりの長さが20cmの長方形をつくります。<span class="pts">（20点）</span></span></div>
+    <table class="dt" style="width:100%;"><tr><th>縦の長さ（cm）</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr><tr><th>横の長さ（cm）</th><td>9</td><td></td><td></td><td></td><td></td></tr></table><ol class="items"><li>表のあいているところをうめましょう。</li><li>縦の長さと横の長さの和は、いつも何cmですか。（　<span class="ansline" style="min-width:50px;"></span>　）</li><li>横の長さは、縦の長さに比例していますか。（　<span class="ansline" style="min-width:80px;"></span>　）</li></ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+
+  <div class="q">
+    <div class="qh"><span class="num">5</span><span class="inst">ご石を、1辺に同じ数ずつならべて正方形の形をつくります（中はあけておきます）。1辺が2こでは4こ、3こでは8こ、4こでは12こです。<span class="pts">（20点）</span></span></div>
+    <ol class="items"><li>1辺が5このとき、ご石は全部で何こですか。（　<span class="ansline" style="min-width:50px;"></span>　）</li><li>1辺の数を□こ、全部の数を○ことして、□と○の関係を式に表しましょう。（　<span class="ansline" style="min-width:120px;"></span>　）</li><li>1辺が10このとき、ご石は全部で何こですか。（　<span class="ansline" style="min-width:50px;"></span>　）</li></ol>
+    <div class="conf-row"><span class="label">じぶんの自信は？</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,13 Q11,19 16,13" fill="none" stroke="#333" stroke-width="1.3"/></svg>自信あり</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M7,14 Q11,17 15,14" fill="none" stroke="#333" stroke-width="1.3"/></svg>まあまあ</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><line x1="7" y1="14" x2="15" y2="14" stroke="#333" stroke-width="1.3"/></svg>少し不安</span><span class="face"><svg width="21" height="21" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="#333" stroke-width="1.3"/><circle cx="8" cy="9" r="1.2" fill="#333"/><circle cx="14" cy="9" r="1.2" fill="#333"/><path d="M6,16 Q11,12 16,16" fill="none" stroke="#333" stroke-width="1.3"/></svg>むずかしい</span></div>
+  </div>
+</div>
+
+<div class="sheet ans pb">
+  <h1>解答・解説</h1>
+  <div class="sub">小5算数　単元確認テスト⑳　変わり方（配点：各20点×5＝100点）</div>
+
+  <div class="memo">
+    ■ テスト範囲と勉強のポイント：5年「変わり方」の内容。ともなって変わる2つの量の関係を表から見つける、□と○を使った式、和が一定の関係まで。
+  </div>
+
+  <h2 class="ah">1　正三角形とぼう</h2>
+  <div class="a">① <span class="k">7</span>・<span class="k">9</span>　② <span class="k">○＝2×□＋1</span>（□×2＋1）　③ <span class="k">21本</span></div>
+  <div class="ex">正三角形が1こふえるごとに、ぼうは2本ずつふえる。最初の1本に、2本ずつ□回たすと考えてもよい。</div>
+
+  <h2 class="ah">2　階だんの形</h2>
+  <div class="a">① <span class="k">10こ</span>　② <span class="k">15こ</span>　③ <span class="k">55こ</span></div>
+  <div class="ex">1だんふえるごとに、ふえる数が2、3、4、…と1ずつ大きくなる。10だんは1＋2＋…＋10＝55。</div>
+
+  <h2 class="ah">3　代金の式</h2>
+  <div class="a">① <span class="k">○＝80×□＋120</span>　② <span class="k">680円</span>　③ 式 <span class="k">(1000−120)÷80＝11</span>　答え <span class="k">11本</span></div>
+  <div class="ex">ケースの代金はいつも120円なので、80×□にたす。</div>
+
+  <h2 class="ah">4　和が一定</h2>
+  <div class="a">① <span class="k">8・7・6・5</span>　② <span class="k">10cm</span>　③ <span class="k">比例していない</span></div>
+  <div class="ex">縦＋横＝20÷2＝10。縦がふえると横はへるので、比例ではない。</div>
+
+  <h2 class="ah">5　ご石の数</h2>
+  <div class="a">① <span class="k">16こ</span>　② <span class="k">○＝4×□−4</span>（(□−1)×4 でもよい）　③ <span class="k">36こ</span></div>
+  <div class="ex">1辺□こを4つたすと、かどのご石を2回ずつ数えるので4こひく。</div>
+
+  <div class="memo" style="margin-top:6mm;">
+    ■ このテストのねらい：表からきまりを見つけて式に表し、大きな数のときも求められるか確かめよう。</div>
+
+  <div class="reflect">
+    ★　この学習は楽しかったですか。（　はい　・　まあまあ　・　少し　・　いいえ　）<br>
+    ◆　この学習はよくわかりましたか。（　はい　・　まあまあ　・　少し　・　いいえ　）<br>
+    ●　感想を自由にかきましょう。<br>
+    <span class="line2"></span><span class="line2"></span>
+  </div>
+</div>
+
+<script>
+function toggleEdit(){
+  const sheets = document.querySelectorAll('.sheet');
+  const on = sheets[0].getAttribute('contenteditable') === 'true';
+  sheets.forEach(s => s.setAttribute('contenteditable', on ? 'false' : 'true'));
+  event.target.textContent = on ? '編集モード' : '編集モード：ON（もう一度押すと解除）';
+}
+</script>
+
+</body>
+</html>
