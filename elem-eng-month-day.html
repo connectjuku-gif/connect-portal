@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小学英語_月と曜日の英語書き取り</title>
+<style>
+@page { size: A4; margin: 14mm 14mm; }
+* { box-sizing: border-box; }
+body { font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif; color:#111; line-height:1.6; font-size:11.5pt; margin:0; background:#e9e9e9; }
+.sheet { background:#fff; max-width: 190mm; margin: 12px auto; padding: 12mm 12mm; box-shadow: 0 1px 6px rgba(0,0,0,.15); }
+@media print { body{background:#fff;} .sheet{ box-shadow:none; margin:0; padding:0; max-width:none; } .nop{display:none !important;} .pb{ page-break-before: always; break-before: page; } }
+.controlbar { position: sticky; top: 0; z-index: 10; background: #1F3A5F; color: #fff; padding: 12px 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; font-size: 13px; }
+.controlbar .title { font-weight: bold; font-size: 15px; margin-right: 8px; }
+.controlbar button { font-family: inherit; font-size: 13px; padding: 7px 14px; border-radius: 6px; border: none; cursor: pointer; }
+.controlbar button.primary { background: #C9972B; color: #fff; font-weight: bold; }
+.controlbar button.secondary { background: #3A557A; color: #fff; }
+.controlbar button.secondary.active { background: #8A2E2E; }
+.controlbar button.pill { background: #29466D; color:#E6ECF4; border:1px solid #5A7398; padding: 5px 10px; }
+.controlbar button.pill.on { background:#FAF8F2; color:#1F3A5F; font-weight:bold; }
+.controlbar select, .controlbar input[type=text] { font-family:inherit; font-size:13px; padding:5px 6px; border-radius:6px; border:none; }
+.controlbar label { display:inline-flex; align-items:center; gap:5px; }
+.controlbar .grp { display:inline-flex; flex-wrap:wrap; align-items:center; gap:6px; padding: 4px 10px; border:1px solid #5A7398; border-radius:8px; }
+.controlbar .spacer { flex: 1; }
+.controlbar .count { font-size: 12px; color: #D9E1EC; }
+body.editmode [contenteditable="true"] { outline: 1px dashed #C9972B; }
+@media print { [contenteditable] { outline: none !important; } }
+.hh { border-bottom:2px solid #222; padding-bottom:3px; margin-bottom:6px; }
+.hh1 { font-size:10.5pt; color:#333; letter-spacing:.05em; display:flex; justify-content:space-between; }
+.hh2 { font-size:15pt; font-weight:bold; margin-top:1px; }
+.meta { display:flex; align-items:flex-end; justify-content:flex-end; gap:6px; font-size:10.5pt; margin:4px 0 6px; }
+.meta .ln { display:inline-block; border-bottom:1px solid #222; }
+.meta .w1 { min-width:42mm; } .meta .w3 { min-width:12mm; }
+.point { border:1px solid #222; padding:5px 10px; font-size:10pt; line-height:1.55; margin-bottom:3mm; }
+.fr { display:inline-flex; flex-direction:column; text-align:center; vertical-align:middle; line-height:1.3; font-weight:bold; }
+.fr > span:first-child { border-bottom:1.5px solid #111; padding:0 5px; }
+.fr > span:last-child { padding:0 5px; }
+.blankpage { text-align:center; color:#aaa; font-size:10px; padding-top:120mm; height:250mm; }
+.ans h1 { text-align:center; font-size:16pt; margin:0 0 4px; }
+.ans .sub { text-align:center; font-size:10.5pt; color:#444; margin-bottom:8px; }
+.ans h2 { font-size:12pt; border-left:5px solid #222; padding-left:8px; margin:10px 0 4px; break-after:avoid; }
+.agrid { display:grid; grid-template-columns: repeat(var(--ac,5), 1fr); gap: 2px 8px; break-inside:avoid; }
+.ai { font-size:11pt; padding:3px 0; border-bottom:1px dotted #bbb; display:flex; align-items:center; gap:4px; }
+.ai .no { width:2.4em; font-size:9.5pt; font-weight:bold; flex-shrink:0; }
+.k { font-weight:bold; text-decoration: underline; }
+.memo { border:2px solid #222; padding:8px 12px; font-size:10pt; margin:8px 0; break-inside:avoid; }
+.memo b { display:block; margin-bottom:2px; }
+.cols { display:grid; grid-template-columns: 1fr 1fr; gap: 0 12mm; }
+.cols h3 { margin: 2mm 0 3mm; font-size:11.5pt; text-align:center; border:2px solid #222; padding: 3px 0; letter-spacing:.15em; }
+.row { display:flex; align-items:flex-end; gap: 8px; height: 15.5mm; }
+.row .jp { width: 5.2em; text-align:right; font-weight:bold; font-size:12.5pt; padding-bottom:3px; flex-shrink:0; }
+.row .ln { flex:1; border-bottom: 1px solid #222; height: 11mm; position:relative; font-family: "Century Gothic", "Arial", sans-serif; font-size:15pt; padding-left:3px; color:#555; }
+.row .ln::before { content:""; position:absolute; left:0; right:0; top:50%; border-top:1px dashed #bbb; }
+.ans .row { height: 9.5mm; }
+.ans .row .ln { height: 7mm; font-size:12pt; color:#111; }
+.ans .row .ln::before { display:none; }
+</style>
+</head>
+<body>
+<div class="controlbar nop">
+  <span class="title">🗓️ 月と曜日の英語 書き取り｜学習塾CONNECT</span>
+  <label>ならびかた <select id="order"><option value="seq">じゅんばん</option><option value="rand">バラバラ</option></select></label>
+  <label>ヒント <select id="hint"><option value="none">なし</option><option value="first">最初の1文字</option></select></label>
+  <label>枚数 <select id="countSel"><option value="1">1枚</option><option value="2">2枚</option><option value="3">3枚</option><option value="4">4枚</option><option value="5">5枚</option><option value="6">6枚</option></select></label>
+  <button class="primary" id="genBtn">作り直す</button>
+  <button class="secondary" id="editBtn">編集モード</button>
+  <button class="secondary" id="printBtn">印刷</button>
+  <span class="spacer"></span>
+  <span class="count" id="info"></span>
+</div>
+<div id="output"></div>
+<script>
+(function(){
+  function ri(min, max){ return Math.floor(Math.random()*(max-min+1))+min; }
+  function gcd(a, b){ while(b){ var t = a % b; a = b; b = t; } return a; }
+  function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random()*(i+1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function fr(n, d){ return '<span class="fr"><span>'+n+'</span><span>'+d+'</span></span>'; }
+  function $(id){ return document.getElementById(id); }
+  function head(sub, title, k, n, outOf){
+    return '<div class="hh"><div class="hh1"><span>' + sub + '</span><span>' + (n > 1 ? (k+1) + '／' + n + '枚目' : '') + '</span></div><div class="hh2">' + title + '</div></div>'
+      + '<div class="meta"><span>名前</span><span class="ln w1"></span><span>　月　日</span>' + (outOf ? '<span>　</span><span class="ln w3"></span><span>／' + outOf + '</span>' : '') + '</div>';
+  }
+  var M = [['1月','January'],['2月','February'],['3月','March'],['4月','April'],['5月','May'],['6月','June'],['7月','July'],['8月','August'],['9月','September'],['10月','October'],['11月','November'],['12月','December']];
+  var D = [['日曜日','Sunday'],['月曜日','Monday'],['火曜日','Tuesday'],['水曜日','Wednesday'],['木曜日','Thursday'],['金曜日','Friday'],['土曜日','Saturday']];
+  function rows(list, hint, ans){
+    return list.map(function(w){ return '<div class="row"><span class="jp">' + w[0] + '</span><span class="ln">' + (ans ? '<span class="k">' + w[1] + '</span>' : hint ? w[1].charAt(0) : '') + '</span></div>'; }).join('');
+  }
+  function build(){
+    var rand = $('order').value === 'rand', hint = $('hint').value === 'first', n = +$('countSel').value, sets = [];
+    for (var k = 0; k < n; k++) sets.push(rand ? [shuffle(M), shuffle(D)] : [M, D]);
+    var sheets = sets.map(function(s, k){
+      return head('小学英語　単語', '月と曜日の英語 書き取り', k, n, '19問')
+        + '<div class="point">日本語に合う英語を書きましょう。月と曜日は、いつも<b>最初の文字を大文字</b>で書きます。</div>'
+        + '<div class="cols"><div><h3>月（Months）</h3>' + rows(s[0], hint, false) + '</div><div><h3>曜日（Days）</h3>' + rows(s[1], hint, false) + '</div></div>';
+    });
+    var ans = '<h1>解答</h1><div class="sub">月と曜日の英語 書き取り（' + n + '枚）</div>';
+    sets.forEach(function(s, k){
+      if (n > 1) ans += '<h2>' + (k+1) + '枚目</h2>';
+      ans += '<div class="cols"><div>' + rows(s[0], false, true) + '</div><div>' + rows(s[1], false, true) + '</div></div>';
+    });
+    ans += '<div class="memo"><b>■ 書くときのポイント</b>・February（r を忘れやすい）、Wednesday（d を忘れやすい）、Saturday（u）に注意。<br>・月と曜日は、文の途中でも最初の文字は大文字。</div>';
+    return { sheets: sheets, answer: ans, info: n + '枚＋解答' };
+  }
+  // ---- 共通：組み立て・白紙・編集・印刷 ----
+  function render(){
+    var r = build(); if (!r) return;
+    var n = r.sheets.length;
+    var h = r.sheets.map(function(s, k){ return '<div class="sheet' + (k ? ' pb' : '') + '">' + s + '</div>'; }).join('');
+    // 両面印刷用：問題が3枚以上の奇数枚なら白紙を1枚はさみ、解答を新しい紙の表から始める
+    if (n > 1 && n % 2 === 1) h += '<div class="sheet pb blankpage">（両面印刷用の白紙ページ）</div>';
+    $('output').innerHTML = h + '<div class="sheet ans pb">' + r.answer + '</div>';
+    $('info').textContent = r.info;
+    if (document.body.classList.contains('editmode')) setEdit(true);
+  }
+  function setEdit(on){
+    document.body.classList.toggle('editmode', on);
+    var b = $('editBtn'); b.classList.toggle('active', on); b.textContent = on ? '編集モード：ON' : '編集モード';
+    Array.prototype.forEach.call(document.querySelectorAll('#output .sheet'), function(s){ s.contentEditable = on ? 'true' : 'false'; });
+  }
+  $('genBtn').addEventListener('click', render);
+  Array.prototype.forEach.call(document.querySelectorAll('.controlbar select, .controlbar input'), function(el){ el.addEventListener('change', render); });
+  $('editBtn').addEventListener('click', function(){ setEdit(!document.body.classList.contains('editmode')); });
+  $('printBtn').addEventListener('click', function(){ window.print(); });
+  window.__render = render;
+  render();
+})();
+</script>
+</body>
+</html>

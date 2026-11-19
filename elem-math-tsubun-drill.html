@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小学算数_分数の通分ドリル（ランダム）</title>
+<style>
+@page { size: A4; margin: 14mm 14mm; }
+* { box-sizing: border-box; }
+body { font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif; color:#111; line-height:1.6; font-size:11.5pt; margin:0; background:#e9e9e9; }
+.sheet { background:#fff; max-width: 190mm; margin: 12px auto; padding: 12mm 12mm; box-shadow: 0 1px 6px rgba(0,0,0,.15); }
+@media print { body{background:#fff;} .sheet{ box-shadow:none; margin:0; padding:0; max-width:none; } .nop{display:none !important;} .pb{ page-break-before: always; break-before: page; } }
+.controlbar { position: sticky; top: 0; z-index: 10; background: #1F3A5F; color: #fff; padding: 12px 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; font-size: 13px; }
+.controlbar .title { font-weight: bold; font-size: 15px; margin-right: 8px; }
+.controlbar button { font-family: inherit; font-size: 13px; padding: 7px 14px; border-radius: 6px; border: none; cursor: pointer; }
+.controlbar button.primary { background: #C9972B; color: #fff; font-weight: bold; }
+.controlbar button.secondary { background: #3A557A; color: #fff; }
+.controlbar button.secondary.active { background: #8A2E2E; }
+.controlbar button.pill { background: #29466D; color:#E6ECF4; border:1px solid #5A7398; padding: 5px 10px; }
+.controlbar button.pill.on { background:#FAF8F2; color:#1F3A5F; font-weight:bold; }
+.controlbar select, .controlbar input[type=text] { font-family:inherit; font-size:13px; padding:5px 6px; border-radius:6px; border:none; }
+.controlbar label { display:inline-flex; align-items:center; gap:5px; }
+.controlbar .grp { display:inline-flex; flex-wrap:wrap; align-items:center; gap:6px; padding: 4px 10px; border:1px solid #5A7398; border-radius:8px; }
+.controlbar .spacer { flex: 1; }
+.controlbar .count { font-size: 12px; color: #D9E1EC; }
+body.editmode [contenteditable="true"] { outline: 1px dashed #C9972B; }
+@media print { [contenteditable] { outline: none !important; } }
+.hh { border-bottom:2px solid #222; padding-bottom:3px; margin-bottom:6px; }
+.hh1 { font-size:10.5pt; color:#333; letter-spacing:.05em; display:flex; justify-content:space-between; }
+.hh2 { font-size:15pt; font-weight:bold; margin-top:1px; }
+.meta { display:flex; align-items:flex-end; justify-content:flex-end; gap:6px; font-size:10.5pt; margin:4px 0 6px; }
+.meta .ln { display:inline-block; border-bottom:1px solid #222; }
+.meta .w1 { min-width:42mm; } .meta .w3 { min-width:12mm; }
+.point { border:1px solid #222; padding:5px 10px; font-size:10pt; line-height:1.55; margin-bottom:3mm; }
+.fr { display:inline-flex; flex-direction:column; text-align:center; vertical-align:middle; line-height:1.3; font-weight:bold; }
+.fr > span:first-child { border-bottom:1.5px solid #111; padding:0 5px; }
+.fr > span:last-child { padding:0 5px; }
+.blankpage { text-align:center; color:#aaa; font-size:10px; padding-top:120mm; height:250mm; }
+.ans h1 { text-align:center; font-size:16pt; margin:0 0 4px; }
+.ans .sub { text-align:center; font-size:10.5pt; color:#444; margin-bottom:8px; }
+.ans h2 { font-size:12pt; border-left:5px solid #222; padding-left:8px; margin:10px 0 4px; break-after:avoid; }
+.agrid { display:grid; grid-template-columns: repeat(var(--ac,5), 1fr); gap: 2px 8px; break-inside:avoid; }
+.ai { font-size:11pt; padding:3px 0; border-bottom:1px dotted #bbb; display:flex; align-items:center; gap:4px; }
+.ai .no { width:2.4em; font-size:9.5pt; font-weight:bold; flex-shrink:0; }
+.k { font-weight:bold; text-decoration: underline; }
+.memo { border:2px solid #222; padding:8px 12px; font-size:10pt; margin:8px 0; break-inside:avoid; }
+.memo b { display:block; margin-bottom:2px; }
+.grid { display:grid; grid-template-columns: 1fr 1fr; column-gap:12mm; }
+.cell { height: 22mm; display:flex; align-items:center; gap:5px; border-bottom:1px dotted #888; font-size:14pt; }
+.cell .no { font-size:10pt; font-weight:bold; width:2.6em; flex-shrink:0; }
+.cell .box { display:inline-block; width:30mm; height:15mm; border:1px solid #555; margin-left:4px; }
+.ai .fr { font-size:10pt; }
+</style>
+</head>
+<body>
+<div class="controlbar nop">
+  <span class="title">🔢 分数の通分ドリル｜学習塾CONNECT</span>
+  <label>難しさ <select id="lv"><option value="easy">やさしめ（倍数の関係が多い）</option><option value="normal">ふつう（分母3〜12）</option><option value="hard">難しめ（分母4〜20）</option></select></label>
+  <label>分数 <select id="irr"><option value="only">これ以上約分できない分数だけ</option><option value="mixed">約分できる分数もまぜる</option></select></label>
+  <label>枚数 <select id="countSel"><option value="1">1枚（20問）</option><option value="2">2枚</option><option value="3">3枚</option><option value="4">4枚</option><option value="5">5枚</option><option value="6">6枚</option></select></label>
+  <button class="primary" id="genBtn">問題を作り直す</button>
+  <button class="secondary" id="editBtn">編集モード</button>
+  <button class="secondary" id="printBtn">印刷</button>
+  <span class="spacer"></span>
+  <span class="count" id="info"></span>
+</div>
+<div id="output"></div>
+<script>
+(function(){
+  function ri(min, max){ return Math.floor(Math.random()*(max-min+1))+min; }
+  function gcd(a, b){ while(b){ var t = a % b; a = b; b = t; } return a; }
+  function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random()*(i+1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function fr(n, d){ return '<span class="fr"><span>'+n+'</span><span>'+d+'</span></span>'; }
+  function $(id){ return document.getElementById(id); }
+  function head(sub, title, k, n, outOf){
+    return '<div class="hh"><div class="hh1"><span>' + sub + '</span><span>' + (n > 1 ? (k+1) + '／' + n + '枚目' : '') + '</span></div><div class="hh2">' + title + '</div></div>'
+      + '<div class="meta"><span>名前</span><span class="ln w1"></span><span>　月　日</span>' + (outOf ? '<span>　</span><span class="ln w3"></span><span>／' + outOf + '</span>' : '') + '</div>';
+  }
+  var PAIRS = [[2,4],[2,6],[2,8],[2,10],[2,12],[3,6],[3,9],[3,12],[4,8],[4,12],[5,10],[3,4],[2,3],[4,6]];
+  function num(d, only){ for (var t = 0; t < 100; t++) { var n = ri(1, d - 1); if (!only || gcd(n, d) === 1) return n; } return 1; }
+  function gen(lv, only){
+    var d1, d2;
+    if (lv === 'easy') {
+      if (Math.random() < .7) { var p = PAIRS[ri(0, PAIRS.length - 1)]; d1 = p[0]; d2 = p[1]; if (Math.random() < .5) { d1 = p[1]; d2 = p[0]; } }
+      else { d1 = ri(2, 10); do { d2 = ri(2, 10); } while (d2 === d1); }
+    } else {
+      var lo = lv === 'normal' ? 3 : 4, hi = lv === 'normal' ? 12 : 20;
+      d1 = ri(lo, hi); do { d2 = ri(lo, hi); } while (d2 === d1);
+    }
+    var n1 = num(d1, only), n2 = num(d2, only), L = d1 * d2 / gcd(d1, d2);
+    return { n1: n1, d1: d1, n2: n2, d2: d2, L: L, m1: n1 * L / d1, m2: n2 * L / d2 };
+  }
+  function build(){
+    var lv = $('lv').value, only = $('irr').value === 'only', n = +$('countSel').value, sets = [];
+    for (var k = 0; k < n; k++) {
+      var list = [], seen = {};
+      while (list.length < 20) { var p = gen(lv, only), key = p.n1 + '/' + p.d1 + ',' + p.n2 + '/' + p.d2; if (seen[key]) continue; seen[key] = 1; list.push(p); }
+      sets.push(list);
+    }
+    var sheets = sets.map(function(list, k){
+      var s = head('小学算数　分数', '分数の通分ドリル', k, n, '20問')
+        + '<div class="point">次の2つの分数を通分しましょう。分母を、2つの分母の最小公倍数（いちばん小さい共通の倍数）にそろえます。</div><div class="grid">';
+      list.forEach(function(p, i){ s += '<div class="cell"><span class="no">(' + (i+1) + ')</span>(' + fr(p.n1, p.d1) + '，' + fr(p.n2, p.d2) + ')　→<span class="box"></span></div>'; });
+      return s + '</div>';
+    });
+    var ans = '<h1>解答</h1><div class="sub">分数の通分ドリル（' + n + '枚・全' + n*20 + '問）</div>';
+    sets.forEach(function(list, k){
+      if (n > 1) ans += '<h2>' + (k+1) + '枚目</h2>';
+      ans += '<div class="agrid" style="--ac:4">' + list.map(function(p, i){ return '<div class="ai"><span class="no">(' + (i+1) + ')</span><span class="k">(' + fr(p.m1, p.L) + '，' + fr(p.m2, p.L) + ')</span></div>'; }).join('') + '</div>';
+    });
+    ans += '<div class="memo"><b>■ 通分のポイント</b>・まず2つの分母の最小公倍数を見つける（大きいほうの分母の倍数を順に調べると早い）。<br>・分母に何をかけたかを見て、分子にも同じ数をかける。</div>';
+    return { sheets: sheets, answer: ans, info: '1枚20問 × ' + n + '枚＋解答' };
+  }
+  // ---- 共通：組み立て・白紙・編集・印刷 ----
+  function render(){
+    var r = build(); if (!r) return;
+    var n = r.sheets.length;
+    var h = r.sheets.map(function(s, k){ return '<div class="sheet' + (k ? ' pb' : '') + '">' + s + '</div>'; }).join('');
+    // 両面印刷用：問題が3枚以上の奇数枚なら白紙を1枚はさみ、解答を新しい紙の表から始める
+    if (n > 1 && n % 2 === 1) h += '<div class="sheet pb blankpage">（両面印刷用の白紙ページ）</div>';
+    $('output').innerHTML = h + '<div class="sheet ans pb">' + r.answer + '</div>';
+    $('info').textContent = r.info;
+    if (document.body.classList.contains('editmode')) setEdit(true);
+  }
+  function setEdit(on){
+    document.body.classList.toggle('editmode', on);
+    var b = $('editBtn'); b.classList.toggle('active', on); b.textContent = on ? '編集モード：ON' : '編集モード';
+    Array.prototype.forEach.call(document.querySelectorAll('#output .sheet'), function(s){ s.contentEditable = on ? 'true' : 'false'; });
+  }
+  $('genBtn').addEventListener('click', render);
+  Array.prototype.forEach.call(document.querySelectorAll('.controlbar select, .controlbar input'), function(el){ el.addEventListener('change', render); });
+  $('editBtn').addEventListener('click', function(){ setEdit(!document.body.classList.contains('editmode')); });
+  $('printBtn').addEventListener('click', function(){ window.print(); });
+  window.__render = render;
+  render();
+})();
+</script>
+</body>
+</html>

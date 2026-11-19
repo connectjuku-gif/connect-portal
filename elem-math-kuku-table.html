@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小学算数_九九あなうめ表</title>
+<style>
+@page { size: A4; margin: 14mm 14mm; }
+* { box-sizing: border-box; }
+body { font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif; color:#111; line-height:1.6; font-size:11.5pt; margin:0; background:#e9e9e9; }
+.sheet { background:#fff; max-width: 190mm; margin: 12px auto; padding: 12mm 12mm; box-shadow: 0 1px 6px rgba(0,0,0,.15); }
+@media print { body{background:#fff;} .sheet{ box-shadow:none; margin:0; padding:0; max-width:none; } .nop{display:none !important;} .pb{ page-break-before: always; break-before: page; } }
+.controlbar { position: sticky; top: 0; z-index: 10; background: #1F3A5F; color: #fff; padding: 12px 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; font-size: 13px; }
+.controlbar .title { font-weight: bold; font-size: 15px; margin-right: 8px; }
+.controlbar button { font-family: inherit; font-size: 13px; padding: 7px 14px; border-radius: 6px; border: none; cursor: pointer; }
+.controlbar button.primary { background: #C9972B; color: #fff; font-weight: bold; }
+.controlbar button.secondary { background: #3A557A; color: #fff; }
+.controlbar button.secondary.active { background: #8A2E2E; }
+.controlbar button.pill { background: #29466D; color:#E6ECF4; border:1px solid #5A7398; padding: 5px 10px; }
+.controlbar button.pill.on { background:#FAF8F2; color:#1F3A5F; font-weight:bold; }
+.controlbar select, .controlbar input[type=text] { font-family:inherit; font-size:13px; padding:5px 6px; border-radius:6px; border:none; }
+.controlbar label { display:inline-flex; align-items:center; gap:5px; }
+.controlbar .grp { display:inline-flex; flex-wrap:wrap; align-items:center; gap:6px; padding: 4px 10px; border:1px solid #5A7398; border-radius:8px; }
+.controlbar .spacer { flex: 1; }
+.controlbar .count { font-size: 12px; color: #D9E1EC; }
+body.editmode [contenteditable="true"] { outline: 1px dashed #C9972B; }
+@media print { [contenteditable] { outline: none !important; } }
+.hh { border-bottom:2px solid #222; padding-bottom:3px; margin-bottom:6px; }
+.hh1 { font-size:10.5pt; color:#333; letter-spacing:.05em; display:flex; justify-content:space-between; }
+.hh2 { font-size:15pt; font-weight:bold; margin-top:1px; }
+.meta { display:flex; align-items:flex-end; justify-content:flex-end; gap:6px; font-size:10.5pt; margin:4px 0 6px; }
+.meta .ln { display:inline-block; border-bottom:1px solid #222; }
+.meta .w1 { min-width:42mm; } .meta .w3 { min-width:12mm; }
+.point { border:1px solid #222; padding:5px 10px; font-size:10pt; line-height:1.55; margin-bottom:3mm; }
+.fr { display:inline-flex; flex-direction:column; text-align:center; vertical-align:middle; line-height:1.3; font-weight:bold; }
+.fr > span:first-child { border-bottom:1.5px solid #111; padding:0 5px; }
+.fr > span:last-child { padding:0 5px; }
+.blankpage { text-align:center; color:#aaa; font-size:10px; padding-top:120mm; height:250mm; }
+.ans h1 { text-align:center; font-size:16pt; margin:0 0 4px; }
+.ans .sub { text-align:center; font-size:10.5pt; color:#444; margin-bottom:8px; }
+.ans h2 { font-size:12pt; border-left:5px solid #222; padding-left:8px; margin:10px 0 4px; break-after:avoid; }
+.agrid { display:grid; grid-template-columns: repeat(var(--ac,5), 1fr); gap: 2px 8px; break-inside:avoid; }
+.ai { font-size:11pt; padding:3px 0; border-bottom:1px dotted #bbb; display:flex; align-items:center; gap:4px; }
+.ai .no { width:2.4em; font-size:9.5pt; font-weight:bold; flex-shrink:0; }
+.k { font-weight:bold; text-decoration: underline; }
+.memo { border:2px solid #222; padding:8px 12px; font-size:10pt; margin:8px 0; break-inside:avoid; }
+.memo b { display:block; margin-bottom:2px; }
+table.kk { border-collapse:collapse; margin: 6mm auto 0; }
+table.kk th, table.kk td { border:1.5px solid #222; width: 17.5mm; height: 17.5mm; text-align:center; font-size:15pt; }
+table.kk th { background:#eee; font-weight:bold; }
+table.kk th.corner { background:#ddd; }
+.ans table.kk { margin: 2mm auto 4mm; break-inside: avoid; }
+.ans table.kk th, .ans table.kk td { width: 10mm; height: 8.2mm; font-size:10pt; }
+.ans .tw { display:grid; grid-template-columns: 1fr 1fr; gap: 0 6mm; }
+</style>
+</head>
+<body>
+<div class="controlbar nop">
+  <span class="title">✖️ 九九あなうめ表｜学習塾CONNECT</span>
+  <label>ならびかた <select id="order"><option value="seq">じゅんばん</option><option value="rand">ランダム</option></select></label>
+  <label>枚数 <select id="countSel"><option value="1">1枚</option><option value="2">2枚</option><option value="3">3枚</option><option value="4">4枚</option><option value="5">5枚</option><option value="6">6枚</option></select></label>
+  <button class="primary" id="genBtn">問題を作り直す</button>
+  <button class="secondary" id="editBtn">編集モード</button>
+  <button class="secondary" id="printBtn">印刷</button>
+  <span class="spacer"></span>
+  <span class="count" id="info"></span>
+</div>
+<div id="output"></div>
+<script>
+(function(){
+  function ri(min, max){ return Math.floor(Math.random()*(max-min+1))+min; }
+  function gcd(a, b){ while(b){ var t = a % b; a = b; b = t; } return a; }
+  function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random()*(i+1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function fr(n, d){ return '<span class="fr"><span>'+n+'</span><span>'+d+'</span></span>'; }
+  function $(id){ return document.getElementById(id); }
+  function head(sub, title, k, n, outOf){
+    return '<div class="hh"><div class="hh1"><span>' + sub + '</span><span>' + (n > 1 ? (k+1) + '／' + n + '枚目' : '') + '</span></div><div class="hh2">' + title + '</div></div>'
+      + '<div class="meta"><span>名前</span><span class="ln w1"></span><span>　月　日</span>' + (outOf ? '<span>　</span><span class="ln w3"></span><span>／' + outOf + '</span>' : '') + '</div>';
+  }
+  function table(rows, cols, filled){
+    var h = '<table class="kk"><tr><th class="corner">×</th>' + cols.map(function(c){ return '<th>' + c + '</th>'; }).join('') + '</tr>';
+    rows.forEach(function(r){ h += '<tr><th>' + r + '</th>' + cols.map(function(c){ return '<td>' + (filled ? '<span class="k">' + r*c + '</span>' : '') + '</td>'; }).join('') + '</tr>'; });
+    return h + '</table>';
+  }
+  function build(){
+    var rand = $('order').value === 'rand', n = +$('countSel').value, base = [1,2,3,4,5,6,7,8,9], sets = [];
+    for (var k = 0; k < n; k++) sets.push(rand ? [shuffle(base), shuffle(base)] : [base, base]);
+    var sheets = sets.map(function(rc, k){
+      return head('小学算数　かけ算', '九九 あなうめ表', k, n, '81マス')
+        + '<div class="point">たての数（左）と よこの数（上）を かけた答えを、マスに書きましょう。' + (rand ? '数のならびがバラバラなので、よく見てね。' : '') + '</div>' + table(rc[0], rc[1], false);
+    });
+    var ans = '<h1>解答</h1><div class="sub">九九 あなうめ表（' + n + '枚）</div><div class="tw">';
+    sets.forEach(function(rc, k){ ans += '<div>' + (n > 1 ? '<h2>' + (k+1) + '枚目</h2>' : '') + table(rc[0], rc[1], true) + '</div>'; });
+    return { sheets: sheets, answer: ans + '</div>', info: n + '枚＋解答' };
+  }
+  // ---- 共通：組み立て・白紙・編集・印刷 ----
+  function render(){
+    var r = build(); if (!r) return;
+    var n = r.sheets.length;
+    var h = r.sheets.map(function(s, k){ return '<div class="sheet' + (k ? ' pb' : '') + '">' + s + '</div>'; }).join('');
+    // 両面印刷用：問題が3枚以上の奇数枚なら白紙を1枚はさみ、解答を新しい紙の表から始める
+    if (n > 1 && n % 2 === 1) h += '<div class="sheet pb blankpage">（両面印刷用の白紙ページ）</div>';
+    $('output').innerHTML = h + '<div class="sheet ans pb">' + r.answer + '</div>';
+    $('info').textContent = r.info;
+    if (document.body.classList.contains('editmode')) setEdit(true);
+  }
+  function setEdit(on){
+    document.body.classList.toggle('editmode', on);
+    var b = $('editBtn'); b.classList.toggle('active', on); b.textContent = on ? '編集モード：ON' : '編集モード';
+    Array.prototype.forEach.call(document.querySelectorAll('#output .sheet'), function(s){ s.contentEditable = on ? 'true' : 'false'; });
+  }
+  $('genBtn').addEventListener('click', render);
+  Array.prototype.forEach.call(document.querySelectorAll('.controlbar select, .controlbar input'), function(el){ el.addEventListener('change', render); });
+  $('editBtn').addEventListener('click', function(){ setEdit(!document.body.classList.contains('editmode')); });
+  $('printBtn').addEventListener('click', function(){ window.print(); });
+  window.__render = render;
+  render();
+})();
+</script>
+</body>
+</html>
