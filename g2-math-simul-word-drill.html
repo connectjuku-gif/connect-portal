@@ -1,0 +1,253 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>中2数学_連立方程式の文章題ドリル（ランダム）</title>
+<style>
+@page { size: A4; margin: 14mm 14mm; }
+* { box-sizing: border-box; }
+body { font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif; color:#111; line-height:1.6; font-size:11.5pt; margin:0; background:#e9e9e9; }
+.sheet { background:#fff; max-width: 190mm; margin: 12px auto; padding: 12mm 12mm; box-shadow: 0 1px 6px rgba(0,0,0,.15); }
+@media print { body{background:#fff;} .sheet{ box-shadow:none; margin:0; padding:0; max-width:none; } .nop{display:none !important;} .pb{ page-break-before: always; break-before: page; } }
+/* ---- 操作バー ---- */
+.controlbar { position: sticky; top: 0; z-index: 10; background: #1F3A5F; color: #fff; padding: 12px 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; font-size: 13px; }
+.controlbar .title { font-weight: bold; font-size: 15px; margin-right: 8px; }
+.controlbar button { font-family: inherit; font-size: 13px; padding: 7px 14px; border-radius: 6px; border: none; cursor: pointer; }
+.controlbar button.primary { background: #C9972B; color: #fff; font-weight: bold; }
+.controlbar button.secondary { background: #3A557A; color: #fff; }
+.controlbar button.secondary.active { background: #8A2E2E; }
+.controlbar select, .controlbar input { font-family:inherit; font-size:13px; padding:5px 6px; border-radius:6px; border:none; }
+.controlbar input[type=number] { width: 3.4em; text-align:center; }
+.controlbar label { display:inline-flex; align-items:center; gap:5px; }
+.controlbar .types { display:flex; flex-wrap:wrap; gap:6px 12px; padding: 4px 10px; border:1px solid #5A7398; border-radius:8px; }
+.controlbar .spacer { flex: 1; }
+.controlbar .count { font-size: 12px; color: #D9E1EC; }
+.controlbar .warn { color:#FFD58A; font-weight:bold; }
+body.editmode [contenteditable="true"] { outline: 1px dashed #C9972B; }
+@media print { [contenteditable] { outline: none !important; } }
+/* ---- 問題用紙 ---- */
+.hh { border-bottom:2px solid #222; padding-bottom:3px; margin-bottom:6px; }
+.hh1 { font-size:10.5pt; color:#333; letter-spacing:.05em; display:flex; justify-content:space-between; }
+.hh2 { font-size:15pt; font-weight:bold; margin-top:1px; }
+.meta { display:flex; align-items:flex-end; justify-content:flex-end; gap:6px; font-size:10.5pt; margin:4px 0 6px; }
+.meta .ln { display:inline-block; border-bottom:1px solid #222; }
+.meta .w1 { min-width:42mm; } .meta .w3 { min-width:12mm; }
+.point { border:1px solid #222; padding:5px 10px; font-size:10pt; line-height:1.55; margin-bottom:2mm; }
+.item { display:flex; flex-direction:column; border-bottom:1px dotted #888; height: var(--h); padding: 2mm 0 2.5mm; break-inside:avoid; }
+.item .qt { font-size:11pt; line-height:1.65; }
+.item .no { font-weight:bold; margin-right:4px; }
+.item .work { flex:1; display:flex; gap:6mm; margin-top:1.5mm; }
+.item .shiki { flex:1; font-size:9.5pt; color:#444; }
+.item .kotae { width: 66mm; flex-shrink:0; display:flex; align-items:flex-end; gap:4px; font-size:9.5pt; color:#444; }
+.item .kotae span { display:block; flex:1; height: 10mm; border:1px solid #555; }
+.fr { display:inline-flex; flex-direction:column; text-align:center; vertical-align:middle; margin:0 2px; line-height:1.25; font-size:.9em; }
+.fr > span:first-child { border-bottom:1px solid #111; padding:0 3px; }
+.fr > span:last-child { padding:0 3px; }
+i { font-family: "Times New Roman", "Hiragino Mincho ProN", serif; font-size:1.1em; }
+.eq { white-space:nowrap; }
+.blankpage { text-align:center; color:#aaa; font-size:10px; padding-top:120mm; height:250mm; }
+/* ---- 解答 ---- */
+.ans h1 { text-align:center; font-size:16pt; margin:0 0 4px; }
+.ans .sub { text-align:center; font-size:10.5pt; color:#444; margin-bottom:6px; }
+.ans h2 { font-size:12pt; border-left:5px solid #222; padding-left:8px; margin:10px 0 4px; break-after:avoid; }
+.ans .two { columns:2; column-gap:9mm; }
+.ai { break-inside:avoid; font-size:10pt; margin:0 0 5px; line-height:1.65; padding-bottom:3px; border-bottom:1px dotted #bbb; }
+.ai .ln2 { display:block; margin-left:2.2em; }
+.ai .st { display:block; font-size:9pt; color:#333; margin-left:2.2em; }
+.ai .no { font-weight:bold; margin-right:4px; }
+.k { font-weight:bold; text-decoration: underline; }
+.memo { border:2px solid #222; padding:8px 12px; font-size:10pt; margin:8px 0; break-inside:avoid; }
+.memo b { display:block; margin-bottom:2px; }
+</style>
+</head>
+<body>
+
+<div class="controlbar nop">
+  <span class="title">✏️ 中2数学 連立方程式の文章題ドリル｜学習塾CONNECT</span>
+  <span class="types" id="types"></span>
+  <label>枚数 <select id="countSel"><option value="1">1枚</option><option value="2">2枚</option><option value="3">3枚</option><option value="4">4枚</option><option value="5">5枚</option><option value="6">6枚</option></select></label>
+  <label>解答 <select id="ansSel"><option value="ex">解説つき</option><option value="a">答えだけ</option></select></label>
+  <button class="primary" id="genBtn">問題を作り直す</button>
+  <button class="secondary" id="editBtn">編集モード</button>
+  <button class="secondary" id="printBtn">印刷</button>
+  <span class="spacer"></span>
+  <span class="count" id="info"></span>
+</div>
+
+<div id="output"></div>
+
+<script>
+(function(){
+  // ---------- 共通 ----------
+
+  function ri(min, max){ return Math.floor(Math.random()*(max-min+1))+min; }
+  function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+  function gcd(a, b){ a = Math.abs(a); b = Math.abs(b); while(b){ var t = a % b; a = b; b = t; } return a; }
+  function lcm(a, b){ return a / gcd(a, b) * b; }
+  function sg(v){ return v < 0 ? '−' + Math.abs(v) : String(v); }
+  function nm(v){ return Math.abs(v) >= 1000 ? sg(v).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : sg(v); }   // 1,240 のようにカンマ
+  var X = '<i>x</i>', Y = '<i>y</i>';
+  function cf(c, v){ return (c === 1 ? '' : c === -1 ? '−' : sg(c)) + v; }       // 係数つきの文字
+  function m(s){ return '<span class="eq">' + s + '</span>'; }
+  function fr(n, d){ return '<span class="fr"><span>' + n + '</span><span>' + d + '</span></span>'; }
+  function G(f){ return function(){ for (var i = 0; i < 2000; i++) { var r = f.apply(null, arguments); if (r) return r; } throw new Error('gen'); }; }
+  function to(){ return '　→　'; }
+
+  // ---------- 問題の種類 ----------
+
+  function sys(e1, e2){ return e1 + '　…①<br>' + e2 + '　…②'; }
+  function sysA(e1, e2){ return m(e1) + '、' + m(e2); }
+  var TYPES = [
+    { label: '代金と個数', def: 2, gen: G(function(){
+        var it = pick([['りんご','みかん','個'],['ケーキ','シュークリーム','個'],['大人の入場券','子どもの入場券','枚'],['ボールペン','えんぴつ','本']]);
+        var A = it[0], B = it[1], c = it[2];
+        var a = ri(8, 18) * 10, b = ri(3, 12) * 10; if (a - b < 20) return null;
+        var n = ri(8, 16), x = ri(2, n - 2), y = n - x, T = a * x + b * y;
+        var e1 = X + ' ＋ ' + Y + ' ＝ ' + n, e2 = a + X + ' ＋ ' + b + Y + ' ＝ ' + T;
+        return { q: '1' + c + a + '円の' + A + 'と、1' + c + b + '円の' + B + 'をあわせて' + n + c + '買ったら、代金の合計は' + nm(T) + '円でした。' + A + 'と' + B + 'をそれぞれ何' + c + '買いましたか。',
+          eq: sysA(e1, e2), a: A + ' ' + x + c + '、' + B + ' ' + y + c,
+          st: [A + 'を ' + X + ' ' + c + '、' + B + 'を ' + Y + ' ' + c + '買ったとする。',
+               '個数から ' + m(e1) + '　…①　代金から ' + m(e2) + '　…②',
+               '②−①×' + b + ' より ' + m(cf(a - b, X) + ' ＝ ' + (T - b * n)) + to() + m(X + ' ＝ ' + x),
+               m(X + ' ＝ ' + x) + ' を①に代入して ' + m(Y + ' ＝ ' + y)] };
+      }) },
+    { label: '2回の買い物', def: 1, gen: G(function(){
+        var it = pick([['りんご','みかん'],['ケーキ','プリン'],['おにぎり','パン'],['ノート','ボールペン']]);
+        var A = it[0], B = it[1];
+        var p1 = ri(1, 5), q1 = ri(1, 6), p2 = ri(1, 5), q2 = ri(1, 6);
+        if (p1 * q2 - p2 * q1 === 0 || (p1 === p2 && q1 === q2)) return null;
+        var x = ri(8, 20) * 10, y = ri(3, 15) * 10; if (x === y) return null;
+        var T1 = p1 * x + q1 * y, T2 = p2 * x + q2 * y;
+        var L = lcm(p1, p2), m1 = L / p1, m2 = L / p2, cy = q1 * m1 - q2 * m2, cr = T1 * m1 - T2 * m2;
+        var e1 = cf(p1, X) + ' ＋ ' + cf(q1, Y) + ' ＝ ' + T1, e2 = cf(p2, X) + ' ＋ ' + cf(q2, Y) + ' ＝ ' + T2;
+        var lab = '①' + (m1 > 1 ? '×' + m1 : '') + '−②' + (m2 > 1 ? '×' + m2 : '');
+        return { q: A + p1 + '個と' + B + q1 + '個を買うと' + nm(T1) + '円、' + A + p2 + '個と' + B + q2 + '個を買うと' + nm(T2) + '円です。' + A + '1個と' + B + '1個の値段をそれぞれ求めなさい。',
+          eq: sysA(e1, e2), a: A + ' ' + x + '円、' + B + ' ' + y + '円',
+          st: [A + '1個を ' + X + ' 円、' + B + '1個を ' + Y + ' 円とする。',
+               m(e1) + '　…①　' + m(e2) + '　…②',
+               lab + ' で ' + X + ' を消すと ' + m(cf(cy, Y) + ' ＝ ' + sg(cr)) + to() + m(Y + ' ＝ ' + y),
+               m(Y + ' ＝ ' + y) + ' を①に代入して ' + m(cf(p1, X) + ' ＋ ' + (q1 * y) + ' ＝ ' + T1) + to() + m(X + ' ＝ ' + x)] };
+      }) },
+    { label: '速さ', def: 1, gen: G(function(){
+        var a = pick([50, 60, 70, 80]), b = pick([100, 120, 150, 160, 180, 200, 240]);
+        var tx = ri(5, 20), ty = ri(3, 15), x = a * tx, y = b * ty, Dd = x + y, t = tx + ty;
+        if (Dd > 4000) return null;
+        var L = lcm(a, b), ka = L / a, kb = L / b;
+        var e1 = X + ' ＋ ' + Y + ' ＝ ' + Dd, e2 = fr(X, a) + ' ＋ ' + fr(Y, b) + ' ＝ ' + t;
+        return { q: '家から' + nm(Dd) + 'm離れた図書館まで行くのに、はじめは分速' + a + 'mで歩き、途中から分速' + b + 'mで走ったところ、全体で' + t + '分かかりました。歩いた道のりと走った道のりをそれぞれ求めなさい。',
+          eq: sysA(e1, e2), a: '歩いた道のり ' + nm(x) + 'm、走った道のり ' + nm(y) + 'm',
+          st: ['歩いた道のりを ' + X + ' m、走った道のりを ' + Y + ' m とする。時間 ＝ 道のり ÷ 速さ。',
+               '道のりから ' + m(e1) + '　…①　時間から ' + m(e2) + '　…②',
+               '②の両辺を' + L + '倍して ' + m(cf(ka, X) + ' ＋ ' + cf(kb, Y) + ' ＝ ' + (L * t)) + '　…②′',
+               '①×' + ka + '−②′ より ' + m(cf(ka - kb, Y) + ' ＝ ' + (ka * Dd - L * t)) + to() + m(Y + ' ＝ ' + y) + '、①に代入して ' + m(X + ' ＝ ' + x)] };
+      }) },
+    { label: '割合（増減）', def: 1, gen: G(function(){
+        var ctx = pick([['ある中学校の生徒数','男子','女子','人'],['ある店で売れた弁当の数','からあげ弁当','のり弁当','個']]);
+        var x = ri(5, 15) * 20, y = ri(5, 15) * 20, p = pick([5, 10, 15, 20]), q = pick([5, 10, 15, 20]);
+        var d = (p * x - q * y) / 100; if (d === 0) return null;
+        var N = x + y, u = ctx[3];
+        var e1 = X + ' ＋ ' + Y + ' ＝ ' + N, e2 = fr(p, 100) + X + ' − ' + fr(q, 100) + Y + ' ＝ ' + sg(d);
+        return { q: '昨年の' + ctx[0] + 'は' + N + u + 'でした。今年は昨年より' + ctx[1] + 'が' + p + '%増え、' + ctx[2] + 'が' + q + '%減ったので、全体で' + Math.abs(d) + u + (d > 0 ? '増えました' : '減りました') + '。昨年の' + ctx[1] + 'と' + ctx[2] + 'の数をそれぞれ求めなさい。',
+          eq: sysA(e1, e2), a: ctx[1] + ' ' + x + u + '、' + ctx[2] + ' ' + y + u,
+          st: ['昨年の' + ctx[1] + 'を ' + X + ' ' + u + '、' + ctx[2] + 'を ' + Y + ' ' + u + 'とする。',
+               '昨年の合計から ' + m(e1) + '　…①　増えた分・減った分から ' + m(e2) + '　…②',
+               '②の両辺を100倍して ' + m(cf(p, X) + ' − ' + cf(q, Y) + ' ＝ ' + sg(100 * d)) + '　…②′',
+               '①×' + q + '＋②′ より ' + m(cf(p + q, X) + ' ＝ ' + (q * N + 100 * d)) + to() + m(X + ' ＝ ' + x) + '、①に代入して ' + m(Y + ' ＝ ' + y)] };
+      }) },
+    { label: '2けたの整数', def: 1, gen: G(function(){
+        var x = ri(1, 9), y = ri(1, 9); if (x === y) return null;
+        var s = x + y, d = 9 * (y - x), big = d > 0;
+        var e1 = X + ' ＋ ' + Y + ' ＝ ' + s, e2 = '10' + Y + ' ＋ ' + X + ' ＝ 10' + X + ' ＋ ' + Y + (big ? ' ＋ ' : ' − ') + Math.abs(d);
+        return { q: '2けたの正の整数があります。各位の数の和は' + s + 'で、十の位の数と一の位の数を入れかえてできる整数は、もとの整数より' + Math.abs(d) + (big ? '大きく' : '小さく') + 'なります。もとの整数を求めなさい。',
+          eq: sysA(e1, e2), a: String(10 * x + y),
+          st: ['もとの整数の十の位を ' + X + '、一の位を ' + Y + ' とすると、もとの整数は 10' + X + ' ＋ ' + Y + '、入れかえた整数は 10' + Y + ' ＋ ' + X + '。',
+               m(e1) + '　…①　' + m(e2) + '　…②',
+               '②を整理して ' + m('9' + Y + ' − 9' + X + ' ＝ ' + sg(d)) + to() + m('−' + X + ' ＋ ' + Y + ' ＝ ' + sg(y - x)) + '　…③',
+               '①＋③ より ' + m('2' + Y + ' ＝ ' + (2 * y)) + to() + m(Y + ' ＝ ' + y) + '、①から ' + m(X + ' ＝ ' + x) + '。もとの整数は ' + (10 * x + y)] };
+      }) }
+  ];
+
+  var CFG = { max: 8, sub: '中学2年　数学　連立方程式', title: '連立方程式の文章題ドリル',
+    point: '次の問題を、連立方程式をつくって解きましょう。「何を <i>x</i>・<i>y</i> にするか」を決めて、式と答えを書きます。答えには単位をつけましょう。',
+    memo: '・わからない数が2つあるときは、それぞれ <i>x</i>・<i>y</i> とおく。<br>・「個数」と「代金」、「道のり」と「時間」のように、<strong>2つの関係からそれぞれ式をつくる</strong>。<br>・分数や小数・%がある式は、先に両辺を何倍かして整数にすると計算ミスが減る。<br>・最後に、答えを両方の式にあてはめて確かめよう。' };
+
+  // ---------- 画面 ----------
+  var tbox = document.getElementById('types');
+  TYPES.forEach(function(t, i){
+    var l = document.createElement('label');
+    l.innerHTML = t.label + ' <input type="number" min="0" max="' + CFG.max + '" value="' + t.def + '" id="c' + i + '">';
+    tbox.appendChild(l);
+    l.querySelector('input').addEventListener('change', render);
+  });
+  var sets = [];
+  function counts(){ return TYPES.map(function(t, i){ var v = parseInt(document.getElementById('c' + i).value, 10); return isNaN(v) || v < 0 ? 0 : Math.min(v, CFG.max); }); }
+  function sheetHtml(list, k, n){
+    var h = '<div class="sheet' + (k ? ' pb' : '') + '" style="--h:' + Math.floor(224 / Math.max(list.length, 4)) + 'mm">'
+      + '<div class="hh"><div class="hh1"><span>' + CFG.sub + '</span><span>' + (n > 1 ? (k + 1) + '／' + n + '枚目' : '') + '</span></div><div class="hh2">' + CFG.title + '</div></div>'
+      + '<div class="meta"><span>名前</span><span class="ln w1"></span><span>　月　日</span><span>　</span><span class="ln w3"></span><span>／' + list.length + '問</span></div>'
+      + '<div class="point">' + CFG.point + '</div>';
+    list.forEach(function(p, i){
+      h += '<div class="item"><div class="qt"><span class="no">(' + (i + 1) + ')</span>' + p.q + '</div>'
+        + '<div class="work"><div class="shiki">式</div><div class="kotae">答<span></span></div></div></div>';
+    });
+    return h + '</div>';
+  }
+  function answerHtml(withEx){
+    var h = '<div class="sheet ans pb"><h1>解答' + (withEx ? '・解説' : '') + '</h1><div class="sub">' + CFG.title + '（' + sets.length + '枚）</div>';
+    sets.forEach(function(list, k){
+      if (sets.length > 1) h += '<h2>' + (k + 1) + '枚目</h2>';
+      h += '<div class="two">';
+      list.forEach(function(p, i){
+        h += '<div class="ai"><span class="no">(' + (i + 1) + ')</span><span class="k">' + p.a + '</span>'
+          + '<span class="ln2">式　' + p.eq + '</span>'
+          + (withEx ? p.st.map(function(s){ return '<span class="st">' + s + '</span>'; }).join('') : '') + '</div>';
+      });
+      h += '</div>';
+    });
+    return h + '<div class="memo"><b>■ 文章題の解き方のポイント</b>' + CFG.memo + '</div></div>';
+  }
+  function render(){
+    var c = counts(), total = c.reduce(function(s, v){ return s + v; }, 0), n = +document.getElementById('countSel').value;
+    var info = document.getElementById('info');
+    if (total === 0) { info.innerHTML = '<span class="warn">問題数を1問以上にしてください</span>'; return; }
+    if (total > CFG.max) { info.innerHTML = '<span class="warn">1枚' + CFG.max + '問までです（いま' + total + '問）</span>'; return; }
+    sets = [];
+    for (var k = 0; k < n; k++) {
+      var list = [], seen = {};
+      TYPES.forEach(function(t, i){
+        for (var j = 0; j < c[i]; j++) {
+          var p, tries = 0;
+          do { p = t.gen(j); tries++; } while (seen[p.q] && tries < 50);
+          seen[p.q] = 1; list.push(p);
+        }
+      });
+      sets.push(list);
+    }
+    var h = sets.map(function(l, k){ return sheetHtml(l, k, n); }).join('');
+    // 両面印刷用：問題が3枚以上の奇数枚なら白紙を1枚はさみ、解答を新しい紙の表から始める
+    if (n > 1 && n % 2 === 1) h += '<div class="sheet pb blankpage">（両面印刷用の白紙ページ）</div>';
+    document.getElementById('output').innerHTML = h + answerHtml(document.getElementById('ansSel').value === 'ex');
+    info.textContent = '1枚' + total + '問 × ' + n + '枚＋解答';
+    if (document.body.classList.contains('editmode')) setEdit(true);
+  }
+  function setEdit(on){
+    document.body.classList.toggle('editmode', on);
+    var b = document.getElementById('editBtn'); b.classList.toggle('active', on); b.textContent = on ? '編集モード：ON' : '編集モード';
+    Array.prototype.forEach.call(document.querySelectorAll('#output .sheet'), function(s){ s.contentEditable = on ? 'true' : 'false'; });
+  }
+  document.getElementById('genBtn').addEventListener('click', render);
+  document.getElementById('countSel').addEventListener('change', render);
+  document.getElementById('ansSel').addEventListener('change', function(){
+    if (!sets.length) return render();
+    var a = document.querySelector('#output .ans'); a.outerHTML = answerHtml(this.value === 'ex');
+    if (document.body.classList.contains('editmode')) setEdit(true);
+  });
+  document.getElementById('editBtn').addEventListener('click', function(){ setEdit(!document.body.classList.contains('editmode')); });
+  document.getElementById('printBtn').addEventListener('click', function(){ window.print(); });
+  window.__TYPES = TYPES;
+  render();
+})();
+</script>
+</body>
+</html>

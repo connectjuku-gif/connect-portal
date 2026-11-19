@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>中1数学_1次方程式の文章題ドリル（ランダム）</title>
+<style>
+@page { size: A4; margin: 14mm 14mm; }
+* { box-sizing: border-box; }
+body { font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif; color:#111; line-height:1.6; font-size:11.5pt; margin:0; background:#e9e9e9; }
+.sheet { background:#fff; max-width: 190mm; margin: 12px auto; padding: 12mm 12mm; box-shadow: 0 1px 6px rgba(0,0,0,.15); }
+@media print { body{background:#fff;} .sheet{ box-shadow:none; margin:0; padding:0; max-width:none; } .nop{display:none !important;} .pb{ page-break-before: always; break-before: page; } }
+/* ---- 操作バー ---- */
+.controlbar { position: sticky; top: 0; z-index: 10; background: #1F3A5F; color: #fff; padding: 12px 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; font-size: 13px; }
+.controlbar .title { font-weight: bold; font-size: 15px; margin-right: 8px; }
+.controlbar button { font-family: inherit; font-size: 13px; padding: 7px 14px; border-radius: 6px; border: none; cursor: pointer; }
+.controlbar button.primary { background: #C9972B; color: #fff; font-weight: bold; }
+.controlbar button.secondary { background: #3A557A; color: #fff; }
+.controlbar button.secondary.active { background: #8A2E2E; }
+.controlbar select, .controlbar input { font-family:inherit; font-size:13px; padding:5px 6px; border-radius:6px; border:none; }
+.controlbar input[type=number] { width: 3.4em; text-align:center; }
+.controlbar label { display:inline-flex; align-items:center; gap:5px; }
+.controlbar .types { display:flex; flex-wrap:wrap; gap:6px 12px; padding: 4px 10px; border:1px solid #5A7398; border-radius:8px; }
+.controlbar .spacer { flex: 1; }
+.controlbar .count { font-size: 12px; color: #D9E1EC; }
+.controlbar .warn { color:#FFD58A; font-weight:bold; }
+body.editmode [contenteditable="true"] { outline: 1px dashed #C9972B; }
+@media print { [contenteditable] { outline: none !important; } }
+/* ---- 問題用紙 ---- */
+.hh { border-bottom:2px solid #222; padding-bottom:3px; margin-bottom:6px; }
+.hh1 { font-size:10.5pt; color:#333; letter-spacing:.05em; display:flex; justify-content:space-between; }
+.hh2 { font-size:15pt; font-weight:bold; margin-top:1px; }
+.meta { display:flex; align-items:flex-end; justify-content:flex-end; gap:6px; font-size:10.5pt; margin:4px 0 6px; }
+.meta .ln { display:inline-block; border-bottom:1px solid #222; }
+.meta .w1 { min-width:42mm; } .meta .w3 { min-width:12mm; }
+.point { border:1px solid #222; padding:5px 10px; font-size:10pt; line-height:1.55; margin-bottom:2mm; }
+.item { display:flex; flex-direction:column; border-bottom:1px dotted #888; height: var(--h); padding: 2mm 0 2.5mm; break-inside:avoid; }
+.item .qt { font-size:11pt; line-height:1.65; }
+.item .no { font-weight:bold; margin-right:4px; }
+.item .work { flex:1; display:flex; gap:6mm; margin-top:1.5mm; }
+.item .shiki { flex:1; font-size:9.5pt; color:#444; }
+.item .kotae { width: 66mm; flex-shrink:0; display:flex; align-items:flex-end; gap:4px; font-size:9.5pt; color:#444; }
+.item .kotae span { display:block; flex:1; height: 10mm; border:1px solid #555; }
+.fr { display:inline-flex; flex-direction:column; text-align:center; vertical-align:middle; margin:0 2px; line-height:1.25; font-size:.9em; }
+.fr > span:first-child { border-bottom:1px solid #111; padding:0 3px; }
+.fr > span:last-child { padding:0 3px; }
+i { font-family: "Times New Roman", "Hiragino Mincho ProN", serif; font-size:1.1em; }
+.eq { white-space:nowrap; }
+.blankpage { text-align:center; color:#aaa; font-size:10px; padding-top:120mm; height:250mm; }
+/* ---- 解答 ---- */
+.ans h1 { text-align:center; font-size:16pt; margin:0 0 4px; }
+.ans .sub { text-align:center; font-size:10.5pt; color:#444; margin-bottom:6px; }
+.ans h2 { font-size:12pt; border-left:5px solid #222; padding-left:8px; margin:10px 0 4px; break-after:avoid; }
+.ans .two { columns:2; column-gap:9mm; }
+.ai { break-inside:avoid; font-size:10pt; margin:0 0 5px; line-height:1.65; padding-bottom:3px; border-bottom:1px dotted #bbb; }
+.ai .ln2 { display:block; margin-left:2.2em; }
+.ai .st { display:block; font-size:9pt; color:#333; margin-left:2.2em; }
+.ai .no { font-weight:bold; margin-right:4px; }
+.k { font-weight:bold; text-decoration: underline; }
+.memo { border:2px solid #222; padding:8px 12px; font-size:10pt; margin:8px 0; break-inside:avoid; }
+.memo b { display:block; margin-bottom:2px; }
+</style>
+</head>
+<body>
+
+<div class="controlbar nop">
+  <span class="title">✏️ 中1数学 1次方程式の文章題ドリル｜学習塾CONNECT</span>
+  <span class="types" id="types"></span>
+  <label>枚数 <select id="countSel"><option value="1">1枚</option><option value="2">2枚</option><option value="3">3枚</option><option value="4">4枚</option><option value="5">5枚</option><option value="6">6枚</option></select></label>
+  <label>解答 <select id="ansSel"><option value="ex">解説つき</option><option value="a">答えだけ</option></select></label>
+  <button class="primary" id="genBtn">問題を作り直す</button>
+  <button class="secondary" id="editBtn">編集モード</button>
+  <button class="secondary" id="printBtn">印刷</button>
+  <span class="spacer"></span>
+  <span class="count" id="info"></span>
+</div>
+
+<div id="output"></div>
+
+<script>
+(function(){
+  // ---------- 共通 ----------
+
+  function ri(min, max){ return Math.floor(Math.random()*(max-min+1))+min; }
+  function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+  function gcd(a, b){ a = Math.abs(a); b = Math.abs(b); while(b){ var t = a % b; a = b; b = t; } return a; }
+  function lcm(a, b){ return a / gcd(a, b) * b; }
+  function sg(v){ return v < 0 ? '−' + Math.abs(v) : String(v); }
+  function nm(v){ return Math.abs(v) >= 1000 ? sg(v).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : sg(v); }   // 1,240 のようにカンマ
+  var X = '<i>x</i>', Y = '<i>y</i>';
+  function cf(c, v){ return (c === 1 ? '' : c === -1 ? '−' : sg(c)) + v; }       // 係数つきの文字
+  function m(s){ return '<span class="eq">' + s + '</span>'; }
+  function fr(n, d){ return '<span class="fr"><span>' + n + '</span><span>' + d + '</span></span>'; }
+  function G(f){ return function(){ for (var i = 0; i < 2000; i++) { var r = f.apply(null, arguments); if (r) return r; } throw new Error('gen'); }; }
+  function to(){ return '　→　'; }
+
+  // ---------- 問題の種類 ----------
+
+  var TYPES = [
+    { label: '代金', def: 2, gen: G(function(){
+        var it = pick([['りんご','みかん','個'],['ケーキ','シュークリーム','個'],['ボールペン','えんぴつ','本'],['大人の入場券','子どもの入場券','枚']]);
+        var A = it[0], B = it[1], c = it[2];
+        var a = ri(8, 18) * 10, b = ri(3, 12) * 10; if (a - b < 20) return null;
+        var n = ri(8, 15), x = ri(2, n - 2), T = a * x + b * (n - x);
+        var eq = m(a + X + ' ＋ ' + b + '(' + n + ' − ' + X + ') ＝ ' + T);
+        return { q: '1' + c + a + '円の' + A + 'と、1' + c + b + '円の' + B + 'をあわせて' + n + c + '買ったら、代金の合計は' + nm(T) + '円でした。' + A + 'を何' + c + '買いましたか。',
+          eq: eq, a: A + ' ' + x + c,
+          st: [A + 'を ' + X + ' ' + c + '買ったとすると、' + B + 'は (' + n + ' − ' + X + ') ' + c + '。',
+               '代金の合計から ' + eq,
+               m(a + X + ' ＋ ' + (b * n) + ' − ' + b + X + ' ＝ ' + T) + to() + m(cf(a - b, X) + ' ＝ ' + (T - b * n)) + to() + m(X + ' ＝ ' + x)] };
+      }) },
+    { label: '過不足', def: 1, gen: G(function(){
+        var it = pick([['子ども','えんぴつ','本'],['生徒','画用紙','枚'],['子ども','あめ','個'],['生徒','ノート','冊']]);
+        var P = it[0], I = it[1], u = it[2];
+        var x = ri(5, 12), p = ri(2, 5), q = p + ri(1, 3), r1 = ri(1, 12), r2 = (q - p) * x - r1;
+        if (r2 < 1 || r2 > 20) return null;
+        var S = p * x + r1, eq = m(p + X + ' ＋ ' + r1 + ' ＝ ' + q + X + ' − ' + r2);
+        return { q: P + 'に' + I + 'を配ります。1人' + p + u + 'ずつ配ると' + r1 + u + '余り、1人' + q + u + 'ずつ配ると' + r2 + u + '足りません。' + P + 'の人数と' + I + 'の数を求めなさい。',
+          eq: eq, a: '人数 ' + x + '人、' + I + ' ' + S + u,
+          st: [P + 'の人数を ' + X + ' 人とすると、' + I + 'の数は「' + p + X + ' ＋ ' + r1 + '」とも「' + q + X + ' − ' + r2 + '」とも表せる。',
+               '2つは等しいので ' + eq,
+               m(p + X + ' − ' + q + X + ' ＝ −' + r2 + ' − ' + r1) + to() + m(cf(p - q, X) + ' ＝ ' + sg(-(r1 + r2))) + to() + m(X + ' ＝ ' + x),
+               I + 'の数は ' + m(p + ' × ' + x + ' ＋ ' + r1 + ' ＝ ' + S) + u] };
+      }) },
+    { label: '年齢', def: 1, gen: G(function(){
+        var P = pick(['父','母']), C = ri(5, 14), k = ri(2, 3), x = ri(2, 15), F = k * (C + x) - x;
+        if (F < 28 || F > 52 || F - C < 20) return null;
+        var eq = m(F + ' ＋ ' + X + ' ＝ ' + k + '(' + C + ' ＋ ' + X + ')');
+        return { q: '現在、' + P + 'は' + F + '歳、子どもは' + C + '歳です。' + P + 'の年齢が子どもの年齢の' + k + '倍になるのは何年後ですか。',
+          eq: eq, a: x + '年後',
+          st: [X + ' 年後とすると、' + P + 'は (' + F + ' ＋ ' + X + ') 歳、子どもは (' + C + ' ＋ ' + X + ') 歳。',
+               P + 'が子どもの' + k + '倍なので ' + eq,
+               m(F + ' ＋ ' + X + ' ＝ ' + (k * C) + ' ＋ ' + k + X) + to() + m(X + ' − ' + k + X + ' ＝ ' + (k * C) + ' − ' + F) + to() + m(cf(1 - k, X) + ' ＝ ' + sg(k * C - F)) + to() + m(X + ' ＝ ' + x)] };
+      }) },
+    { label: '速さ', def: 1, gen: G(function(){
+        var a = ri(6, 8) * 10, b = ri(12, 25) * 10, mm = ri(4, 15), x = a * mm / (b - a);
+        if (x !== Math.floor(x) || x < 3 || x > 20) return null;
+        var eq = m(b + X + ' ＝ ' + a + '(' + mm + ' ＋ ' + X + ')');
+        return { q: '弟は家を出発して、分速' + a + 'mで駅に向かいました。その' + mm + '分後に、兄が自転車で分速' + b + 'mで同じ道を追いかけました。兄は出発してから何分後に弟に追いつきますか。',
+          eq: eq, a: x + '分後',
+          st: ['兄が出発してから ' + X + ' 分後に追いつくとすると、弟が歩いた時間は (' + mm + ' ＋ ' + X + ') 分。',
+               '追いつくとき、2人が進んだ道のりは等しいので ' + eq,
+               m(b + X + ' ＝ ' + (a * mm) + ' ＋ ' + a + X) + to() + m((b - a) + X + ' ＝ ' + (a * mm)) + to() + m(X + ' ＝ ' + x)] };
+      }) },
+    { label: 'ある数', def: 1, gen: G(function(j){
+        var x = ri(2, 12), a = ri(2, 8), c = ri(2, 9); if (c <= a) return null;
+        if (Math.random() < .5) {
+          var b = ri(1, 20), d = (c - a) * x - b; if (d < 1 || d > 30) return null;
+          var eq = m(a + X + ' ＋ ' + b + ' ＝ ' + c + X + ' − ' + d);
+          return { q: 'ある数を' + a + '倍して' + b + 'を加えた数は、ある数を' + c + '倍して' + d + 'をひいた数と等しくなります。ある数を求めなさい。',
+            eq: eq, a: String(x),
+            st: ['ある数を ' + X + ' とすると ' + eq,
+                 m(a + X + ' − ' + c + X + ' ＝ −' + d + ' − ' + b) + to() + m(cf(a - c, X) + ' ＝ ' + sg(-(b + d))) + to() + m(X + ' ＝ ' + x)] };
+        }
+        var b2 = ri(2, 9); if ((a * b2) % (c - a)) return null; x = a * b2 / (c - a); if (x > 30) return null;
+        var eq2 = m(a + '(' + X + ' ＋ ' + b2 + ') ＝ ' + c + X);
+        return { q: 'ある数に' + b2 + 'を加えて' + a + '倍した数は、ある数を' + c + '倍した数と等しくなります。ある数を求めなさい。',
+          eq: eq2, a: String(x),
+          st: ['ある数を ' + X + ' とすると ' + eq2,
+               m(a + X + ' ＋ ' + (a * b2) + ' ＝ ' + c + X) + to() + m(cf(a - c, X) + ' ＝ −' + (a * b2)) + to() + m(X + ' ＝ ' + x)] };
+      }) },
+    { label: '割引き', def: 0, gen: G(function(){
+        var it = pick(['シャツ','かばん','くつ','本だな']);
+        var p = ri(1, 4), x = ri(10, 60) * 100, T = x * (10 - p) / 10;
+        var eq = m('(1 − 0.' + p + ')' + X + ' ＝ ' + T);
+        return { q: 'ある' + it + 'を定価の' + p + '割引きで買ったら、代金は' + nm(T) + '円でした。この' + it + 'の定価を求めなさい。',
+          eq: eq, a: nm(x) + '円',
+          st: ['定価を ' + X + ' 円とすると、' + p + '割引きの値段は (1 − 0.' + p + ')' + X + ' ＝ 0.' + (10 - p) + X + ' 円。',
+               m('0.' + (10 - p) + X + ' ＝ ' + T) + '　両辺を10倍して ' + m((10 - p) + X + ' ＝ ' + (T * 10)) + to() + m(X + ' ＝ ' + x)] };
+      }) }
+  ];
+
+  var CFG = { max: 8, sub: '中学1年　数学　1次方程式', title: '1次方程式の文章題ドリル',
+    point: '次の問題を、方程式をつくって解きましょう。「何を <i>x</i> にするか」を決めて、式と答えを書きます。答えには単位をつけましょう。',
+    memo: '・まず「何を <i>x</i> にするか」を決める（ふつうは問われているもの）。<br>・「代金の合計」「配る数」「進んだ道のり」など、<strong>同じものを2通りに表して ＝ でつなぐ</strong>と式になる。<br>・答えが出たら、問題文にあてはめて合うか確かめよう（人数や個数が分数・マイナスになったらどこかがまちがい）。' };
+
+  // ---------- 画面 ----------
+  var tbox = document.getElementById('types');
+  TYPES.forEach(function(t, i){
+    var l = document.createElement('label');
+    l.innerHTML = t.label + ' <input type="number" min="0" max="' + CFG.max + '" value="' + t.def + '" id="c' + i + '">';
+    tbox.appendChild(l);
+    l.querySelector('input').addEventListener('change', render);
+  });
+  var sets = [];
+  function counts(){ return TYPES.map(function(t, i){ var v = parseInt(document.getElementById('c' + i).value, 10); return isNaN(v) || v < 0 ? 0 : Math.min(v, CFG.max); }); }
+  function sheetHtml(list, k, n){
+    var h = '<div class="sheet' + (k ? ' pb' : '') + '" style="--h:' + Math.floor(224 / Math.max(list.length, 4)) + 'mm">'
+      + '<div class="hh"><div class="hh1"><span>' + CFG.sub + '</span><span>' + (n > 1 ? (k + 1) + '／' + n + '枚目' : '') + '</span></div><div class="hh2">' + CFG.title + '</div></div>'
+      + '<div class="meta"><span>名前</span><span class="ln w1"></span><span>　月　日</span><span>　</span><span class="ln w3"></span><span>／' + list.length + '問</span></div>'
+      + '<div class="point">' + CFG.point + '</div>';
+    list.forEach(function(p, i){
+      h += '<div class="item"><div class="qt"><span class="no">(' + (i + 1) + ')</span>' + p.q + '</div>'
+        + '<div class="work"><div class="shiki">式</div><div class="kotae">答<span></span></div></div></div>';
+    });
+    return h + '</div>';
+  }
+  function answerHtml(withEx){
+    var h = '<div class="sheet ans pb"><h1>解答' + (withEx ? '・解説' : '') + '</h1><div class="sub">' + CFG.title + '（' + sets.length + '枚）</div>';
+    sets.forEach(function(list, k){
+      if (sets.length > 1) h += '<h2>' + (k + 1) + '枚目</h2>';
+      h += '<div class="two">';
+      list.forEach(function(p, i){
+        h += '<div class="ai"><span class="no">(' + (i + 1) + ')</span><span class="k">' + p.a + '</span>'
+          + '<span class="ln2">式　' + p.eq + '</span>'
+          + (withEx ? p.st.map(function(s){ return '<span class="st">' + s + '</span>'; }).join('') : '') + '</div>';
+      });
+      h += '</div>';
+    });
+    return h + '<div class="memo"><b>■ 文章題の解き方のポイント</b>' + CFG.memo + '</div></div>';
+  }
+  function render(){
+    var c = counts(), total = c.reduce(function(s, v){ return s + v; }, 0), n = +document.getElementById('countSel').value;
+    var info = document.getElementById('info');
+    if (total === 0) { info.innerHTML = '<span class="warn">問題数を1問以上にしてください</span>'; return; }
+    if (total > CFG.max) { info.innerHTML = '<span class="warn">1枚' + CFG.max + '問までです（いま' + total + '問）</span>'; return; }
+    sets = [];
+    for (var k = 0; k < n; k++) {
+      var list = [], seen = {};
+      TYPES.forEach(function(t, i){
+        for (var j = 0; j < c[i]; j++) {
+          var p, tries = 0;
+          do { p = t.gen(j); tries++; } while (seen[p.q] && tries < 50);
+          seen[p.q] = 1; list.push(p);
+        }
+      });
+      sets.push(list);
+    }
+    var h = sets.map(function(l, k){ return sheetHtml(l, k, n); }).join('');
+    // 両面印刷用：問題が3枚以上の奇数枚なら白紙を1枚はさみ、解答を新しい紙の表から始める
+    if (n > 1 && n % 2 === 1) h += '<div class="sheet pb blankpage">（両面印刷用の白紙ページ）</div>';
+    document.getElementById('output').innerHTML = h + answerHtml(document.getElementById('ansSel').value === 'ex');
+    info.textContent = '1枚' + total + '問 × ' + n + '枚＋解答';
+    if (document.body.classList.contains('editmode')) setEdit(true);
+  }
+  function setEdit(on){
+    document.body.classList.toggle('editmode', on);
+    var b = document.getElementById('editBtn'); b.classList.toggle('active', on); b.textContent = on ? '編集モード：ON' : '編集モード';
+    Array.prototype.forEach.call(document.querySelectorAll('#output .sheet'), function(s){ s.contentEditable = on ? 'true' : 'false'; });
+  }
+  document.getElementById('genBtn').addEventListener('click', render);
+  document.getElementById('countSel').addEventListener('change', render);
+  document.getElementById('ansSel').addEventListener('change', function(){
+    if (!sets.length) return render();
+    var a = document.querySelector('#output .ans'); a.outerHTML = answerHtml(this.value === 'ex');
+    if (document.body.classList.contains('editmode')) setEdit(true);
+  });
+  document.getElementById('editBtn').addEventListener('click', function(){ setEdit(!document.body.classList.contains('editmode')); });
+  document.getElementById('printBtn').addEventListener('click', function(){ window.print(); });
+  window.__TYPES = TYPES;
+  render();
+})();
+</script>
+</body>
+</html>
