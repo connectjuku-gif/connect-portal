@@ -60,6 +60,7 @@
   .chip.all { background: var(--primary); color: #FAF8F2; }
   .chip.eng { background: #EFF2F6; color: var(--primary); }
   .chip.math { background: #FBF3E3; color: var(--accent); }
+  .chip.jpn { background: #F4EDF1; color: #7A3E62; }
   .sort-btn {
     display: flex; align-items: center; gap: 6px;
     background: #FFFFFF; border: 1px solid #D8D2C4; border-radius: 999px;
@@ -215,6 +216,7 @@
       <a href="#" class="chip all">すべて</a>
       <a href="#eng-top" class="chip eng">📘 英語</a>
       <a href="#math-top" class="chip math">📐 数学</a>
+      <a href="#jpn-top" class="chip jpn">✍️ 国語</a>
     </nav>
     <nav class="grades" aria-label="学年で絞り込み">
       <span class="gl">🎓 学年</span>
@@ -268,6 +270,8 @@
     <a href="#math-exam">都立入試対策</a>
     <a href="#math-calc">計算プリント</a>
     <a href="#math-check">確認テスト</a>
+    <span class="sep"></span>
+    <a href="#jpn-kanji">漢字テスト</a>
   </div>
 
   <!-- 英語 -->
@@ -740,6 +744,28 @@
       </div>
     </div>
 
+  </section>
+
+  <section id="jpn-top" class="subject" style="padding-bottom:56px;">
+    <div class="subject-head">
+      <h2 style="color: #7A3E62;">✍️ 国語</h2>
+      <span class="meta">漢字</span>
+    </div>
+    <div class="underline" style="background: #7A3E62;"></div>
+
+    <div id="jpn-kanji" class="category" style="margin-bottom:8px;">
+      <h3>漢字テスト</h3>
+      <div class="card-grid">
+        <div class="card material-item" data-grade="1 2 3" data-tags="漢字 漢検 4級 国語 ランダム">
+          <div class="thumb has-img"><span class="temoji">✍️</span><img class="timg" src="thumbs/kanji-kanken4-test.jpg" alt="" loading="lazy" onerror="this.parentNode.classList.add('noimg');this.remove()"><span class="gbadge gb-multi">中1〜中3</span></div>
+          <div class="body">
+            <div class="card-title">漢検4級 漢字テスト（ランダム）</div>
+            <div class="desc">問題集その1〜その3（432文）から、読み10問・書き10問を毎回ランダムに出題／縦書き・範囲と枚数（1〜6枚）を選べる</div>
+            <div class="pills"><a href="kanji-kanken4-test.html" class="pill">開く</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <p class="no-results" id="noResults">条件に合う教材が見つかりませんでした。学年・単元の絞り込みや検索キーワードを変えてみてください。</p>

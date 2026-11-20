@@ -45,7 +45,7 @@
 <header> … タイトル・検索ボックス（#searchInput）
 <main>
   .filter-bar
-    nav.subjects   教科（すべて／英語 #eng-top／数学 #math-top へのページ内リンク）
+    nav.subjects   教科（すべて／英語 #eng-top／数学 #math-top／国語 #jpn-top へのページ内リンク）
     nav.grades     学年ボタン  .gchip[data-grade="all|el|1|2|3|hs"]
   nav.schools      中学校ボタン .schip[data-school="all|中野東|西戸山|西新宿"]
   nav.tags         単元ボタン  .tchip[data-tag="文法|関数|…"]
@@ -58,6 +58,8 @@
     <div id="eng-vocab"   class="category">  単語・読解
   <section id="math-top" class="subject">  数学
     #math-teiki（定期テスト予想問題）／#math-formula（公式・総復習）／#math-exam（都立入試対策）／#math-calc（計算プリント）／#math-check（確認テスト）
+  <section id="jpn-top" class="subject">   国語
+    #jpn-kanji（漢字テスト）
 ```
 
 ### カード1枚の形
