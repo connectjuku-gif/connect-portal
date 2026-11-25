@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小学算数 ランダム計算プリント</title>
+<style>
+* { box-sizing: border-box; }
+body { margin:0; font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif; background:#e9e9e9; color:#111; }
+.bar { position: sticky; top: 0; z-index: 10; background: #1F3A5F; color: #fff; padding: 10px 16px; }
+.bar .row1 { display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; }
+.bar .title { font-weight: bold; font-size: 15px; margin-right: auto; }
+.bar button, .bar a.btn { font-family: inherit; font-size: 13px; padding: 7px 14px; border-radius: 6px; border: none; cursor: pointer; text-decoration:none; }
+.bar .primary { background: #C9972B; color: #fff; font-weight: bold; }
+.bar .secondary { background: #3A557A; color: #fff; }
+.units { display:grid; grid-template-columns: repeat(5, 1fr); gap:6px; margin-top:10px; }
+.units button { font-family: inherit; font-size: 13px; padding: 7px 6px; border-radius: 6px; border: 1px solid #5A7398; background: #29466D; color:#E6ECF4; cursor:pointer; text-align:left; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.units button.on { background:#FAF8F2; color:#1F3A5F; border-color:#FAF8F2; font-weight:bold; }
+.note { font-size:12px; color:#D9E1EC; margin-top:8px; }
+.frame { max-width: 230mm; margin: 14px auto 40px; }
+iframe { width:100%; border:0; background:#fff; display:block; min-height: 80vh; box-shadow:0 1px 6px rgba(0,0,0,.15); }
+@media (max-width: 800px) { .units { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 480px) { .units { grid-template-columns: repeat(2, 1fr); } }
+@media print { .bar { display:none; } body { background:#fff; } .frame { margin:0; max-width:none; } iframe { box-shadow:none; } }
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="row1">
+    <span class="title">🔢 小学算数 ランダム計算プリント｜学習塾CONNECT</span>
+    <button class="primary" id="printBtn">このプリントを印刷</button>
+    <a class="btn secondary" id="openBtn" href="el5-math-check-01.html" target="_blank" rel="noopener">別のタブで開く</a>
+  </div>
+  <div class="units" id="units"></div>
+  <div class="note">種類をえらぶと、下にそのプリントが表示されます。条件や枚数はプリントの上の紺色のバーで選べます。</div>
+</div>
+<div class="frame"><iframe id="view" title="確認テスト" src="el5-math-check-01.html"></iframe></div>
+<script>
+(function(){
+  var U = [['たし算・ひき算','elem-math-addsub-drill.html'],['九九プリント','elem-math-kuku-drill.html'],['九九あなうめ表','elem-math-kuku-table.html'],['百ます計算','elem-math-hyakumasu.html'],['穴あきかけ算','elem-math-kuku-hole.html'],['倍と半分','elem-math-double-half.html'],['あまりのあるわり算','elem-math-div-remainder.html'],['最小公倍数・最大公約数','elem-math-lcm-gcd.html'],['約分','elem-math-reduce-drill.html'],['通分','elem-math-tsubun-drill.html']];
+  var box = document.getElementById('units'), view = document.getElementById('view'), openBtn = document.getElementById('openBtn');
+  function file(i){ return U[i][1]; }
+  U.forEach(function(u, i){
+    var b = document.createElement('button'); b.type = 'button'; b.textContent = u[0]; b.title = u[0];
+    b.onclick = function(){ show(i, true); }; box.appendChild(b);
+  });
+  function fit(){
+    try { var d = view.contentDocument; if (d && d.body) view.style.height = (d.documentElement.scrollHeight + 20) + 'px'; } catch (e) {}
+  }
+  view.addEventListener('load', function(){ fit(); setTimeout(fit, 300); });
+  window.addEventListener('resize', fit);
+  function show(i, push){
+    Array.prototype.forEach.call(box.children, function(b, k){ b.classList.toggle('on', k === i); });
+    var f = file(i); if (view.getAttribute('src') !== f) view.setAttribute('src', f);
+    openBtn.href = f;
+    if (push) { try { history.replaceState(null, '', '#u' + (i + 1)); } catch (e) {} }
+  }
+  document.getElementById('printBtn').onclick = function(){
+    try { view.contentWindow.focus(); view.contentWindow.print(); }
+    catch (e) { window.open(openBtn.href, '_blank'); }
+  };
+  var m = /#u(\d+)/.exec(location.hash), start = m ? Math.min(Math.max(+m[1], 1), U.length) - 1 : 0;
+  show(start, false);
+})();
+</script>
+</body>
+</html>
