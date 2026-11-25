@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小学算数_倍と半分の暗算（ランダム）</title>
+<style>
+@page { size: A4; margin: 11mm 12mm; }
+* { box-sizing: border-box; }
+body { font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif; color:#111; line-height:1.5; font-size:11pt; margin:0; background:#e9e9e9; }
+.sheet { background:#fff; width: 186mm; margin: 12px auto; padding: 10mm 10mm; box-shadow: 0 1px 6px rgba(0,0,0,.15); }
+@media print { body{background:#fff;} .sheet{ box-shadow:none; margin:0; padding:0 .8mm; width:auto; } .nop{display:none !important;} .pb{ page-break-before: always; break-before: page; } }
+/* ---- 操作バー ---- */
+.controlbar { position: sticky; top: 0; z-index: 10; background: #1F3A5F; color: #fff; padding: 12px 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; font-size: 13px; }
+.controlbar .title { font-weight: bold; font-size: 15px; margin-right: 8px; }
+.controlbar button { font-family: inherit; font-size: 13px; padding: 7px 14px; border-radius: 6px; border: none; cursor: pointer; }
+.controlbar button.primary { background: #C9972B; color: #fff; font-weight: bold; }
+.controlbar button.secondary { background: #3A557A; color: #fff; }
+.controlbar button.secondary.active { background: #8A2E2E; }
+.controlbar select { font-family:inherit; font-size:13px; padding:6px 8px; border-radius:6px; border:none; }
+.controlbar label { display:inline-flex; align-items:center; gap:6px; }
+.controlbar .spacer { flex: 1; }
+.controlbar .count { font-size: 12px; color: #D9E1EC; }
+body.editmode [contenteditable="true"] { outline: 1px dashed #C9972B; }
+@media print { [contenteditable] { outline: none !important; } }
+
+
+/* ---- 問題用紙 ---- */
+.hh { display:flex; justify-content:space-between; align-items:flex-end; border-bottom:2px solid #222; padding-bottom:4px; margin-bottom:3mm; }
+.hh2 { font-size:17pt; font-weight:bold; line-height:1.25; }
+.hh1 { font-size:9.5pt; color:#444; }
+.meta { display:grid; grid-template-columns:auto auto; gap:1px 8px; font-size:9.5pt; align-items:end; }
+.meta .ln { display:inline-block; border-bottom:1px solid #222; min-width:13mm; text-align:right; }
+.meta .lw { min-width:30mm; }
+.tip { border-left:4px solid #222; background:#f4f4f4; padding:4px 10px; font-size:9.5pt; line-height:1.6; margin-bottom:2.5mm; }
+.grid { display:grid; column-gap:8mm; grid-auto-flow: column; }
+.cell { height: var(--rh); display:flex; align-items:center; gap:5px; border-bottom:1px solid #ddd; font-size: var(--fs); font-weight:bold; white-space:nowrap; }
+.cell .no { font-size:8.5pt; font-weight:normal; color:#555; width:2.6em; text-align:right; flex-shrink:0; }
+.cell .w { font-size:.68em; color:#333; }
+.bx { display:inline-block; width:15mm; height: calc(var(--rh) - 2.2mm); border:1.4px solid #222; border-radius:2px; vertical-align:middle; }
+.bx.s { width:10mm; }
+.bx.ans { width:auto; min-width:10mm; padding:0 4px; text-align:center; font-size:.85em; line-height: calc(var(--rh) - 2.2mm); }
+.sec { font-size:9.5pt; font-weight:bold; margin:0 0 1mm; }
+/* 百ます */
+.hm-h { display:flex; justify-content:space-between; font-size:9.5pt; font-weight:bold; margin:2mm 0 1mm; }
+.hm-h span { font-weight:normal; }
+table.hm { border-collapse:collapse; width:100%; table-layout:fixed; }
+table.hm td { border:1px solid #222; text-align:center; height: var(--hh); font-size: var(--hf); font-weight:bold; padding:0; }
+table.hm td.h { background:#eee; }
+table.hm td.op { background:#222; color:#fff; }
+table.hm td.a { font-size: calc(var(--hf) * .8); font-weight:normal; }
+.blankpage { text-align:center; color:#aaa; font-size:10px; padding-top:120mm; height:250mm; }
+/* ---- 解答 ---- */
+.ans h1 { text-align:center; font-size:15pt; margin:0 0 2px; }
+.ans .sub { text-align:center; font-size:10pt; color:#444; margin-bottom:5px; }
+.ans h2 { font-size:11pt; border-left:5px solid #222; padding-left:8px; margin:6px 0 3px; break-after:avoid; }
+.agrid { display:grid; grid-template-columns: repeat(5, 1fr); gap: 0 6px; break-inside:avoid; margin-bottom:2mm; }
+.ai { font-size:9.5pt; padding:1px 0; border-bottom:1px dotted #bbb; }
+.ai .no { color:#555; font-size:8pt; display:inline-block; width:2.4em; }
+.k { font-weight:bold; text-decoration: underline; }
+.hmwrap { display:grid; grid-template-columns:1fr 1fr; gap:4mm; break-inside:avoid; margin-bottom:2mm; }
+.memo { border:2px solid #222; padding:7px 12px; font-size:9.5pt; margin:6px 0; break-inside:avoid; }
+.memo b { display:block; margin-bottom:2px; }
+</style>
+</head>
+<body>
+
+<div class="controlbar nop">
+  <span class="title">✖️ 倍と半分（2ばい・半分）｜学習塾CONNECT</span>
+  <label>問題 <select id="modeSel"><option value="mix">2ばい・半分をまぜる</option><option value="dbl">2ばいだけ</option><option value="half">半分だけ</option></select></label>
+  <label>数の大きさ <select id="rangeSel"><option value="20">やさしい（20まで）</option><option value="50">ふつう（50まで）</option><option value="100">むずかしい（100まで）</option></select></label>
+  <label>枚数 <select id="countSel"><option value="1">1枚</option><option value="2" selected>2枚</option><option value="3">3枚</option><option value="4">4枚</option><option value="5">5枚</option><option value="6">6枚</option><option value="8">8枚</option><option value="10">10枚</option><option value="12">12枚</option></select></label>
+  <button class="primary" id="genBtn">問題を作り直す</button>
+  <button class="secondary" id="editBtn">編集モード</button>
+  <button class="secondary" id="printBtn">印刷</button>
+  <span class="spacer"></span>
+  <span class="count" id="info"></span>
+</div>
+
+<div id="output"></div>
+
+<script>
+(function(){
+  function ri(a, b){ return Math.floor(Math.random() * (b - a + 1)) + a; }
+  function pick(a){ return a[Math.floor(Math.random() * a.length)]; }
+  function gcd(a, b){ while (b) { var t = a % b; a = b; b = t; } return a; }
+  function lcm(a, b){ return a / gcd(a, b) * b; }
+  function shuffle(a){ for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function V(id){ var e = document.getElementById(id); return e ? e.value : ''; }
+  var BX = '<span class="bx"></span>', BXS = '<span class="bx s"></span>';
+  function NO(i){ return '<span class="no">(' + (i + 1) + ')</span>'; }
+  // 1枚の中で同じ問題ができるだけ重ならないように作る
+  function uniq(n, f){ var out = [], seen = {}, t = 0; while (out.length < n && t < 50000) { t++; var p = f(out.length); if (!p) continue; if (seen[p.key] && (t < 3000 || (out.length && out[out.length - 1].key === p.key))) continue; seen[p.key] = 1; out.push(p); } return out; }   // 数の種類が少ないときは、となり同士でなければ同じ問題もゆるす
+
+
+  var S = { title: '倍と半分（2ばい・半分）', count: function(){ return 50; },
+    sub: function(){ return '2ばい と 半分 の暗算 ／ 50問'; },
+    make: function(){
+      var m = V('modeSel'), R = +V('rangeSel');
+      return uniq(50, function(){
+        var d = m === 'dbl' || (m === 'mix' && Math.random() < .5);
+        if (d) { var x = ri(2, R); return { key: 'd' + x, q: x + ' <span class="w">の 2ばい</span> ＝ ' + BX, a: String(x * 2) }; }
+        var y = ri(2, R) * 2; return { key: 'h' + y, q: y + ' <span class="w">の 半分</span> ＝ ' + BX, a: String(y / 2) };
+      });
+    },
+    sheet: function(s){ return cells(s, 2, 9.4, 15); },
+    answer: answers,
+    memo: '・2ばいは「同じ数をたす」、半分は「同じ数2つに分ける」こと。<br>・36の2ばいは、30の2ばい（60）と6の2ばい（12）をあわせて72、のように十の位と一の位に分けると暗算しやすい。<br>・74の半分は、70の半分（35）と4の半分（2）をあわせて37。十の位が奇数のときに気をつけよう。' };
+
+
+  var sheets = [];
+  function head(k, n, sub){
+    return '<div class="hh"><div><div class="hh2">' + S.title + '</div><div class="hh1">' + sub + (n > 1 ? '　／　No.' + (k + 1 < 10 ? '0' : '') + (k + 1) : '') + '</div></div>'
+      + '<div class="meta"><span>日付</span><span><span class="ln">月</span> <span class="ln">日</span></span><span>名前</span><span class="ln lw"></span>'
+      + (S.hm ? '' : '<span>点数</span><span><span class="ln">点</span></span><span>時間</span><span><span class="ln">分</span> <span class="ln">秒</span></span>') + '</div></div>';
+  }
+  function render(){
+    var n = +V('countSel'); sheets = [];
+    for (var k = 0; k < n; k++) sheets.push(S.make());
+    var h = sheets.map(function(s, k){ return '<div class="sheet' + (k ? ' pb' : '') + '">' + head(k, n, S.sub()) + S.sheet(s) + '</div>'; }).join('');
+    // 両面印刷用：問題が3枚以上の奇数枚なら白紙を1枚はさみ、解答を新しい紙の表から始める
+    if (n > 1 && n % 2 === 1) h += '<div class="sheet pb blankpage">（両面印刷用の白紙ページ）</div>';
+    var a = '<div class="sheet ans pb"><h1>解答</h1><div class="sub">' + S.title + '　' + S.sub() + '（' + n + '枚）</div>';
+    sheets.forEach(function(s, k){ if (n > 1) a += '<h2>No.' + (k + 1 < 10 ? '0' : '') + (k + 1) + '</h2>'; a += S.answer(s); });
+    a += '<div class="memo"><b>■ 勉強のポイント</b>' + S.memo + '</div></div>';
+    document.getElementById('output').innerHTML = h + a;
+    document.getElementById('info').textContent = '問題 ' + n + '枚・' + (n * S.count()) + '問＋解答';
+    if (document.body.classList.contains('editmode')) setEdit(true);
+  }
+  // 問題を「並んだセル」で表示する共通の部品
+  function cells(list, cols, rh, fs){
+    var rows = Math.ceil(list.length / cols);
+    return '<div class="grid" style="grid-template-columns:repeat(' + cols + ',1fr);grid-template-rows:repeat(' + rows + ',auto);--rh:' + rh + 'mm;--fs:' + fs + 'pt">'
+      + list.map(function(p, i){ return '<div class="cell">' + NO(i) + p.q + '</div>'; }).join('') + '</div>';
+  }
+  function answers(list){ return '<div class="agrid">' + list.map(function(p, i){ return '<div class="ai"><span class="no">(' + (i + 1) + ')</span><span class="k">' + p.a + '</span></div>'; }).join('') + '</div>'; }
+  function setEdit(on){
+    document.body.classList.toggle('editmode', on);
+    var b = document.getElementById('editBtn'); b.classList.toggle('active', on); b.textContent = on ? '編集モード：ON' : '編集モード';
+    Array.prototype.forEach.call(document.querySelectorAll('#output .sheet'), function(s){ s.contentEditable = on ? 'true' : 'false'; });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.controlbar select'), function(e){ e.addEventListener('change', render); });
+  document.getElementById('genBtn').addEventListener('click', render);
+  document.getElementById('editBtn').addEventListener('click', function(){ setEdit(!document.body.classList.contains('editmode')); });
+  document.getElementById('printBtn').addEventListener('click', function(){ window.print(); });
+  window.__S = S;
+  render();
+})();
+</script>
+</body>
+</html>
